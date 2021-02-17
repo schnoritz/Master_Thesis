@@ -1,5 +1,5 @@
 # Fdb version 3
-["pdflatex"] 1613580876 "Masterarbeit.tex" "Masterarbeit.pdf" "Masterarbeit" 1613580877
+["pdflatex"] 1613584465 "Masterarbeit.tex" "Masterarbeit.pdf" "Masterarbeit" 1613584466
   "/usr/local/texlive/2020/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/local/texlive/2020/texmf-dist/fonts/tfm/public/cm/cmbx12.tfm" 1136768653 1324 c910af8c371558dc20f2d7822f66fe64 ""
   "/usr/local/texlive/2020/texmf-dist/fonts/tfm/public/cm/cmmi12.tfm" 1136768653 1524 4414a8315f39513458b80dfc63bff03a ""
@@ -25,10 +25,19 @@
   "/usr/local/texlive/2020/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1586288239 4811913 0be9a7e86c70a26e5e3042966bcd7097 ""
   "/usr/local/texlive/2020/texmf-var/web2c/pdftex/pdflatex.fmt" 1613578675 2432454 7fcbb77b7dedfffe0917f4eb19850091 ""
   "/usr/local/texlive/2020/texmf.cnf" 1586288231 577 d60164b4589a341208aff7a667fbbdcb ""
-  "Masterarbeit.aux" 1613580877 8 a94a2480d3289e625eea47cd1b285758 "pdflatex"
-  "Masterarbeit.tex" 1613580876 1181 62f95fc45c690a42f670efb185678cb9 ""
+  "Chapters/Abstract.tex" 1613584109 591 901736df3fbc807121c46f9eaed8ff28 ""
+  "Chapters/Appendix.tex" 1613584102 591 901736df3fbc807121c46f9eaed8ff28 ""
+  "Chapters/Conclusion.tex" 1613584108 591 901736df3fbc807121c46f9eaed8ff28 ""
+  "Chapters/Declaration.tex" 1613584107 591 901736df3fbc807121c46f9eaed8ff28 ""
+  "Chapters/Dedication.tex" 1613584106 591 901736df3fbc807121c46f9eaed8ff28 ""
+  "Chapters/Discussion.tex" 1613584105 591 901736df3fbc807121c46f9eaed8ff28 ""
+  "Chapters/Introduction.tex" 1613584104 591 901736df3fbc807121c46f9eaed8ff28 ""
+  "Chapters/Material & Methods.tex" 1613584103 591 901736df3fbc807121c46f9eaed8ff28 ""
+  "Chapters/Results.tex" 1613584102 591 901736df3fbc807121c46f9eaed8ff28 ""
+  "Masterarbeit.aux" 1613584466 184 21129c32f2a0c2242d82fee76f2c2cd8 "pdflatex"
+  "Masterarbeit.tex" 1613584464 744 ab9d4481070c58ff600ddd072deb8b95 ""
   "images/university.png" 1613580587 20418 a5d4b320956baa062b678ed17bb56eb7 ""
   (generated)
+  "Masterarbeit.log"
   "Masterarbeit.pdf"
   "Masterarbeit.aux"
-  "Masterarbeit.log"

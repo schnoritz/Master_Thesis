@@ -1,4 +1,4 @@
-PWD /Users/simongutwein/Studium/Masterarbeit/Git/Masterarbeit Text
+PWD /Users/simongutwein/Studium/Masterarbeit/Git/Masterarbeit_Text
 INPUT /usr/local/texlive/2020/texmf.cnf
 INPUT /usr/local/texlive/2020/texmf-dist/web2c/texmf.cnf
 INPUT /usr/local/texlive/2020/texmf-var/web2c/pdftex/pdflatex.fmt
@@ -44,6 +44,24 @@ INPUT /usr/local/texlive/2020/texmf-dist/fonts/tfm/public/cm/cmsy10.tfm
 INPUT /usr/local/texlive/2020/texmf-var/fonts/map/pdftex/updmap/pdftex.map
 INPUT /usr/local/texlive/2020/texmf-dist/fonts/tfm/public/cm/cmr17.tfm
 INPUT /usr/local/texlive/2020/texmf-dist/fonts/tfm/public/cm/cmbx12.tfm
+INPUT Chapters/Abstract.tex
+INPUT Chapters/Abstract.tex
+INPUT Chapters/Dedication.tex
+INPUT Chapters/Dedication.tex
+INPUT Chapters/Declaration.tex
+INPUT Chapters/Declaration.tex
+INPUT Chapters/Introduction.tex
+INPUT Chapters/Introduction.tex
+INPUT Chapters/Material & Methods.tex
+INPUT Chapters/Material & Methods.tex
+INPUT Chapters/Results.tex
+INPUT Chapters/Results.tex
+INPUT Chapters/Discussion.tex
+INPUT Chapters/Discussion.tex
+INPUT Chapters/Conclusion.tex
+INPUT Chapters/Conclusion.tex
+INPUT Chapters/Appendix.tex
+INPUT Chapters/Appendix.tex
 INPUT Masterarbeit.aux
 INPUT /usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb
 INPUT /usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb

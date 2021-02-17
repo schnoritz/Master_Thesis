@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020) (preloaded format=pdflatex 2021.2.17)  17 FEB 2021 17:54
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020) (preloaded format=pdflatex 2021.2.17)  17 FEB 2021 18:54
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -106,27 +106,46 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 [1
 
 {/usr/local/texlive/2020/texmf-var/fonts/map/pdftex/updmap/pdftex.map} <./image
-s/university.png>] [1
+s/university.png>] (./Chapters/Abstract.tex) [1
 
-] [2
+] (./Chapters/Dedication.tex)
+[2
+
+] (./Chapters/Declaration.tex) [3
+
+] (./Chapters/Introduction.tex) [4
+
+]
+(./Chapters/Material & Methods.tex) [5
+
+] (./Chapters/Results.tex) [6
+
+]
+(./Chapters/Discussion.tex) [7
+
+] (./Chapters/Conclusion.tex) [8
+
+]
+Appendix A.
+(./Chapters/Appendix.tex) [9
 
 ] (./Masterarbeit.aux) ) 
 Here is how much of TeX's memory you used:
- 1163 strings out of 480608
- 17276 string characters out of 5903630
+ 1201 strings out of 480608
+ 18008 string characters out of 5903630
  251838 words of memory out of 5000000
- 17097 multiletter control sequences out of 15000+600000
+ 17107 multiletter control sequences out of 15000+600000
  534454 words of font info for 31 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 30i,6n,25p,456b,214s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 30i,6n,25p,646b,214s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/local/texlive/2020/texmf-dist/fonts/type1/public/
 amsfonts/cm/cmbx12.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/a
 msfonts/cm/cmr12.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/ams
 fonts/cm/cmr17.pfb>
-Output written on Masterarbeit.pdf (3 pages, 53581 bytes).
+Output written on Masterarbeit.pdf (10 pages, 63331 bytes).
 PDF statistics:
- 29 PDF objects out of 1000 (max. 8388607)
- 18 compressed objects within 1 object stream
+ 52 PDF objects out of 1000 (max. 8388607)
+ 34 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  6 words of extra memory for PDF output out of 10000 (max. 10000000)
 
