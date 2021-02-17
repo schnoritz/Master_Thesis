@@ -1,9 +1,31 @@
-\documentclass[12pt]{report}
+\documentclass[12pt]{report} %etvl [12pt, twoside] für doppelseitig
+\usepackage[utf8]{inputenc}
 \usepackage{graphicx}
 \graphicspath{{images/}}
+\usepackage[a4paper, width=150mm, top=25mm, bottom=25mm]{geometry}
+
+\usepackage{titlesec}
+\titleformat{\chapter}[display]
+  {\normalfont\bfseries}{}{0pt}{\Huge}
+ \titleformat{\section}[display]
+  {\normalfont\bfseries}{}{0pt}{\Large}
+
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\renewcommand{\chaptermark}[1]{\markboth{#1}{}}
+\fancypagestyle{plain}{}{
+	\renewcommand{\headrulewidth}{0.4pt}
+	\renewcommand{\footrulewidth}{0.4pt}
+	\fancyhead{}
+	\fancyhead[L]{Thesis Title}
+	\fancyhead[R]{Simon Gutwein}
+	\fancyfoot{}
+	\fancyfoot[R]{\thepage}
+	\fancyfoot[C]{\leftmark}
+}
 
 \title{
-	{\includegraphics{university.png}}
+	{\includegraphics{university.png}}\\
 	{Thesis Title}\\
 	{\large Institution Name}\\
 }
@@ -15,28 +37,30 @@
 
 \maketitle
 
-\chapter*{Abstract}
+\chapter{Abstract}
 \input{Chapters/Abstract}
 
-\chapter*{Dedication}
+\chapter{Dedication}
 \input{Chapters/Dedication}
 
-\chapter*{Declaration}
+\chapter{Declaration}
 \input{Chapters/Declaration}
 
-\chapter*{Introduction}
+\tableofcontents
+
+\chapter{Introduction}
 \input{Chapters/Introduction}
 
-\chapter*{Material \& Methods}
+\chapter{Material \& Methods}
 \input{Chapters/Material & Methods}
 
-\chapter*{Results}
+\chapter{Results}
 \input{Chapters/Results}
 
-\chapter*{Discussion}
+\chapter{Discussion}
 \input{Chapters/Discussion}
 
-\chapter*{Conclusion}
+\chapter{Conclusion}
 \input{Chapters/Conclusion}
 
 \appendix
