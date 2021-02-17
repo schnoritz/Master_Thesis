@@ -5,6 +5,7 @@ import matplotlib.patches as ptc
 file = open("/Users/simongutwein/Studium/Masterarbeit/Data/MR-Linac_model.egsinp")
 
 i=0
+
 while True:
 	i += 1
 	if i == 10000:
@@ -15,9 +16,9 @@ while True:
 		info = ""
 		for i in range(80): 
 			info += file.readline()
+
 	if "R0LEAF, Z0LEAF" in t_line:
 		JAW_dat = file.readline()
-
 		break
 
 print(info,JAW_dat)
@@ -41,4 +42,3 @@ ax = plt.gca()
 ax.add_patch(ptc.Rectangle((-5.4,-0.4),10.8,39.9+JAW[0],facecolor="tab:red",alpha=0.5))
 ax.add_patch(ptc.Rectangle((-5.4,39.5+JAW[1]),10.8,39.9-JAW[1], facecolor="tab:red",alpha=0.5))
 plt.show()
-#test
