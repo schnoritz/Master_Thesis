@@ -37,5 +37,3 @@ filename = "water_phantom_2X2.3ddose"
 x, y, z, dose_3D = dose_distribution_3D(filename)
 
 plot_dose_distribution(dose_3D, x, y, z)
-
-#This is changed
