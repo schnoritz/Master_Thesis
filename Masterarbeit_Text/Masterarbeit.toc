@@ -1,11 +1,11 @@
 \contentsline {chapter}{\numberline {1}Abstract}{1}%
 \contentsline {section}{\numberline {1.1}BlaBla}{1}%
 \contentsline {section}{\numberline {1.2}BlaBla}{1}%
-\contentsline {chapter}{\numberline {2}Dedication}{2}%
-\contentsline {chapter}{\numberline {3}Declaration}{3}%
-\contentsline {chapter}{\numberline {4}Introduction}{5}%
-\contentsline {chapter}{\numberline {5}Material \& Methods}{6}%
-\contentsline {chapter}{\numberline {6}Results}{7}%
-\contentsline {chapter}{\numberline {7}Discussion}{8}%
-\contentsline {chapter}{\numberline {8}Conclusion}{9}%
-\contentsline {chapter}{\numberline {A}Appendix Title}{10}%
+\contentsline {chapter}{\numberline {2}Dedication}{3}%
+\contentsline {chapter}{\numberline {3}Declaration}{4}%
+\contentsline {chapter}{\numberline {4}Introduction}{6}%
+\contentsline {chapter}{\numberline {5}Material \& Methods}{7}%
+\contentsline {chapter}{\numberline {6}Results}{8}%
+\contentsline {chapter}{\numberline {7}Discussion}{9}%
+\contentsline {chapter}{\numberline {8}Conclusion}{10}%
+\contentsline {chapter}{\numberline {A}Appendix Title}{11}%

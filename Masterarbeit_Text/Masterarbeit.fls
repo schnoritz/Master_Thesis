@@ -59,6 +59,9 @@ INPUT /usr/local/texlive/2020/texmf-dist/fonts/tfm/public/cm/cmbx12.tfm
 INPUT Chapters/Abstract.tex
 INPUT Chapters/Abstract.tex
 INPUT /usr/local/texlive/2020/texmf-dist/fonts/tfm/public/cm/cmbx12.tfm
+INPUT images/Neckarfront.jpg
+INPUT ./images/Neckarfront.jpg
+INPUT ./images/Neckarfront.jpg
 INPUT Chapters/Dedication.tex
 INPUT Chapters/Dedication.tex
 INPUT Chapters/Declaration.tex
