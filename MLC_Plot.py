@@ -2,7 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.patches as ptc
 
-file = open("/Users/simongutwein/Studium/Masterarbeit/Data/MR-Linac_model.egsinp")
+file = open("/Users/simongutwein/Documents/GitHub/Master_Thesis/Data/MR-Linac_model.egsinp")
 
 i=0
 
@@ -21,7 +21,7 @@ while True:
 		JAW_dat = file.readline()
 		break
 
-print(info,JAW_dat)
+#print(info,JAW_dat)
 
 info = np.array(info.replace(',', '').split())
 info = info.astype(float)
@@ -39,6 +39,6 @@ plt.barh(range(len(left_MLC)),right_offset,left=right_MLC)
 #plt.yticks(np.linspace(0,79,8),np.around(np.linspace(-28.6,28.6,8),decimals=2))
 #plt.xticks(np.linspace(-5.4,5.4,10),np.around(np.linspace(-54,54,10),decimals=2))
 ax = plt.gca()
-ax.add_patch(ptc.Rectangle((-5.4,-0.4),10.8,39.9+JAW[0],facecolor="tab:red",alpha=0.5))
-ax.add_patch(ptc.Rectangle((-5.4,39.5+JAW[1]),10.8,39.9-JAW[1], facecolor="tab:red",alpha=0.5))
+ax.add_patch(ptc.Rectangle((-5.4,-0.4),10.8,39.9+JAW[0],facecolor="r",alpha=0.5))
+ax.add_patch(ptc.Rectangle((-5.4,39.5+JAW[1]),10.8,39.9-JAW[1]+0.4, facecolor="r",alpha=0.5))
 plt.show()

@@ -14,7 +14,7 @@ def dose_distribution_3D(filename):
 def plot_dose_distribution(dose_3D,x ,y ,z):
 	
 	plt.imshow(dose_3D[:,:,0])
-	#plt.show()
+	plt.show()
 	pos = 50
 	x_center, y_center = np.where(dose_3D[:,:,pos] == dose_3D[:,:,pos].max())
 	x_center = x_center[0]
@@ -32,7 +32,7 @@ def plot_dose_distribution(dose_3D,x ,y ,z):
 	plt.plot(y[:-1],CP)
 	plt.show()
 	
-filename = "water_phantom_2X2.3ddose"
+filename = "/Users/simongutwein/Documents/GitHub/Master_Thesis/Data/water_phantom_2X2.3ddose"
 
 x, y, z, dose_3D = dose_distribution_3D(filename)
 
