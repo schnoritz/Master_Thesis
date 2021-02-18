@@ -1,12 +1,15 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020) (preloaded format=pdflatex 2021.2.17)  18 FEB 2021 13:20
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020) (preloaded format=pdflatex 2021.2.17)  18 FEB 2021 19:35
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
-**Masterarbeit.tex
-(./Masterarbeit.tex
+**/Users/simongutwein/Documents/GitHub/Master_Thesis/Masterarbeit_Text/Masterar
+beit.tex
+
+(/Users/simongutwein/Documents/GitHub/Master_Thesis/Masterarbeit_Text/Masterarb
+eit.tex
 LaTeX2e <2020-02-02> patch level 5
-L3 programming layer <2020-03-06>
-(/usr/local/texlive/2020/texmf-dist/tex/latex/base/report.cls
+L3 programming layer <2020-03-06> (/usr/local/texlive/2020/texmf-dist/tex/latex
+/base/report.cls
 Document Class: report 2019/12/20 v1.4l Standard LaTeX document class
 (/usr/local/texlive/2020/texmf-dist/tex/latex/base/size12.clo
 File: size12.clo 2019/12/20 v1.4l Standard LaTeX file (size option)
@@ -23,42 +26,32 @@ File: size12.clo 2019/12/20 v1.4l Standard LaTeX file (size option)
 \abovecaptionskip=\skip47
 \belowcaptionskip=\skip48
 \bibindent=\dimen134
-)
-(/usr/local/texlive/2020/texmf-dist/tex/latex/base/inputenc.sty
+) (/usr/local/texlive/2020/texmf-dist/tex/latex/base/inputenc.sty
 Package: inputenc 2018/08/11 v1.3c Input encoding file
 \inpenc@prehook=\toks15
 \inpenc@posthook=\toks16
-)
-(/usr/local/texlive/2020/texmf-dist/tex/latex/graphics/graphicx.sty
+) (/usr/local/texlive/2020/texmf-dist/tex/latex/graphics/graphicx.sty
 Package: graphicx 2019/11/30 v1.2a Enhanced LaTeX Graphics (DPC,SPQR)
-
 (/usr/local/texlive/2020/texmf-dist/tex/latex/graphics/keyval.sty
 Package: keyval 2014/10/28 v1.15 key=value parser (DPC)
 \KV@toks@=\toks17
-)
-(/usr/local/texlive/2020/texmf-dist/tex/latex/graphics/graphics.sty
+) (/usr/local/texlive/2020/texmf-dist/tex/latex/graphics/graphics.sty
 Package: graphics 2019/11/30 v1.4a Standard LaTeX Graphics (DPC,SPQR)
-
 (/usr/local/texlive/2020/texmf-dist/tex/latex/graphics/trig.sty
 Package: trig 2016/01/03 v1.10 sin cos tan (DPC)
-)
-(/usr/local/texlive/2020/texmf-dist/tex/latex/graphics-cfg/graphics.cfg
+) (/usr/local/texlive/2020/texmf-dist/tex/latex/graphics-cfg/graphics.cfg
 File: graphics.cfg 2016/06/04 v1.11 sample graphics configuration
 )
 Package graphics Info: Driver file: pdftex.def on input line 105.
-
 (/usr/local/texlive/2020/texmf-dist/tex/latex/graphics-def/pdftex.def
 File: pdftex.def 2018/01/08 v1.0l Graphics/color driver for pdftex
 ))
 \Gin@req@height=\dimen135
 \Gin@req@width=\dimen136
-)
-(/usr/local/texlive/2020/texmf-dist/tex/latex/geometry/geometry.sty
+) (/usr/local/texlive/2020/texmf-dist/tex/latex/geometry/geometry.sty
 Package: geometry 2020/01/02 v5.9 Page Geometry
-
 (/usr/local/texlive/2020/texmf-dist/tex/generic/iftex/ifvtex.sty
 Package: ifvtex 2019/10/25 v1.7 ifvtex legacy package. Use iftex instead.
-
 (/usr/local/texlive/2020/texmf-dist/tex/generic/iftex/iftex.sty
 Package: iftex 2020/03/06 v1.0d TeX engine tests
 ))
@@ -74,73 +67,108 @@ Package: iftex 2020/03/06 v1.0d TeX engine tests
 \Gm@layouthoffset=\dimen143
 \Gm@layoutvoffset=\dimen144
 \Gm@dimlist=\toks18
-)
-(/usr/local/texlive/2020/texmf-dist/tex/latex/titlesec/titlesec.sty
-Package: titlesec 2019/10/16 v2.13 Sectioning titles
-\ttl@box=\box45
-\beforetitleunit=\skip49
-\aftertitleunit=\skip50
-\ttl@plus=\dimen145
-\ttl@minus=\dimen146
-\ttl@toksa=\toks19
-\titlewidth=\dimen147
-\titlewidthlast=\dimen148
-\titlewidthfirst=\dimen149
-)
-(/usr/local/texlive/2020/texmf-dist/tex/latex/fancyhdr/fancyhdr.sty
+) (/usr/local/texlive/2020/texmf-dist/tex/latex/booktabs/booktabs.sty
+Package: booktabs 2020/01/12 v1.61803398 Publication quality tables
+\heavyrulewidth=\dimen145
+\lightrulewidth=\dimen146
+\cmidrulewidth=\dimen147
+\belowrulesep=\dimen148
+\belowbottomsep=\dimen149
+\aboverulesep=\dimen150
+\abovetopsep=\dimen151
+\cmidrulesep=\dimen152
+\cmidrulekern=\dimen153
+\defaultaddspace=\dimen154
+\@cmidla=\count179
+\@cmidlb=\count180
+\@aboverulesep=\dimen155
+\@belowrulesep=\dimen156
+\@thisruleclass=\count181
+\@lastruleclass=\count182
+\@thisrulewidth=\dimen157
+) (/usr/local/texlive/2020/texmf-dist/tex/latex/fancyhdr/fancyhdr.sty
 Package: fancyhdr 2019/01/31 v3.10 Extensive control of page headers and footer
 s
-\f@nch@headwidth=\skip51
-\f@nch@O@elh=\skip52
-\f@nch@O@erh=\skip53
-\f@nch@O@olh=\skip54
-\f@nch@O@orh=\skip55
-\f@nch@O@elf=\skip56
-\f@nch@O@erf=\skip57
-\f@nch@O@olf=\skip58
-\f@nch@O@orf=\skip59
+\f@nch@headwidth=\skip49
+\f@nch@O@elh=\skip50
+\f@nch@O@erh=\skip51
+\f@nch@O@olh=\skip52
+\f@nch@O@orh=\skip53
+\f@nch@O@elf=\skip54
+\f@nch@O@erf=\skip55
+\f@nch@O@olf=\skip56
+\f@nch@O@orf=\skip57
+) (/usr/local/texlive/2020/texmf-dist/tex/latex/caption/caption.sty
+Package: caption 2020/01/03 v3.4h Customizing captions (AR)
+(/usr/local/texlive/2020/texmf-dist/tex/latex/caption/caption3.sty
+Package: caption3 2020/01/03 v1.8h caption3 kernel (AR)
+Package caption3 Info: TeX engine: e-TeX on input line 61.
+\captionmargin=\dimen158
+\captionmargin@=\dimen159
+\captionwidth=\dimen160
+\caption@tempdima=\dimen161
+\caption@indent=\dimen162
+\caption@parindent=\dimen163
+\caption@hangindent=\dimen164
+Package caption Info: Standard document class detected.
 )
-(/usr/local/texlive/2020/texmf-dist/tex/latex/l3backend/l3backend-pdfmode.def
+\c@caption@flags=\count183
+\c@continuedfloat=\count184
+) (/usr/local/texlive/2020/texmf-dist/tex/latex/caption/subcaption.sty
+Package: subcaption 2020/01/22 v1.3d Sub-captions (AR)
+\c@subfigure=\count185
+\c@subtable=\count186
+) (/usr/local/texlive/2020/texmf-dist/tex/latex/titlesec/titlesec.sty
+Package: titlesec 2019/10/16 v2.13 Sectioning titles
+\ttl@box=\box45
+\beforetitleunit=\skip58
+\aftertitleunit=\skip59
+\ttl@plus=\dimen165
+\ttl@minus=\dimen166
+\ttl@toksa=\toks19
+\titlewidth=\dimen167
+\titlewidthlast=\dimen168
+\titlewidthfirst=\dimen169
+) (/usr/local/texlive/2020/texmf-dist/tex/latex/l3backend/l3backend-pdfmode.def
 File: l3backend-pdfmode.def 2020-03-12 L3 backend support: PDF mode
-\l__kernel_color_stack_int=\count179
+\l__kernel_color_stack_int=\count187
 \l__pdf_internal_box=\box46
 )
-(./Masterarbeit.aux)
+(/Users/simongutwein/Documents/GitHub/Master_Thesis/Masterarbeit_Text/Masterarb
+eit.aux)
 \openout1 = `Masterarbeit.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 34.
-LaTeX Font Info:    ... okay on input line 34.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 34.
-LaTeX Font Info:    ... okay on input line 34.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 34.
-LaTeX Font Info:    ... okay on input line 34.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 34.
-LaTeX Font Info:    ... okay on input line 34.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 34.
-LaTeX Font Info:    ... okay on input line 34.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 34.
-LaTeX Font Info:    ... okay on input line 34.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 34.
-LaTeX Font Info:    ... okay on input line 34.
-
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 43.
+LaTeX Font Info:    ... okay on input line 43.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 43.
+LaTeX Font Info:    ... okay on input line 43.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 43.
+LaTeX Font Info:    ... okay on input line 43.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 43.
+LaTeX Font Info:    ... okay on input line 43.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 43.
+LaTeX Font Info:    ... okay on input line 43.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 43.
+LaTeX Font Info:    ... okay on input line 43.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 43.
+LaTeX Font Info:    ... okay on input line 43.
 (/usr/local/texlive/2020/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count180
-\scratchdimen=\dimen150
+\scratchcounter=\count188
+\scratchdimen=\dimen170
 \scratchbox=\box47
-\nofMPsegments=\count181
-\nofMParguments=\count182
+\nofMPsegments=\count189
+\nofMParguments=\count190
 \everyMPshowfont=\toks20
-\MPscratchCnt=\count183
-\MPscratchDim=\dimen151
-\MPnumerator=\count184
-\makeMPintoPDFobject=\count185
+\MPscratchCnt=\count191
+\MPscratchDim=\dimen171
+\MPnumerator=\count192
+\makeMPintoPDFobject=\count193
 \everyMPtoPDFconversion=\toks21
 ) (/usr/local/texlive/2020/texmf-dist/tex/latex/epstopdf-pkg/epstopdf-base.sty
 Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
 Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 4
 85.
-
 (/usr/local/texlive/2020/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
 e
@@ -154,15 +182,15 @@ e
 * layoutoffset:(h,v)=(0.0pt,0.0pt)
 * modes: 
 * h-part:(L,W,R)=(85.35826pt, 426.79134pt, 85.35828pt)
-* v-part:(T,H,B)=(71.13188pt, 702.78308pt, 71.13188pt)
+* v-part:(T,H,B)=(85.35826pt, 674.33032pt, 85.35826pt)
 * \paperwidth=597.50787pt
 * \paperheight=845.04684pt
 * \textwidth=426.79134pt
-* \textheight=702.78308pt
+* \textheight=674.33032pt
 * \oddsidemargin=13.08827pt
 * \evensidemargin=13.08827pt
-* \topmargin=-38.1381pt
-* \headheight=12.0pt
+* \topmargin=-23.91173pt
+* \headheight=15.0pt
 * \headsep=25.0pt
 * \topskip=12.0pt
 * \footskip=30.0pt
@@ -179,97 +207,150 @@ e
 * \@reversemarginfalse
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
+Package caption Info: Begin \AtBeginDocument code.
+Package caption Info: End \AtBeginDocument code.
 <images/university.png, id=1, 354.57469pt x 156.585pt>
 File: images/university.png Graphic file (type png)
 <use images/university.png>
-Package pdftex.def Info: images/university.png  used on input line 36.
+Package pdftex.def Info: images/university.png  used on input line 45.
 (pdftex.def)             Requested size: 354.57382pt x 156.58461pt.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <14.4> on input line 36.
+(Font)              <14.4> on input line 45.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <7> on input line 36.
+(Font)              <7> on input line 45.
 [1
 
-{/usr/local/texlive/2020/texmf-var/fonts/map/pdftex/updmap/pdftex.map} <./image
-s/university.png>]
+{/usr/local/texlive/2020/texmf-var/fonts/map/pdftex/updmap/pdftex.map} </Users/
+simongutwein/Documents/GitHub/Master_Thesis/Masterarbeit_Text/images/university
+.png>]
 Chapter 1.
-(./Chapters/Abstract.tex
+
+(/Users/simongutwein/Documents/GitHub/Master_Thesis/Masterarbeit_Text/Chapters/
+Abstract.tex
 <images/Neckarfront.jpg, id=11, 945.5325pt x 630.355pt>
 File: images/Neckarfront.jpg Graphic file (type jpg)
 <use images/Neckarfront.jpg>
 Package pdftex.def Info: images/Neckarfront.jpg  used on input line 7.
 (pdftex.def)             Requested size: 300.0pt x 200.00563pt.
-)
-
-Package Fancyhdr Warning: \headheight is too small (12.0pt): 
-Make it at least 14.49998pt.
-We now make it that large for the rest of the document.
-This may cause the page layout to be inconsistent, however.
-
 [1
 
-] [2 <./images/Neckarfront.jpg>]
+]
+<images/x_squared.png, id=16, 218.8175pt x 231.86626pt>
+File: images/x_squared.png Graphic file (type png)
+<use images/x_squared.png>
+Package pdftex.def Info: images/x_squared.png  used on input line 21.
+(pdftex.def)             Requested size: 192.05582pt x 170.7186pt.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <10.95> on input line 22.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <8> on input line 22.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <6> on input line 22.
+<images/x_cubed.jpg, id=17, 321.2pt x 279.0425pt>
+File: images/x_cubed.jpg Graphic file (type jpg)
+<use images/x_cubed.jpg>
+Package pdftex.def Info: images/x_cubed.jpg  used on input line 28.
+(pdftex.def)             Requested size: 192.05983pt x 170.72235pt.
+[2 </Users/simongutwein/Documents/GitHub/Master_Thesis/Masterarbeit_Text/images
+/Neckarfront.jpg> </Users/simongutwein/Documents/GitHub/Master_Thesis/Masterarb
+eit_Text/images/x_squared.png> </Users/simongutwein/Documents/GitHub/Master_The
+sis/Masterarbeit_Text/images/x_cubed.jpg>]
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <12> on input line 41.
+) [3]
 Chapter 2.
-(./Chapters/Dedication.tex) [3
+
+(/Users/simongutwein/Documents/GitHub/Master_Thesis/Masterarbeit_Text/Chapters/
+Dedication.tex) [4
 
 ]
 Chapter 3.
-(./Chapters/Declaration.tex) [4
 
-] (./Masterarbeit.toc
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <12> on input line 2.
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <8> on input line 2.
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <6> on input line 2.
-)
+(/Users/simongutwein/Documents/GitHub/Master_Thesis/Masterarbeit_Text/Chapters/
+Declaration.tex) [5
+
+]
+(/Users/simongutwein/Documents/GitHub/Master_Thesis/Masterarbeit_Text/Masterarb
+eit.toc)
 \tf@toc=\write3
 \openout3 = `Masterarbeit.toc'.
 
- [5
+[6
+
+]
+(/Users/simongutwein/Documents/GitHub/Master_Thesis/Masterarbeit_Text/Masterarb
+eit.lof)
+\tf@lof=\write4
+\openout4 = `Masterarbeit.lof'.
+
+[7
+
+]
+(/Users/simongutwein/Documents/GitHub/Master_Thesis/Masterarbeit_Text/Masterarb
+eit.lot)
+\tf@lot=\write5
+\openout5 = `Masterarbeit.lot'.
+
+[8
 
 ]
 Chapter 4.
-(./Chapters/Introduction.tex) [6
+
+(/Users/simongutwein/Documents/GitHub/Master_Thesis/Masterarbeit_Text/Chapters/
+Introduction.tex) [9
 
 ]
 Chapter 5.
-(./Chapters/Material & Methods.tex) [7
+
+(/Users/simongutwein/Documents/GitHub/Master_Thesis/Masterarbeit_Text/Chapters/
+Material & Methods.tex) [10
 
 ]
 Chapter 6.
-(./Chapters/Results.tex) [8
+
+(/Users/simongutwein/Documents/GitHub/Master_Thesis/Masterarbeit_Text/Chapters/
+Results.tex) [11
 
 ]
 Chapter 7.
-(./Chapters/Discussion.tex) [9
+
+(/Users/simongutwein/Documents/GitHub/Master_Thesis/Masterarbeit_Text/Chapters/
+Discussion.tex) [12
 
 ]
 Chapter 8.
-(./Chapters/Conclusion.tex) [10
+
+(/Users/simongutwein/Documents/GitHub/Master_Thesis/Masterarbeit_Text/Chapters/
+Conclusion.tex) [13
 
 ]
 Appendix A.
-(./Chapters/Appendix.tex) [11
 
-] (./Masterarbeit.aux) ) 
+(/Users/simongutwein/Documents/GitHub/Master_Thesis/Masterarbeit_Text/Chapters/
+Appendix.tex) [14
+
+]
+(/Users/simongutwein/Documents/GitHub/Master_Thesis/Masterarbeit_Text/Masterarb
+eit.aux) ) 
 Here is how much of TeX's memory you used:
- 2175 strings out of 480608
- 31291 string characters out of 5903630
- 282318 words of memory out of 5000000
- 18048 multiletter control sequences out of 15000+600000
- 537207 words of font info for 40 fonts, out of 8000000 for 9000
+ 3446 strings out of 480608
+ 56177 string characters out of 5903630
+ 301663 words of memory out of 5000000
+ 19298 multiletter control sequences out of 15000+600000
+ 538123 words of font info for 43 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 30i,10n,45p,3591b,249s stack positions out of 5000i,500n,10000p,200000b,80000s
-</usr/local/texlive/2020/texmf-dist/fonts/type1/public/
-amsfonts/cm/cmbx12.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/a
-msfonts/cm/cmr12.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/ams
-fonts/cm/cmr17.pfb>
-Output written on Masterarbeit.pdf (12 pages, 493832 bytes).
+ 41i,10n,45p,2279b,503s stack positions out of 5000i,500n,10000p,200000b,80000s
+</usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cm
+bx12.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmm
+i10.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmr1
+0.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.
+pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pf
+b></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb>
+Output written on /Users/simongutwein/Documents/GitHub/Master_Thesis/Masterarbe
+it_Text/Masterarbeit.pdf (15 pages, 565672 bytes).
 PDF statistics:
- 59 PDF objects out of 1000 (max. 8388607)
- 38 compressed objects within 1 object stream
+ 84 PDF objects out of 1000 (max. 8388607)
+ 54 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
- 11 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 21 words of extra memory for PDF output out of 10000 (max. 10000000)
 
