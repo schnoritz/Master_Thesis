@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020) (preloaded format=pdflatex 2021.2.17)  18 FEB 2021 19:35
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020) (preloaded format=pdflatex 2021.2.17)  18 FEB 2021 19:54
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -129,41 +129,273 @@ Package: titlesec 2019/10/16 v2.13 Sectioning titles
 \titlewidth=\dimen167
 \titlewidthlast=\dimen168
 \titlewidthfirst=\dimen169
-) (/usr/local/texlive/2020/texmf-dist/tex/latex/l3backend/l3backend-pdfmode.def
+) (/usr/local/texlive/2020/texmf-dist/tex/latex/biblatex/biblatex.sty
+Package: biblatex 2019/12/01 v3.14 programmable bibliographies (PK/MW)
+(/usr/local/texlive/2020/texmf-dist/tex/latex/pdftexcmds/pdftexcmds.sty
+Package: pdftexcmds 2019/11/24 v0.31 Utility functions of pdfTeX for LuaTeX (HO
+)
+(/usr/local/texlive/2020/texmf-dist/tex/generic/infwarerr/infwarerr.sty
+Package: infwarerr 2019/12/03 v1.5 Providing info/warning/error messages (HO)
+) (/usr/local/texlive/2020/texmf-dist/tex/generic/ltxcmds/ltxcmds.sty
+Package: ltxcmds 2019/12/15 v1.24 LaTeX kernel commands for general use (HO)
+)
+Package pdftexcmds Info: \pdf@primitive is available.
+Package pdftexcmds Info: \pdf@ifprimitive is available.
+Package pdftexcmds Info: \pdfdraftmode found.
+) (/usr/local/texlive/2020/texmf-dist/tex/latex/etoolbox/etoolbox.sty
+Package: etoolbox 2019/09/21 v2.5h e-TeX tools for LaTeX (JAW)
+\etb@tempcnta=\count187
+) (/usr/local/texlive/2020/texmf-dist/tex/latex/kvoptions/kvoptions.sty
+Package: kvoptions 2019/11/29 v3.13 Key value format for package options (HO)
+(/usr/local/texlive/2020/texmf-dist/tex/generic/kvsetkeys/kvsetkeys.sty
+Package: kvsetkeys 2019/12/15 v1.18 Key value parser (HO)
+)) (/usr/local/texlive/2020/texmf-dist/tex/latex/logreq/logreq.sty
+Package: logreq 2010/08/04 v1.0 xml request logger
+\lrq@indent=\count188
+(/usr/local/texlive/2020/texmf-dist/tex/latex/logreq/logreq.def
+File: logreq.def 2010/08/04 v1.0 logreq spec v1.0
+)) (/usr/local/texlive/2020/texmf-dist/tex/latex/base/ifthen.sty
+Package: ifthen 2014/09/29 v1.1c Standard LaTeX ifthen package (DPC)
+) (/usr/local/texlive/2020/texmf-dist/tex/latex/url/url.sty
+\Urlmuskip=\muskip16
+Package: url 2013/09/16  ver 3.4  Verb mode for urls, etc.
+)
+\c@tabx@nest=\count189
+\c@listtotal=\count190
+\c@listcount=\count191
+\c@liststart=\count192
+\c@liststop=\count193
+\c@citecount=\count194
+\c@citetotal=\count195
+\c@multicitecount=\count196
+\c@multicitetotal=\count197
+\c@instcount=\count198
+\c@maxnames=\count199
+\c@minnames=\count266
+\c@maxitems=\count267
+\c@minitems=\count268
+\c@citecounter=\count269
+\c@maxcitecounter=\count270
+\c@savedcitecounter=\count271
+\c@uniquelist=\count272
+\c@uniquename=\count273
+\c@refsection=\count274
+\c@refsegment=\count275
+\c@maxextratitle=\count276
+\c@maxextratitleyear=\count277
+\c@maxextraname=\count278
+\c@maxextradate=\count279
+\c@maxextraalpha=\count280
+\c@abbrvpenalty=\count281
+\c@highnamepenalty=\count282
+\c@lownamepenalty=\count283
+\c@maxparens=\count284
+\c@parenlevel=\count285
+\blx@tempcnta=\count286
+\blx@tempcntb=\count287
+\blx@tempcntc=\count288
+\blx@maxsection=\count289
+\blx@maxsegment@0=\count290
+\blx@notetype=\count291
+\blx@parenlevel@text=\count292
+\blx@parenlevel@foot=\count293
+\blx@sectionciteorder@0=\count294
+\blx@entrysetcounter=\count295
+\labelnumberwidth=\skip60
+\labelalphawidth=\skip61
+\biblabelsep=\skip62
+\bibitemsep=\skip63
+\bibnamesep=\skip64
+\bibinitsep=\skip65
+\bibparsep=\skip66
+\bibhang=\skip67
+\blx@bcfin=\read2
+\blx@bcfout=\write3
+\blx@langwohyphens=\language86
+\c@mincomprange=\count296
+\c@maxcomprange=\count297
+\c@mincompwidth=\count298
+Package biblatex Info: Trying to load biblatex default data model...
+Package biblatex Info: ... file 'blx-dm.def' found.
+(/usr/local/texlive/2020/texmf-dist/tex/latex/biblatex/blx-dm.def
+File: blx-dm.def 2019/12/01 v3.14 biblatex localization (PK/MW)
+)
+Package biblatex Info: Trying to load biblatex custom data model...
+Package biblatex Info: ... file 'biblatex-dm.cfg' not found.
+\c@afterword=\count299
+\c@savedafterword=\count300
+\c@annotator=\count301
+\c@savedannotator=\count302
+\c@author=\count303
+\c@savedauthor=\count304
+\c@bookauthor=\count305
+\c@savedbookauthor=\count306
+\c@commentator=\count307
+\c@savedcommentator=\count308
+\c@editor=\count309
+\c@savededitor=\count310
+\c@editora=\count311
+\c@savededitora=\count312
+\c@editorb=\count313
+\c@savededitorb=\count314
+\c@editorc=\count315
+\c@savededitorc=\count316
+\c@foreword=\count317
+\c@savedforeword=\count318
+\c@holder=\count319
+\c@savedholder=\count320
+\c@introduction=\count321
+\c@savedintroduction=\count322
+\c@namea=\count323
+\c@savednamea=\count324
+\c@nameb=\count325
+\c@savednameb=\count326
+\c@namec=\count327
+\c@savednamec=\count328
+\c@translator=\count329
+\c@savedtranslator=\count330
+\c@shortauthor=\count331
+\c@savedshortauthor=\count332
+\c@shorteditor=\count333
+\c@savedshorteditor=\count334
+\c@labelname=\count335
+\c@savedlabelname=\count336
+\c@institution=\count337
+\c@savedinstitution=\count338
+\c@lista=\count339
+\c@savedlista=\count340
+\c@listb=\count341
+\c@savedlistb=\count342
+\c@listc=\count343
+\c@savedlistc=\count344
+\c@listd=\count345
+\c@savedlistd=\count346
+\c@liste=\count347
+\c@savedliste=\count348
+\c@listf=\count349
+\c@savedlistf=\count350
+\c@location=\count351
+\c@savedlocation=\count352
+\c@organization=\count353
+\c@savedorganization=\count354
+\c@origlocation=\count355
+\c@savedoriglocation=\count356
+\c@origpublisher=\count357
+\c@savedorigpublisher=\count358
+\c@publisher=\count359
+\c@savedpublisher=\count360
+\c@language=\count361
+\c@savedlanguage=\count362
+\c@origlanguage=\count363
+\c@savedoriglanguage=\count364
+\c@pageref=\count365
+\c@savedpageref=\count366
+\shorthandwidth=\skip68
+\shortjournalwidth=\skip69
+\shortserieswidth=\skip70
+\shorttitlewidth=\skip71
+\shortauthorwidth=\skip72
+\shorteditorwidth=\skip73
+\locallabelnumberwidth=\skip74
+\locallabelalphawidth=\skip75
+\localshorthandwidth=\skip76
+\localshortjournalwidth=\skip77
+\localshortserieswidth=\skip78
+\localshorttitlewidth=\skip79
+\localshortauthorwidth=\skip80
+\localshorteditorwidth=\skip81
+Package biblatex Info: Trying to load compatibility code...
+Package biblatex Info: ... file 'blx-compat.def' found.
+(/usr/local/texlive/2020/texmf-dist/tex/latex/biblatex/blx-compat.def
+File: blx-compat.def 2019/12/01 v3.14 biblatex compatibility (PK/MW)
+)
+Package biblatex Info: Trying to load generic definitions...
+Package biblatex Info: ... file 'biblatex.def' found.
+(/usr/local/texlive/2020/texmf-dist/tex/latex/biblatex/biblatex.def
+File: biblatex.def 2019/12/01 v3.14 biblatex compatibility (PK/MW)
+\c@textcitecount=\count367
+\c@textcitetotal=\count368
+\c@textcitemaxnames=\count369
+\c@biburlbigbreakpenalty=\count370
+\c@biburlbreakpenalty=\count371
+\c@biburlnumpenalty=\count372
+\c@biburlucpenalty=\count373
+\c@biburllcpenalty=\count374
+\biburlbigskip=\muskip17
+\biburlnumskip=\muskip18
+\biburlucskip=\muskip19
+\biburllcskip=\muskip20
+\c@smartand=\count375
+)
+Package biblatex Info: Trying to load bibliography style 'numeric'...
+Package biblatex Info: ... file 'numeric.bbx' found.
+(/usr/local/texlive/2020/texmf-dist/tex/latex/biblatex/bbx/numeric.bbx
+File: numeric.bbx 2019/12/01 v3.14 biblatex bibliography style (PK/MW)
+Package biblatex Info: Trying to load bibliography style 'standard'...
+Package biblatex Info: ... file 'standard.bbx' found.
+(/usr/local/texlive/2020/texmf-dist/tex/latex/biblatex/bbx/standard.bbx
+File: standard.bbx 2019/12/01 v3.14 biblatex bibliography style (PK/MW)
+\c@bbx:relatedcount=\count376
+\c@bbx:relatedtotal=\count377
+))
+Package biblatex Info: Trying to load citation style 'numeric'...
+Package biblatex Info: ... file 'numeric.cbx' found.
+(/usr/local/texlive/2020/texmf-dist/tex/latex/biblatex/cbx/numeric.cbx
+File: numeric.cbx 2019/12/01 v3.14 biblatex citation style (PK/MW)
+Package biblatex Info: Redefining '\cite'.
+Package biblatex Info: Redefining '\parencite'.
+Package biblatex Info: Redefining '\footcite'.
+Package biblatex Info: Redefining '\footcitetext'.
+Package biblatex Info: Redefining '\smartcite'.
+Package biblatex Info: Redefining '\supercite'.
+Package biblatex Info: Redefining '\textcite'.
+Package biblatex Info: Redefining '\textcites'.
+Package biblatex Info: Redefining '\cites'.
+Package biblatex Info: Redefining '\parencites'.
+Package biblatex Info: Redefining '\smartcites'.
+)
+Package biblatex Info: Trying to load configuration file...
+Package biblatex Info: ... file 'biblatex.cfg' found.
+(/usr/local/texlive/2020/texmf-dist/tex/latex/biblatex/biblatex.cfg
+File: biblatex.cfg 
+))
+\@quotelevel=\count378
+\@quotereset=\count379
+(/usr/local/texlive/2020/texmf-dist/tex/latex/l3backend/l3backend-pdfmode.def
 File: l3backend-pdfmode.def 2020-03-12 L3 backend support: PDF mode
-\l__kernel_color_stack_int=\count187
+\l__kernel_color_stack_int=\count380
 \l__pdf_internal_box=\box46
 )
 (/Users/simongutwein/Documents/GitHub/Master_Thesis/Masterarbeit_Text/Masterarb
 eit.aux)
 \openout1 = `Masterarbeit.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 43.
-LaTeX Font Info:    ... okay on input line 43.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 43.
-LaTeX Font Info:    ... okay on input line 43.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 43.
-LaTeX Font Info:    ... okay on input line 43.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 43.
-LaTeX Font Info:    ... okay on input line 43.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 43.
-LaTeX Font Info:    ... okay on input line 43.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 43.
-LaTeX Font Info:    ... okay on input line 43.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 43.
-LaTeX Font Info:    ... okay on input line 43.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 46.
+LaTeX Font Info:    ... okay on input line 46.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 46.
+LaTeX Font Info:    ... okay on input line 46.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 46.
+LaTeX Font Info:    ... okay on input line 46.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 46.
+LaTeX Font Info:    ... okay on input line 46.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 46.
+LaTeX Font Info:    ... okay on input line 46.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 46.
+LaTeX Font Info:    ... okay on input line 46.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 46.
+LaTeX Font Info:    ... okay on input line 46.
 (/usr/local/texlive/2020/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count188
+\scratchcounter=\count381
 \scratchdimen=\dimen170
 \scratchbox=\box47
-\nofMPsegments=\count189
-\nofMParguments=\count190
+\nofMPsegments=\count382
+\nofMParguments=\count383
 \everyMPshowfont=\toks20
-\MPscratchCnt=\count191
+\MPscratchCnt=\count384
 \MPscratchDim=\dimen171
-\MPnumerator=\count192
-\makeMPintoPDFobject=\count193
+\MPnumerator=\count385
+\makeMPintoPDFobject=\count386
 \everyMPtoPDFconversion=\toks21
 ) (/usr/local/texlive/2020/texmf-dist/tex/latex/epstopdf-pkg/epstopdf-base.sty
 Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
@@ -209,15 +441,32 @@ e
 
 Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: End \AtBeginDocument code.
+Package biblatex Info: Trying to load language 'english'...
+Package biblatex Info: ... file 'english.lbx' found.
+(/usr/local/texlive/2020/texmf-dist/tex/latex/biblatex/lbx/english.lbx
+File: english.lbx 2019/12/01 v3.14 biblatex localization (PK/MW)
+)
+Package biblatex Info: Input encoding 'utf8' detected.
+Package biblatex Info: Automatic encoding selection.
+(biblatex)             Assuming data encoding 'utf8'.
+\openout3 = `Masterarbeit.bcf'.
+
+Package biblatex Info: Trying to load bibliographic data...
+Package biblatex Info: ... file 'Masterarbeit.bbl' found.
+
+(/Users/simongutwein/Documents/GitHub/Master_Thesis/Masterarbeit_Text/Masterarb
+eit.bbl)
+Package biblatex Info: Reference section=0 on input line 46.
+Package biblatex Info: Reference segment=0 on input line 46.
 <images/university.png, id=1, 354.57469pt x 156.585pt>
 File: images/university.png Graphic file (type png)
 <use images/university.png>
-Package pdftex.def Info: images/university.png  used on input line 45.
+Package pdftex.def Info: images/university.png  used on input line 48.
 (pdftex.def)             Requested size: 354.57382pt x 156.58461pt.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <14.4> on input line 45.
+(Font)              <14.4> on input line 48.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <7> on input line 45.
+(Font)              <7> on input line 48.
 [1
 
 {/usr/local/texlive/2020/texmf-var/fonts/map/pdftex/updmap/pdftex.map} </Users/
@@ -256,7 +505,7 @@ Package pdftex.def Info: images/x_cubed.jpg  used on input line 28.
 eit_Text/images/x_squared.png> </Users/simongutwein/Documents/GitHub/Master_The
 sis/Masterarbeit_Text/images/x_cubed.jpg>]
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <12> on input line 41.
+(Font)              <12> on input line 42.
 ) [3]
 Chapter 2.
 
@@ -272,24 +521,24 @@ Declaration.tex) [5
 ]
 (/Users/simongutwein/Documents/GitHub/Master_Thesis/Masterarbeit_Text/Masterarb
 eit.toc)
-\tf@toc=\write3
-\openout3 = `Masterarbeit.toc'.
+\tf@toc=\write4
+\openout4 = `Masterarbeit.toc'.
 
 [6
 
 ]
 (/Users/simongutwein/Documents/GitHub/Master_Thesis/Masterarbeit_Text/Masterarb
 eit.lof)
-\tf@lof=\write4
-\openout4 = `Masterarbeit.lof'.
+\tf@lof=\write5
+\openout5 = `Masterarbeit.lof'.
 
 [7
 
 ]
 (/Users/simongutwein/Documents/GitHub/Master_Thesis/Masterarbeit_Text/Masterarb
 eit.lot)
-\tf@lot=\write5
-\openout5 = `Masterarbeit.lot'.
+\tf@lot=\write6
+\openout6 = `Masterarbeit.lot'.
 
 [8
 
@@ -323,34 +572,43 @@ Chapter 8.
 (/Users/simongutwein/Documents/GitHub/Master_Thesis/Masterarbeit_Text/Chapters/
 Conclusion.tex) [13
 
+] [14
+
 ]
 Appendix A.
 
 (/Users/simongutwein/Documents/GitHub/Master_Thesis/Masterarbeit_Text/Chapters/
-Appendix.tex) [14
+Appendix.tex) [15
 
 ]
 (/Users/simongutwein/Documents/GitHub/Master_Thesis/Masterarbeit_Text/Masterarb
-eit.aux) ) 
+eit.aux)
+Package logreq Info: Writing requests to 'Masterarbeit.run.xml'.
+\openout1 = `Masterarbeit.run.xml'.
+
+ ) 
 Here is how much of TeX's memory you used:
- 3446 strings out of 480608
- 56177 string characters out of 5903630
- 301663 words of memory out of 5000000
- 19298 multiletter control sequences out of 15000+600000
- 538123 words of font info for 43 fonts, out of 8000000 for 9000
+ 10809 strings out of 480608
+ 197843 string characters out of 5903630
+ 823876 words of memory out of 5000000
+ 26583 multiletter control sequences out of 15000+600000
+ 538940 words of font info for 46 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 41i,10n,45p,2279b,503s stack positions out of 5000i,500n,10000p,200000b,80000s
-</usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cm
-bx12.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmm
-i10.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmr1
-0.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.
-pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pf
-b></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb>
+ 41i,10n,45p,2347b,1229s stack positions out of 5000i,500n,10000p,200000b,80000s
+</usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb
+></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmcsc10.pfb
+></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb>
+</usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></
+usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></us
+r/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/
+local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/loc
+al/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb></usr/loca
+l/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt12.pfb>
 Output written on /Users/simongutwein/Documents/GitHub/Master_Thesis/Masterarbe
-it_Text/Masterarbeit.pdf (15 pages, 565672 bytes).
+it_Text/Masterarbeit.pdf (16 pages, 595246 bytes).
 PDF statistics:
- 84 PDF objects out of 1000 (max. 8388607)
- 54 compressed objects within 1 object stream
+ 99 PDF objects out of 1000 (max. 8388607)
+ 65 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  21 words of extra memory for PDF output out of 10000 (max. 10000000)
 
