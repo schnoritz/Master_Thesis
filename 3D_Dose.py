@@ -1,6 +1,8 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
+#File to read in .3ddose file and plot cross-, inplane and TDV
+
 def dose_distribution_3D(filename):
 
 	file = open(filename)
