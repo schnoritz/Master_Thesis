@@ -2,7 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.patches as ptc
 
-file = open("/Users/simongutwein/Documents/GitHub/Master_Thesis/Data/MR-Linac_model.egsinp")
+file = open("/Users/simongutwein/Documents/GitHub/Master_Thesis/Data/MR-Linac_model_2X2.egsinp")
 
 i=0
 
@@ -33,6 +33,7 @@ JAW_dat = np.array(JAW_dat.replace(',', '').split())
 JAW_dat = JAW_dat.astype(float)
 JAW = [JAW_dat[0]]
 JAW.append(JAW_dat[1])
+JAW = np.array(JAW)
 
 ax = plt.barh(range(len(left_MLC)),left_offset,left=left_MLC)
 plt.barh(range(len(left_MLC)),right_offset,left=right_MLC)
@@ -41,4 +42,5 @@ plt.barh(range(len(left_MLC)),right_offset,left=right_MLC)
 ax = plt.gca()
 ax.add_patch(ptc.Rectangle((-5.4,-0.4),10.8,39.9+JAW[0],facecolor="r",alpha=0.5))
 ax.add_patch(ptc.Rectangle((-5.4,39.5+JAW[1]),10.8,39.9-JAW[1]+0.4, facecolor="r",alpha=0.5))
+fig = plt.gcf()
 plt.show()
