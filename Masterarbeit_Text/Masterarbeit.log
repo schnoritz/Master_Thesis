@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020) (preloaded format=pdflatex 2021.2.17)  18 FEB 2021 19:54
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020) (preloaded format=pdflatex 2021.2.17)  19 FEB 2021 10:35
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -505,7 +505,7 @@ Package pdftex.def Info: images/x_cubed.jpg  used on input line 28.
 eit_Text/images/x_squared.png> </Users/simongutwein/Documents/GitHub/Master_The
 sis/Masterarbeit_Text/images/x_cubed.jpg>]
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <12> on input line 42.
+(Font)              <12> on input line 41.
 ) [3]
 Chapter 2.
 
@@ -588,10 +588,10 @@ Package logreq Info: Writing requests to 'Masterarbeit.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 10809 strings out of 480608
- 197843 string characters out of 5903630
- 823876 words of memory out of 5000000
- 26583 multiletter control sequences out of 15000+600000
+ 10806 strings out of 480608
+ 197815 string characters out of 5903630
+ 823866 words of memory out of 5000000
+ 26580 multiletter control sequences out of 15000+600000
  538940 words of font info for 46 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  41i,10n,45p,2347b,1229s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -605,7 +605,7 @@ local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/loc
 al/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb></usr/loca
 l/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt12.pfb>
 Output written on /Users/simongutwein/Documents/GitHub/Master_Thesis/Masterarbe
-it_Text/Masterarbeit.pdf (16 pages, 595246 bytes).
+it_Text/Masterarbeit.pdf (16 pages, 595110 bytes).
 PDF statistics:
  99 PDF objects out of 1000 (max. 8388607)
  65 compressed objects within 1 object stream
