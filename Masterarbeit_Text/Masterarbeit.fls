@@ -42,6 +42,8 @@ INPUT /usr/local/texlive/2020/texmf-dist/tex/latex/caption/subcaption.sty
 INPUT /usr/local/texlive/2020/texmf-dist/tex/latex/caption/subcaption.sty
 INPUT /usr/local/texlive/2020/texmf-dist/tex/latex/titlesec/titlesec.sty
 INPUT /usr/local/texlive/2020/texmf-dist/tex/latex/titlesec/titlesec.sty
+INPUT /usr/local/texlive/2020/texmf-dist/tex/latex/titling/titling.sty
+INPUT /usr/local/texlive/2020/texmf-dist/tex/latex/titling/titling.sty
 INPUT /usr/local/texlive/2020/texmf-dist/tex/latex/biblatex/biblatex.sty
 INPUT /usr/local/texlive/2020/texmf-dist/tex/latex/biblatex/biblatex.sty
 INPUT /usr/local/texlive/2020/texmf-dist/tex/latex/pdftexcmds/pdftexcmds.sty
@@ -96,12 +98,16 @@ INPUT /Users/simongutwein/Documents/GitHub/Master_Thesis/Masterarbeit_Text/Maste
 INPUT /Users/simongutwein/Documents/GitHub/Master_Thesis/Masterarbeit_Text/Masterarbeit.bbl
 INPUT /Users/simongutwein/Documents/GitHub/Master_Thesis/Masterarbeit_Text/Masterarbeit.bbl
 INPUT /usr/local/texlive/2020/texmf-dist/fonts/tfm/public/cm/cmr17.tfm
-INPUT /Users/simongutwein/Documents/GitHub/Master_Thesis/Masterarbeit_Text/images/university.png
-INPUT /Users/simongutwein/Documents/GitHub/Master_Thesis/Masterarbeit_Text/images/university.png
+INPUT /Users/simongutwein/Documents/GitHub/Master_Thesis/Masterarbeit_Text/images/logo4.jpg
+INPUT /Users/simongutwein/Documents/GitHub/Master_Thesis/Masterarbeit_Text/images/logo4.jpg
 OUTPUT /Users/simongutwein/Documents/GitHub/Master_Thesis/Masterarbeit_Text/Masterarbeit.pdf
-INPUT /Users/simongutwein/Documents/GitHub/Master_Thesis/Masterarbeit_Text/images/university.png
+INPUT /Users/simongutwein/Documents/GitHub/Master_Thesis/Masterarbeit_Text/images/logo4.jpg
+INPUT /Users/simongutwein/Documents/GitHub/Master_Thesis/Masterarbeit_Text/images/logo3.jpg
+INPUT /Users/simongutwein/Documents/GitHub/Master_Thesis/Masterarbeit_Text/images/logo3.jpg
+INPUT /Users/simongutwein/Documents/GitHub/Master_Thesis/Masterarbeit_Text/images/logo3.jpg
+INPUT /usr/local/texlive/2020/texmf-dist/fonts/tfm/public/cm/cmr17.tfm
 INPUT /usr/local/texlive/2020/texmf-dist/fonts/tfm/public/cm/cmbx12.tfm
-INPUT /usr/local/texlive/2020/texmf-dist/fonts/tfm/public/cm/cmbx12.tfm
+INPUT /usr/local/texlive/2020/texmf-dist/fonts/tfm/public/cm/cmr17.tfm
 INPUT /usr/local/texlive/2020/texmf-dist/fonts/tfm/public/cm/cmr12.tfm
 INPUT /usr/local/texlive/2020/texmf-dist/fonts/tfm/public/cm/cmmi12.tfm
 INPUT /usr/local/texlive/2020/texmf-dist/fonts/tfm/public/cm/cmsy10.tfm
@@ -166,6 +172,7 @@ INPUT /usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmcsc10.
 INPUT /usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb
 INPUT /usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb
 INPUT /usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb
+INPUT /usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb
 INPUT /usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb
 INPUT /usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb
 INPUT /usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt12.pfb
