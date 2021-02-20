@@ -1,3 +1,5 @@
+#Quelle. https://mateuszbuda.github.io/2017/12/01/brainseg.html
+
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.patches as ptc
