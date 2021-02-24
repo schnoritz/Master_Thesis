@@ -4,7 +4,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.patches as ptc
 
-file = open("/Users/simongutwein/Documents/GitHub/Master_Thesis/Data/MR-Linac_model_2X2.egsinp")
+file = open("/Users/simongutwein/Documents/GitHub/Master_Thesis/Data/MR-Linac_model_22X22.egsinp")
 
 i=0
 
