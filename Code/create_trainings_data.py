@@ -123,21 +123,40 @@ def calculate_MLC_positions(fieldsize, offset):
 	return MLC, JAWS
 
 class training_data():
-	def __init__(self, fieldsize, translation):
-		self.fieldsize = fieldsize
-		self.translation = translation
+	def __init__(self):
+		self.fieldsize, self.translation = self.createFieldParameters()
+		self.MLC_iso = self.calculateMLC()
+		self.JAW_iso = self.calculateJAW()
+
+	def calculateMLC(self):
+		pass
+
+	def calculateJAW(self):
+		pass
+
+	def createFieldParameters(self):
+		fieldsize = ([random.randint(2,57), random.randint(2,22)])
+		max_x_translation = 28.5-fieldsize[0]/2
+		max_y_translation = 11-fieldsize[1]/2
+		offset = [random.randint(-np.floor(max_x_translation), np.floor(max_x_translation)), random.randint(-np.floor(max_y_translation), np.floor(max_y_translation))]
+
+		return fieldsize, offset
+
 
 """############################################################################################################################################################
 																PROGRAMM START
 ############################################################################################################################################################"""			
 
-batch_size = 10000
+#dat = training_data()
+
+batch_size = 100
 
 plot = False
 
 shapes = []
 MLCs = []
-for i in range(batch_size):
+JAWs = []
+while len(MLCs) < batch_size:
 
 	fieldsize = ([random.randint(2,57), random.randint(2,22)])
 	max_x_translation = 28.5-fieldsize[0]/2
@@ -148,12 +167,13 @@ for i in range(batch_size):
 		continue
 
 	shapes.append((fieldsize, offset))
-	MLC, JAWS = calculate_MLC_positions(fieldsize, offset)
+	MLC, JAW = calculate_MLC_positions(fieldsize, offset)
 
 	MLCs.append(MLC)
+	JAWs.append(JAW)
 
-print(shapes)
-print(np.array(MLCs).shape)
+#print(shapes)
+print(len(shapes), np.array(MLCs).shape, np.array(JAWs).shape)
 
 #size_parameters, translation_parameters = (54, 14), (0,0) #define size parameters
 size_parameters, translation_parameters = None, None
