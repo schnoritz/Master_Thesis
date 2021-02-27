@@ -32,6 +32,8 @@ def plot_dose_distribution(dose_3D,x ,y ,z):
 	plt.subplot(3, 1, 3)
 	plt.plot(y[:-1],CP)
 	plt.show()
+
+	return
 	
 filename = "/Users/simongutwein/Documents/GitHub/Master_Thesis/Data/water_phantom_2X2.3ddose"
 
