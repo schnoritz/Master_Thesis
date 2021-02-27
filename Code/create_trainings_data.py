@@ -34,11 +34,13 @@ also hier leaf gesamt mit central leaf sind es 12 Leafes, also leafes 39 bis 45 
 """
 
 """
+
 To-Do:
--batchweise erzeugung und speicherung
--testen ob dimensions und translationskombination schon vorgekommen ist. 
--klären wie es aussieht mit den restlichen leaves sind die wichtig oder nicht
--problem beheben bei central leafes wenn beide gleich sind
+[ ] batchweise erzeugung und speicherung
+[✔] testen ob dimensions und translationskombination schon vorgekommen ist. 
+[ ] klären wie es aussieht mit den restlichen leaves sind die wichtig oder nicht
+[ ] neue MLC positionen in template .egsnip file einspeichern
+[ ] klasse für trainingsdata fertigstellen
 
 """
 from imports import *
@@ -55,12 +57,12 @@ def create_field_parameters(size=None, translation=None):
 	else:
 		fieldsize = np.array([size[0], size[1]])
 
-	print("FIELDSIZE:", fieldsize)
+	#print("FIELDSIZE:", fieldsize)
 
 	if translation is None:
 		max_x_translation = 28.5-fieldsize[0]/2
 		max_y_translation = 11-fieldsize[1]/2
-		print("MAXMIMUM OFFSET VALUES:", max_x_translation, max_y_translation)
+		#print("MAXMIMUM OFFSET VALUES:", max_x_translation, max_y_translation)
 		#accounting for boundary conditions that field translation can't be so that field lies outside of maximum field
 		#offset = [random.uniform(-max_x_translation, max_x_translation), random.uniform(-max_y_translation, max_y_translation)]
 		offset = [random.randint(-np.floor(max_x_translation), np.floor(max_x_translation)), random.randint(-np.floor(max_y_translation), np.floor(max_y_translation))]
@@ -74,7 +76,7 @@ def calculate_MLC_positions(fieldsize, offset):
 	MLC = np.zeros((2,80))
 	dx, dy = offset[0], offset[1]
 	central_leafes = [np.floor(dx/0.715).astype(int) + 40, np.floor(dx/0.715).astype(int) + 41]
-	print("CENTRAL_LEAFES:", central_leafes)
+	#print("CENTRAL_LEAFES:", central_leafes)
 
 	#anzahl der leafes die noch hinzugefügt werden sollen, in dem Fall hier 4 Leafes mehr als benötigt werden.
 	count_leafes = np.ceil(fieldsize[0]/0.715).astype(int)+2
@@ -82,7 +84,7 @@ def calculate_MLC_positions(fieldsize, offset):
 	#Leaf anzahl immer gerade machen
 	if count_leafes%2 != 0:
 		count_leafes += 1
-	print("COUT_LEAFES:", count_leafes)
+	#print("COUT_LEAFES:", count_leafes)
 
 	MLC[0,:] += dy - 0.2 #Spalt in der Mitte erzeugen, 0,2mm breite
 	MLC[1,:] += dy + 0.2
@@ -120,25 +122,52 @@ def calculate_MLC_positions(fieldsize, offset):
 
 	return MLC, JAWS
 
+class training_data():
+	def __init__(self, fieldsize, translation):
+		self.fieldsize = fieldsize
+		self.translation = translation
 
 """############################################################################################################################################################
 																PROGRAMM START
 ############################################################################################################################################################"""			
 
-batch_size = 100
+batch_size = 10000
 
+plot = False
+
+shapes = []
+MLCs = []
 for i in range(batch_size):
-	pass
+
+	fieldsize = ([random.randint(2,57), random.randint(2,22)])
+	max_x_translation = 28.5-fieldsize[0]/2
+	max_y_translation = 11-fieldsize[1]/2
+	offset = [random.randint(-np.floor(max_x_translation), np.floor(max_x_translation)), random.randint(-np.floor(max_y_translation), np.floor(max_y_translation))]
+
+	if (fieldsize, offset) in shapes: 
+		continue
+
+	shapes.append((fieldsize, offset))
+	MLC, JAWS = calculate_MLC_positions(fieldsize, offset)
+
+	MLCs.append(MLC)
+
+print(shapes)
+print(np.array(MLCs).shape)
 
 #size_parameters, translation_parameters = (54, 14), (0,0) #define size parameters
 size_parameters, translation_parameters = None, None
 size, position = create_field_parameters(size=size_parameters, translation=translation_parameters)
-print("FIELDSIZE:", size, "TRANSLATIONAL POSITION:", position)
+#print("FIELDSIZE:", size, "TRANSLATIONAL POSITION:", position)
 
 #MLC und JAW berechnen
 MLC, JAWS = calculate_MLC_positions(size, position)
 
-print("MLCs:", MLC, "\nJAWs:" JAWS)
+#print("MLCs:", MLC, "\nJAWs:", JAWS)
 
-plot_MLC_field(MLC*10, JAWS)
+if plot == True:
+	plot_MLC_field(MLC*10, JAWS)
 
+new_MLC = calcNewMLC(MLC)
+new_JAW = calcNewJAW(JAWS)
+#print(new_MLC, new_JAW)
