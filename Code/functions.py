@@ -1,6 +1,4 @@
-import numpy as np
-import matplotlib.pyplot as plt
-import matplotlib.patches as ptc
+from imports import *
 
 def plot_MLC_field(MLC_dat, JAWS_dat):
 

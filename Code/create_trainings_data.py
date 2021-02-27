@@ -33,11 +33,15 @@ also hier leaf gesamt mit central leaf sind es 12 Leafes, also leafes 39 bis 45 
 
 """
 
-import numpy as np
-import random
-import matplotlib.pyplot as plt
-import matplotlib.patches as ptc
-from functions import *
+"""
+To-Do:
+-batchweise erzeugung und speicherung
+-testen ob dimensions und translationskombination schon vorgekommen ist. 
+-klären wie es aussieht mit den restlichen leaves sind die wichtig oder nicht
+-problem beheben bei central leafes wenn beide gleich sind
+
+"""
+from imports import *
 
 
 def create_field_parameters(size=None, translation=None):
@@ -49,12 +53,17 @@ def create_field_parameters(size=None, translation=None):
 		fieldsize = np.array([random.randint(2,57), random.randint(2,22)])
 
 	else:
-		fieldsize = np.array([size[0], size[0]])
+		fieldsize = np.array([size[0], size[1]])
 
+	print("FIELDSIZE:", fieldsize)
 
 	if translation is None:
+		max_x_translation = 28.5-fieldsize[0]/2
+		max_y_translation = 11-fieldsize[1]/2
+		print("MAXMIMUM OFFSET VALUES:", max_x_translation, max_y_translation)
 		#accounting for boundary conditions that field translation can't be so that field lies outside of maximum field
-		offset = [random.randint(-27+np.ceil(fieldsize[0]/2), 27-np.ceil(fieldsize[0]/2)), random.randint(-11+np.ceil(fieldsize[1]/2), 11-np.ceil(fieldsize[1]/2))]
+		#offset = [random.uniform(-max_x_translation, max_x_translation), random.uniform(-max_y_translation, max_y_translation)]
+		offset = [random.randint(-np.floor(max_x_translation), np.floor(max_x_translation)), random.randint(-np.floor(max_y_translation), np.floor(max_y_translation))]
 	else:
 		offset = [translation[0],translation[1]]
 
@@ -62,13 +71,10 @@ def create_field_parameters(size=None, translation=None):
 
 def calculate_MLC_positions(fieldsize, offset):
 	
-	#braucht noch funktionalität an den rändern, und hat weirdes problem wenn feld in der Mitte oder so dass mittlerer Bin tiefer
-
 	MLC = np.zeros((2,80))
-	#print(fieldsize, offset)
 	dx, dy = offset[0], offset[1]
-	central_leafes = [np.floor(dx/0.715).astype(int) + 40, np.ceil(dx/0.715).astype(int) + 40] #hier noch testen ob central leaves beide die selbe zahl haben
-	#print(central_leafes)
+	central_leafes = [np.floor(dx/0.715).astype(int) + 40, np.floor(dx/0.715).astype(int) + 41]
+	print("CENTRAL_LEAFES:", central_leafes)
 
 	#anzahl der leafes die noch hinzugefügt werden sollen, in dem Fall hier 4 Leafes mehr als benötigt werden.
 	count_leafes = np.ceil(fieldsize[0]/0.715).astype(int)+2
@@ -76,28 +82,63 @@ def calculate_MLC_positions(fieldsize, offset):
 	#Leaf anzahl immer gerade machen
 	if count_leafes%2 != 0:
 		count_leafes += 1
-	#print(count_leafes)
+	print("COUT_LEAFES:", count_leafes)
 
 	MLC[0,:] += dy - 0.2 #Spalt in der Mitte erzeugen, 0,2mm breite
 	MLC[1,:] += dy + 0.2
-	MLC[0,int(central_leafes[0]-count_leafes/2)-1:central_leafes[0]] -= fieldsize[1]/2 #MLC positionen in array speichern 
-	MLC[0,central_leafes[1]-1:int(central_leafes[1]+count_leafes/2)] -= fieldsize[1]/2 #MLC ist dabei ein 2x80 Array mit MLC[0] = untete Leafes
-	MLC[1,int(central_leafes[0]-count_leafes/2)-1:central_leafes[0]] += fieldsize[1]/2 #und MLC[1] = obere Leafes
-	MLC[1,central_leafes[1]-1:int(central_leafes[1]+count_leafes/2)] += fieldsize[1]/2
+
+	if int(central_leafes[0]-count_leafes/2)-1 < 0 and int(central_leafes[1]+count_leafes/2) < 80:
+
+		MLC[0,0:central_leafes[0]] -= fieldsize[1]/2
+		MLC[1,0:central_leafes[0]] += fieldsize[1]/2
+		MLC[0,central_leafes[1]-1:int(central_leafes[1]+count_leafes/2)] -= fieldsize[1]/2
+		MLC[1,central_leafes[1]-1:int(central_leafes[1]+count_leafes/2)] += fieldsize[1]/2
+	
+	elif int(central_leafes[1]+count_leafes/2) >= 80 and int(central_leafes[0]-count_leafes/2)-1 > 0:
+		
+		MLC[0,int(central_leafes[0]-count_leafes/2)-1:central_leafes[0]] -= fieldsize[1]/2
+		MLC[1,int(central_leafes[0]-count_leafes/2)-1:central_leafes[0]] += fieldsize[1]/2
+		MLC[0,central_leafes[1]-1:80] -= fieldsize[1]/2
+		MLC[1,central_leafes[1]-1:80] += fieldsize[1]/2
+	
+	elif int(central_leafes[1]+count_leafes/2) >= 80 and int(central_leafes[0]-count_leafes/2)-1 < 0:
+
+		MLC[0,0:central_leafes[0]] -= fieldsize[1]/2
+		MLC[1,0:central_leafes[0]] += fieldsize[1]/2
+		MLC[0,central_leafes[1]-1:80] -= fieldsize[1]/2
+		MLC[1,central_leafes[1]-1:80] += fieldsize[1]/2
+
+	else:
+
+		MLC[0,int(central_leafes[0]-count_leafes/2)-1:central_leafes[0]] -= fieldsize[1]/2
+		MLC[1,int(central_leafes[0]-count_leafes/2)-1:central_leafes[0]] += fieldsize[1]/2
+		MLC[0,central_leafes[1]-1:int(central_leafes[1]+count_leafes/2)] -= fieldsize[1]/2
+		MLC[1,central_leafes[1]-1:int(central_leafes[1]+count_leafes/2)] += fieldsize[1]/2
 
 	#JAW positionen berechnen
 	JAWS = np.array([dx-fieldsize[0]/2, dx+fieldsize[0]/2])*10.0
 
 	return MLC, JAWS
 
-# size_parameters, translation_parameters = (10, 10), (0,0) #define size parameters
+
+"""############################################################################################################################################################
+																PROGRAMM START
+############################################################################################################################################################"""			
+
+batch_size = 100
+
+for i in range(batch_size):
+	pass
+
+#size_parameters, translation_parameters = (54, 14), (0,0) #define size parameters
 size_parameters, translation_parameters = None, None
-size, position = create_field_parameters(size=size_parameters)
+size, position = create_field_parameters(size=size_parameters, translation=translation_parameters)
+print("FIELDSIZE:", size, "TRANSLATIONAL POSITION:", position)
 
 #MLC und JAW berechnen
 MLC, JAWS = calculate_MLC_positions(size, position)
 
-#print(MLC, JAWS)
+print("MLCs:", MLC, "\nJAWs:" JAWS)
 
 plot_MLC_field(MLC*10, JAWS)
 
