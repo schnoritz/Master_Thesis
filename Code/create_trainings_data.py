@@ -37,7 +37,7 @@ import numpy as np
 import random
 import matplotlib.pyplot as plt
 import matplotlib.patches as ptc
-from test import *
+from functions import *
 
 
 def create_field_parameters(size=None, translation=None):
@@ -65,10 +65,10 @@ def calculate_MLC_positions(fieldsize, offset):
 	#braucht noch funktionalität an den rändern, und hat weirdes problem wenn feld in der Mitte oder so dass mittlerer Bin tiefer
 
 	MLC = np.zeros((2,80))
-	print(fieldsize, offset)
+	#print(fieldsize, offset)
 	dx, dy = offset[0], offset[1]
 	central_leafes = [np.floor(dx/0.715).astype(int) + 40, np.ceil(dx/0.715).astype(int) + 40] #hier noch testen ob central leaves beide die selbe zahl haben
-	print(central_leafes)
+	#print(central_leafes)
 
 	#anzahl der leafes die noch hinzugefügt werden sollen, in dem Fall hier 4 Leafes mehr als benötigt werden.
 	count_leafes = np.ceil(fieldsize[0]/0.715).astype(int)+2
@@ -76,7 +76,7 @@ def calculate_MLC_positions(fieldsize, offset):
 	#Leaf anzahl immer gerade machen
 	if count_leafes%2 != 0:
 		count_leafes += 1
-	print(count_leafes)
+	#print(count_leafes)
 
 	MLC[0,:] += dy - 0.2 #Spalt in der Mitte erzeugen, 0,2mm breite
 	MLC[1,:] += dy + 0.2
@@ -97,7 +97,7 @@ size, position = create_field_parameters(size=size_parameters)
 #MLC und JAW berechnen
 MLC, JAWS = calculate_MLC_positions(size, position)
 
-print(MLC, JAWS)
+#print(MLC, JAWS)
 
 plot_MLC_field(MLC*10, JAWS)
 
