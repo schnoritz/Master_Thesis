@@ -41,6 +41,7 @@ To-Do:
 [ ] klären wie es aussieht mit den restlichen leaves sind die wichtig oder nicht
 [ ] neue MLC positionen in template .egsnip file einspeichern
 [ ] klasse für trainingsdata fertigstellen
+[ ] möglichkeit bieten bei class auch ein festdefniniertes Feld zu erstellen
 
 """
 from imports import *
