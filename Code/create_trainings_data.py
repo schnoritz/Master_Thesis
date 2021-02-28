@@ -153,7 +153,7 @@ class trainingData():
 #dat = training_data((12,12),(0,0))
 dat = trainingData()
 #print(dat.translation, dat.fieldsize, dat.MLC_iso, dat.JAW_iso)
-batch_size = 30000
+batch_size = 1000
 
 plot = False
 
@@ -176,7 +176,7 @@ while len(MLCs) < batch_size:
 	MLCs.append(field.MLC_iso)
 	JAWs.append(field.JAW_iso)
 
-#print(shapes)
+print(shapes)
 print(len(shapes), np.array(MLCs).shape, np.array(JAWs).shape)
 
 #pprint.pprint(field.__dict__)
@@ -186,5 +186,4 @@ for i in shapes:
 	if i[0] == [10,10]:
 		occ.append(i)
 print(occ)
-
 
