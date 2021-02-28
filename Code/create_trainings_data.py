@@ -36,25 +36,25 @@ also hier leaf gesamt mit central leaf sind es 12 Leafes, also leafes 39 bis 45 
 """
 
 To-Do:
-[ ] batchweise erzeugung und speicherung
+[✔] batchweise erzeugung und speicherung
 [✔] testen ob dimensions und translationskombination schon vorgekommen ist. 
-[ ] klären wie es aussieht mit den restlichen leaves sind die wichtig oder nicht
-[ ] neue MLC positionen in template .egsnip file einspeichern
-[ ] klasse für trainingsdata fertigstellen
-[ ] möglichkeit bieten bei class auch ein festdefniniertes Feld zu erstellen
+[ ] klären wie es aussieht mit den restlichen leafes sind die wichtig oder nicht
+[ ] MLC positionen in template .egsnip file einspeichern
+[✔] klasse für trainingsdata fertigstellen
+[✔] möglichkeit bieten bei class auch ein festdefniniertes Feld zu erstellen
+[ ] evtl. Output erstellen damit ich sehen kann welche Felder wie fot vorgekommen sind
 
 """
 from imports import *
 
-class training_data():
+class trainingData():
 
 	def __init__(self, fieldsize=None, translation=None):
-		self.fieldsize, self.translation = self.createFieldParameters(fieldsize, translation)
-		self.MLC_iso = self.calculateMLC()
-		self.JAW_iso = self.calculateJAW()
-		self.egsinp = self.create_egsinp()
+		self.fieldsize, self.translation = self.create_field_parameters(fieldsize, translation)
+		self.MLC_iso = self.calculate_mlc()
+		self.JAW_iso = self.calculate_jaw()
 
-	def createFieldParameters(self, fieldsize=None, translation=None):
+	def create_field_parameters(self, fieldsize=None, translation=None):
 
 		if fieldsize is None:
 			fieldsize = ([random.randint(2,57), random.randint(2,22)])
@@ -71,7 +71,7 @@ class training_data():
 
 		return fieldsize, translation
 
-	def calculateMLC(self):
+	def calculate_mlc(self):
 
 		MLC = np.zeros((2,80))
 		dx, dy = self.translation[0], self.translation[1]
@@ -89,6 +89,7 @@ class training_data():
 		MLC[0,:] += dy - 0.2 #Spalt in der Mitte erzeugen, 0,2mm breite
 		MLC[1,:] += dy + 0.2
 
+
 		if int(central_leafes[0]-count_leafes/2)-1 < 0 and int(central_leafes[1]+count_leafes/2) < 80:
 
 			MLC[0,0:central_leafes[0]] -= self.fieldsize[1]/2
@@ -96,6 +97,7 @@ class training_data():
 			MLC[0,central_leafes[1]-1:int(central_leafes[1]+count_leafes/2)] -= self.fieldsize[1]/2
 			MLC[1,central_leafes[1]-1:int(central_leafes[1]+count_leafes/2)] += self.fieldsize[1]/2
 		
+
 		elif int(central_leafes[1]+count_leafes/2) >= 80 and int(central_leafes[0]-count_leafes/2)-1 > 0:
 			
 			MLC[0,int(central_leafes[0]-count_leafes/2)-1:central_leafes[0]] -= self.fieldsize[1]/2
@@ -103,12 +105,14 @@ class training_data():
 			MLC[0,central_leafes[1]-1:80] -= self.fieldsize[1]/2
 			MLC[1,central_leafes[1]-1:80] += self.fieldsize[1]/2
 		
+
 		elif int(central_leafes[1]+count_leafes/2) >= 80 and int(central_leafes[0]-count_leafes/2)-1 < 0:
 
 			MLC[0,0:central_leafes[0]] -= self.fieldsize[1]/2
 			MLC[1,0:central_leafes[0]] += self.fieldsize[1]/2
 			MLC[0,central_leafes[1]-1:80] -= self.fieldsize[1]/2
 			MLC[1,central_leafes[1]-1:80] += self.fieldsize[1]/2
+
 
 		else:
 
@@ -119,11 +123,11 @@ class training_data():
 
 		return MLC
 
-	def calculateJAW(self):
+	def calculate_jaw(self):
 
 		return np.array([self.translation[0]-self.fieldsize[0]/2, self.translation[0]+self.fieldsize[0]/2])*10.0
 
-	def plotMLC(self):
+	def plot_mlc(self):
 
 		MLC = self.MLC_iso
 		field = np.linspace(0,0.715*80,80)
@@ -140,33 +144,33 @@ class training_data():
 		plt.tight_layout()
 		plt.show()
 	
-		return		
-
-	def create_egsinp(self):
-		
-		pass
-
+		return
 
 """############################################################################################################################################################
 																PROGRAMM START
 ############################################################################################################################################################"""			
 
 #dat = training_data((12,12),(0,0))
-dat = training_data()
+dat = trainingData()
 #print(dat.translation, dat.fieldsize, dat.MLC_iso, dat.JAW_iso)
-batch_size = 1000
+batch_size = 30000
 
 plot = False
 
 shapes, MLCs, JAWs = [], [], []
 
+template, idx = read_template()
 
 while len(MLCs) < batch_size:
 
-	field = training_data()
+	field = trainingData()
 
 	if (field.fieldsize, field.translation) in shapes: 
 		continue
+
+	#print(template)
+	#field.plot_mlc()
+	field.egsinp_text = create_egsinp_text(field, template[:], idx)
 
 	shapes.append((field.fieldsize, field.translation))
 	MLCs.append(field.MLC_iso)
@@ -175,12 +179,12 @@ while len(MLCs) < batch_size:
 #print(shapes)
 print(len(shapes), np.array(MLCs).shape, np.array(JAWs).shape)
 
+#pprint.pprint(field.__dict__)
 
-
-# occ = [];
-# for i in shapes:
-# 	if i[0] == [10,10]:
-# 		occ.append(i)
-# print(occ)
+occ = [];
+for i in shapes:
+	if i[0] == [10,10]:
+		occ.append(i)
+print(occ)
 
 
