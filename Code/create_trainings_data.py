@@ -34,7 +34,6 @@ also hier leaf gesamt mit central leaf sind es 12 Leafes, also leafes 39 bis 45 
 """
 
 """
-
 To-Do:
 [✔] batchweise erzeugung und speicherung
 [✔] testen ob dimensions und translationskombination schon vorgekommen ist. 
@@ -44,13 +43,15 @@ To-Do:
 [✔] möglichkeit bieten bei class auch ein festdefniniertes Feld zu erstellen
 [ ] evtl. Output erstellen damit ich sehen kann welche Felder wie fot vorgekommen sind
 [✔] Leaves sind im Fled 0.2 zu weit ausgefahren
-
 """
 from imports import *
 
 class trainingData():
 
 	def __init__(self, fieldsize=None, translation=None):
+		self.max_fieldsize = [57, 22]
+		self.num_leafes = 80
+		self.leaf_width = 0.715
 		self.fieldsize, self.translation = self.create_field_parameters(fieldsize, translation)
 		self.MLC_iso = self.calculate_mlc()
 		self.JAW_iso = self.calculate_jaw()
@@ -58,13 +59,13 @@ class trainingData():
 	def create_field_parameters(self, fieldsize=None, translation=None):
 
 		if fieldsize is None:
-			fieldsize = ([random.randint(2,57), random.randint(2,22)])
+			fieldsize = ([random.randint(2,self.max_fieldsize[0]), random.randint(2,self.max_fieldsize[1])])
 
 		#print("FIELDSIZE:", fieldsize)
 
 		if translation is None:
-			max_x_translation = 28.5-fieldsize[0]/2
-			max_y_translation = 11-fieldsize[1]/2
+			max_x_translation = self.max_fieldsize[0]/2-fieldsize[0]/2
+			max_y_translation = self.max_fieldsize[1]/2-fieldsize[1]/2
 			#print("MAXMIMUM OFFSET VALUES:", max_x_translation, max_y_translation)
 			#accounting for boundary conditions that field translation can't be so that field lies outside of maximum field
 			#offset = [random.uniform(-max_x_translation, max_x_translation), random.uniform(-max_y_translation, max_y_translation)]
@@ -74,13 +75,13 @@ class trainingData():
 
 	def calculate_mlc(self):
 
-		MLC = np.zeros((2,80))
+		MLC = np.zeros((2,self.num_leafes))
 		dx, dy = self.translation[0], self.translation[1]
-		central_leafes = [np.floor(dx/0.715).astype(int) + 40, np.floor(dx/0.715).astype(int) + 41]
+		central_leafes = [np.floor(dx/self.leaf_width).astype(int) + int(self.num_leafes/2), np.floor(dx/self.leaf_width).astype(int) + int(self.num_leafes/2) + 1]
 		#print("CENTRAL_LEAFES:", central_leafes)
 
 		#anzahl der leafes die noch hinzugefügt werden sollen, in dem Fall hier 4 Leafes mehr als benötigt werden.
-		count_leafes = np.ceil(self.fieldsize[0]/0.715).astype(int)+2
+		count_leafes = np.ceil(self.fieldsize[0]/self.leaf_width).astype(int)+2
 		
 		#Leaf anzahl immer gerade machen
 		if count_leafes%2 != 0:
@@ -90,7 +91,7 @@ class trainingData():
 		MLC[0,:] += dy - 0.2 #Spalt in der Mitte erzeugen, 0,2mm breite
 		MLC[1,:] += dy + 0.2
 
-		if int(central_leafes[0]-count_leafes/2)-1 < 0 and int(central_leafes[1]+count_leafes/2) < 80:
+		if int(central_leafes[0]-count_leafes/2)-1 < 0 and int(central_leafes[1]+count_leafes/2) < self.num_leafes:
 
 			MLC[0,0:central_leafes[0]] -= self.fieldsize[1]/2-0.2
 			MLC[1,0:central_leafes[0]] += self.fieldsize[1]/2-0.2
@@ -98,20 +99,20 @@ class trainingData():
 			MLC[1,central_leafes[1]-1:int(central_leafes[1]+count_leafes/2)] += self.fieldsize[1]/2-0.2
 		
 
-		elif int(central_leafes[1]+count_leafes/2) >= 80 and int(central_leafes[0]-count_leafes/2)-1 > 0:
+		elif int(central_leafes[1]+count_leafes/2) >= self.num_leafes and int(central_leafes[0]-count_leafes/2)-1 > 0:
 			
 			MLC[0,int(central_leafes[0]-count_leafes/2)-1:central_leafes[0]] -= self.fieldsize[1]/2-0.2
 			MLC[1,int(central_leafes[0]-count_leafes/2)-1:central_leafes[0]] += self.fieldsize[1]/2-0.2
-			MLC[0,central_leafes[1]-1:80] -= self.fieldsize[1]/2-0.2
-			MLC[1,central_leafes[1]-1:80] += self.fieldsize[1]/2-0.2
+			MLC[0,central_leafes[1]-1:self.num_leafes] -= self.fieldsize[1]/2-0.2
+			MLC[1,central_leafes[1]-1:self.num_leafes] += self.fieldsize[1]/2-0.2
 		
 
-		elif int(central_leafes[1]+count_leafes/2) >= 80 and int(central_leafes[0]-count_leafes/2)-1 < 0:
+		elif int(central_leafes[1]+count_leafes/2) >= self.num_leafes and int(central_leafes[0]-count_leafes/2)-1 < 0:
 			
 			MLC[0,0:central_leafes[0]] -= self.fieldsize[1]/2-0.2
 			MLC[1,0:central_leafes[0]] += self.fieldsize[1]/2-0.2
-			MLC[0,central_leafes[1]-1:80] -= self.fieldsize[1]/2-0.2
-			MLC[1,central_leafes[1]-1:80] += self.fieldsize[1]/2-0.2
+			MLC[0,central_leafes[1]-1:self.num_leafes] -= self.fieldsize[1]/2-0.2
+			MLC[1,central_leafes[1]-1:self.num_leafes] += self.fieldsize[1]/2-0.2
 
 		else:
 
@@ -124,28 +125,28 @@ class trainingData():
 
 	def calculate_jaw(self):
 
-		return np.array([self.translation[0]-self.fieldsize[0]/2, self.translation[0]+self.fieldsize[0]/2])*10.0
+		return np.array([self.translation[0]-self.fieldsize[0]/2, self.translation[0]+self.fieldsize[0]/2])
 
 	def plot_mlc(self):
 
 		MLC = self.MLC_iso
-		field = np.linspace(-28.5,28.5,80)
+		field = np.linspace(-self.max_fieldsize[0]/2,self.max_fieldsize[0]/2,self.num_leafes)
 		plt.bar(field,MLC[1,:],color="w")
 		plt.bar(field,MLC[0,:],color="w")
-		plt.bar(field,15-MLC[1,:],width=0.55,bottom=MLC[1,:], color="chocolate")
-		plt.bar(field,-15-MLC[0,:],width=0.55,bottom=MLC[0,:], color="sandybrown")
+		plt.bar(field,15-MLC[1,:],width=0.6,bottom=MLC[1,:], color="chocolate")
+		plt.bar(field,-15-MLC[0,:],width=0.6,bottom=MLC[0,:], color="sandybrown")
 
 		ax = plt.gca()
-		ax.add_patch(ptc.Rectangle((-28.5,-15),57.2/2+self.JAW_iso[0]/10.0,30,facecolor="midnightblue",alpha=0.6))
-		ax.add_patch(ptc.Rectangle((self.JAW_iso[1]/10.0,-15),28.7-self.JAW_iso[1]/10.0,30,facecolor="midnightblue",alpha=0.6))
+		ax.add_patch(ptc.Rectangle((-self.max_fieldsize[0]/2,-15),self.max_fieldsize[0]/2+self.JAW_iso[0],30,facecolor="midnightblue",alpha=0.6))
+		ax.add_patch(ptc.Rectangle((self.JAW_iso[1],-15),self.max_fieldsize[0]/2-self.JAW_iso[1],30,facecolor="midnightblue",alpha=0.6))
 
-		plt.hlines([11, -11], xmin=-28.5, xmax=28.5, colors="black")
-		plt.vlines([-28.5, 28.5], ymin=-11, ymax=11, colors="black")
+		plt.hlines([self.max_fieldsize[1]/2, -self.max_fieldsize[1]/2], xmin=-self.max_fieldsize[0]/2, xmax=self.max_fieldsize[0]/2, colors="black")
+		plt.vlines([-self.max_fieldsize[0]/2, self.max_fieldsize[0]/2], ymin=-self.max_fieldsize[1]/2, ymax=self.max_fieldsize[1]/2, colors="black")
 
-		plt.text(-28.5, -17, f"Fieldsize: [{self.fieldsize[0]} X {self.fieldsize[1]}]")
-		plt.text(-28.5, -19, f"Offset: [{self.translation[0]} X {self.translation[1]}]")
-		#plt.annotate(text='', xy=(28.5+self.translation[0],self.translation[1]+self.fieldsize[1]/2), xytext=(28.5+self.translation[0], self.translation[1]-self.fieldsize[1]/2), arrowprops=dict(arrowstyle='<|-|>'))
-		#plt.annotate(text='', xy=(28.5+self.translation[0]-self.fieldsize[0]/2 ,self.translation[1]), xytext=(28.5+self.translation[0]+self.fieldsize[0]/2, self.translation[1]), arrowprops=dict(arrowstyle='<|-|>'))
+		plt.text(-self.max_fieldsize[0]/2, -17, f"Fieldsize: [{self.fieldsize[0]} X {self.fieldsize[1]}]")
+		plt.text(-self.max_fieldsize[0]/2, -19, f"Offset: [{self.translation[0]} X {self.translation[1]}]")
+		#plt.annotate(text='', xy=(self.max_fieldsize[0]/2+self.translation[0],self.translation[1]+self.fieldsize[1]/2), xytext=(self.max_fieldsize[0]/2+self.translation[0], self.translation[1]-self.fieldsize[1]/2), arrowprops=dict(arrowstyle='<|-|>'))
+		#plt.annotate(text='', xy=(self.max_fieldsize[0]/2+self.translation[0]-self.fieldsize[0]/2 ,self.translation[1]), xytext=(self.max_fieldsize[0]/2+self.translation[0]+self.fieldsize[0]/2, self.translation[1]), arrowprops=dict(arrowstyle='<|-|>'))
 		plt.plot(self.translation[0], self.translation[1], markersize=5, marker="x", color="black")
 
 		plt.yticks(np.arange(-14, 15, step=2))
@@ -195,6 +196,8 @@ print(len(shapes), np.array(MLCs).shape, np.array(JAWs).shape)
 # #print(occ)
 
 field = trainingData()
+field.egsinp_text = create_egsinp_text(field, template[:], idx)
 pprint.pprint(field.MLC_iso)
 pprint.pprint(field.JAW_iso)
+pprint.pprint(field.egsinp_text)
 field.plot_mlc()
