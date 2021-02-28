@@ -49,7 +49,7 @@ from imports import *
 class trainingData():
 
 	def __init__(self, fieldsize=None, translation=None):
-		self.max_fieldsize = [57, 22]
+		self.max_fieldsize = [57, 22] #[x_max, y_max]
 		self.num_leafes = 80
 		self.leaf_width = 0.715
 		self.fieldsize, self.translation = self.create_field_parameters(fieldsize, translation)
@@ -133,24 +133,24 @@ class trainingData():
 		field = np.linspace(-self.max_fieldsize[0]/2,self.max_fieldsize[0]/2,self.num_leafes)
 		plt.bar(field,MLC[1,:],color="w")
 		plt.bar(field,MLC[0,:],color="w")
-		plt.bar(field,15-MLC[1,:],width=0.6,bottom=MLC[1,:], color="chocolate")
-		plt.bar(field,-15-MLC[0,:],width=0.6,bottom=MLC[0,:], color="sandybrown")
+		plt.bar(field,self.max_fieldsize[1]/2+3-MLC[1,:],width=self.leaf_width-0.1,bottom=MLC[1,:], color="chocolate")
+		plt.bar(field,-self.max_fieldsize[1]/2-3-MLC[0,:],width=self.leaf_width-0.1,bottom=MLC[0,:], color="sandybrown")
 
 		ax = plt.gca()
-		ax.add_patch(ptc.Rectangle((-self.max_fieldsize[0]/2,-15),self.max_fieldsize[0]/2+self.JAW_iso[0],30,facecolor="midnightblue",alpha=0.6))
-		ax.add_patch(ptc.Rectangle((self.JAW_iso[1],-15),self.max_fieldsize[0]/2-self.JAW_iso[1],30,facecolor="midnightblue",alpha=0.6))
+		ax.add_patch(ptc.Rectangle((-self.max_fieldsize[0]/2,-self.max_fieldsize[1]/2-3),self.max_fieldsize[0]/2+self.JAW_iso[0], self.max_fieldsize[1]+6,facecolor="midnightblue",alpha=0.6))
+		ax.add_patch(ptc.Rectangle((self.JAW_iso[1],-self.max_fieldsize[1]/2-3),self.max_fieldsize[0]/2-self.JAW_iso[1], self.max_fieldsize[1]+6,facecolor="midnightblue",alpha=0.6))
 
 		plt.hlines([self.max_fieldsize[1]/2, -self.max_fieldsize[1]/2], xmin=-self.max_fieldsize[0]/2, xmax=self.max_fieldsize[0]/2, colors="black")
 		plt.vlines([-self.max_fieldsize[0]/2, self.max_fieldsize[0]/2], ymin=-self.max_fieldsize[1]/2, ymax=self.max_fieldsize[1]/2, colors="black")
 
-		plt.text(-self.max_fieldsize[0]/2, -17, f"Fieldsize: [{self.fieldsize[0]} X {self.fieldsize[1]}]")
-		plt.text(-self.max_fieldsize[0]/2, -19, f"Offset: [{self.translation[0]} X {self.translation[1]}]")
+		plt.text(-self.max_fieldsize[0]/2, -self.max_fieldsize[1]/2-5, f"Fieldsize: [{self.fieldsize[0]} X {self.fieldsize[1]}]")
+		plt.text(-self.max_fieldsize[0]/2, -self.max_fieldsize[1]/2-7, f"Offset: [{self.translation[0]} X {self.translation[1]}]")
 		#plt.annotate(text='', xy=(self.max_fieldsize[0]/2+self.translation[0],self.translation[1]+self.fieldsize[1]/2), xytext=(self.max_fieldsize[0]/2+self.translation[0], self.translation[1]-self.fieldsize[1]/2), arrowprops=dict(arrowstyle='<|-|>'))
 		#plt.annotate(text='', xy=(self.max_fieldsize[0]/2+self.translation[0]-self.fieldsize[0]/2 ,self.translation[1]), xytext=(self.max_fieldsize[0]/2+self.translation[0]+self.fieldsize[0]/2, self.translation[1]), arrowprops=dict(arrowstyle='<|-|>'))
 		plt.plot(self.translation[0], self.translation[1], markersize=5, marker="x", color="black")
 
-		plt.yticks(np.arange(-14, 15, step=2))
-		plt.xticks(np.arange(-30, 31, step=5))
+		plt.yticks(np.arange(-self.max_fieldsize[1]/2, self.max_fieldsize[1]/2+0.1, step=self.max_fieldsize[1]/10))
+		plt.xticks(np.arange(-self.max_fieldsize[0]/2, self.max_fieldsize[0]/2+0.1, step=self.max_fieldsize[0]/10))
 		plt.axis('equal')
 		plt.tight_layout()
 

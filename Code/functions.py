@@ -144,13 +144,13 @@ def create_egsinp_text(curr_field, template_text, idx):
 	JAW = curr_field.JAW_iso
 
 	JAW_text = [", ".join([f"{JAW[0]:.4f}",f"{JAW[1]:.4f}", "2"])]
-	MLC_text = [[f"{MLC[0,i]:.4f}",f"{MLC[1,i]:.4f}", "1"] for i in range(80)]
+	MLC_text = [[f"{MLC[0,i]:.4f}",f"{MLC[1,i]:.4f}", "1"] for i in range(curr_field.num_leafes)]
 	MLC_text = [", ".join(i) for i in MLC_text]
 
 	template_text.insert(idx[1], JAW_text[0])
 	template_text[idx[1]]
 	j = 0
-	for i in range(80):
+	for i in range(curr_field.num_leafes):
 		j += 1
 		template_text.insert(idx[0]+j, MLC_text[i])
 
