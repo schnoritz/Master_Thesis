@@ -43,6 +43,7 @@ To-Do:
 [✔] klasse für trainingsdata fertigstellen
 [✔] möglichkeit bieten bei class auch ein festdefniniertes Feld zu erstellen
 [ ] evtl. Output erstellen damit ich sehen kann welche Felder wie fot vorgekommen sind
+[✔] Leaves sind im Fled 0.2 zu weit ausgefahren
 
 """
 from imports import *
@@ -89,37 +90,35 @@ class trainingData():
 		MLC[0,:] += dy - 0.2 #Spalt in der Mitte erzeugen, 0,2mm breite
 		MLC[1,:] += dy + 0.2
 
-
 		if int(central_leafes[0]-count_leafes/2)-1 < 0 and int(central_leafes[1]+count_leafes/2) < 80:
 
-			MLC[0,0:central_leafes[0]] -= self.fieldsize[1]/2
-			MLC[1,0:central_leafes[0]] += self.fieldsize[1]/2
-			MLC[0,central_leafes[1]-1:int(central_leafes[1]+count_leafes/2)] -= self.fieldsize[1]/2
-			MLC[1,central_leafes[1]-1:int(central_leafes[1]+count_leafes/2)] += self.fieldsize[1]/2
+			MLC[0,0:central_leafes[0]] -= self.fieldsize[1]/2-0.2
+			MLC[1,0:central_leafes[0]] += self.fieldsize[1]/2-0.2
+			MLC[0,central_leafes[1]-1:int(central_leafes[1]+count_leafes/2)] -= self.fieldsize[1]/2-0.2
+			MLC[1,central_leafes[1]-1:int(central_leafes[1]+count_leafes/2)] += self.fieldsize[1]/2-0.2
 		
 
 		elif int(central_leafes[1]+count_leafes/2) >= 80 and int(central_leafes[0]-count_leafes/2)-1 > 0:
 			
-			MLC[0,int(central_leafes[0]-count_leafes/2)-1:central_leafes[0]] -= self.fieldsize[1]/2
-			MLC[1,int(central_leafes[0]-count_leafes/2)-1:central_leafes[0]] += self.fieldsize[1]/2
-			MLC[0,central_leafes[1]-1:80] -= self.fieldsize[1]/2
-			MLC[1,central_leafes[1]-1:80] += self.fieldsize[1]/2
+			MLC[0,int(central_leafes[0]-count_leafes/2)-1:central_leafes[0]] -= self.fieldsize[1]/2-0.2
+			MLC[1,int(central_leafes[0]-count_leafes/2)-1:central_leafes[0]] += self.fieldsize[1]/2-0.2
+			MLC[0,central_leafes[1]-1:80] -= self.fieldsize[1]/2-0.2
+			MLC[1,central_leafes[1]-1:80] += self.fieldsize[1]/2-0.2
 		
 
 		elif int(central_leafes[1]+count_leafes/2) >= 80 and int(central_leafes[0]-count_leafes/2)-1 < 0:
-
-			MLC[0,0:central_leafes[0]] -= self.fieldsize[1]/2
-			MLC[1,0:central_leafes[0]] += self.fieldsize[1]/2
-			MLC[0,central_leafes[1]-1:80] -= self.fieldsize[1]/2
-			MLC[1,central_leafes[1]-1:80] += self.fieldsize[1]/2
-
+			
+			MLC[0,0:central_leafes[0]] -= self.fieldsize[1]/2-0.2
+			MLC[1,0:central_leafes[0]] += self.fieldsize[1]/2-0.2
+			MLC[0,central_leafes[1]-1:80] -= self.fieldsize[1]/2-0.2
+			MLC[1,central_leafes[1]-1:80] += self.fieldsize[1]/2-0.2
 
 		else:
 
-			MLC[0,int(central_leafes[0]-count_leafes/2)-1:central_leafes[0]] -= self.fieldsize[1]/2
-			MLC[1,int(central_leafes[0]-count_leafes/2)-1:central_leafes[0]] += self.fieldsize[1]/2
-			MLC[0,central_leafes[1]-1:int(central_leafes[1]+count_leafes/2)] -= self.fieldsize[1]/2
-			MLC[1,central_leafes[1]-1:int(central_leafes[1]+count_leafes/2)] += self.fieldsize[1]/2
+			MLC[0,int(central_leafes[0]-count_leafes/2)-1:central_leafes[0]] -= self.fieldsize[1]/2-0.2
+			MLC[1,int(central_leafes[0]-count_leafes/2)-1:central_leafes[0]] += self.fieldsize[1]/2-0.2
+			MLC[0,central_leafes[1]-1:int(central_leafes[1]+count_leafes/2)] -= self.fieldsize[1]/2-0.2
+			MLC[1,central_leafes[1]-1:int(central_leafes[1]+count_leafes/2)] += self.fieldsize[1]/2-0.2
 
 		return MLC
 
@@ -133,15 +132,25 @@ class trainingData():
 		field = np.linspace(0,0.715*80,80)
 		plt.bar(field,MLC[1,:],color="w")
 		plt.bar(field,MLC[0,:],color="w")
-		plt.bar(field,15-MLC[1,:],width=0.6,bottom=MLC[1,:])
-		plt.bar(field,-15-MLC[0,:],width=0.6,bottom=MLC[0,:])
+		plt.bar(field,15-MLC[1,:],width=0.55,bottom=MLC[1,:], color="chocolate")
+		plt.bar(field,-15-MLC[0,:],width=0.55,bottom=MLC[0,:], color="sandybrown")
 
 		ax = plt.gca()
-		ax.add_patch(ptc.Rectangle((0,-15),57.2/2+self.JAW_iso[0]/10.0,30,facecolor="g",alpha=0.7))
-		ax.add_patch(ptc.Rectangle((57.2/2+self.JAW_iso[1]/10.0,-15),57.2/2-self.JAW_iso[1]/10.0,30,facecolor="g",alpha=0.7))
+		ax.add_patch(ptc.Rectangle((0,-15),57.2/2+self.JAW_iso[0]/10.0,30,facecolor="midnightblue",alpha=0.6))
+		ax.add_patch(ptc.Rectangle((57.2/2+self.JAW_iso[1]/10.0,-15),57.2/2-self.JAW_iso[1]/10.0,30,facecolor="midnightblue",alpha=0.6))
+
+		plt.hlines([11, -11], xmin=0, xmax=57, colors="black")
+		plt.vlines([0, 57], ymin=-11, ymax=11, colors="black")
+
+		plt.text(0, -17, f"Fieldsize: [{self.fieldsize[0]} X {self.fieldsize[1]}]")
+		plt.text(0, -19, f"Offset: [{self.translation[0]} X {self.translation[1]}]")
+		#plt.annotate(text='', xy=(28.5+self.translation[0],self.translation[1]+self.fieldsize[1]/2), xytext=(28.5+self.translation[0], self.translation[1]-self.fieldsize[1]/2), arrowprops=dict(arrowstyle='<|-|>'))
+		#plt.annotate(text='', xy=(28.5+self.translation[0]-self.fieldsize[0]/2 ,self.translation[1]), xytext=(28.5+self.translation[0]+self.fieldsize[0]/2, self.translation[1]), arrowprops=dict(arrowstyle='<|-|>'))
+		plt.plot(28.5+self.translation[0], self.translation[1], markersize=5, marker="x", color="black")
 
 		plt.axis('equal')
 		plt.tight_layout()
+
 		plt.show()
 	
 		return
@@ -150,10 +159,8 @@ class trainingData():
 																PROGRAMM START
 ############################################################################################################################################################"""			
 
-#dat = training_data((12,12),(0,0))
-dat = trainingData()
 #print(dat.translation, dat.fieldsize, dat.MLC_iso, dat.JAW_iso)
-batch_size = 1000
+batch_size = 10
 
 plot = False
 
@@ -179,11 +186,13 @@ while len(MLCs) < batch_size:
 #print(shapes)
 print(len(shapes), np.array(MLCs).shape, np.array(JAWs).shape)
 
-#pprint.pprint(field.__dict__)
+# occ = [];
+# for i in shapes:
+# 	if i[0] == [10,10]:
+# 		occ.append(i)
+# #print(occ)
 
-occ = [];
-for i in shapes:
-	if i[0] == [10,10]:
-		occ.append(i)
-print(occ)
-
+field = trainingData()
+pprint.pprint(field.MLC_iso)
+pprint.pprint(field.JAW_iso)
+field.plot_mlc()
