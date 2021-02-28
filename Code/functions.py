@@ -1,6 +1,6 @@
 from imports import *
 
-def plot_MLC_field(MLC_dat, JAWS_dat):
+def plot_mlc_field(MLC_dat, JAWS_dat):
 
 	MLC_dat = MLC_dat/10
 	field = np.linspace(0,0.715*80,80)
@@ -19,7 +19,7 @@ def plot_MLC_field(MLC_dat, JAWS_dat):
 
 	return
 
-def calcNewMLC(old_MLC, radius=41.5, ssd=143.5, cil=35.77-0.09):
+def calc_new_mlc(old_MLC, radius=41.5, ssd=143.5, cil=35.77-0.09):
 	
 	new_MLC = np.zeros((2,80))
 
@@ -38,7 +38,7 @@ def calcNewMLC(old_MLC, radius=41.5, ssd=143.5, cil=35.77-0.09):
 
 	return np.array(new_MLC)
 
-def calcNewJAW(old_JAWS, cil=44.35-0.09, radius=13.0, ssd=143.5):
+def calc_new_jaw(old_JAWS, cil=44.35-0.09, radius=13.0, ssd=143.5):
 
 	new_JAWS = np.zeros(2)
 
@@ -78,7 +78,7 @@ def create_field_parameters(size=None, translation=None):
 
 	return fieldsize, offset
 
-def calculate_MLC_positions(fieldsize, offset):
+def calculate_mlc_positions(fieldsize, offset):
 	
 	MLC = np.zeros((2,80))
 	dx, dy = offset[0], offset[1]
@@ -129,4 +129,42 @@ def calculate_MLC_positions(fieldsize, offset):
 
 	return MLC, JAWS
 
-	
+def read_template():
+
+	f = open("/Users/simongutwein/Documents/GitHub/Master_Thesis/Data/TEMPLATE.egsinp")
+	template_text = f.read()
+	template_text = template_text.split("\n")
+	idx = [i for i, x in enumerate(template_text) if x=="###HIER ERSETZEN###"]
+
+	return template_text, idx
+
+def create_egsinp_text(curr_field, template_text, idx):
+
+	MLC = curr_field.MLC_iso
+	JAW = curr_field.JAW_iso
+
+	JAW_text = [", ".join([f"{JAW[0]:.4f}",f"{JAW[1]:.4f}", "2"])]
+	MLC_text = [[f"{MLC[0,i]:.4f}",f"{MLC[1,i]:.4f}", "1"] for i in range(80)]
+	MLC_text = [", ".join(i) for i in MLC_text]
+
+	template_text.insert(idx[1], JAW_text[0])
+	template_text[idx[1]]
+	j = 0
+	for i in range(80):
+		j += 1
+		template_text.insert(idx[0]+j, MLC_text[i])
+
+	final_text = []
+	for line in template_text:
+		if line.strip("\n") !=  "###HIER ERSETZEN###":
+			final_text.append(line)
+
+	return final_text
+
+def create_file():
+	pass
+	# with open("/Users/simongutwein/Documents/GitHub/Master_Thesis/Data/NEW_TEMPLATE.egsinp", "w") as f:
+	# 	f.truncate(0)
+	# 	for line in template_text:
+	# 		if line.strip("\n") != "###HIER ERSETZEN###":
+	# 			f.write("%s\n" % line)
