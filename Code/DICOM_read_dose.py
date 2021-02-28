@@ -67,7 +67,6 @@ plan_path = "/Users/simongutwein/Downloads/Share_Simon/DICOMData/10X10/MRI_Phant
 plan = pydicom.read_file(plan_path,force=True)
 
 #print(plan)
-
 #Maximale Öffnungsposition ist -110, geschlossen ist -2
 # -> Angaben sind in mm -> -110 sind 11cm -> Bei beiden MLC bei -110 und +110 also Feldöffnunf von 220mm 
 # -> Also 22cm
