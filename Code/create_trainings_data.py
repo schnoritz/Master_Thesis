@@ -176,7 +176,7 @@ while len(MLCs) < batch_size:
 	MLCs.append(field.MLC_iso)
 	JAWs.append(field.JAW_iso)
 
-print(shapes)
+#print(shapes)
 print(len(shapes), np.array(MLCs).shape, np.array(JAWs).shape)
 
 #pprint.pprint(field.__dict__)
