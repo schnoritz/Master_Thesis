@@ -181,7 +181,7 @@ Multi Leaf Collimator
 -0.0089, LBROT
 0, ENDTYPE
 41.5, 35.77, LEAFRADIUS, CIL
-####HIER MLC DATEN####
+###HIER ERSETZEN###
 0.7, 0.01, 0, 0, 
 Air
 0.7, 0.01, 0, 0, 
@@ -195,7 +195,7 @@ Jaws
 2, 7.5, # LEAVES, TOTAL WIDTH
 -10000, ZFOCUS(1)
 13, 44.35, R0LEAF, Z0LEAF
-####HIER JAW DATEN####
+###HIER ERSETZEN###
 0.7, 0.01, 0, 0, 
 Air
 0.7, 0.01, 0, 0, 
