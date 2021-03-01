@@ -62,17 +62,22 @@ class trainingData():
 
 	def create_field_parameters(self, fieldsize=None, translation=None):
 
-		if fieldsize is None:
+		if fieldsize is None and translation is None:
 			fieldsize = ([random.randint(2,self.max_generated_fieldsize[0]), random.randint(2,self.max_generated_fieldsize[1])])
 
-		#print("FIELDSIZE:", fieldsize)
-
-		if translation is None:
 			max_x_translation = self.max_fieldsize[0]/2 - fieldsize[0]/2
 			max_y_translation = self.max_fieldsize[1]/2 - fieldsize[1]/2
 			#print("MAXMIMUM OFFSET VALUES:", max_x_translation, max_y_translation)
 			#accounting for boundary conditions that field translation can't be so that field lies outside of maximum field
 			#offset = [random.uniform(-max_x_translation, max_x_translation), random.uniform(-max_y_translation, max_y_translation)]
+			translation = [random.randint(-np.floor(max_x_translation), np.floor(max_x_translation)), random.randint(-np.floor(max_y_translation), np.floor(max_y_translation))]
+
+		if fieldsize is None and translation is not None:
+			fieldsize = ([random.randint(2,int(self.max_generated_fieldsize[0]/2)-translation[0]), random.randint(2,int(self.max_generated_fieldsize[1]/2)-translation[1])])
+
+		if fieldsize is not None and translation is None:
+			max_x_translation = self.max_fieldsize[0]/2 - fieldsize[0]/2
+			max_y_translation = self.max_fieldsize[1]/2 - fieldsize[1]/2
 			translation = [random.randint(-np.floor(max_x_translation), np.floor(max_x_translation)), random.randint(-np.floor(max_y_translation), np.floor(max_y_translation))]
 
 		return fieldsize, translation
@@ -202,7 +207,7 @@ class trainingData():
 ############################################################################################################################################################"""			
 
 #print(dat.translation, dat.fieldsize, dat.MLC_iso, dat.JAW_iso)
-batch_size = 1000
+batch_size = 1
 
 plot = False
 
@@ -212,7 +217,7 @@ template, idx = read_template()
 
 while len(MLCs) < batch_size:
 
-	field = trainingData()
+	field = trainingData((20,20))
 
 	if (field.fieldsize, field.translation) in shapes: 
 		continue
@@ -225,19 +230,17 @@ while len(MLCs) < batch_size:
 	MLCs.append(field.MLC_iso)
 	JAWs.append(field.JAW_iso)
 
-print(shapes)
-print(len(shapes), np.array(MLCs).shape, np.array(JAWs).shape)
+#print(shapes)
+#print(len(shapes), np.array(MLCs).shape, np.array(JAWs).shape)
 
-occ = [];
-for i in shapes:
-	if i[0] == [2,2]:
-		occ.append(i)
-print(occ)
+# occ = [];
+# for i in shapes:
+# 	if i[0] == [2,2]:
+# 		occ.append(i)
+# print(occ)
 
-# field = trainingData()
-# field.egsinp_text = create_egsinp_text(field, template[:], idx)
-# pprint.pprint(field.__dict__)
-# pprint.pprint(field.MLC_iso)
-# pprint.pprint(field.JAW_iso)
-# pprint.pprint(field.egsinp_text)
-# field.plot_mlc()
+field = trainingData()
+#field.egsinp_text = create_egsinp_text(field, template[:], idx)
+#pprint.pprint(field.__dict__)
+#field.plot_mlc()
+
