@@ -68,8 +68,8 @@ class trainingData():
 		#print("FIELDSIZE:", fieldsize)
 
 		if translation is None:
-			max_x_translation = self.max_generated_fieldsize[0]/2 - fieldsize[0]/2
-			max_y_translation = self.max_generated_fieldsize[1]/2 - fieldsize[1]/2
+			max_x_translation = self.max_fieldsize[0]/2 - fieldsize[0]/2
+			max_y_translation = self.max_fieldsize[1]/2 - fieldsize[1]/2
 			#print("MAXMIMUM OFFSET VALUES:", max_x_translation, max_y_translation)
 			#accounting for boundary conditions that field translation can't be so that field lies outside of maximum field
 			#offset = [random.uniform(-max_x_translation, max_x_translation), random.uniform(-max_y_translation, max_y_translation)]
@@ -202,7 +202,7 @@ class trainingData():
 ############################################################################################################################################################"""			
 
 #print(dat.translation, dat.fieldsize, dat.MLC_iso, dat.JAW_iso)
-batch_size = 10000
+batch_size = 1000
 
 plot = False
 
@@ -212,7 +212,7 @@ template, idx = read_template()
 
 while len(MLCs) < batch_size:
 
-	field = trainingData(max_generated_fieldsize=(22,22))
+	field = trainingData()
 
 	if (field.fieldsize, field.translation) in shapes: 
 		continue
@@ -230,7 +230,7 @@ print(len(shapes), np.array(MLCs).shape, np.array(JAWs).shape)
 
 occ = [];
 for i in shapes:
-	if i[0] == [10,10]:
+	if i[0] == [2,2]:
 		occ.append(i)
 print(occ)
 
