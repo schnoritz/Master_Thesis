@@ -20,7 +20,7 @@ class UNet(nn.Module):
 
         self.bottleneck = UNet._block(features * 8, features * 16, name="bottleneck")
 
-        self.upconv4 = nn.ConvTranspose2d(
+        self.upconv4 = nn.ConvTranspose2d( #upsampling https://pytorch.org/docs/stable/generated/torch.nn.ConvTranspose2d.html
             features * 16, features * 8, kernel_size=2, stride=2
         )
         self.decoder4 = UNet._block((features * 8) * 2, features * 8, name="dec4")
@@ -28,7 +28,7 @@ class UNet(nn.Module):
             features * 8, features * 4, kernel_size=2, stride=2
         )
         self.decoder3 = UNet._block((features * 4) * 2, features * 4, name="dec3")
-        self.upconv2 = nn.ConvTranspose2d(
+        self.upconv2 = nn.ConvTranspose2d( 
             features * 4, features * 2, kernel_size=2, stride=2
         )
         self.decoder2 = UNet._block((features * 2) * 2, features * 2, name="dec2")
