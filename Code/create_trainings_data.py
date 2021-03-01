@@ -49,11 +49,23 @@ from imports import *
 
 class trainingData():
 
-	def __init__(self, fieldsize=None, translation=None, max_generated_fieldsize=(57,22)):
-		self.max_fieldsize = [57, 22] #[x_max, y_max]
-		self.max_generated_fieldsize = max_generated_fieldsize
-		self.num_leafes = 80
-		self.leaf_width = 0.715
+	def __init__(self, fieldsize=None, translation=None, max_fieldsize=None, max_generated_fieldsize=None, num_leafes=80):
+
+		if max_fieldsize is None:
+			self.max_fieldsize = (57, 22)
+		else:
+			self.max_fieldsize =  max_fieldsize #[x_max, y_max]
+
+		if max_generated_fieldsize is None:
+			self.max_generated_fieldsize = self.max_fieldsize
+		else:
+			self.max_generated_fieldsize = max_generated_fieldsize
+
+		if self.max_generated_fieldsize[0] > self.max_fieldsize[0] or self.max_generated_fieldsize[1] > self.max_fieldsize[1]:
+			raise ValueError("Passed max_generated_fieldsize value bigger than max_fieldsize.")
+
+		self.num_leafes = num_leafes
+		self.leaf_width = self.max_fieldsize[0]/self.num_leafes
 		self.fieldsize, self.translation = self.create_field_parameters(fieldsize, translation)
 		self.MLC_iso = self.create_mlc_positions()
 		self.JAW_iso = self.create_jaw_positions()
@@ -61,6 +73,10 @@ class trainingData():
 		self.JAW_egsinp = self.calculate_new_jaw()
 
 	def create_field_parameters(self, fieldsize=None, translation=None):
+
+		if fieldsize is not None and translation is not None:
+			if fieldsize[0]/2 + abs(translation[0]) > self.max_fieldsize[0]/2 or fieldsize[1]/2 + abs(translation[1]) > self.max_fieldsize[1]/2:
+				raise ValueError("fieldsize and translation dont fit inside maximum_fieldsize")
 
 		if fieldsize is None and translation is None:
 			fieldsize = ([random.randint(2,self.max_generated_fieldsize[0]), random.randint(2,self.max_generated_fieldsize[1])])
@@ -217,7 +233,7 @@ template, idx = read_template()
 
 while len(MLCs) < batch_size:
 
-	field = trainingData((20,20))
+	field = trainingData()
 
 	if (field.fieldsize, field.translation) in shapes: 
 		continue
@@ -240,7 +256,7 @@ while len(MLCs) < batch_size:
 # print(occ)
 
 field = trainingData()
-#field.egsinp_text = create_egsinp_text(field, template[:], idx)
-#pprint.pprint(field.__dict__)
-#field.plot_mlc()
+field.egsinp_text = create_egsinp_text(field, template[:], idx)
+pprint.pprint(field.__dict__)
+field.plot_mlc()
 
