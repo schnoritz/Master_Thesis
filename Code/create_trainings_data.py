@@ -35,14 +35,15 @@ also hier leaf gesamt mit central leaf sind es 12 Leafes, also leafes 39 bis 45 
 
 """
 To-Do:
+[ ] klären wie es aussieht mit den restlichen leafes sind die wichtig oder nicht
+[-] (Quasi fertig, function ist in functions.py) MLC positionen in template .egsnip file einspeichern
+[ ] evtl. Output erstellen damit ich sehen kann welche Felder wie fot vorgekommen sind
+[ ] JAW Positionen für .egsinp File wirken komisch. 
+[✔] Leaves sind im Fled 0.2 zu weit ausgefahren
+[✔] klasse für trainingsdata fertigstellen
 [✔] batchweise erzeugung und speicherung
 [✔] testen ob dimensions und translationskombination schon vorgekommen ist. 
-[ ] klären wie es aussieht mit den restlichen leafes sind die wichtig oder nicht
-[ ] MLC positionen in template .egsnip file einspeichern
-[✔] klasse für trainingsdata fertigstellen
 [✔] möglichkeit bieten bei class auch ein festdefniniertes Feld zu erstellen
-[ ] evtl. Output erstellen damit ich sehen kann welche Felder wie fot vorgekommen sind
-[✔] Leaves sind im Fled 0.2 zu weit ausgefahren
 """
 from imports import *
 
@@ -53,8 +54,10 @@ class trainingData():
 		self.num_leafes = 80
 		self.leaf_width = 0.715
 		self.fieldsize, self.translation = self.create_field_parameters(fieldsize, translation)
-		self.MLC_iso = self.calculate_mlc()
-		self.JAW_iso = self.calculate_jaw()
+		self.MLC_iso = self.create_mlc_positions()
+		self.JAW_iso = self.create_jaw_positions()
+		self.MLC_egsinp = self.calculate_new_mlc()
+		self.JAW_egsinp = self.calculate_new_jaw()
 
 	def create_field_parameters(self, fieldsize=None, translation=None):
 
@@ -64,8 +67,8 @@ class trainingData():
 		#print("FIELDSIZE:", fieldsize)
 
 		if translation is None:
-			max_x_translation = self.max_fieldsize[0]/2-fieldsize[0]/2
-			max_y_translation = self.max_fieldsize[1]/2-fieldsize[1]/2
+			max_x_translation = self.max_fieldsize[0]/2 - fieldsize[0]/2
+			max_y_translation = self.max_fieldsize[1]/2 - fieldsize[1]/2
 			#print("MAXMIMUM OFFSET VALUES:", max_x_translation, max_y_translation)
 			#accounting for boundary conditions that field translation can't be so that field lies outside of maximum field
 			#offset = [random.uniform(-max_x_translation, max_x_translation), random.uniform(-max_y_translation, max_y_translation)]
@@ -73,7 +76,7 @@ class trainingData():
 
 		return fieldsize, translation
 
-	def calculate_mlc(self):
+	def create_mlc_positions(self):
 
 		MLC = np.zeros((2,self.num_leafes))
 		dx, dy = self.translation[0], self.translation[1]
@@ -81,76 +84,111 @@ class trainingData():
 		#print("CENTRAL_LEAFES:", central_leafes)
 
 		#anzahl der leafes die noch hinzugefügt werden sollen, in dem Fall hier 4 Leafes mehr als benötigt werden.
-		count_leafes = np.ceil(self.fieldsize[0]/self.leaf_width).astype(int)+2
+		count_leafes = np.ceil(self.fieldsize[0]/self.leaf_width).astype(int) + 2
 		
 		#Leaf anzahl immer gerade machen
 		if count_leafes%2 != 0:
 			count_leafes += 1
 		#print("COUT_LEAFES:", count_leafes)
 
-		MLC[0,:] += dy - 0.2 #Spalt in der Mitte erzeugen, 0,2mm breite
-		MLC[1,:] += dy + 0.2
+		MLC[0, :] += dy - 0.2 #Spalt in der Mitte erzeugen, 0,2mm breite
+		MLC[1, :] += dy + 0.2
 
-		if int(central_leafes[0]-count_leafes/2)-1 < 0 and int(central_leafes[1]+count_leafes/2) < self.num_leafes:
+		if int(central_leafes[0] - count_leafes/2) - 1 < 0 and int(central_leafes[1] + count_leafes/2) < self.num_leafes:
 
-			MLC[0,0:central_leafes[0]] -= self.fieldsize[1]/2-0.2
-			MLC[1,0:central_leafes[0]] += self.fieldsize[1]/2-0.2
-			MLC[0,central_leafes[1]-1:int(central_leafes[1]+count_leafes/2)] -= self.fieldsize[1]/2-0.2
-			MLC[1,central_leafes[1]-1:int(central_leafes[1]+count_leafes/2)] += self.fieldsize[1]/2-0.2
+			MLC[0, 0 : central_leafes[0]] -= self.fieldsize[1]/2 - 0.2
+			MLC[1, 0 : central_leafes[0]] += self.fieldsize[1]/2 - 0.2
+			MLC[0, central_leafes[1] - 1 : int(central_leafes[1] + count_leafes/2)] -= self.fieldsize[1]/2 - 0.2
+			MLC[1, central_leafes[1] - 1 : int(central_leafes[1] + count_leafes/2)] += self.fieldsize[1]/2 - 0.2
 		
 
-		elif int(central_leafes[1]+count_leafes/2) >= self.num_leafes and int(central_leafes[0]-count_leafes/2)-1 > 0:
+		elif int(central_leafes[1] + count_leafes/2) >= self.num_leafes and int(central_leafes[0] - count_leafes/2) - 1 > 0:
 			
-			MLC[0,int(central_leafes[0]-count_leafes/2)-1:central_leafes[0]] -= self.fieldsize[1]/2-0.2
-			MLC[1,int(central_leafes[0]-count_leafes/2)-1:central_leafes[0]] += self.fieldsize[1]/2-0.2
-			MLC[0,central_leafes[1]-1:self.num_leafes] -= self.fieldsize[1]/2-0.2
-			MLC[1,central_leafes[1]-1:self.num_leafes] += self.fieldsize[1]/2-0.2
+			MLC[0, int(central_leafes[0] - count_leafes/2) - 1 : central_leafes[0]] -= self.fieldsize[1]/2 - 0.2
+			MLC[1, int(central_leafes[0] - count_leafes/2) - 1 : central_leafes[0]] += self.fieldsize[1]/2 - 0.2
+			MLC[0, central_leafes[1] - 1 : self.num_leafes] -= self.fieldsize[1]/2 - 0.2
+			MLC[1, central_leafes[1] - 1 : self.num_leafes] += self.fieldsize[1]/2 - 0.2
 		
 
-		elif int(central_leafes[1]+count_leafes/2) >= self.num_leafes and int(central_leafes[0]-count_leafes/2)-1 < 0:
+		elif int(central_leafes[1] + count_leafes/2) >= self.num_leafes and int(central_leafes[0] - count_leafes/2) - 1 < 0:
 			
-			MLC[0,0:central_leafes[0]] -= self.fieldsize[1]/2-0.2
-			MLC[1,0:central_leafes[0]] += self.fieldsize[1]/2-0.2
-			MLC[0,central_leafes[1]-1:self.num_leafes] -= self.fieldsize[1]/2-0.2
-			MLC[1,central_leafes[1]-1:self.num_leafes] += self.fieldsize[1]/2-0.2
+			MLC[0, 0 : central_leafes[0]] -= self.fieldsize[1]/2 - 0.2
+			MLC[1, 0 : central_leafes[0]] += self.fieldsize[1]/2 - 0.2
+			MLC[0, central_leafes[1] - 1 : self.num_leafes] -= self.fieldsize[1]/2 - 0.2
+			MLC[1, central_leafes[1] - 1 : self.num_leafes] += self.fieldsize[1]/2 - 0.2
 
 		else:
 
-			MLC[0,int(central_leafes[0]-count_leafes/2)-1:central_leafes[0]] -= self.fieldsize[1]/2-0.2
-			MLC[1,int(central_leafes[0]-count_leafes/2)-1:central_leafes[0]] += self.fieldsize[1]/2-0.2
-			MLC[0,central_leafes[1]-1:int(central_leafes[1]+count_leafes/2)] -= self.fieldsize[1]/2-0.2
-			MLC[1,central_leafes[1]-1:int(central_leafes[1]+count_leafes/2)] += self.fieldsize[1]/2-0.2
+			MLC[0, int(central_leafes[0] - count_leafes/2) - 1 : central_leafes[0]] -= self.fieldsize[1]/2 - 0.2
+			MLC[1, int(central_leafes[0] - count_leafes/2) - 1 : central_leafes[0]] += self.fieldsize[1]/2 - 0.2
+			MLC[0, central_leafes[1] - 1 : int(central_leafes[1] + count_leafes/2)] -= self.fieldsize[1]/2 - 0.2
+			MLC[1, central_leafes[1] - 1 : int(central_leafes[1] + count_leafes/2)] += self.fieldsize[1]/2 - 0.2
 
 		return MLC
 
-	def calculate_jaw(self):
+	def create_jaw_positions(self):
 
-		return np.array([self.translation[0]-self.fieldsize[0]/2, self.translation[0]+self.fieldsize[0]/2])
+		return np.array([self.translation[0] - self.fieldsize[0]/2, self.translation[0] + self.fieldsize[0]/2])
+
+	def calculate_new_mlc(self, radius=41.5, ssd=143.5, cil=35.77-0.09):
+		
+		MLC_egsinp = np.zeros((2, self.num_leafes))
+
+		for j in range(2):
+			for i in range(self.num_leafes):
+				if j == 0:
+					if self.MLC_iso[j,i] <= 0:
+						MLC_egsinp[j,i] = (((cil + math.sqrt(pow(radius, 2)-pow(math.cos(abs(self.MLC_iso[j,i])*0.1/ssd)*radius, 2)))*abs(self.MLC_iso[j,i])*0.1/ssd + math.cos(abs(self.MLC_iso[j,i])*0.1/ssd)*radius)*(-1))
+					if self.MLC_iso[j,i] > 0:
+						MLC_egsinp[j,i] = ((-(cil - math.sqrt(pow(radius, 2)-pow(math.cos(abs(self.MLC_iso[j,i])*0.1/ssd)*radius, 2)))*abs(self.MLC_iso[j,i])*0.1/ssd + math.cos(abs(self.MLC_iso[j,i])*0.1/ssd)*radius)*(-1))    
+				else:
+					if self.MLC_iso[j,i] >= 0:
+						MLC_egsinp[j,i] = ((cil + math.sqrt(pow(radius, 2)-pow(math.cos(abs(self.MLC_iso[j,i])*0.1/ssd)*radius, 2)))*abs(self.MLC_iso[j,i])*0.1/ssd + math.cos(abs(self.MLC_iso[j,i])*0.1/ssd)*radius) 
+					if self.MLC_iso[j,i] < 0:
+						MLC_egsinp[j,i] = (-(cil - math.sqrt(pow(radius, 2)-pow(math.cos(abs(self.MLC_iso[j,i])*0.1/ssd)*radius, 2)))*abs(self.MLC_iso[j,i])*0.1/ssd + math.cos(abs(self.MLC_iso[j,i])*0.1/ssd)*radius)
+
+		return MLC_egsinp
+
+	#Ergebnisse wirken wirklich komisch
+	def calculate_new_jaw(self, cil=44.35-0.09, radius=13.0, ssd=143.5):
+		
+		new_JAWS = np.zeros(2)
+
+		if self.JAW_iso[0] <= 0:
+			new_JAWS[0] = ((cil + math.sqrt(pow(radius, 2)-pow(math.cos(abs(self.JAW_iso[0]*10)*0.1/ssd)*radius, 2)))*abs(self.JAW_iso[0]*10)*0.1/ssd + math.cos(abs(self.JAW_iso[0]*10)*0.1/ssd)*radius)*(-1)
+		if self.JAW_iso[0] > 0:
+			new_JAWS[0] = (-(cil - math.sqrt(pow(radius, 2)-pow(math.cos(abs(self.JAW_iso[0]*10)*0.1/ssd)*radius, 2)))*abs(self.JAW_iso[0]*10)*0.1/ssd + math.cos(abs(self.JAW_iso[0]*10)*0.1/ssd)*radius)*(-1)   
+		if self.JAW_iso[1] >= 0:
+			new_JAWS[1] = (cil + math.sqrt(pow(radius, 2)-pow(math.cos(abs(self.JAW_iso[1]*10)*0.1/ssd)*radius, 2)))*abs(self.JAW_iso[1]*10)*0.1/ssd + math.cos(abs(self.JAW_iso[1]*10)*0.1/ssd)*radius
+		if self.JAW_iso[1] < 0:
+			new_JAWS[1] =- (cil - math.sqrt(pow(radius, 2)-pow(math.cos(abs(self.JAW_iso[1]*10)*0.1/ssd)*radius, 2)))*abs(self.JAW_iso[1]*10)*0.1/ssd + math.cos(abs(self.JAW_iso[1]*10)*0.1/ssd)*radius   
+
+		return new_JAWS
 
 	def plot_mlc(self):
 
 		MLC = self.MLC_iso
-		field = np.linspace(-self.max_fieldsize[0]/2,self.max_fieldsize[0]/2,self.num_leafes)
-		plt.bar(field,MLC[1,:],color="w")
-		plt.bar(field,MLC[0,:],color="w")
-		plt.bar(field,self.max_fieldsize[1]/2+3-MLC[1,:],width=self.leaf_width-0.1,bottom=MLC[1,:], color="chocolate")
-		plt.bar(field,-self.max_fieldsize[1]/2-3-MLC[0,:],width=self.leaf_width-0.1,bottom=MLC[0,:], color="sandybrown")
+		field = np.linspace(-self.max_fieldsize[0]/2, self.max_fieldsize[0]/2, self.num_leafes)
+		plt.bar(field,MLC[1, :], color="w")
+		plt.bar(field,MLC[0, :], color="w")
+		plt.bar(field, self.max_fieldsize[1]/2 + 3 - MLC[1,:], width=self.leaf_width - 0.1, bottom=MLC[1,:], color="chocolate")
+		plt.bar(field, -self.max_fieldsize[1]/2 - 3 -MLC[0,:], width=self.leaf_width - 0.1, bottom=MLC[0,:], color="sandybrown")
 
 		ax = plt.gca()
-		ax.add_patch(ptc.Rectangle((-self.max_fieldsize[0]/2,-self.max_fieldsize[1]/2-3),self.max_fieldsize[0]/2+self.JAW_iso[0], self.max_fieldsize[1]+6,facecolor="midnightblue",alpha=0.6))
-		ax.add_patch(ptc.Rectangle((self.JAW_iso[1],-self.max_fieldsize[1]/2-3),self.max_fieldsize[0]/2-self.JAW_iso[1], self.max_fieldsize[1]+6,facecolor="midnightblue",alpha=0.6))
+		ax.add_patch(ptc.Rectangle((-self.max_fieldsize[0]/2, -self.max_fieldsize[1]/2 - 3), self.max_fieldsize[0]/2 + self.JAW_iso[0], self.max_fieldsize[1] + 6, facecolor="midnightblue", alpha=0.6))
+		ax.add_patch(ptc.Rectangle((self.JAW_iso[1], -self.max_fieldsize[1]/2 - 3), self.max_fieldsize[0]/2 - self.JAW_iso[1], self.max_fieldsize[1] + 6, facecolor="midnightblue", alpha=0.6))
 
 		plt.hlines([self.max_fieldsize[1]/2, -self.max_fieldsize[1]/2], xmin=-self.max_fieldsize[0]/2, xmax=self.max_fieldsize[0]/2, colors="black")
 		plt.vlines([-self.max_fieldsize[0]/2, self.max_fieldsize[0]/2], ymin=-self.max_fieldsize[1]/2, ymax=self.max_fieldsize[1]/2, colors="black")
 
-		plt.text(-self.max_fieldsize[0]/2, -self.max_fieldsize[1]/2-5, f"Fieldsize: [{self.fieldsize[0]} X {self.fieldsize[1]}]")
-		plt.text(-self.max_fieldsize[0]/2, -self.max_fieldsize[1]/2-7, f"Offset: [{self.translation[0]} X {self.translation[1]}]")
+		plt.text(-self.max_fieldsize[0]/2, -self.max_fieldsize[1]/2 - 5, f"Fieldsize: [{self.fieldsize[0]} X {self.fieldsize[1]}]")
+		plt.text(-self.max_fieldsize[0]/2, -self.max_fieldsize[1]/2 - 7, f"Offset: [{self.translation[0]} X {self.translation[1]}]")
 		#plt.annotate(text='', xy=(self.max_fieldsize[0]/2+self.translation[0],self.translation[1]+self.fieldsize[1]/2), xytext=(self.max_fieldsize[0]/2+self.translation[0], self.translation[1]-self.fieldsize[1]/2), arrowprops=dict(arrowstyle='<|-|>'))
 		#plt.annotate(text='', xy=(self.max_fieldsize[0]/2+self.translation[0]-self.fieldsize[0]/2 ,self.translation[1]), xytext=(self.max_fieldsize[0]/2+self.translation[0]+self.fieldsize[0]/2, self.translation[1]), arrowprops=dict(arrowstyle='<|-|>'))
 		plt.plot(self.translation[0], self.translation[1], markersize=5, marker="x", color="black")
 
-		plt.yticks(np.arange(-self.max_fieldsize[1]/2, self.max_fieldsize[1]/2+0.1, step=self.max_fieldsize[1]/10))
-		plt.xticks(np.arange(-self.max_fieldsize[0]/2, self.max_fieldsize[0]/2+0.1, step=self.max_fieldsize[0]/10))
+		plt.yticks(np.arange(-self.max_fieldsize[1]/2, self.max_fieldsize[1]/2 + 0.1, step=self.max_fieldsize[1]/10))
+		plt.xticks(np.arange(-self.max_fieldsize[0]/2, self.max_fieldsize[0]/2 + 0.1, step=self.max_fieldsize[0]/10))
 		plt.axis('equal')
 		plt.tight_layout()
 
@@ -163,7 +201,7 @@ class trainingData():
 ############################################################################################################################################################"""			
 
 #print(dat.translation, dat.fieldsize, dat.MLC_iso, dat.JAW_iso)
-batch_size = 10
+batch_size = 10000
 
 plot = False
 
@@ -195,9 +233,10 @@ print(len(shapes), np.array(MLCs).shape, np.array(JAWs).shape)
 # 		occ.append(i)
 # #print(occ)
 
-field = trainingData()
-field.egsinp_text = create_egsinp_text(field, template[:], idx)
-pprint.pprint(field.MLC_iso)
-pprint.pprint(field.JAW_iso)
-pprint.pprint(field.egsinp_text)
-field.plot_mlc()
+#field = trainingData()
+#field.egsinp_text = create_egsinp_text(field, template[:], idx)
+#pprint.pprint(field.__dict__)
+#pprint.pprint(field.MLC_iso)
+#pprint.pprint(field.JAW_iso)
+#pprint.pprint(field.egsinp_text)
+#field.plot_mlc()
