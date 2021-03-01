@@ -49,8 +49,9 @@ from imports import *
 
 class trainingData():
 
-	def __init__(self, fieldsize=None, translation=None):
+	def __init__(self, fieldsize=None, translation=None, max_generated_fieldsize=(57,22)):
 		self.max_fieldsize = [57, 22] #[x_max, y_max]
+		self.max_generated_fieldsize = max_generated_fieldsize
 		self.num_leafes = 80
 		self.leaf_width = 0.715
 		self.fieldsize, self.translation = self.create_field_parameters(fieldsize, translation)
@@ -62,13 +63,13 @@ class trainingData():
 	def create_field_parameters(self, fieldsize=None, translation=None):
 
 		if fieldsize is None:
-			fieldsize = ([random.randint(2,self.max_fieldsize[0]), random.randint(2,self.max_fieldsize[1])])
+			fieldsize = ([random.randint(2,self.max_generated_fieldsize[0]), random.randint(2,self.max_generated_fieldsize[1])])
 
 		#print("FIELDSIZE:", fieldsize)
 
 		if translation is None:
-			max_x_translation = self.max_fieldsize[0]/2 - fieldsize[0]/2
-			max_y_translation = self.max_fieldsize[1]/2 - fieldsize[1]/2
+			max_x_translation = self.max_generated_fieldsize[0]/2 - fieldsize[0]/2
+			max_y_translation = self.max_generated_fieldsize[1]/2 - fieldsize[1]/2
 			#print("MAXMIMUM OFFSET VALUES:", max_x_translation, max_y_translation)
 			#accounting for boundary conditions that field translation can't be so that field lies outside of maximum field
 			#offset = [random.uniform(-max_x_translation, max_x_translation), random.uniform(-max_y_translation, max_y_translation)]
@@ -211,7 +212,7 @@ template, idx = read_template()
 
 while len(MLCs) < batch_size:
 
-	field = trainingData()
+	field = trainingData(max_generated_fieldsize=(22,22))
 
 	if (field.fieldsize, field.translation) in shapes: 
 		continue
@@ -224,19 +225,19 @@ while len(MLCs) < batch_size:
 	MLCs.append(field.MLC_iso)
 	JAWs.append(field.JAW_iso)
 
-#print(shapes)
+print(shapes)
 print(len(shapes), np.array(MLCs).shape, np.array(JAWs).shape)
 
-# occ = [];
-# for i in shapes:
-# 	if i[0] == [10,10]:
-# 		occ.append(i)
-# #print(occ)
+occ = [];
+for i in shapes:
+	if i[0] == [10,10]:
+		occ.append(i)
+print(occ)
 
-#field = trainingData()
-#field.egsinp_text = create_egsinp_text(field, template[:], idx)
-#pprint.pprint(field.__dict__)
-#pprint.pprint(field.MLC_iso)
-#pprint.pprint(field.JAW_iso)
-#pprint.pprint(field.egsinp_text)
-#field.plot_mlc()
+# field = trainingData()
+# field.egsinp_text = create_egsinp_text(field, template[:], idx)
+# pprint.pprint(field.__dict__)
+# pprint.pprint(field.MLC_iso)
+# pprint.pprint(field.JAW_iso)
+# pprint.pprint(field.egsinp_text)
+# field.plot_mlc()
