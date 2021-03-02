@@ -140,6 +140,8 @@ def read_template():
 
 def create_egsinp_text(curr_field, template_text, idx):
 
+	template = template_text[:]
+
 	MLC = curr_field.MLC_iso
 	JAW = curr_field.JAW_iso
 
@@ -147,15 +149,15 @@ def create_egsinp_text(curr_field, template_text, idx):
 	MLC_text = [[f"{MLC[0,i]:.4f}",f"{MLC[1,i]:.4f}", "1"] for i in range(curr_field.num_leafes)]
 	MLC_text = [", ".join(i) for i in MLC_text]
 
-	template_text.insert(idx[1], JAW_text[0])
-	template_text[idx[1]]
+	template.insert(idx[1], JAW_text[0])
+	template[idx[1]]
 	j = 0
 	for i in range(curr_field.num_leafes):
 		j += 1
-		template_text.insert(idx[0]+j, MLC_text[i])
+		template.insert(idx[0]+j, MLC_text[i])
 
 	final_text = []
-	for line in template_text:
+	for line in template:
 		if line.strip("\n") !=  "###HIER ERSETZEN###":
 			final_text.append(line)
 

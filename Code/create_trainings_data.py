@@ -256,7 +256,7 @@ while len(MLCs) < batch_size:
 # print(occ)
 
 field = trainingData()
-field.egsinp_text = create_egsinp_text(field, template[:], idx)
+field.egsinp_text = create_egsinp_text(field, template, idx)
 pprint.pprint(field.__dict__)
 field.plot_mlc()
 
