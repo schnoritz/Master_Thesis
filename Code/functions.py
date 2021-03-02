@@ -170,3 +170,23 @@ def create_file():
 	# 	for line in template_text:
 	# 		if line.strip("\n") != "###HIER ERSETZEN###":
 	# 			f.write("%s\n" % line)
+
+def doses_of_dcm():
+	
+	sizes = ["2x2", "3x3", "5x5", "10x10", "15x15", "22x22", "40x22", "57x22"]
+
+	for size in sizes:
+		file_path = "/Users/simongutwein/Downloads/Share_Simon/DICOMData/" + size + "/MRI_Phantom_Reference" + size + "_Dose.dcm"
+		ds = pydicom.read_file(file_path,force=True)
+		print(size)
+		dose = ds.pixel_array
+		print(dose.shape)
+
+		#dose dimensions = (101, 151, 219)
+		#dimensionalität in cm bestimmen -> damit fielsize zu volumen gemapped werden kann 
+
+
+
+
+
+

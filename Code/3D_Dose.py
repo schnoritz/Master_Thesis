@@ -9,7 +9,7 @@ def dose_distribution_3D(filename):
 	z, y, x = np.array(list(map(float, file.readline().split()))), np.array(list(map(float, file.readline().split()))) ,np.array(list(map(float, file.readline().split())))
 	dose_dat = np.array(list(map(float, file.readline().split())))
 	dose_dat = dose_dat.reshape(dim[2], dim[1],  dim[0])
-
+	print(dose_dat.shape)
 	return x, y, z, dose_dat
 
 def plot_dose_distribution(dose_3D,x ,y ,z):
