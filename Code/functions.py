@@ -172,7 +172,7 @@ def create_file():
 	# 			f.write("%s\n" % line)
 
 def doses_of_dcm():
-	
+
 	sizes = ["2x2", "3x3", "5x5", "10x10", "15x15", "22x22", "40x22", "57x22"]
 
 	for size in sizes:
@@ -184,9 +184,6 @@ def doses_of_dcm():
 
 		#dose dimensions = (101, 151, 219)
 		#dimensionalität in cm bestimmen -> damit fielsize zu volumen gemapped werden kann 
-
-
-
 
 
 
