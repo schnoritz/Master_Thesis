@@ -135,15 +135,14 @@ def read_template():
 	template_text = f.read()
 	template_text = template_text.split("\n")
 	idx = [i for i, x in enumerate(template_text) if x=="###HIER ERSETZEN###"]
-
 	return template_text, idx
 
 def create_egsinp_text(curr_field, template_text, idx):
 
 	template = template_text[:]
 
-	MLC = curr_field.MLC_iso
-	JAW = curr_field.JAW_iso
+	MLC = curr_field.MLC_egsinp
+	JAW = curr_field.JAW_egsinp
 
 	JAW_text = [", ".join([f"{JAW[0]:.4f}",f"{JAW[1]:.4f}", "2"])]
 	MLC_text = [[f"{MLC[0,i]:.4f}",f"{MLC[1,i]:.4f}", "1"] for i in range(curr_field.num_leafes)]
@@ -163,13 +162,12 @@ def create_egsinp_text(curr_field, template_text, idx):
 
 	return final_text
 
-def create_file():
-	pass
-	# with open("/Users/simongutwein/Documents/GitHub/Master_Thesis/Data/NEW_TEMPLATE.egsinp", "w") as f:
-	# 	f.truncate(0)
-	# 	for line in template_text:
-	# 		if line.strip("\n") != "###HIER ERSETZEN###":
-	# 			f.write("%s\n" % line)
+def create_file(self):
+	with open("/Users/simongutwein/Documents/GitHub/Master_Thesis/Data/NEW_TEMPLATE.egsinp", "w") as f:
+		f.truncate(0)
+		for line in self.egsinp_text:
+			if line.strip("\n") != "###HIER ERSETZEN###":
+				f.write("%s\n" % line)
 
 def doses_of_dcm():
 

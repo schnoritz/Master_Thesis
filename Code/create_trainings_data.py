@@ -146,14 +146,14 @@ class trainingData():
 			for i in range(self.num_leafes):
 				if j == 0:
 					if self.MLC_iso[j,i] <= 0:
-						MLC_egsinp[j,i] = (((cil + math.sqrt(pow(radius, 2)-pow(math.cos(abs(self.MLC_iso[j,i])*0.1/ssd)*radius, 2)))*abs(self.MLC_iso[j,i])*0.1/ssd + math.cos(abs(self.MLC_iso[j,i])*0.1/ssd)*radius)*(-1))
-					if self.MLC_iso[j,i] > 0:
-						MLC_egsinp[j,i] = ((-(cil - math.sqrt(pow(radius, 2)-pow(math.cos(abs(self.MLC_iso[j,i])*0.1/ssd)*radius, 2)))*abs(self.MLC_iso[j,i])*0.1/ssd + math.cos(abs(self.MLC_iso[j,i])*0.1/ssd)*radius)*(-1))    
+						MLC_egsinp[j,i] = (((cil + math.sqrt(pow(radius, 2)-pow(math.cos(abs(self.MLC_iso[j,i]*10)*0.1/ssd)*radius, 2)))*abs(self.MLC_iso[j,i]*10)*0.1/ssd + math.cos(abs(self.MLC_iso[j,i]*10)*0.1/ssd)*radius)*(-1))
+					if self.MLC_iso[j,i]*10 > 0:
+						MLC_egsinp[j,i] = ((-(cil - math.sqrt(pow(radius, 2)-pow(math.cos(abs(self.MLC_iso[j,i]*10)*0.1/ssd)*radius, 2)))*abs(self.MLC_iso[j,i]*10)*0.1/ssd + math.cos(abs(self.MLC_iso[j,i]*10)*0.1/ssd)*radius)*(-1))    
 				else:
-					if self.MLC_iso[j,i] >= 0:
-						MLC_egsinp[j,i] = ((cil + math.sqrt(pow(radius, 2)-pow(math.cos(abs(self.MLC_iso[j,i])*0.1/ssd)*radius, 2)))*abs(self.MLC_iso[j,i])*0.1/ssd + math.cos(abs(self.MLC_iso[j,i])*0.1/ssd)*radius) 
-					if self.MLC_iso[j,i] < 0:
-						MLC_egsinp[j,i] = (-(cil - math.sqrt(pow(radius, 2)-pow(math.cos(abs(self.MLC_iso[j,i])*0.1/ssd)*radius, 2)))*abs(self.MLC_iso[j,i])*0.1/ssd + math.cos(abs(self.MLC_iso[j,i])*0.1/ssd)*radius)
+					if self.MLC_iso[j,i]*10 >= 0:
+						MLC_egsinp[j,i] = ((cil + math.sqrt(pow(radius, 2)-pow(math.cos(abs(self.MLC_iso[j,i]*10)*0.1/ssd)*radius, 2)))*abs(self.MLC_iso[j,i]*10)*0.1/ssd + math.cos(abs(self.MLC_iso[j,i]*10)*0.1/ssd)*radius) 
+					if self.MLC_iso[j,i]*10 < 0:
+						MLC_egsinp[j,i] = (-(cil - math.sqrt(pow(radius, 2)-pow(math.cos(abs(self.MLC_iso[j,i]*10)*0.1/ssd)*radius, 2)))*abs(self.MLC_iso[j,i]*10)*0.1/ssd + math.cos(abs(self.MLC_iso[j,i]*10)*0.1/ssd)*radius)
 
 		return MLC_egsinp
 
@@ -277,8 +277,9 @@ while len(MLCs) < batch_size:
 # 		occ.append(i)
 # print(occ)
 
-field = trainingData()
+field = trainingData((10,10),(0,0))
 field.egsinp_text = create_egsinp_text(field, template, idx)
+create_file(field)
 pprint.pprint(field.__dict__)
 field.plot_mlc()
 
