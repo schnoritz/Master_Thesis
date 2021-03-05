@@ -35,16 +35,17 @@ also hier leaf gesamt mit central leaf sind es 12 Leafes, also leafes 39 bis 45 
 
 """
 To-Do:
-[ ] klären wie es aussieht mit den restlichen leafes sind die wichtig oder nicht
-[-] (Quasi fertig, function ist in functions.py) MLC positionen in template .egsnip file einspeichern
-[ ] evtl. Output erstellen damit ich sehen kann welche Felder wie fot vorgekommen sind
-[ ] JAW Positionen für .egsinp File wirken komisch. 
+[✔] klären wie es aussieht mit den restlichen leafes sind die wichtig oder nicht
+[✔] (Quasi fertig, function ist in functions.py) MLC positionen in template .egsnip file einspeichern
+[✔] evtl. Output erstellen damit ich sehen kann welche Felder wie fot vorgekommen sind
+[✔] JAW Positionen für .egsinp File wirken komisch. 
 [✔] Leaves sind im Fled 0.2 zu weit ausgefahren
 [✔] klasse für trainingsdata fertigstellen
 [✔] batchweise erzeugung und speicherung
 [✔] testen ob dimensions und translationskombination schon vorgekommen ist. 
 [✔] möglichkeit bieten bei class auch ein festdefniniertes Feld zu erstellen
 """
+
 from imports import *
 
 class trainingData():
@@ -274,11 +275,7 @@ class trainingData():
 
 #print(dat.translation, dat.fieldsize, dat.MLC_iso, dat.JAW_iso)
 batch_size = 5
-
-plot = False
-
-shapes, MLCs, JAWs = [], [], []
-
+shapes = []
 template, idx = read_template()
 path = "/Users/simongutwein/Documents/GitHub/Master_Thesis/Data/training_data"
 
@@ -289,24 +286,12 @@ while len(shapes) < batch_size:
 		continue
 
 	field.egsinp_text = field.create_egsinp_text(template, idx)
+	field.create_egs_file(path)
+	shapes.append((field.fieldsize, field.translation))
 	#pprint.pprint(field.__dict__)
 	#field.plot_mlc()
 
-	field.create_egs_file(path)
-	#field.plot_mlc()
-	field.egsinp_text = field.create_egsinp_text(template[:], idx)
- 
-	shapes.append((field.fieldsize, field.translation))
-
-
 #print(shapes)
-#print(len(shapes), np.array(MLCs).shape, np.array(JAWs).shape)
-
-# occ = [];
-# for i in shapes:
-# 	if i[0] == [2,2]:
-# 		occ.append(i)
-# print(occ)
 
 
 
