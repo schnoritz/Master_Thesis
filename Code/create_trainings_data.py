@@ -117,10 +117,10 @@ class trainingData():
 		dx, dy = self.translation[0], self.translation[1]
 		#calculate the central leaves
 		central_leafes = [np.floor(dx/self.leaf_width).astype(int) + int(self.num_leafes/2), np.floor(dx/self.leaf_width).astype(int) + int(self.num_leafes/2) + 1]
-		print(central_leafes)
+		#print(central_leafes)
 		#calculate the numbers of leafes which need to be added to the central leafes + 4 extra leafes
 		count_leafes = np.ceil(self.fieldsize[0]/self.leaf_width).astype(int) + 2
-		print(count_leafes)
+		#print(count_leafes)
 		#make number of leafes even
 		if count_leafes%2 != 0:
 			count_leafes += 1
@@ -238,6 +238,34 @@ class trainingData():
 
 		return MLC
 
+	def create_egsinp_text(self, template_text, idx):
+
+		template = template_text[:]
+
+		JAW_text = [", ".join([f"{self.JAW_egsinp[0]:.4f}",f"{self.JAW_egsinp[1]:.4f}", "2"])]
+		MLC_text = [[f"{self.MLC_egsinp[0,i]:.4f}",f"{self.MLC_egsinp[1,i]:.4f}", "1"] for i in range(self.num_leafes)]
+		MLC_text = [", ".join(i) for i in MLC_text]
+
+		template.insert(idx[1], JAW_text[0])
+
+		for i in range(self.num_leafes):
+			template.insert(idx[0]+i+1, MLC_text[i])
+
+		final_text = []
+		for line in template:
+			if line.strip("\n") !=  "###HIER ERSETZEN###":
+				final_text.append(line)
+
+		return final_text
+
+	def create_egs_file(self, path):
+
+		field_path = f"{path}/MR-Linac_model_{self.fieldsize[0]}x{self.fieldsize[1]}_{self.translation[0]}x{self.translation[1]}.egsinp" 
+		if not Path(field_path).is_file():
+			with open(field_path,"x") as f:
+				f.truncate(0)
+				for line in self.egsinp_text:
+					f.write("%s\n" % line)
 
 
 """############################################################################################################################################################
@@ -245,28 +273,31 @@ class trainingData():
 ############################################################################################################################################################"""			
 
 #print(dat.translation, dat.fieldsize, dat.MLC_iso, dat.JAW_iso)
-batch_size = 1
+batch_size = 5
 
 plot = False
 
 shapes, MLCs, JAWs = [], [], []
 
 template, idx = read_template()
+path = "/Users/simongutwein/Documents/GitHub/Master_Thesis/Data/training_data"
 
-while len(MLCs) < batch_size:
+while len(shapes) < batch_size:
 
-	field = trainingData()
-
+	field = trainingData((10,10),(0,0))
 	if (field.fieldsize, field.translation) in shapes: 
 		continue
 
-	#print(template)
+	field.egsinp_text = field.create_egsinp_text(template, idx)
+	#pprint.pprint(field.__dict__)
 	#field.plot_mlc()
-	field.egsinp_text = create_egsinp_text(field, template[:], idx)
+
+	field.create_egs_file(path)
+	#field.plot_mlc()
+	field.egsinp_text = field.create_egsinp_text(template[:], idx)
  
 	shapes.append((field.fieldsize, field.translation))
-	MLCs.append(field.MLC_iso)
-	JAWs.append(field.JAW_iso)
+
 
 #print(shapes)
 #print(len(shapes), np.array(MLCs).shape, np.array(JAWs).shape)
@@ -277,9 +308,5 @@ while len(MLCs) < batch_size:
 # 		occ.append(i)
 # print(occ)
 
-field = trainingData((10,10),(0,0))
-field.egsinp_text = create_egsinp_text(field, template, idx)
-create_file(field)
-pprint.pprint(field.__dict__)
-field.plot_mlc()
+
 
