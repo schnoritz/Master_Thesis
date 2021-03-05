@@ -274,7 +274,7 @@ class trainingData():
 ############################################################################################################################################################"""			
 
 #print(dat.translation, dat.fieldsize, dat.MLC_iso, dat.JAW_iso)
-batch_size = 5
+batch_size = 1
 shapes = []
 template, idx = read_template()
 path = "/Users/simongutwein/Documents/GitHub/Master_Thesis/Data/training_data"

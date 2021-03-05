@@ -9,6 +9,7 @@ file = open("/Users/simongutwein/Documents/GitHub/Master_Thesis/Data/MR-Linac_mo
 i=0
 
 while True:
+
 	i += 1
 	if i == 10000:
 		break
@@ -16,7 +17,7 @@ while True:
 	t_line = file.readline()
 	if "LEAFRADIUS, CIL" in t_line:
 		info = ""
-		for i in range(80): 
+		for j in range(80): 
 			info += file.readline()
 
 	if "R0LEAF, Z0LEAF" in t_line:
