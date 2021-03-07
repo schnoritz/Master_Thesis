@@ -7,4 +7,3 @@ import matplotlib.patches as ptc
 import math
 import pprint
 from functions import *
-
