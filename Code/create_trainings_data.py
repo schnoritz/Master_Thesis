@@ -330,7 +330,7 @@ class trainingData():
 																PROGRAMM START
 ############################################################################################################################################################"""			
 
-batch_size = 100
+batch_size = 10000
 shapes = []
 template, idx = read_template()
 path = "/Users/simongutwein/Documents/GitHub/Master_Thesis/Data/training_data"
@@ -342,9 +342,9 @@ while len(shapes) < batch_size:
 		continue
 
 	field.egsinp_text = field.create_egsinp_text(template, idx)
-	field.create_egs_file(path)
+	#field.create_egs_file(path)
 	shapes.append((field.fieldsize, field.translation))
 	#pprint.pprint(field.__dict__)
 	#field.plot_mlc()
 
-# scatter_hist_2D_data(shapes)
+scatter_hist_2D_data(shapes)
