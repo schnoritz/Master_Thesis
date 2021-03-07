@@ -112,7 +112,7 @@ class trainingData():
 				max_y_translation = self.max_fieldsize[1]/2 - fieldsize[1]/2
 				translation = [random.randint(-np.floor(max_x_translation), np.floor(max_x_translation)), random.randint(-np.floor(max_y_translation), np.floor(max_y_translation))]
 				#translation = [random.uniform(-max_x_translation, max_x_translation), random.uniform(-max_y_translation, max_y_translation)]
-			
+
 			else:
 				raise ValueError(f"{distribution} is not a viable distribution parameter. Choose from \"gaussian\" or \"random\"")
 		
@@ -162,7 +162,7 @@ class trainingData():
 		returnable = False
 
 		while returnable == False:
-			translation = [np.floor(abs(random.gauss(0,max_x_translation/3))), np.floor(abs(random.gauss(0,max_y_translation/3)))]
+			translation = [np.floor(random.gauss(0,max_x_translation/3)), np.floor(random.gauss(0,max_y_translation/3))]
 
 			if abs(translation[0]) <= max_x_translation and abs(translation[1]) <= max_y_translation:
 				returnable = True
@@ -330,7 +330,7 @@ class trainingData():
 																PROGRAMM START
 ############################################################################################################################################################"""			
 
-batch_size = 10000
+batch_size = 100
 shapes = []
 template, idx = read_template()
 path = "/Users/simongutwein/Documents/GitHub/Master_Thesis/Data/training_data"
@@ -342,21 +342,9 @@ while len(shapes) < batch_size:
 		continue
 
 	field.egsinp_text = field.create_egsinp_text(template, idx)
-	#field.create_egs_file(path)
+	field.create_egs_file(path)
 	shapes.append((field.fieldsize, field.translation))
 	#pprint.pprint(field.__dict__)
 	#field.plot_mlc()
 
-x_fieldsize = []
-y_fieldsize = []
-for i in shapes:
-	x_fieldsize.append(i[0][0])
-	y_fieldsize.append(i[0][1])
-
-plt.scatter(x_fieldsize,y_fieldsize)
-plt.show()
-
-#print(shapes)
-
-
-
+# scatter_hist_2D_data(shapes)
