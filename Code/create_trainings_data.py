@@ -96,7 +96,7 @@ class trainingData():
 
 			if distribution == "gaussian":
 
-				fieldsize = self.gaussian_fieldsize(self.max_fieldsize)
+				fieldsize = self.gaussian_fieldsize(self.max_generated_fieldsize)
 
 				#check for boundary conditions
 				max_x_translation = self.max_fieldsize[0]/2 - fieldsize[0]/2
@@ -115,11 +115,12 @@ class trainingData():
 			
 			else:
 				raise ValueError(f"{distribution} is not a viable distribution parameter. Choose from \"gaussian\" or \"random\"")
+		
 		#check if one of paramters is given
 		if fieldsize is None and translation is not None:
 
 			if distribution == "gaussian":
-				fieldsize = self.gaussian_fieldsize(self.max_fieldsize)
+				fieldsize = self.gaussian_fieldsize(self.max_generated_fieldsize)
 
 			elif distribution == "random":
 				fieldsize = ([random.randint(2,int(self.max_generated_fieldsize[0]/2)-translation[0]), random.randint(2,int(self.max_generated_fieldsize[1]/2)-translation[1])])
@@ -144,13 +145,13 @@ class trainingData():
 		return fieldsize, translation
 
 	@staticmethod
-	def gaussian_fieldsize(max_fieldsize):
+	def gaussian_fieldsize(max_generated_fieldsize):
 		returnable = False
 
 		while returnable == False:
-			fieldsize = [round(abs(random.gauss(0,max_fieldsize[0]/3))) ,round(abs(random.gauss(0,max_fieldsize[1]/3)))]
+			fieldsize = [round(abs(random.gauss(0,max_generated_fieldsize[0]/3))) ,round(abs(random.gauss(0,max_generated_fieldsize[1]/3)))]
 
-			if fieldsize[0] >= 2 and fieldsize[1] >= 2 and fieldsize[0] <= max_fieldsize[0] and fieldsize[1] <= max_fieldsize[1]:
+			if fieldsize[0] >= 2 and fieldsize[1] >= 2 and fieldsize[0] <= max_generated_fieldsize[0] and fieldsize[1] <= max_generated_fieldsize[1]:
 				returnable = True
 	
 		return list(map(int, fieldsize))
@@ -329,14 +330,14 @@ class trainingData():
 																PROGRAMM START
 ############################################################################################################################################################"""			
 
-batch_size = 1
+batch_size = 10000
 shapes = []
 template, idx = read_template()
 path = "/Users/simongutwein/Documents/GitHub/Master_Thesis/Data/training_data"
 
 while len(shapes) < batch_size:
 
-	field = trainingData((10,10),(0,0))
+	field = trainingData()
 	if (field.fieldsize, field.translation) in shapes: 
 		continue
 
@@ -344,16 +345,18 @@ while len(shapes) < batch_size:
 	#field.create_egs_file(path)
 	shapes.append((field.fieldsize, field.translation))
 	#pprint.pprint(field.__dict__)
-	field.plot_mlc()
+	#field.plot_mlc()
 
-# x_fieldsize = []
-# for i in shapes:
-# 	x_fieldsize.append(i[0][0])
+x_fieldsize = []
+y_fieldsize = []
+for i in shapes:
+	x_fieldsize.append(i[0][0])
+	y_fieldsize.append(i[0][1])
 
-# plt.hist(x_fieldsize, bins=56)
-# plt.show()
+plt.scatter(x_fieldsize,y_fieldsize)
+plt.show()
 
-print(shapes)
+#print(shapes)
 
 
 
