@@ -312,6 +312,7 @@ class trainingData():
 			template.insert(idx[0]+i+1, MLC_text[i])
 
 		final_text = []
+		
 		for line in template:
 			if line.strip("\n") !=  "###HIER ERSETZEN###":
 				final_text.append(line)
