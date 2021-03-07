@@ -153,5 +153,32 @@ def doses_of_dcm():
 		#dose dimensions = (101, 151, 219)
 		#dimensionalität in cm bestimmen -> damit fielsize zu volumen gemapped werden kann 
 
+def scatter_hist_2D_data(shapes):
 
+	x_fieldsize = []
+	y_fieldsize = []
+	for i in shapes:
+		x_fieldsize.append(i[0][0])
+		y_fieldsize.append(i[0][1])
+
+	x_translation = []
+	y_translation = []
+	for i in shapes:
+		x_translation.append(i[1][0])
+		y_translation.append(i[1][1])
+
+	fig = plt.figure(figsize=(8,8))
+	gs = fig.add_gridspec(2, 2,  width_ratios=(7, 2), height_ratios=(2, 7),
+                      left=0.1, right=0.9, bottom=0.1, top=0.9,
+                      wspace=0.05, hspace=0.05)
+
+	scat = fig.add_subplot(gs[1, 0])
+	top = fig.add_subplot(gs[0, 0], sharex=scat)
+	right = fig.add_subplot(gs[1, 1], sharey=scat)
+	scat.scatter(x,y, marker="x", s=3)
+	right.hist(y, orientation='horizontal', bins=len(np.unique(y)))
+	top.hist(x, bins=len(np.unique(x)))
+	top.tick_params(axis="x", labelbottom=False)
+	right.tick_params(axis="y", labelleft=False)
+	plt.show()
 
