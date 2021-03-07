@@ -167,10 +167,14 @@ def scatter_hist_2D_data(shapes):
 		x_translation.append(i[1][0])
 		y_translation.append(i[1][1])
 
+	plot_scatt_hist(x_fieldsize,y_fieldsize)
+	plot_scatt_hist(x_translation,y_translation)
+
+def plot_scatt_hist(x,y):
 	fig = plt.figure(figsize=(8,8))
 	gs = fig.add_gridspec(2, 2,  width_ratios=(7, 2), height_ratios=(2, 7),
-                      left=0.1, right=0.9, bottom=0.1, top=0.9,
-                      wspace=0.05, hspace=0.05)
+	                  left=0.1, right=0.9, bottom=0.1, top=0.9,
+	                  wspace=0.05, hspace=0.05)
 
 	scat = fig.add_subplot(gs[1, 0])
 	top = fig.add_subplot(gs[0, 0], sharex=scat)
