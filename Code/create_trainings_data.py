@@ -57,7 +57,7 @@ class trainingData():
 	num_leafes = number of leafes
 	'''
 
-	def __init__(self, fieldsize=None, translation=None, max_fieldsize=None, max_generated_fieldsize=None, num_leafes=80):
+	def __init__(self, fieldsize=None, translation=None, max_fieldsize=None, max_generated_fieldsize=None, num_leafes=80, distribution="gaussian"):
 
 		#check if max fieldsize is given or not, otherwise MR-Linac fieldsize is used
 		if max_fieldsize is None:
@@ -78,13 +78,13 @@ class trainingData():
 		#parameter assignment
 		self.num_leafes = num_leafes
 		self.leaf_width = self.max_fieldsize[0]/self.num_leafes
-		self.fieldsize, self.translation = self.create_field_parameters(fieldsize, translation)
+		self.fieldsize, self.translation = self.create_field_parameters(fieldsize, translation, distribution)
 		self.MLC_iso = self.create_mlc_positions()
 		self.JAW_iso = self.create_jaw_positions()
 		self.MLC_egsinp = self.calculate_new_mlc()
 		self.JAW_egsinp = self.calculate_new_jaw()
 
-	def create_field_parameters(self, fieldsize=None, translation=None):
+	def create_field_parameters(self, fieldsize=None, translation=None, distribution="gaussian"):
 
 		#if fielsize and translation are passed, check if they fit the max_fieldsize
 		if fieldsize is not None and translation is not None:
@@ -93,24 +93,80 @@ class trainingData():
 
 		#if fieldsize and translation is not passed use full spectrum of fieldsizes and translations
 		if fieldsize is None and translation is None:
-			fieldsize = ([random.randint(2,self.max_generated_fieldsize[0]), random.randint(2,self.max_generated_fieldsize[1])])
 
-			#check for boundary conditions
-			max_x_translation = self.max_fieldsize[0]/2 - fieldsize[0]/2
-			max_y_translation = self.max_fieldsize[1]/2 - fieldsize[1]/2
-			translation = [random.randint(-np.floor(max_x_translation), np.floor(max_x_translation)), random.randint(-np.floor(max_y_translation), np.floor(max_y_translation))]
-			#translation = [random.uniform(-max_x_translation, max_x_translation), random.uniform(-max_y_translation, max_y_translation)]
+			if distribution == "gaussian":
 
+				fieldsize = self.gaussian_fieldsize(self.max_fieldsize)
+
+				#check for boundary conditions
+				max_x_translation = self.max_fieldsize[0]/2 - fieldsize[0]/2
+				max_y_translation = self.max_fieldsize[1]/2 - fieldsize[1]/2
+				translation = self.gaussian_translation(max_x_translation, max_y_translation)
+
+			elif distribution == "random":
+
+				fieldsize = ([random.randint(2,self.max_generated_fieldsize[0]), random.randint(2,self.max_generated_fieldsize[1])])
+				
+				#check for boundary conditions
+				max_x_translation = self.max_fieldsize[0]/2 - fieldsize[0]/2
+				max_y_translation = self.max_fieldsize[1]/2 - fieldsize[1]/2
+				translation = [random.randint(-np.floor(max_x_translation), np.floor(max_x_translation)), random.randint(-np.floor(max_y_translation), np.floor(max_y_translation))]
+				#translation = [random.uniform(-max_x_translation, max_x_translation), random.uniform(-max_y_translation, max_y_translation)]
+			
+			else:
+				raise ValueError(f"{distribution} is not a viable distribution parameter. Choose from \"gaussian\" or \"random\"")
 		#check if one of paramters is given
 		if fieldsize is None and translation is not None:
-			fieldsize = ([random.randint(2,int(self.max_generated_fieldsize[0]/2)-translation[0]), random.randint(2,int(self.max_generated_fieldsize[1]/2)-translation[1])])
+
+			if distribution == "gaussian":
+				fieldsize = self.gaussian_fieldsize(self.max_fieldsize)
+
+			elif distribution == "random":
+				fieldsize = ([random.randint(2,int(self.max_generated_fieldsize[0]/2)-translation[0]), random.randint(2,int(self.max_generated_fieldsize[1]/2)-translation[1])])
+
+			else:
+				raise ValueError(f"{distribution} is not a viable distribution parameter. Choose from \"gaussian\" or \"random\"")
 
 		if fieldsize is not None and translation is None:
+
 			max_x_translation = self.max_fieldsize[0]/2 - fieldsize[0]/2
 			max_y_translation = self.max_fieldsize[1]/2 - fieldsize[1]/2
-			translation = [random.randint(-np.floor(max_x_translation), np.floor(max_x_translation)), random.randint(-np.floor(max_y_translation), np.floor(max_y_translation))]
+
+			if distribution == "gaussian":
+				translation = self.gaussian_translation(max_x_translation, max_y_translation)
+
+			elif distribution == "random":
+				translation = [random.randint(-np.floor(max_x_translation), np.floor(max_x_translation)), random.randint(-np.floor(max_y_translation), np.floor(max_y_translation))]
+
+			else:
+				raise ValueError(f"{distribution} is not a viable distribution parameter. Choose from \"gaussian\" or \"random\"")
 
 		return fieldsize, translation
+
+	@staticmethod
+	def gaussian_fieldsize(max_fieldsize):
+		returnable = False
+
+		while returnable == False:
+			fieldsize = [round(abs(random.gauss(0,max_fieldsize[0]/3))) ,round(abs(random.gauss(0,max_fieldsize[1]/3)))]
+
+			if fieldsize[0] >= 2 and fieldsize[1] >= 2 and fieldsize[0] <= max_fieldsize[0] and fieldsize[1] <= max_fieldsize[1]:
+				returnable = True
+	
+		return list(map(int, fieldsize))
+
+	@staticmethod
+	def gaussian_translation(max_x_translation, max_y_translation):
+		
+		returnable = False
+
+		while returnable == False:
+			translation = [np.floor(abs(random.gauss(0,max_x_translation/3))), np.floor(abs(random.gauss(0,max_y_translation/3)))]
+
+			if abs(translation[0]) <= max_x_translation and abs(translation[1]) <= max_y_translation:
+				returnable = True
+	
+		return list(map(int, translation))
 
 	def create_mlc_positions(self):
 
@@ -174,37 +230,6 @@ class trainingData():
 
 		return new_JAWS
 
-	def plot_mlc(self):
-
-		MLC = self.MLC_iso
-		field = np.linspace(-self.max_fieldsize[0]/2, self.max_fieldsize[0]/2, self.num_leafes)
-		plt.bar(field,MLC[1, :], color="w")
-		plt.bar(field,MLC[0, :], color="w")
-		plt.bar(field, self.max_fieldsize[1]/2 + 3 - MLC[1,:], width=self.leaf_width -0.1, bottom=MLC[1,:], color="chocolate")
-		plt.bar(field, -self.max_fieldsize[1]/2 - 3 -MLC[0,:], width=self.leaf_width -0.1, bottom=MLC[0,:], color="sandybrown")
-
-		ax = plt.gca()
-		ax.add_patch(ptc.Rectangle((-self.max_fieldsize[0]/2, -self.max_fieldsize[1]/2 - 3), self.max_fieldsize[0]/2 + self.JAW_iso[0], self.max_fieldsize[1] + 6, facecolor="midnightblue", alpha=0.6))
-		ax.add_patch(ptc.Rectangle((self.JAW_iso[1], -self.max_fieldsize[1]/2 - 3), self.max_fieldsize[0]/2 - self.JAW_iso[1], self.max_fieldsize[1] + 6, facecolor="midnightblue", alpha=0.6))
-
-		plt.hlines([self.max_fieldsize[1]/2, -self.max_fieldsize[1]/2], xmin=-self.max_fieldsize[0]/2, xmax=self.max_fieldsize[0]/2, colors="black")
-		plt.vlines([-self.max_fieldsize[0]/2, self.max_fieldsize[0]/2], ymin=-self.max_fieldsize[1]/2, ymax=self.max_fieldsize[1]/2, colors="black")
-
-		plt.text(-self.max_fieldsize[0]/2, -self.max_fieldsize[1]/2 - 5, f"Fieldsize: [{self.fieldsize[0]} X {self.fieldsize[1]}]")
-		plt.text(-self.max_fieldsize[0]/2, -self.max_fieldsize[1]/2 - 7, f"Offset: [{self.translation[0]} X {self.translation[1]}]")
-		#plt.annotate(text='', xy=(self.max_fieldsize[0]/2+self.translation[0],self.translation[1]+self.fieldsize[1]/2), xytext=(self.max_fieldsize[0]/2+self.translation[0], self.translation[1]-self.fieldsize[1]/2), arrowprops=dict(arrowstyle='<|-|>'))
-		#plt.annotate(text='', xy=(self.max_fieldsize[0]/2+self.translation[0]-self.fieldsize[0]/2 ,self.translation[1]), xytext=(self.max_fieldsize[0]/2+self.translation[0]+self.fieldsize[0]/2, self.translation[1]), arrowprops=dict(arrowstyle='<|-|>'))
-		plt.plot(self.translation[0], self.translation[1], markersize=5, marker="x", color="black")
-
-		plt.yticks(np.arange(-self.max_fieldsize[1]/2, self.max_fieldsize[1]/2 + 0.1, step=self.max_fieldsize[1]/10))
-		plt.xticks(np.arange(-self.max_fieldsize[0]/2, self.max_fieldsize[0]/2 + 0.1, step=self.max_fieldsize[0]/10))
-		plt.axis('equal')
-		plt.tight_layout()
-
-		plt.show()
-	
-		return
-
 	def check_boundary_conditions(self, MLC, central_leafes, count_leafes):
 
 		#check for boundary conditions to move MLC accordingly
@@ -237,7 +262,38 @@ class trainingData():
 			MLC[0, central_leafes[1] - 1 : int(central_leafes[1] + count_leafes/2)] -= self.fieldsize[1]/2 - 0.2
 			MLC[1, central_leafes[1] - 1 : int(central_leafes[1] + count_leafes/2)] += self.fieldsize[1]/2 - 0.2
 
-		return MLC
+		return MLC	
+
+	def plot_mlc(self):
+
+		MLC = self.MLC_iso
+		field = np.linspace(-self.max_fieldsize[0]/2, self.max_fieldsize[0]/2, self.num_leafes)
+		plt.bar(field,MLC[1, :], color="w")
+		plt.bar(field,MLC[0, :], color="w")
+		plt.bar(field, self.max_fieldsize[1]/2 + 3 - MLC[1,:], width=self.leaf_width -0.1, bottom=MLC[1,:], color="chocolate")
+		plt.bar(field, -self.max_fieldsize[1]/2 - 3 -MLC[0,:], width=self.leaf_width -0.1, bottom=MLC[0,:], color="sandybrown")
+
+		ax = plt.gca()
+		ax.add_patch(ptc.Rectangle((-self.max_fieldsize[0]/2, -self.max_fieldsize[1]/2 - 3), self.max_fieldsize[0]/2 + self.JAW_iso[0], self.max_fieldsize[1] + 6, facecolor="midnightblue", alpha=0.6))
+		ax.add_patch(ptc.Rectangle((self.JAW_iso[1], -self.max_fieldsize[1]/2 - 3), self.max_fieldsize[0]/2 - self.JAW_iso[1], self.max_fieldsize[1] + 6, facecolor="midnightblue", alpha=0.6))
+
+		plt.hlines([self.max_fieldsize[1]/2, -self.max_fieldsize[1]/2], xmin=-self.max_fieldsize[0]/2, xmax=self.max_fieldsize[0]/2, colors="black")
+		plt.vlines([-self.max_fieldsize[0]/2, self.max_fieldsize[0]/2], ymin=-self.max_fieldsize[1]/2, ymax=self.max_fieldsize[1]/2, colors="black")
+
+		plt.text(-self.max_fieldsize[0]/2, -self.max_fieldsize[1]/2 - 5, f"Fieldsize: [{self.fieldsize[0]} X {self.fieldsize[1]}]")
+		plt.text(-self.max_fieldsize[0]/2, -self.max_fieldsize[1]/2 - 7, f"Offset: [{self.translation[0]} X {self.translation[1]}]")
+		#plt.annotate(text='', xy=(self.max_fieldsize[0]/2+self.translation[0],self.translation[1]+self.fieldsize[1]/2), xytext=(self.max_fieldsize[0]/2+self.translation[0], self.translation[1]-self.fieldsize[1]/2), arrowprops=dict(arrowstyle='<|-|>'))
+		#plt.annotate(text='', xy=(self.max_fieldsize[0]/2+self.translation[0]-self.fieldsize[0]/2 ,self.translation[1]), xytext=(self.max_fieldsize[0]/2+self.translation[0]+self.fieldsize[0]/2, self.translation[1]), arrowprops=dict(arrowstyle='<|-|>'))
+		plt.plot(self.translation[0], self.translation[1], markersize=5, marker="x", color="black")
+
+		plt.yticks(np.arange(-self.max_fieldsize[1]/2, self.max_fieldsize[1]/2 + 0.1, step=self.max_fieldsize[1]/10))
+		plt.xticks(np.arange(-self.max_fieldsize[0]/2, self.max_fieldsize[0]/2 + 0.1, step=self.max_fieldsize[0]/10))
+		plt.axis('equal')
+		plt.tight_layout()
+
+		plt.show()
+	
+		return
 
 	def create_egsinp_text(self, template_text, idx):
 
@@ -273,7 +329,6 @@ class trainingData():
 																PROGRAMM START
 ############################################################################################################################################################"""			
 
-#print(dat.translation, dat.fieldsize, dat.MLC_iso, dat.JAW_iso)
 batch_size = 1
 shapes = []
 template, idx = read_template()
@@ -286,12 +341,19 @@ while len(shapes) < batch_size:
 		continue
 
 	field.egsinp_text = field.create_egsinp_text(template, idx)
-	field.create_egs_file(path)
+	#field.create_egs_file(path)
 	shapes.append((field.fieldsize, field.translation))
 	#pprint.pprint(field.__dict__)
-	#field.plot_mlc()
+	field.plot_mlc()
 
-#print(shapes)
+# x_fieldsize = []
+# for i in shapes:
+# 	x_fieldsize.append(i[0][0])
+
+# plt.hist(x_fieldsize, bins=56)
+# plt.show()
+
+print(shapes)
 
 
 
