@@ -65,6 +65,8 @@ class trainingData():
 		else:
 			self.max_fieldsize =  max_fieldsize #[x_max, y_max]
 
+		if fieldsize is not None and (fieldsize[0] > self.max_fieldsize[0] or fieldsize[1] > self.max_fieldsize[1]):
+			raise ValueError("fieldsize is bigger than max_fieldsize")
 		#check if max_generated_fieldsize is passeed, if not max_generated_fieldsize is set to max_fieldsize
 		if max_generated_fieldsize is None:
 			self.max_generated_fieldsize = self.max_fieldsize
