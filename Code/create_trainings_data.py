@@ -333,14 +333,14 @@ class trainingData():
 																PROGRAMM START
 ############################################################################################################################################################"""			
 
-batch_size = 100
+batch_size = 10000
 shapes = []
 template, idx = read_template()
 path = "/Users/simongutwein/Documents/GitHub/Master_Thesis/Data/training_data"
 
 while len(shapes) < batch_size:
 
-	field = trainingData()
+	field = trainingData(distribution="gaussian")
 	if (field.fieldsize, field.translation) in shapes: 
 		continue
 

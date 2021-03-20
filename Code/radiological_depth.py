@@ -5,7 +5,7 @@ volume = 5*np.ones((size,size,size))
 volume[:,:,:5] = 0
 num = int((size-1)/2)
 d =5
-volume[num-d:num+d, num-d:num+d, num-d:num+d] = 0
+volume[num-d:num+d, num-d:num+d, num-d:num+d] = 10
 
 origin_pos = [0,0,-10]
 
@@ -15,10 +15,10 @@ dist = [np.sqrt(np.sum(np.square([i,j,k]-origin_pos_corrected))) for i in range(
 
 dist_map = np.array(dist).reshape((size,size,size))
 
-# for i in range(volume.shape[0]):
-# 	plt.imshow(dist_map[i,:,:])
-# 	plt.draw()
-# 	plt.pause(0.01)
+for i in range(volume.shape[0]):
+	plt.imshow(volume[i,:,:])
+	plt.draw()
+	plt.pause(0.01)
 
 radiological_depth = np.zeros(volume.shape)
 for i in range(volume.shape[0]):
