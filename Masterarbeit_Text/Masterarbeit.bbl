@@ -19,63 +19,168 @@
 
 \refsection{0}
   \datalist[entry]{nty/global//global/global}
-    \entry{einstein}{article}{}
+    \entry{davis_glioblastoma_2016}{article}{}
       \name{author}{1}{}{%
-        {{hash=3ebf53e52a3ce84f0ffb8553200a6a63}{%
-           family={Einstein},
-           familyi={E\bibinitperiod},
-           given={Albert},
-           giveni={A\bibinitperiod}}}%
+        {{hash=5f4f310b62be76da412198be9a9dcc25}{%
+           family={Davis},
+           familyi={D\bibinitperiod},
+           given={Mary},
+           giveni={M\bibinitperiod}}}%
       }
-      \strng{namehash}{3ebf53e52a3ce84f0ffb8553200a6a63}
-      \strng{fullhash}{3ebf53e52a3ce84f0ffb8553200a6a63}
-      \strng{bibnamehash}{3ebf53e52a3ce84f0ffb8553200a6a63}
-      \strng{authorbibnamehash}{3ebf53e52a3ce84f0ffb8553200a6a63}
-      \strng{authornamehash}{3ebf53e52a3ce84f0ffb8553200a6a63}
-      \strng{authorfullhash}{3ebf53e52a3ce84f0ffb8553200a6a63}
-      \field{sortinit}{E}
-      \field{sortinithash}{c554bd1a0b76ea92b9f105fe36d9c7b0}
+      \strng{namehash}{5f4f310b62be76da412198be9a9dcc25}
+      \strng{fullhash}{5f4f310b62be76da412198be9a9dcc25}
+      \strng{bibnamehash}{5f4f310b62be76da412198be9a9dcc25}
+      \strng{authorbibnamehash}{5f4f310b62be76da412198be9a9dcc25}
+      \strng{authornamehash}{5f4f310b62be76da412198be9a9dcc25}
+      \strng{authorfullhash}{5f4f310b62be76da412198be9a9dcc25}
+      \field{sortinit}{D}
+      \field{sortinithash}{c438b3d5d027251ba63f5ed538d98af5}
       \field{labelnamesource}{author}
-      \field{labeltitlesource}{title}
-      \field{journaltitle}{Annalen der Physik}
-      \field{number}{10}
-      \field{title}{{Zur Elektrodynamik bewegter K{ö}rper}. ({German}) [{On} the electrodynamics of moving bodies]}
-      \field{volume}{322}
-      \field{year}{1905}
-      \field{pages}{891\bibrangedash 921}
-      \range{pages}{31}
+      \field{labeltitlesource}{shorttitle}
+      \field{day}{1}
+      \field{issn}{1092-1095, 1538-067X}
+      \field{journaltitle}{Clinical Journal of Oncology Nursing}
+      \field{month}{10}
+      \field{number}{5}
+      \field{shortjournal}{{CJON}}
+      \field{shorttitle}{Glioblastoma}
+      \field{title}{Glioblastoma: Overview of Disease and Treatment}
+      \field{urlday}{18}
+      \field{urlmonth}{3}
+      \field{urlyear}{2021}
+      \field{volume}{20}
+      \field{year}{2016}
+      \field{dateera}{ce}
+      \field{urldateera}{ce}
+      \field{pages}{S2\bibrangedash S8}
+      \range{pages}{-1}
       \verb{doi}
-      \verb http://dx.doi.org/10.1002/andp.19053221004
+      \verb 10.1188/16.CJON.S1.2-8
       \endverb
-      \keyw{physics}
-    \endentry
-    \entry{knuthwebsite}{online}{}
-      \name{author}{1}{}{%
-        {{hash=1dd533466eb3313074d496394d319407}{%
-           family={Knuth},
-           familyi={K\bibinitperiod},
-           given={Donald},
-           giveni={D\bibinitperiod}}}%
-      }
-      \strng{namehash}{1dd533466eb3313074d496394d319407}
-      \strng{fullhash}{1dd533466eb3313074d496394d319407}
-      \strng{bibnamehash}{1dd533466eb3313074d496394d319407}
-      \strng{authorbibnamehash}{1dd533466eb3313074d496394d319407}
-      \strng{authornamehash}{1dd533466eb3313074d496394d319407}
-      \strng{authorfullhash}{1dd533466eb3313074d496394d319407}
-      \field{sortinit}{K}
-      \field{sortinithash}{d3edc18d54b9438a72c24c925bfb38f4}
-      \field{labelnamesource}{author}
-      \field{labeltitlesource}{title}
-      \field{addendum}{(accessed: 01.09.2016)}
-      \field{title}{Knuth: Computers and Typesetting}
+      \verb{file}
+      \verb Akzeptierte Version:/Users/simongutwein/Zotero/storage/Y5ERY9DP/Davis - 2016 - Glioblastoma Overview of Disease and Treatment.pdf:application/pdf
+      \endverb
       \verb{urlraw}
-      \verb http://www-cs-faculty.stanford.edu/~uno/abcde.html
+      \verb http://cjon.ons.org/cjon/20/5/supplement/glioblastoma-overview-disease-and-treatment
       \endverb
       \verb{url}
-      \verb http://www-cs-faculty.stanford.edu/~uno/abcde.html
+      \verb http://cjon.ons.org/cjon/20/5/supplement/glioblastoma-overview-disease-and-treatment
       \endverb
-      \keyw{latex,knuth}
+    \endentry
+    \entry{neph_deepmc_2021}{article}{}
+      \name{author}{5}{}{%
+        {{hash=7fc33ce32d4760562b2a4cf2cf87c928}{%
+           family={Neph},
+           familyi={N\bibinitperiod},
+           given={Ryan},
+           giveni={R\bibinitperiod}}}%
+        {{hash=28f3626db27efb68f0962a1e3ea83958}{%
+           family={Lyu},
+           familyi={L\bibinitperiod},
+           given={Qihui},
+           giveni={Q\bibinitperiod}}}%
+        {{hash=b09665f2d86b894e561d30d65478cb84}{%
+           family={Huang},
+           familyi={H\bibinitperiod},
+           given={Yangsibo},
+           giveni={Y\bibinitperiod}}}%
+        {{hash=6538d270bf0ced1e2e1d85f1e1483186}{%
+           family={Yang},
+           familyi={Y\bibinitperiod},
+           given={You\bibnamedelima Ming},
+           giveni={Y\bibinitperiod\bibinitdelim M\bibinitperiod}}}%
+        {{hash=e631bb82c3de82c208edc55258ff03d8}{%
+           family={Sheng},
+           familyi={S\bibinitperiod},
+           given={Ke},
+           giveni={K\bibinitperiod}}}%
+      }
+      \strng{namehash}{1b13c108c366c2445cdf8f5dd74163d2}
+      \strng{fullhash}{4d9d03d5559c4c7652afe17cbfce3aea}
+      \strng{bibnamehash}{1b13c108c366c2445cdf8f5dd74163d2}
+      \strng{authorbibnamehash}{1b13c108c366c2445cdf8f5dd74163d2}
+      \strng{authornamehash}{1b13c108c366c2445cdf8f5dd74163d2}
+      \strng{authorfullhash}{4d9d03d5559c4c7652afe17cbfce3aea}
+      \field{sortinit}{N}
+      \field{sortinithash}{98cf339a479c0454fe09153a08675a15}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{shorttitle}
+      \field{day}{7}
+      \field{issn}{0031-9155, 1361-6560}
+      \field{journaltitle}{Physics in Medicine \& Biology}
+      \field{month}{2}
+      \field{number}{3}
+      \field{shortjournal}{Phys. Med. Biol.}
+      \field{shorttitle}{{DeepMC}}
+      \field{title}{{DeepMC}: a deep learning method for efficient Monte Carlo beamlet dose calculation by predictive denoising in magnetic resonance-guided radiotherapy}
+      \field{urlday}{16}
+      \field{urlmonth}{3}
+      \field{urlyear}{2021}
+      \field{volume}{66}
+      \field{year}{2021}
+      \field{dateera}{ce}
+      \field{urldateera}{ce}
+      \field{pages}{035022}
+      \range{pages}{1}
+      \verb{doi}
+      \verb 10.1088/1361-6560/abca01
+      \endverb
+      \verb{urlraw}
+      \verb https://iopscience.iop.org/article/10.1088/1361-6560/abca01
+      \endverb
+      \verb{url}
+      \verb https://iopscience.iop.org/article/10.1088/1361-6560/abca01
+      \endverb
+    \endentry
+    \entry{thorwarth_technical_2021}{article}{}
+      \name{author}{2}{}{%
+        {{hash=c0f782abcedf29ebfffb8a37587b7e3a}{%
+           family={Thorwarth},
+           familyi={T\bibinitperiod},
+           given={Daniela},
+           giveni={D\bibinitperiod}}}%
+        {{hash=acf0cad0360d6a2e994312cff7dc4ba5}{%
+           family={Low},
+           familyi={L\bibinitperiod},
+           given={Daniel\bibnamedelima A.},
+           giveni={D\bibinitperiod\bibinitdelim A\bibinitperiod}}}%
+      }
+      \strng{namehash}{df7cbf1ae8b655c47b8df29e34c336ec}
+      \strng{fullhash}{df7cbf1ae8b655c47b8df29e34c336ec}
+      \strng{bibnamehash}{df7cbf1ae8b655c47b8df29e34c336ec}
+      \strng{authorbibnamehash}{df7cbf1ae8b655c47b8df29e34c336ec}
+      \strng{authornamehash}{df7cbf1ae8b655c47b8df29e34c336ec}
+      \strng{authorfullhash}{df7cbf1ae8b655c47b8df29e34c336ec}
+      \field{sortinit}{T}
+      \field{sortinithash}{51f9faf24c60c62ca764a77f78cf5666}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{In the past few years, radiotherapy ({RT}) has experienced a major technological innovation with the development of hybrid machines combining magnetic resonance ({MR}) imaging and linear accelerators. This new technology for {MR}-guided cancer treatment has the potential to revolutionize the field of adaptive {RT} due to the opportunity to provide high-resolution, real-time {MR} imaging before and during treatment application. However, from a technical point of view, several challenges remain which need to be tackled to ensure safe and robust real-time adaptive {MR}-guided {RT} delivery. In this manuscript, several technical challenges to {MR}-guided {RT} are discussed. Starting with magnetic field strength tradeoffs, the potential and limitations for purely {MR}-based {RT} workflows are discussed. Furthermore, the current status of real-time 3D {MR} imaging and its potential for real-time {RT} are summarized. Finally, the potential of quantitative {MR} imaging for future biological {RT} adaptation is highlighted.}
+      \field{issn}{2234-943X}
+      \field{journaltitle}{Frontiers in Oncology}
+      \field{note}{Publisher: Frontiers}
+      \field{shortjournal}{Front. Oncol.}
+      \field{title}{Technical Challenges of Real-Time Adaptive {MR}-Guided Radiotherapy}
+      \field{urlday}{21}
+      \field{urlmonth}{3}
+      \field{urlyear}{2021}
+      \field{volume}{11}
+      \field{year}{2021}
+      \field{dateera}{ce}
+      \field{urldateera}{ce}
+      \verb{doi}
+      \verb 10.3389/fonc.2021.634507
+      \endverb
+      \verb{file}
+      \verb Full Text PDF:/Users/simongutwein/Zotero/storage/ANMWKGAX/Thorwarth und Low - 2021 - Technical Challenges of Real-Time Adaptive MR-Guid.pdf:application/pdf
+      \endverb
+      \verb{urlraw}
+      \verb https://www.frontiersin.org/articles/10.3389/fonc.2021.634507/full
+      \endverb
+      \verb{url}
+      \verb https://www.frontiersin.org/articles/10.3389/fonc.2021.634507/full
+      \endverb
+      \keyw{Biologically adaptive radiotherapy,{MR}-guided radiation therapy ({MRgRT}),{MR}-linac,{MR}-only radiotherapy,Online adaptive radiotherapy,Real-time adaptive radiotherapy}
     \endentry
   \enddatalist
 \endrefsection

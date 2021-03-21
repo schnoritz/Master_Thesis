@@ -2182,8 +2182,9 @@
     <bcf:datasource type="file" datatype="bibtex">/Users/simongutwein/Documents/GitHub/Master_Thesis/Masterarbeit_Text/BibTex/bibliography.bib</bcf:datasource>
   </bcf:bibdata>
   <bcf:section number="0">
-    <bcf:citekey order="1">einstein</bcf:citekey>
-    <bcf:citekey order="2">knuthwebsite</bcf:citekey>
+    <bcf:citekey order="1">thorwarth_technical_2021</bcf:citekey>
+    <bcf:citekey order="2">davis_glioblastoma_2016</bcf:citekey>
+    <bcf:citekey order="2">neph_deepmc_2021</bcf:citekey>
   </bcf:section>
   <!-- SORTING TEMPLATES -->
   <bcf:sortingtemplate name="nty">
