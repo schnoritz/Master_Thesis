@@ -1,3 +1,5 @@
 .DS_Store
 Masterarbeit_Text/.DS_Store
 Code/__pycache__
+.vscode/launch.json
+.vscode/settings.json
