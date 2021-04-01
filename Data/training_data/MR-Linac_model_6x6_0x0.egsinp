@@ -1,0 +1,401 @@
+MR-Linac                                                                         #!GUI1.0
+Air
+0, 0, 0, 0, 0, 3, 0,  IWATCH ETC.
+100000000, 47, 11, 900, 2, 5000, 0, 0,  NCASE ETC
+50, 143.59, 0, 0, 0, ,  DIRECTIONAL BREM OPTIONS
+-1, 15, 0, 0.0, 0.2, 2,  0.0, 0.0, 0.0, 0.0,  IQIN, ISOURCE + OPTIONS
+/home/tu/tu_tu/tu_krbmn01/EGSnrc/EGS_HOME/sources/2.2mm.dat
+0, MONOENERGETIC
+7.4
+0, 0, 0.7, 0.01, 0, 2, 2.0,  0 , ECUT,PCUT,IREJCT,ESAVE
+0, 1, 1, 6, 6,  PHOTON FORCING
+1, 10,  SCORING INPUT
+1, 1
+20, 
+0,  DOSE COMPONENTS
+0, Z TO FRONT FACE
+*********** start of CM CONS3R with identifier Target  ***********
+0.8, RMAX
+Target (Tungsten and Copper)
+0, ZMIN
+0.49, ZTHICK
+4, NUM_NODE
+0, 0.2825, 
+0.09, 0.2825, 
+0.09, 0, 
+0.49, 0, 
+0.7, 0.01, 0, 0, -1, 
+Target
+0.7, 0.01, 0, 0, 0, 
+Cu
+*********** start of CM PYRAMIDS with identifier PriCol  ***********
+7.7, RMAX
+Primary Collimator
+2, 0, #LAYERS, AIR OUTSIDE
+1.39, 1.69, 0.6015, 0.6015, -0.6015, -0.6015, 0.4045, 0.4045, -0.4045, -0.4045, 7.7, 7.7, 
+1.69, 13.79, 0.6015, 2.883, -0.6015, -2.883, 0.4045, 1.194, -0.4045, -1.194, 7.7, 7.7, 
+0.7, 0.01, 0, 0,  ECUT ETC. FOR AIR
+0.7, 0.01, 0, 0, 
+MLC/JAW
+0.7, 0.01, 0, 0, 
+MLC/JAW
+*********** start of CM CHAMBER with identifier ChamberI  ***********
+7.7, RMAX
+Monitor Chamber 1
+14.59, ZMIN
+1, 7, 4, N_TOP, N_CHM, N_BOT
+0.11, 7.7, 0, ZTHICK, RCYS, FLAG FOR LAYER 1 IN TOP
+0.7, 0.01, 0, 0, 
+StainlessSteel
+0.7, 0.01, 0, 0, 
+StainlessSteel
+6.7, 7.2, 7.3, RADII FOR CENTRAL PART
+0.576, 0, ZTHICK, FLAG FOR LAYER 1 IN CENTRAL PART
+0.7, 0.01, 0, 0, 
+Nitrogen
+0.038, 0, ZTHICK, FLAG FOR LAYER 2 IN CENTRAL PART
+0.7, 0.01, 0, 0, 
+Ceramics
+0.1, 0, ZTHICK, FLAG FOR LAYER 3 IN CENTRAL PART
+0.7, 0.01, 0, 0, 
+Nitrogen
+0.038, 0, ZTHICK, FLAG FOR LAYER 4 IN CENTRAL PART
+0.7, 0.01, 0, 0, 
+Ceramics
+0.1, 0, ZTHICK, FLAG FOR LAYER 5 IN CENTRAL PART
+0.7, 0.01, 0, 0, 
+Nitrogen
+0.038, 0, ZTHICK, FLAG FOR LAYER 6 IN CENTRAL PART
+0.7, 0.01, 0, 0, 
+Ceramics
+0.25, 0, ZTHICK, FLAG FOR LAYER 7 IN CENTRAL PART
+0.7, 0.01, 0, 0, 
+Nitrogen
+0.7, 0.01, 0, 0,   chamber wall
+Nitrogen
+0.7, 0.01, 0, 0,   gap
+Alumuniumalloy
+0.7, 0.01, 0, 0,   container
+Alumuniumalloy
+0.05, 7.7, 0, ZTHICK, RCYS, FLAG FOR LAYER 1 IN BOTTOM PART
+0.7, 0.01, 0, 0, 
+StainlessSteel
+0.7, 0.01, 0, 0, 
+StainlessSteel
+0.1, 7.7, 0, ZTHICK, RCYS, FLAG FOR LAYER 2 IN BOTTOM PART
+0.7, 0.01, 0, 0, 
+Air
+0.7, 0.01, 0, 0, 
+Air
+0.2, 7.7, 0, ZTHICK, RCYS, FLAG FOR LAYER 3 IN BOTTOM PART
+0.7, 0.01, 0, 0, 
+StainlessSteel
+0.7, 0.01, 0, 0, 
+StainlessSteel
+0.1, 7.7, 0, ZTHICK, RCYS, FLAG FOR LAYER 4 IN BOTTOM PART
+0.7, 0.01, 0, 0, 
+Air
+0.7, 0.01, 0, 0, 
+Air
+0, MRNGE
+*********** start of CM CHAMBER with identifier ChamII  ***********
+7.7, RMAX
+Monitor Chamber 2
+16.29, ZMIN
+1, 7, 3, N_TOP, N_CHM, N_BOT
+0.05, 7.7, 0, ZTHICK, RCYS, FLAG FOR LAYER 1 IN TOP
+0.7, 0.01, 0, 0, 
+StainlessSteel
+0.7, 0.01, 0, 0, 
+StainlessSteel
+6.7, 7.2, 7.3, RADII FOR CENTRAL PART
+0.25, 0, ZTHICK, FLAG FOR LAYER 1 IN CENTRAL PART
+0.7, 0.01, 0, 0, 
+Nitrogen
+0.038, 0, ZTHICK, FLAG FOR LAYER 2 IN CENTRAL PART
+0.7, 0.01, 0, 0, 
+Ceramics
+0.1, 0, ZTHICK, FLAG FOR LAYER 3 IN CENTRAL PART
+0.7, 0.01, 0, 0, 
+Nitrogen
+0.038, 0, ZTHICK, FLAG FOR LAYER 4 IN CENTRAL PART
+0.7, 0.01, 0, 0, 
+Ceramics
+0.1, 0, ZTHICK, FLAG FOR LAYER 5 IN CENTRAL PART
+0.7, 0.01, 0, 0, 
+Nitrogen
+0.038, 0, ZTHICK, FLAG FOR LAYER 6 IN CENTRAL PART
+0.7, 0.01, 0, 0, 
+Ceramics
+0.636, 0, ZTHICK, FLAG FOR LAYER 7 IN CENTRAL PART
+0.7, 0.01, 0, 0, 
+Nitrogen
+0.7, 0.01, 0, 0,   chamber wall
+Nitrogen
+0.7, 0.01, 0, 0,   gap
+Alumuniumalloy
+0.7, 0.01, 0, 0,   container
+Alumuniumalloy
+0.05, 7.7, 0, ZTHICK, RCYS, FLAG FOR LAYER 1 IN BOTTOM PART
+0.7, 0.01, 0, 0, 
+StainlessSteel
+0.7, 0.01, 0, 0, 
+StainlessSteel
+0.05, 7.7, 0, ZTHICK, RCYS, FLAG FOR LAYER 2 IN BOTTOM PART
+0.7, 0.01, 0, 0, 
+Air
+0.7, 0.01, 0, 0, 
+Air
+0.15, 7.7, 0, ZTHICK, RCYS, FLAG FOR LAYER 3 IN BOTTOM PART
+0.7, 0.01, 0, 0, 
+Al
+0.7, 0.01, 0, 0, 
+Al
+0, MRNGE
+*********** start of CM MIRROR with identifier Mirror  ***********
+5.35, RMAX
+Mirror
+18.66295, 8.46609, ZMIN, ZTHICK
+3.14528, -3.398056, XFMIN, XBMIN
+2, # LAYERS
+0.19999,  thickness of layer 1
+1e-6,  thickness of layer 2
+0.7, 0.01, 0, 0, 
+PlateGlass
+0.7, 0.01, 0, 0, 
+Al
+0.7, 0.01, 0, 0, 
+Air
+0.7, 0.01, 0, 0, 
+Air
+*********** start of CM MLCE with identifier MLC  ***********
+15, RMAX
+Multi Leaf Collimator
+0, ORIENT
+80, NUM_LEAF
+31.26, 40.26, ZMIN, ZMAX
+40.2599999, 40.2599999, ZSTEPL, ZSTEPR
+0.08, TGW
+0.115, 0.135, X3, X4
+0.715, 143.59, SPACE, SSD
+-0.0089, LBROT
+0, ENDTYPE
+41.5, 35.77, LEAFRADIUS, CIL
+-41.5498, 41.5498, 1
+-41.5498, 41.5498, 1
+-41.5498, 41.5498, 1
+-41.5498, 41.5498, 1
+-41.5498, 41.5498, 1
+-41.5498, 41.5498, 1
+-41.5498, 41.5498, 1
+-41.5498, 41.5498, 1
+-41.5498, 41.5498, 1
+-41.5498, 41.5498, 1
+-41.5498, 41.5498, 1
+-41.5498, 41.5498, 1
+-41.5498, 41.5498, 1
+-41.5498, 41.5498, 1
+-41.5498, 41.5498, 1
+-41.5498, 41.5498, 1
+-41.5498, 41.5498, 1
+-41.5498, 41.5498, 1
+-41.5498, 41.5498, 1
+-41.5498, 41.5498, 1
+-41.5498, 41.5498, 1
+-41.5498, 41.5498, 1
+-41.5498, 41.5498, 1
+-41.5498, 41.5498, 1
+-41.5498, 41.5498, 1
+-41.5498, 41.5498, 1
+-41.5498, 41.5498, 1
+-41.5498, 41.5498, 1
+-41.5498, 41.5498, 1
+-41.5498, 41.5498, 1
+-41.5498, 41.5498, 1
+-41.5498, 41.5498, 1
+-41.5498, 41.5498, 1
+-42.2550, 42.2550, 1
+-42.2550, 42.2550, 1
+-42.2550, 42.2550, 1
+-42.2550, 42.2550, 1
+-42.2550, 42.2550, 1
+-42.2550, 42.2550, 1
+-42.2550, 42.2550, 1
+-42.2550, 42.2550, 1
+-42.2550, 42.2550, 1
+-42.2550, 42.2550, 1
+-42.2550, 42.2550, 1
+-42.2550, 42.2550, 1
+-42.2550, 42.2550, 1
+-42.2550, 42.2550, 1
+-41.5498, 41.5498, 1
+-41.5498, 41.5498, 1
+-41.5498, 41.5498, 1
+-41.5498, 41.5498, 1
+-41.5498, 41.5498, 1
+-41.5498, 41.5498, 1
+-41.5498, 41.5498, 1
+-41.5498, 41.5498, 1
+-41.5498, 41.5498, 1
+-41.5498, 41.5498, 1
+-41.5498, 41.5498, 1
+-41.5498, 41.5498, 1
+-41.5498, 41.5498, 1
+-41.5498, 41.5498, 1
+-41.5498, 41.5498, 1
+-41.5498, 41.5498, 1
+-41.5498, 41.5498, 1
+-41.5498, 41.5498, 1
+-41.5498, 41.5498, 1
+-41.5498, 41.5498, 1
+-41.5498, 41.5498, 1
+-41.5498, 41.5498, 1
+-41.5498, 41.5498, 1
+-41.5498, 41.5498, 1
+-41.5498, 41.5498, 1
+-41.5498, 41.5498, 1
+-41.5498, 41.5498, 1
+-41.5498, 41.5498, 1
+-41.5498, 41.5498, 1
+-41.5498, 41.5498, 1
+-41.5498, 41.5498, 1
+-41.5498, 41.5498, 1
+-41.5498, 41.5498, 1
+0.7, 0.01, 0, 0, 
+Air
+0.7, 0.01, 0, 0, 
+MLC/JAW
+*********** start of CM MLCQ with identifier Jaws  ***********
+20, RMAX
+Jaws
+1, IDMLFC
+40.50, ZMIN
+7.7, ZTHICK
+2, 7.5, # LEAVES, TOTAL WIDTH
+-10000, ZFOCUS(1)
+13, 44.35, R0LEAF, Z0LEAF
+-13.9281, 13.9281, 2
+0.7, 0.01, 0, 0, 
+Air
+0.7, 0.01, 0, 0, 
+MLC/JAW
+*********** start of CM SLABS with identifier ABS  ***********
+20, RMAX
+Head cover 
+1, NSLABS
+48.2, ZMIN
+0.22, 0.7, 0.01, 0, 0, 0
+ABS
+*********** start of CM SLABS with identifier Cryo  ***********
+35, RMAX
+Cryostat + Gradient Coil + System Body Coil
+36, NSLABS
+49.86248, ZMIN
+0.47752, 0.7, 0.01, 0, 0, 0
+StainlessSteel
+2.0189, 0.7, 0.01, 0, 0, 0
+Air
+0.0525, 0.7, 0.01, 0, 0, 0
+Al
+0.2436, 0.7, 0.01, 0, 0, 0
+Cryotherm233
+0.635, 0.7, 0.01, 0, 0, 0
+Al
+6.903313, 0.7, 0.01, 0, 0, 0
+Air
+0.007112, 0.7, 0.01, 0, 0, 0
+Al
+0.004575, 0.7, 0.01, 0, 0, 0
+Air
+0.3048, 0.7, 0.01, 0, 0, 0
+StainlessSteel
+17.9402, 0.7, 0.01, 0, 0, 0
+Air
+0.3048, 0.7, 0.01, 0, 0, 0
+StainlessSteel
+2.1353, 0.7, 0.01, 0, 0, 0
+LiqHe
+0.3048, 0.7, 0.01, 0, 0, 0
+StainlessSteel
+12.599, 0.7, 0.01, 0, 0, 0
+Air
+0.4, 0.7, 0.01, 0, 0, 0
+StainlessSteel
+0.388316, 0.7, 0.01, 0, 0, 0
+Air
+0.007112, 0.7, 0.01, 0, 0, 0
+Al
+0.650572, 0.7, 0.01, 0, 0, 0
+Air
+0.3175, 0.7, 0.01, 0, 0, 0
+Al
+0.78165, 0.7, 0.01, 0, 0, 0
+Air
+0.03625, 0.7, 0.01, 0, 0, 0
+Al
+0.1596, 0.7, 0.01, 0, 0, 0
+Cryotherm233
+0.3048, 0.7, 0.01, 0, 0, 0
+StainlessSteel
+0.26, 0.7, 0.01, 0, 0, 0
+Air
+0.45, 0.7, 0.01, 0, 0, 0
+Fiberglass_Gradient_Coil
+8.8952, 0.7, 0.01, 0, 0, 0
+Air
+0.0154, 0.7, 0.01, 0, 0, 0
+Al
+0.0035, 0.7, 0.01, 0, 0, 0
+Copper
+0.075, 0.7, 0.01, 0, 0, 0
+FR4
+1.874, 0.7, 0.01, 0, 0, 0
+Air
+0.0035, 0.7, 0.01, 0, 0, 0
+Copper
+0.025, 0.7, 0.01, 0, 0, 0
+FR4
+0.0075, 0.7, 0.01, 0, 0, 0
+Air
+0.35, 0.7, 0.01, 0, 0, 0
+EVAfoam
+0.0075, 0.7, 0.01, 0, 0, 0
+Air
+0.425, 0.7, 0.01, 0, 0, 0
+Fiberglass_QBC
+*********** start of CM SLABS with identifier Air  ***********
+30, RMAX
+Air
+1, NSLABS
+109.59, ZMIN
+4, 0.7, 0.01, 0, 0, 0
+Air
+*********************end of all CMs*****************************
+ #########################
+ :Start MC Transport Parameter:
+ 
+ Global ECUT= 0.7
+ Global PCUT= 0.01
+ Global SMAX= 1e10
+ ESTEPE= 0.25
+ XIMAX= 0.5
+ Boundary crossing algorithm= EXACT
+ Skin depth for BCA= 3
+ Electron-step algorithm= PRESTA-II
+ Spin effects= On
+ Brems angular sampling= Simple
+ Brems cross sections= BH
+ Bound Compton scattering= Off
+ Compton cross sections= default
+ Pair angular sampling= Simple
+ Pair cross sections= BH
+ Photoelectron angular sampling= Off
+ Rayleigh scattering= Off
+ Atomic relaxations= Off
+ Electron impact ionization= Off
+ Photon cross sections= xcom
+ Photon cross-sections output= Off
+ 
+ :Stop MC Transport Parameter:
+ #########################
+

@@ -1,11 +1,12 @@
 from imports import *
+from time import time
+import numba
 
-size = 33
+size = 31
 volume = 5*np.ones((size,size,size))
-volume[:,:,:5] = 0
 num = int((size-1)/2)
 d =5
-volume[num-d:num+d, num-d:num+d, num-d:num+d] = 10
+volume[num-d:num+d, num-d:num+d, num-d:num+d] = 20
 
 origin_pos = [0,0,-10]
 
@@ -15,10 +16,12 @@ dist = [np.sqrt(np.sum(np.square([i,j,k]-origin_pos_corrected))) for i in range(
 
 dist_map = np.array(dist).reshape((size,size,size))
 
-for i in range(volume.shape[0]):
-	plt.imshow(volume[i,:,:])
-	plt.draw()
-	plt.pause(0.01)
+# for i in range(volume.shape[0]):
+# 	plt.imshow(volume[i,:,:])
+# 	plt.draw()
+# 	plt.pause(0.01)
+
+start = time()
 
 radiological_depth = np.zeros(volume.shape)
 for i in range(volume.shape[0]):
@@ -34,6 +37,8 @@ for i in range(volume.shape[0]):
             voxels = np.array([[x[idx],y[idx],z[idx]] for idx in range(len(x))]).astype(int)
             mean_HU_value = np.sum([volume[voxels[i][0],voxels[i][1],voxels[i][2]] for i in range(len(voxels))])
             radiological_depth[i,j,k] = mean_HU_value*dist_map[i,j,k]
+
+print("dauer", time()-start)
 
 for i in range(volume.shape[0]):
     plt.imshow(radiological_depth[i,:,:])

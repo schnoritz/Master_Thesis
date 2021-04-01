@@ -1,5 +1,4 @@
 from imports import *
-
 #File to read in .3ddose file and plot cross-, inplane and TDV
 
 def dose_distribution_3D(filename):
@@ -14,16 +13,14 @@ def dose_distribution_3D(filename):
 
 def plot_dose_distribution(dose_3D,x ,y ,z):
 	
-	plt.imshow(dose_3D[:,:,0])
+	pos = 90
+	plt.imshow(dose_3D[:,pos,:])
 	plt.show()
-	pos = 50
-	x_center, y_center = np.where(dose_3D[:,:,pos] == dose_3D[:,:,pos].max())
-	x_center = x_center[0]
-	y_center = y_center[0]
+	x_center, y_center = dose_3D.shape[0]//2, dose_3D.shape[2]//2
 
-	TDV = dose_3D[x_center,y_center,:]
-	IP = dose_3D[:,y_center,pos]
-	CP = dose_3D[x_center,:,pos]
+	TDV = dose_3D[x_center,:, y_center]
+	IP = dose_3D[:, pos, y_center]
+	CP = dose_3D[x_center, pos, :]
 
 	plt.subplot(3, 1, 1)
 	plt.plot(z[:-1],TDV[::-1])
@@ -35,8 +32,14 @@ def plot_dose_distribution(dose_3D,x ,y ,z):
 
 	return
 	
-filename = "/Users/simongutwein/Documents/GitHub/Master_Thesis/Data/water_phantom_2X2.3ddose"
+
+filename = "/Users/simongutwein/Documents/GitHub/Master_Thesis/Data/MRI_Phantom_Reference2X2.dcm_1.3ddose"
 
 x, y, z, dose_3D = dose_distribution_3D(filename)
+
+# for i in range(dose_3D.shape[2]):
+# 	plt.imshow(dose_3D[:,i,:])
+# 	plt.show()
+# 	print(i)
 
 plot_dose_distribution(dose_3D, x, y, z)
