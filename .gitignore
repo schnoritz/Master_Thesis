@@ -3,3 +3,4 @@ Masterarbeit_Text/.DS_Store
 Code/__pycache__
 .vscode/launch.json
 .vscode/settings.json
+Data/MRI_Phantom_Reference2X2.dcm_1.3ddose
