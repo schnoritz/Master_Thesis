@@ -2,7 +2,7 @@
 
 import numpy as np
 import math
-from numba import jit
+from numba import njit
 import matplotlib.pyplot as plt
 from time import time
 
@@ -39,7 +39,9 @@ class ray():
 
             a = self.calc_alpha(i_x_min, i_x_max, i_y_min, i_y_max, a_min, a_max)
 
-            depth = self.calc_depth(a)
+            #depth = self.calc_depth(a)
+
+            depth = calc_depth(self.origin_pos, self.ray_vector, a, self.target_volume)
 
         return depth
 
@@ -104,18 +106,43 @@ class ray():
 
         return a
 
-    def calc_depth(self, a):
-        intersections = np.array([self.origin_pos + alpha * self.ray_vector for alpha in a])
-        diff = np.array([intersections[i] - intersections[i+1]for i in range(len(intersections)-1)])
-        inter = [zip(np.ceil((intersections[i]+intersections[i+1]) /2).astype('int32')-1) for i in range(len(intersections)-1)]
+    # def calc_depth(self, a):
+    #     intersections = np.array([self.origin_pos + alpha * self.ray_vector for alpha in a])
+    #     diff = np.array([intersections[i] - intersections[i+1]for i in range(len(intersections)-1)])
+    #     inter = [zip(np.ceil((intersections[i]+intersections[i+1]) /2).astype('int32')-1) for i in range(len(intersections)-1)]
 
-        lengths = np.array(
-            [np.sqrt(np.square(var[0]) + np.square(var[1]) + np.square(var[2])) for var in diff])
+    #     lengths = np.array(
+    #         [np.sqrt(np.square(var[0]) + np.square(var[1]) + np.square(var[2])) for var in diff])
 
-        depth = np.sum(np.array(
-            [self.target_volume[x, y, z] * lengths[i] for i, (x, y, z) in enumerate(inter)]))
+    #     depth = np.sum(np.array(
+    #         [self.target_volume[x, y, z] * lengths[i] for i, (x, y, z) in enumerate(inter)]))
 
-        return depth
+    #     return depth
+
+@njit
+def calc_depth(origin, ray_vector, a, target_volume):
+    intersections = np.empty((len(a),3))
+    diff = np.empty((intersections.shape[0]-1,intersections.shape[1]))
+    inter = np.empty(diff.shape)
+    lengths = np.empty(diff.shape[0])
+    depth = 0.0
+
+    for i in range(len(a)):
+        intersections[i,:] = origin + a[i]*ray_vector
+    
+    for i in range(len(intersections)-1):
+        diff[i] = intersections[i] - intersections[i+1]
+
+    for i in range(len(intersections)-1):
+        inter[i] = np.ceil((intersections[i] + intersections[i+1])/2)-1
+
+    for i in range(len(diff)):
+        lengths[i] = np.sqrt(np.square(diff[i][0]) + np.square(diff[i][1]) + np.square(diff[i][2]))
+
+    for i in range(len(lengths)):
+        depth += lengths[i] * target_volume[int(inter[i][0]), int(inter[i][1]), int(inter[i][2])]   
+
+    return depth
 
 def rgb2gray(rgb):
 
