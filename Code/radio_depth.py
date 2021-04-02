@@ -4,142 +4,150 @@ import numpy as np
 import math
 from numba import jit
 import matplotlib.pyplot as plt
-from mpl_toolkits.mplot3d import Axes3D
+from time import time
+
 
 class ray():
     def __init__(self, origin_position, voxel_position, target_volume):
 
         self.origin_pos = np.array(origin_position)
         self.voxel_position = np.array(voxel_position)
+        self.target_volume = target_volume
         self.ray_vector = np.array(voxel_position - origin_position)
-        self.path= self.calculate_path()
-        self.path_lengths = self.calculate_path_length()
-        self.radiological_depth = self.calculate_radiological_depth(target_volume)
-
+        self.path = self.calculate_path()
 
     def calculate_path(self):
 
-        var = np.array([(64-self.origin_pos[0])/self.ray_vector[0], (64-self.origin_pos[1])/self.ray_vector[1]])
+        x, y, z = self.voxel_position[0], self.voxel_position[1], self.voxel_position[2]
+        if self.ray_vector[0] == 0:
+            if self.ray_vector[1] > 1:
+                depth = np.sum(self.target_volume[x, 0:y,z])
+            else:
+                depth = np.sum(self.target_volume[x, y:self.target_volume.shape[1], z])
 
-        var = var[np.isfinite(var)].min()
-        
-        border_intersection = np.array([ self.origin_pos[0]+var*self.ray_vector[0],  self.origin_pos[1]+var*self.ray_vector[1],  self.origin_pos[2]+var*self.ray_vector[2]])
-        directions = np.array([self.ray_vector/abs(self.ray_vector[0]), self.ray_vector/abs(self.ray_vector[1]), self.ray_vector/abs(self.ray_vector[2])])
+        elif self.ray_vector[1] == 0:
+            if self.ray_vector[0] > 1:
+                depth = np.sum(self.target_volume[0:x, y, z])
+            else:
+                depth = np.sum(self.target_volume[x:self.target_volume.shape[0], y, z])
 
-        idxs = []
-        if self.ray_vector[0] > 0:
-            idxs.append(np.ceil(border_intersection[0]))
         else:
-            idxs.append(np.floor(border_intersection[0]))
-        if self.ray_vector[1] > 0:
-            idxs.append(np.ceil(border_intersection[1]))
+
+            a_min, plane= self.calculate_a()
+            a_max = 1
+            i_x_min, i_x_max, i_y_min, i_y_max = self.get_min_max_index(plane, a_min)
+
+            a = self.calc_alpha(i_x_min, i_x_max, i_y_min, i_y_max, a_min, a_max)
+
+            depth = self.calc_depth(a)
+
+        return depth
+
+
+    def calculate_a(self):
+
+        volume_dim = self.target_volume.shape
+
+        a_x = np.array([(self.origin_pos[0]-0)/(self.origin_pos[0]-self.voxel_position[0]),
+                  (self.origin_pos[0]-volume_dim[0])/(self.origin_pos[0]-self.voxel_position[0])])
+        
+        a_x = a_x[a_x > 0].min()
+
+        a_y = np.array([(self.origin_pos[1]-0)/(self.origin_pos[1]-self.voxel_position[1]),
+                        (self.origin_pos[1]-volume_dim[1])/(self.origin_pos[1]-self.voxel_position[1])])
+
+        a_y = a_y[a_y > 0].min()
+
+        a_min = np.array([a_x, a_y]).min()
+
+        if a_y < a_x:
+            plane = 'y'
         else:
-            idxs.append(np.floor(border_intersection[1]))
-        if self.ray_vector[2] > 0:
-            idxs.append(np.ceil(border_intersection[2]))
+            plane = 'x'
+        
+        return a_min, plane
+
+    def get_min_max_index(self,plane, a_min):
+
+        if plane == 'x':
+                i_x_min = 1
+                i_x_max = self.target_volume.shape[0]
+                i_y_min = np.floor(
+                    self.origin_pos[1] + self.ray_vector[1]).astype('int32')
+                i_y_max = np.ceil(
+                    self.origin_pos[1] + a_min*self.ray_vector[1]).astype('int32')
+
         else:
-            idxs.append(np.floor(border_intersection[2]))
+            i_y_min = 1
+            i_y_max = self.target_volume.shape[0]
+            i_x_min = np.floor(self.origin_pos[0] + self.ray_vector[0]).astype('int32')
+            i_x_max = np.ceil(
+                self.origin_pos[0] + a_min*self.ray_vector[0]).astype('int32')
 
-        x, y, z = self.calculate_intersection(idxs)
+        return i_x_min, i_x_max, i_y_min, i_y_max
 
-        if not np.isnan(x):
-            x_plane = np.array([ self.origin_pos[0] + x*self.ray_vector[0],  self.origin_pos[1] + x*self.ray_vector[1],  self.origin_pos[2] + x*self.ray_vector[2]])
-        
-        if not np.isnan(y):
-            y_plane = np.array([ self.origin_pos[0] + y*self.ray_vector[0],  self.origin_pos[1] + y*self.ray_vector[1],  self.origin_pos[2] + y*self.ray_vector[2]])
-        
-        if not np.isnan(z):
-            z_plane = np.array([ self.origin_pos[0] + z*self.ray_vector[0],  self.origin_pos[1] + z*self.ray_vector[1],  self.origin_pos[2] + z*self.ray_vector[2]])
+    def calc_alpha(self, i_x_min, i_x_max, i_y_min, i_y_max, a_min, a_max):
 
-        path = np.empty((0,3), dtype=int)
+        a_x = []
+        for i in range(i_x_min, i_x_max+1):
+            a_x.append((self.origin_pos[0]-i)/(self.origin_pos[0]-self.voxel_position[0]))
 
-        if 'x_plane' in locals():
-            path = np.append(path, self.calculate_plane_intersections(
-                x_plane, directions, 0), axis=0)
+        a_y = []
+        for i in range(i_y_min, i_y_max+1):
+            a_y.append((self.origin_pos[1]-i)/(self.origin_pos[1]-self.voxel_position[1]))
 
-        if 'y_plane' in locals():
-            path = np.append(path, self.calculate_plane_intersections(
-                y_plane, directions, 1), axis=0)
+        a_x, a_y = np.array(a_x), np.array(a_y)
+        a = np.concatenate([a_x, a_y])
+        a = a[a <= a_max]
+        a = a[a >= a_min]
+        a = np.unique(np.sort(a))
 
-        if 'z_plane' in locals():
-            path = np.append(path, self.calculate_plane_intersections(
-                z_plane, directions, 2), axis=0)
-        
-        idx = np.nonzero(self.ray_vector)
-        path = path[path[:, idx[0][0]].argsort()].round(5) 
-        path =  np.unique(path, axis=0)
-        
-        with np.printoptions(threshold=np.inf):
-            print(path)
+        return a
 
-        return np.array(path)
+    def calc_depth(self, a):
+        intersections = np.array([self.origin_pos + alpha * self.ray_vector for alpha in a])
+        diff = np.array([intersections[i] - intersections[i+1]for i in range(len(intersections)-1)])
+        inter = [zip(np.ceil((intersections[i]+intersections[i+1]) /2).astype('int32')-1) for i in range(len(intersections)-1)]
 
+        lengths = np.array(
+            [np.sqrt(np.square(var[0]) + np.square(var[1]) + np.square(var[2])) for var in diff])
 
-    def calculate_intersection(self, idxs): 
-        
-        
-        x = (idxs[0]-self.origin_pos[0])/self.ray_vector[0]
+        depth = np.sum(np.array(
+            [self.target_volume[x, y, z] * lengths[i] for i, (x, y, z) in enumerate(inter)]))
 
-        y = (idxs[1]-self.origin_pos[1])/self.ray_vector[1]
+        return depth
 
-        z = (idxs[2]-self.origin_pos[2])/self.ray_vector[2]
+def rgb2gray(rgb):
 
-        return x, y, z
+    r, g, b = rgb[:, :, 0], rgb[:, :, 1], rgb[:, :, 2]
+    gray = 0.2989 * r + 0.5870 * g + 0.1140 * b
 
-
-    def calculate_plane_intersections(self, point, dir, num):
-
-        path = []
-        for i in range(abs(int(point[num])-self.voxel_position[num])+1):
-            path.append(point+i*dir[num])
-
-        return np.array(path)
-
-
-    def calculate_path_length(self):
-
-        lengths = np.empty((len(self.path)-1,1))
-
-        for i in range(len(self.path)-1):
-            lengths[i] = np.sqrt(np.sum(np.square(self.path[i]-self.path[i+1])))
-    
-        return lengths
-
-
-    def calculate_radiological_depth(self, target_volume):
-
-        voxels = self.path[1:].astype('int32')
-        
-        radiological_depth = 0
-        for i in range(len(voxels)):
-            radiological_depth += target_volume[voxels[i,0]-1, voxels[i,1]-1, voxels[i,2]-1]*self.path_lengths[i]
-
-        return radiological_depth
-
-
-def function():
-    pass
-
+    return gray
 
 if __name__ == "__main__":
     
+    origin = np.array([64,160,20])
+    volume = rgb2gray(plt.imread("/Users/simongutwein/Studium/Masterarbeit/CT.jpg"))
+    volume = np.resize(volume, (32, 128, 128))
+    volume = volume.transpose(1, 2, 0)
 
-    origin = np.array([51,128,16])
-    volume = np.zeros((64, 64, 32))
-    volume[20:40, 20:40, 15:25] = 1
-    voxel = np.array([51, 0, 20])
-    curr_ray = ray(origin, voxel, volume)
-    #print(curr_ray.radiological_depth)
+    plt.imshow(volume[:,:,0], cmap="gray")
 
-    radio_depth_volume = np.empty((64,64))
-    for i in range(64):
-        for j in range(64):
-            print(i,j)
+    radio_depth_volume = np.empty((volume.shape[0], volume.shape[1]))
+    needed_time = []
+    start = time()
+    for i in range(volume.shape[0]):
+        for j in range(volume.shape[1]):
             voxel = np.array([i, j, 20])
             curr_ray = ray(origin, voxel, volume)
-            radio_depth_volume[i,j] = curr_ray.radiological_depth
+            radio_depth_volume[i,j] = curr_ray.path
+            
+            
+    needed_time = time()-start
+    time_per_voxel = needed_time/(128*128)
+    print("Needed Time (all): ", needed_time, "\nTime per Voxel: ", time_per_voxel)
 
-    plt.imshow(radio_depth_volume)
+    plt.imshow(radio_depth_volume, alpha= 0.8, cmap="pink")
     plt.show()
 
                
