@@ -213,7 +213,6 @@ if __name__ == "__main__":
     volume = np.resize(volume, (32, volume.shape[0], volume.shape[1]))
     volume = volume.transpose(1, 2, 0)
 
-   
     radio_depth_volume = np.empty((volume.shape[0], volume.shape[1]))
     needed_time = []
     start = time()
