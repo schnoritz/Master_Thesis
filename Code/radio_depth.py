@@ -2,7 +2,7 @@
 
 import numpy as np
 import math
-from numba import njit#, prange
+from numba import njit, prange
 import matplotlib.pyplot as plt
 from time import time
 
