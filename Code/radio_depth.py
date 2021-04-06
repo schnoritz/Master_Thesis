@@ -2,7 +2,7 @@
 
 import numpy as np
 import math
-from numba import njit, prange
+from numba import njit#, prange
 import matplotlib.pyplot as plt
 from time import time
 
@@ -18,7 +18,7 @@ class ray():
 
     def calculate_path(self):
 
-        a_min= calculate_a(self.target_volume, self.origin_pos, self.ray_vector)
+        a_min= calc_a_min(self.target_volume, self.origin_pos, self.ray_vector)
         a_max = 1
 
         i_x_min, i_x_max, i_y_min, i_y_max, i_z_min, i_z_max = get_min_max_index(self.target_volume, self.origin_pos, self.ray_vector, a_min)
@@ -29,7 +29,40 @@ class ray():
         return depth
 
 
-@njit(fastmath=True)
+@njit
+def calc_a_min(target, origin, ray_vec):
+
+    a_min = 0
+    plane = 'N'
+    volume_dim = np.array(target.shape)-1
+
+    if ray_vec[0] == 0:
+        a_x = np.array([np.inf, np.inf])
+    else:
+        a_x = np.array([(0-origin[0])/(ray_vec[0]),
+                        (volume_dim[0]-origin[0])/(ray_vec[0])])
+
+    a_x = a_x[a_x > 0].min()
+
+    if ray_vec[1] == 0:
+        a_y = np.array([np.inf, np.inf])
+    else:
+        a_y = np.array([(0-origin[1])/(ray_vec[1]),
+                        (volume_dim[1]-origin[1])/(ray_vec[1])])
+
+    a_y = a_y[a_y > 0].min()
+
+    if origin[0] + a_y * ray_vec[0] > volume_dim[0] or origin[0] + a_y * ray_vec[0] < 0:
+        a_min = a_x
+    elif origin[1] + a_x * ray_vec[1] > volume_dim[1] or origin[1] + a_x * ray_vec[1] < 0:
+        a_min = a_y
+    else:
+        a_min = np.array([a_x, a_y]).min()
+
+    return a_min
+
+
+@njit
 def get_min_max_index(target, origin, ray_vec, a_min):
 
     if ray_vec[0] < 0:
@@ -64,7 +97,7 @@ def get_min_max_index(target, origin, ray_vec, a_min):
     return i_x_min, i_x_max, i_y_min, i_y_max, i_z_min, i_z_max
 
 
-@njit(fastmath=True)
+@njit
 def calc_alpha(origin, voxel, i_x_min, i_x_max, i_y_min, i_y_max, i_z_min, i_z_max, a_min, a_max):
 
     a_x = []
@@ -90,41 +123,7 @@ def calc_alpha(origin, voxel, i_x_min, i_x_max, i_y_min, i_y_max, i_z_min, i_z_m
     
     return a
 
-
-@njit(fastmath=True)  # code noch debuggen für parallelisierung
-def calculate_a(target, origin, ray_vec):
-
-    a_min = 0
-    plane = 'N'
-    volume_dim = np.array(target.shape)-1
-
-    if ray_vec[0] == 0:
-        a_x = np.array([np.inf, np.inf])
-    else:
-        a_x = np.array([(0-origin[0])/(ray_vec[0]),
-                        (volume_dim[0]-origin[0])/(ray_vec[0])])
-
-    a_x = a_x[a_x > 0].min()
-
-    if ray_vec[1] == 0:
-        a_y = np.array([np.inf, np.inf])
-    else:
-        a_y = np.array([(0-origin[1])/(ray_vec[1]),
-                        (volume_dim[1]-origin[1])/(ray_vec[1])])
-
-    a_y = a_y[a_y > 0].min()
-
-    if origin[0] + a_y * ray_vec[0] > volume_dim[0] or origin[0] + a_y * ray_vec[0] < 0:
-        a_min = a_x
-    elif origin[1] + a_x * ray_vec[1] > volume_dim[1] or origin[1] + a_x * ray_vec[1] < 0:
-        a_min = a_y
-    else:
-        a_min = np.array([a_x, a_y]).min()
-    
-    return a_min
-
-
-@njit(fastmath=True)#, parallel=True)
+@njit
 def calc_depth(origin, ray_vector, a, target_volume):
     intersections = np.empty((len(a),3))
     diff = np.empty((intersections.shape[0]-1,intersections.shape[1]))
@@ -156,29 +155,37 @@ def rgb2gray(rgb):
 
     return gray
 
-def debug(rotate=True):
+def debug(dat=None, rotate=True):
 
     if rotate==True:
-        angle = np.linspace(0, 1, 10, endpoint=False)*2*np.pi
-        x = 800*np.cos(angle)
-        y = 800*np.sin(angle)
+        angle = np.linspace(0, 1, 40, endpoint=False)*2*np.pi
+        x = np.round(800*np.cos(angle),0)
+        y = np.round(800*np.sin(angle),0)
         origin = []
         for i,j in zip(x,y):
-            origin.append([i,j,20])
+            origin.append([i,j,35])
 
         origins = np.array(origin)
-
+        #print(origins)
+    else:
+        origins = [np.array(dat)]
+        #print(origins)
     return origins
 
 
 if __name__ == "__main__":
     
-    volume = np.array(plt.imread("/Users/simongutwein/Studium/Masterarbeit/CT_512.jpg")).T
+    volume = np.array(rgb2gray(plt.imread("/Users/simongutwein/Studium/Masterarbeit/CT.jpg")))
     volume = np.resize(volume, (64, volume.shape[0], volume.shape[1]))
     volume = volume.transpose(1, 2, 0)
     radio_depth_volume = np.empty((volume.shape[0], volume.shape[1]))
+    voxel = np.array([95,15,20])
+    origin = np.array([-800., 0., 35.])
+    curr_ray = ray(origin, voxel, volume)
+    print(curr_ray.path)
 
-    for origin in debug():
+
+    for origin in debug(rotate=True):
         print(origin)
         needed_time = []
         start = time()
@@ -192,6 +199,6 @@ if __name__ == "__main__":
         time_per_voxel = needed_time/(volume.shape[0]*volume.shape[1])
         print("Needed Time (all): ", needed_time, "\nTime per Voxel: ", time_per_voxel)
 
-        plt.imshow(radio_depth_volume, cmap="magma")
-        plt.imshow(volume[:, :, 50], cmap="gray", alpha=0.3, origin='lower')
+        plt.imshow(radio_depth_volume, cmap="jet")
+        plt.imshow(volume[:, :, 20], cmap="gray", alpha=0.5)
         plt.show()
