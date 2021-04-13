@@ -1,10 +1,10 @@
 MR-Linac                                                                         #!GUI1.0
 Air
 0, 0, 0, 0, 0, 3, 0,  IWATCH ETC.
-100000000, 47, 11, 900, 2, 5000, 0, 0,  NCASE ETC
+1000000, 47, 11, 900, 2, 5000, 0, 0,  NCASE ETC.
 50, 143.59, 0, 0, 0, ,  DIRECTIONAL BREM OPTIONS
 -1, 15, 0, 0.0, 0.2, 2,  0.0, 0.0, 0.0, 0.0,  IQIN, ISOURCE + OPTIONS
-/home/tu/tu_tu/tu_krbmn01/EGSnrc/EGS_HOME/sources/2.2mm.dat
+/home/tu/tu_tu/tu_zxoys08/EGSnrc/egs_home/sources/2.2mm.dat
 0, MONOENERGETIC
 7.4
 0, 0, 0.7, 0.01, 0, 2, 2.0,  0 , ECUT,PCUT,IREJCT,ESAVE

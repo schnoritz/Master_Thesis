@@ -46,7 +46,7 @@ To-Do:
 [✔] möglichkeit bieten bei class auch ein festdefniniertes Feld zu erstellen
 """
 
-from imports import *
+from IMPORTS import *
 
 class trainingData():
 	'''
@@ -144,6 +144,7 @@ class trainingData():
 			else:
 				raise ValueError(f"{distribution} is not a viable distribution parameter. Choose from \"gaussian\" or \"random\"")
 
+
 		return fieldsize, translation
 
 	@staticmethod
@@ -175,22 +176,49 @@ class trainingData():
 
 		MLC = np.zeros((2,self.num_leafes))
 		dx, dy = self.translation[0], self.translation[1]
-		#calculate the central leaves
-		central_leafes = [np.floor(dx/self.leaf_width).astype(int) + int(self.num_leafes/2), np.floor(dx/self.leaf_width).astype(int) + int(self.num_leafes/2) + 1]
-		#print(central_leafes)
-		#calculate the numbers of leafes which need to be added to the central leafes + 4 extra leafes
-		count_leafes = np.ceil(self.fieldsize[0]/self.leaf_width).astype(int) + 2
-		#print(count_leafes)
-		#make number of leafes even
-		if count_leafes%2 != 0:
-			count_leafes += 1
+		field_extend = np.array([dx-float(self.fieldsize[0]/2), dx+float(self.fieldsize[0]/2)])
+		min_leafes = np.ceil((self.fieldsize[0]/2)/0.7)+2
 
-		#create small gap 
+		if self.translation[0] > 0:
+			if self.translation[0] > -0.3 and self.translation[0] < 0.3:
+				num_left, num_left = min_leafes, min_leafes	
+			else:
+				if np.round((abs(self.translation[0])-0.3)%0.7,4) == 0:
+					num_left = min_leafes-1-np.ceil(np.round((abs(self.translation[0])-0.3)/0.7,4))
+				else:
+					num_left = min_leafes-np.ceil(np.round((abs(self.translation[0])-0.3)/0.7,4))
+				if self.translation[0] < 0.4:
+					num_right = min_leafes
+				else:
+					if np.round((abs(self.translation[0])-0.4) % 0.7,4) == 0:
+						num_right = min_leafes +1 +np.ceil(np.round((abs(self.translation[0])-0.4)/0.7,4))
+					else: 
+						num_right = min_leafes+np.ceil(np.round((abs(self.translation[0])-0.4)/0.7,4))
+		else:
+			if self.translation[0] > -0.3 and self.translation[0] < 0.3:
+				num_left, num_right = min_leafes, min_leafes
+			else:
+				if np.round((abs(self.translation[0])-0.3) % 0.7, 4) == 0:
+					num_right = min_leafes-1-np.ceil(np.round((abs(self.translation[0])-0.3)/0.7,4))
+				else:
+					num_right = min_leafes-np.ceil(np.round((abs(self.translation[0])-0.3)/0.7,4))
+
+				if self.translation[0] < 0.4 and self.translation[0] > -0.4:
+					num_left = min_leafes
+				else:
+					if np.round((abs(self.translation[0])-0.4) % 0.7, 4) == 0:
+						num_left = min_leafes +1 +np.ceil(np.round((abs(self.translation[0])-0.4)/0.7,4))
+					else:
+						num_left = min_leafes+np.ceil(np.round((abs(self.translation[0])-0.4)/0.7,4))
+
+		open_leafes = np.array([int(self.num_leafes/2)-num_left+1, int(self.num_leafes/2)+num_right]).astype('int32')
+
+		# #create small gap 
 		MLC[0, :] += dy - 0.2
 		MLC[1, :] += dy + 0.2
 
 		#check for boundary conditions
-		return self.check_boundary_conditions(MLC, central_leafes, count_leafes)
+		return self.check_boundary_conditions(MLC, open_leafes)
 
 	def create_jaw_positions(self):
 
@@ -233,37 +261,42 @@ class trainingData():
 
 		return new_JAWS
 
-	def check_boundary_conditions(self, MLC, central_leafes, count_leafes):
+	def check_boundary_conditions(self, MLC, open_leafes):
+
+		
 
 		#check for boundary conditions to move MLC accordingly
-		if int(central_leafes[0] - count_leafes/2) - 1 < 0 and int(central_leafes[1] + count_leafes/2) < self.num_leafes:
-			MLC[0, 0 : central_leafes[0]] -= self.fieldsize[1]/2 - 0.2
-			MLC[1, 0 : central_leafes[0]] += self.fieldsize[1]/2 - 0.2
-			MLC[0, central_leafes[1] - 1 : int(central_leafes[1] + count_leafes/2)] -= self.fieldsize[1]/2 - 0.2
-			MLC[1, central_leafes[1] - 1 : int(central_leafes[1] + count_leafes/2)] += self.fieldsize[1]/2 - 0.2
+		# if int(central_leafes[0] - count_leafes/2) - 1 < 0 and int(central_leafes[1] + count_leafes/2) < self.num_leafes:
+		# 	MLC[0, 0 : central_leafes[0]] -= self.fieldsize[1]/2 - 0.2
+		# 	MLC[1, 0 : central_leafes[0]] += self.fieldsize[1]/2 - 0.2
+		# 	MLC[0, central_leafes[1] - 1 : int(central_leafes[1] + count_leafes/2)] -= self.fieldsize[1]/2 - 0.2
+		# 	MLC[1, central_leafes[1] - 1 : int(central_leafes[1] + count_leafes/2)] += self.fieldsize[1]/2 - 0.2
 		
 
-		elif int(central_leafes[1] + count_leafes/2) >= self.num_leafes and int(central_leafes[0] - count_leafes/2) - 1 > 0:
+		# elif int(central_leafes[1] + count_leafes/2) >= self.num_leafes and int(central_leafes[0] - count_leafes/2) - 1 > 0:
 			
-			MLC[0, int(central_leafes[0] - count_leafes/2) - 1 : central_leafes[0]] -= self.fieldsize[1]/2 - 0.2
-			MLC[1, int(central_leafes[0] - count_leafes/2) - 1 : central_leafes[0]] += self.fieldsize[1]/2 - 0.2
-			MLC[0, central_leafes[1] - 1 : self.num_leafes] -= self.fieldsize[1]/2 - 0.2
-			MLC[1, central_leafes[1] - 1 : self.num_leafes] += self.fieldsize[1]/2 - 0.2
+		# 	MLC[0, int(central_leafes[0] - count_leafes/2) - 1 : central_leafes[0]] -= self.fieldsize[1]/2 - 0.2
+		# 	MLC[1, int(central_leafes[0] - count_leafes/2) - 1 : central_leafes[0]] += self.fieldsize[1]/2 - 0.2
+		# 	MLC[0, central_leafes[1] - 1 : self.num_leafes] -= self.fieldsize[1]/2 - 0.2
+		# 	MLC[1, central_leafes[1] - 1 : self.num_leafes] += self.fieldsize[1]/2 - 0.2
 		
 
-		elif int(central_leafes[1] + count_leafes/2) >= self.num_leafes and int(central_leafes[0] - count_leafes/2) - 1 < 0:
+		# elif int(central_leafes[1] + count_leafes/2) >= self.num_leafes and int(central_leafes[0] - count_leafes/2) - 1 < 0:
 			
-			MLC[0, 0 : central_leafes[0]] -= self.fieldsize[1]/2 - 0.2
-			MLC[1, 0 : central_leafes[0]] += self.fieldsize[1]/2 - 0.2
-			MLC[0, central_leafes[1] - 1 : self.num_leafes] -= self.fieldsize[1]/2 - 0.2
-			MLC[1, central_leafes[1] - 1 : self.num_leafes] += self.fieldsize[1]/2 - 0.2
+		# 	MLC[0, 0 : central_leafes[0]] -= self.fieldsize[1]/2 - 0.2
+		# 	MLC[1, 0 : central_leafes[0]] += self.fieldsize[1]/2 - 0.2
+		# 	MLC[0, central_leafes[1] - 1 : self.num_leafes] -= self.fieldsize[1]/2 - 0.2
+		# 	MLC[1, central_leafes[1] - 1 : self.num_leafes] += self.fieldsize[1]/2 - 0.2
 
-		else:
+		# else:
 
-			MLC[0, int(central_leafes[0] - count_leafes/2) - 1 : central_leafes[0]] -= self.fieldsize[1]/2 - 0.2
-			MLC[1, int(central_leafes[0] - count_leafes/2) - 1 : central_leafes[0]] += self.fieldsize[1]/2 - 0.2
-			MLC[0, central_leafes[1] - 1 : int(central_leafes[1] + count_leafes/2)] -= self.fieldsize[1]/2 - 0.2
-			MLC[1, central_leafes[1] - 1 : int(central_leafes[1] + count_leafes/2)] += self.fieldsize[1]/2 - 0.2
+		# 	MLC[0, int(central_leafes[0] - count_leafes/2) - 1 : central_leafes[0]] -= self.fieldsize[1]/2 - 0.2
+		# 	MLC[1, int(central_leafes[0] - count_leafes/2) - 1 : central_leafes[0]] += self.fieldsize[1]/2 - 0.2
+		# 	MLC[0, central_leafes[1] - 1 : int(central_leafes[1] + count_leafes/2)] -= self.fieldsize[1]/2 - 0.2
+		# 	MLC[1, central_leafes[1] - 1 : int(central_leafes[1] + count_leafes/2)] += self.fieldsize[1]/2 - 0.2
+
+		MLC[0,open_leafes[0]-1:open_leafes[1]] = self.translation[1]-self.fieldsize[1]/2
+		MLC[1, open_leafes[0]-1:open_leafes[1]] = self.translation[1]+self.fieldsize[1]/2
 
 		return MLC	
 
@@ -282,6 +315,9 @@ class trainingData():
 
 		plt.hlines([self.max_fieldsize[1]/2, -self.max_fieldsize[1]/2], xmin=-self.max_fieldsize[0]/2, xmax=self.max_fieldsize[0]/2, colors="black")
 		plt.vlines([-self.max_fieldsize[0]/2, self.max_fieldsize[0]/2], ymin=-self.max_fieldsize[1]/2, ymax=self.max_fieldsize[1]/2, colors="black")
+		plt.vlines([0, 0], ymin=-14, ymax=14, colors="black", linestyles='dashed', lw=1)
+		plt.hlines([0, 0], xmin=-28.5, xmax=28.5, colors="black", linestyles='dashed', lw=1)
+
 
 		plt.text(-self.max_fieldsize[0]/2, -self.max_fieldsize[1]/2 - 5, f"Fieldsize: [{self.fieldsize[0]} X {self.fieldsize[1]}]")
 		plt.text(-self.max_fieldsize[0]/2, -self.max_fieldsize[1]/2 - 7, f"Offset: [{self.translation[0]} X {self.translation[1]}]")
@@ -333,10 +369,15 @@ class trainingData():
 																PROGRAMM START
 ############################################################################################################################################################"""			
 
-batch_size = 1
+batch_size = 10000
 shapes = []
 template, idx = read_template()
 path = "/Users/simongutwein/Documents/GitHub/Master_Thesis/Data/training_data"
+
+field = trainingData(fieldsize=(10,10),translation=(7,-3))
+#field.plot_mlc()
+#field.egsinp_text = field.create_egsinp_text(template, idx)
+#field.create_egs_file(path)
 
 while len(shapes) < batch_size:
 
@@ -348,7 +389,7 @@ while len(shapes) < batch_size:
 	#field.create_egs_file(path)
 	shapes.append((field.fieldsize, field.translation))
 	#pprint.pprint(field.__dict__)
-	field.plot_mlc()
+	#field.plot_mlc()
 
 scatter_hist_2D_data(shapes)
 

@@ -1,4 +1,4 @@
-from imports import *
+from IMPORTS import *
 
 def plot_mlc_field(MLC_dat, JAWS_dat):
 

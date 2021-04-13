@@ -1,14 +1,13 @@
-from imports import *
+from IMPORTS import *
 #File to read in .3ddose file and plot cross-, inplane and TDV
 
 def dose_distribution_3D(filename):
 
 	file = open(filename)
 	dim = np.array(list(map(int, file.readline().split())))
-	z, y, x = np.array(list(map(float, file.readline().split()))), np.array(list(map(float, file.readline().split()))) ,np.array(list(map(float, file.readline().split())))
+	x, y, z = np.array(list(map(float, file.readline().split()))), np.array(list(map(float, file.readline().split()))) ,np.array(list(map(float, file.readline().split())))
 	dose_dat = np.array(list(map(float, file.readline().split())))
-	dose_dat = dose_dat.reshape(dim[2], dim[1],  dim[0])
-	print(dose_dat.shape)
+	dose_dat = dose_dat.reshape(dim[0], dim[1], dim[2], order='F')
 	return x, y, z, dose_dat
 
 def plot_dose_distribution(dose_3D,x ,y ,z):
@@ -16,11 +15,17 @@ def plot_dose_distribution(dose_3D,x ,y ,z):
 	pos = 90
 	plt.imshow(dose_3D[:,pos,:])
 	plt.show()
+	plt.imshow(dose_3D[pos,:,:])
+	plt.show()
+	plt.imshow(dose_3D[:,:, pos])
+	plt.show()
 	x_center, y_center = dose_3D.shape[0]//2, dose_3D.shape[2]//2
 
-	TDV = dose_3D[x_center,:, y_center]
+	TDV = dose_3D[x_center, y_center, :]
+	print(len(TDV), len(z))
+
 	IP = dose_3D[:, pos, y_center]
-	CP = dose_3D[x_center, pos, :]
+	CP = dose_3D[x_center, :, pos]
 
 	plt.subplot(3, 1, 1)
 	plt.plot(z[:-1],TDV[::-1])
@@ -33,13 +38,13 @@ def plot_dose_distribution(dose_3D,x ,y ,z):
 	return
 	
 
-filename = "/Users/simongutwein/Documents/GitHub/Master_Thesis/Data/MRI_Phantom_Reference2X2.dcm_1.3ddose"
+filename = input("Path:   ")
 
 x, y, z, dose_3D = dose_distribution_3D(filename)
 
-# for i in range(dose_3D.shape[2]):
-# 	plt.imshow(dose_3D[:,i,:])
-# 	plt.show()
-# 	print(i)
+for i in range(dose_3D.shape[2]):
+	plt.imshow(dose_3D[:,i,:])
+	plt.show()
+	print(i)
 
 plot_dose_distribution(dose_3D, x, y, z)
