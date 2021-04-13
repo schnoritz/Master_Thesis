@@ -391,5 +391,5 @@ while len(shapes) < batch_size:
 	#pprint.pprint(field.__dict__)
 	#field.plot_mlc()
 
-scatter_hist_2D_data(shapes)
+scatter_hist_2D_data(shapes) 
 

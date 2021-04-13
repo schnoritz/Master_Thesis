@@ -1,3 +1,4 @@
+
 #Quelle. https://mateuszbuda.github.io/2017/12/01/brainseg.html
 
 import numpy as np
