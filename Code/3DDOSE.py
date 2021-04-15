@@ -21,7 +21,6 @@ def dose_distribution_3D(filename):
 	
 	return x, y, z, dose_dat
 
-dcm_path = "/Users/simongutwein/Downloads/DeepDosePC1/CT.1.3.46.670589.33.1.63679794759504315200001.4792911101058578419"
 
 files = os.listdir("/Users/simongutwein/Downloads/DeepDosePC1/")
 files.remove('.DS_Store')
@@ -52,7 +51,7 @@ x, y, z, dose_3D = dose_distribution_3D(filename)
 
 #%%
 
-cmap = pl.cm.RdBu
+cmap = pl.cm.jet
 
 # Get the colormap colors
 my_cmap = cmap(np.arange(cmap.N))
@@ -72,9 +71,8 @@ basewidth = 512
 for i in range(dose_3D.shape[2]):
 	img = Image.fromarray(np.array((dose_3D[:, :, i]).T/np.array(dose_3D).max()))
 	img = cm(img.resize((basewidth, basewidth), Image.ANTIALIAS))
-	plt.imshow(pixel[:, :, i])
-	plt.imshow(img, alpha = 0.3)
+	plt.imshow(pixel[:, :, i], cmap='bone')
+	plt.imshow(img, alpha = 0.5)
 	plt.show()
-
 
 # %%
