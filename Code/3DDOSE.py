@@ -1,50 +1,80 @@
+
 from IMPORTS import *
+from PIL import Image
+from pydicom import dcmread
+import os
+import pandas as pd
+import matplotlib.pylab as pl
+from matplotlib.colors import ListedColormap
+
 #File to read in .3ddose file and plot cross-, inplane and TDV
 
 def dose_distribution_3D(filename):
 
-	file = open(filename)
-	dim = np.array(list(map(int, file.readline().split())))
-	x, y, z = np.array(list(map(float, file.readline().split()))), np.array(list(map(float, file.readline().split()))) ,np.array(list(map(float, file.readline().split())))
-	dose_dat = np.array(list(map(float, file.readline().split())))
-	dose_dat = dose_dat.reshape(dim[0], dim[1], dim[2], order='F')
+	with open(filename, 'r') as fout:
+
+		dim = np.array(fout.readline().split()).astype("int")
+		x, y, z = np.array(fout.readline().split()).astype(
+			"float"), np.array(fout.readline().split()).astype("float"), np.array(fout.readline().split()).astype("float")
+		dose_dat = np.array(fout.readline().split()).astype("float")
+		dose_dat = dose_dat.reshape(dim[0], dim[1], dim[2], order='F')
+	
 	return x, y, z, dose_dat
 
-def plot_dose_distribution(dose_3D,x ,y ,z):
-	
-	pos = 90
-	plt.imshow(dose_3D[:,pos,:])
-	plt.show()
-	plt.imshow(dose_3D[pos,:,:])
-	plt.show()
-	plt.imshow(dose_3D[:,:, pos])
-	plt.show()
-	x_center, y_center = dose_3D.shape[0]//2, dose_3D.shape[2]//2
+dcm_path = "/Users/simongutwein/Downloads/DeepDosePC1/CT.1.3.46.670589.33.1.63679794759504315200001.4792911101058578419"
 
-	TDV = dose_3D[x_center, y_center, :]
-	print(len(TDV), len(z))
+files = os.listdir("/Users/simongutwein/Downloads/DeepDosePC1/")
+files.remove('.DS_Store')
+pixel = np.empty((512,512,110))
+info = []
+number = []
+for i in range(110): 
+	ct = dcmread("/Users/simongutwein/Downloads/DeepDosePC1/" + files[i])
+	files.append(files[i])
+	number.append(ct.ImagePositionPatient[2])
 
-	IP = dose_3D[:, pos, y_center]
-	CP = dose_3D[x_center, :, pos]
+lst = pd.DataFrame(list(zip(files, number)),columns=['file', 'id'])
+lst = lst.sort_values(by=['id'])
+lst = lst.reset_index()
 
-	plt.subplot(3, 1, 1)
-	plt.plot(z[:-1],TDV[::-1])
-	plt.subplot(3, 1, 2)
-	plt.plot(x[:-1],IP)
-	plt.subplot(3, 1, 3)
-	plt.plot(y[:-1],CP)
-	plt.show()
+for i in range(110):
+	dat = dcmread("/Users/simongutwein/Downloads/DeepDosePC1/" + lst['file'][i])
+	pixel[:,:,i] = dat.pixel_array
 
-	return
-	
-
-filename = input("Path:   ")
+# input("Path:   ")
+filename = "/Users/simongutwein/localfolder/EGSnrc/egs_home/dosxyznrc/phantom_file.3ddose"
 
 x, y, z, dose_3D = dose_distribution_3D(filename)
 
-for i in range(dose_3D.shape[2]):
-	plt.imshow(dose_3D[:,i,:])
-	plt.show()
-	print(i)
+# for i in range(len(z)-1):
+# 	plt.imshow(dose_3D[:,:,i])
+# 	plt.show()
 
-plot_dose_distribution(dose_3D, x, y, z)
+#%%
+
+cmap = pl.cm.RdBu
+
+# Get the colormap colors
+my_cmap = cmap(np.arange(cmap.N))
+
+# Set alpha
+zeros = np.zeros((1,20))
+ones = np.ones((1,236))
+arr = np.concatenate((zeros, ones), axis=1)
+my_cmap[:, -1] = arr
+
+# Create new colormap
+cm = ListedColormap(my_cmap)
+
+#%%
+
+basewidth = 512
+for i in range(dose_3D.shape[2]):
+	img = Image.fromarray(np.array((dose_3D[:, :, i]).T/np.array(dose_3D).max()))
+	img = cm(img.resize((basewidth, basewidth), Image.ANTIALIAS))
+	plt.imshow(pixel[:, :, i])
+	plt.imshow(img, alpha = 0.3)
+	plt.show()
+
+
+# %%

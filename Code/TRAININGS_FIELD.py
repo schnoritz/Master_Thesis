@@ -374,22 +374,23 @@ shapes = []
 template, idx = read_template()
 path = "/Users/simongutwein/Documents/GitHub/Master_Thesis/Data/training_data"
 
-field = trainingData(fieldsize=(10,10),translation=(7,-3))
+for i in range(2,11):
+	field = trainingData(fieldsize=(i,i),translation=(0,0))
 #field.plot_mlc()
-#field.egsinp_text = field.create_egsinp_text(template, idx)
-#field.create_egs_file(path)
-
-while len(shapes) < batch_size:
-
-	field = trainingData(distribution="gaussian")
-	if (field.fieldsize, field.translation) in shapes: 
-		continue
-
 	field.egsinp_text = field.create_egsinp_text(template, idx)
-	#field.create_egs_file(path)
-	shapes.append((field.fieldsize, field.translation))
-	#pprint.pprint(field.__dict__)
-	#field.plot_mlc()
+	field.create_egs_file(path)
 
-scatter_hist_2D_data(shapes) 
+# while len(shapes) < batch_size:
+
+# 	field = trainingData(distribution="gaussian")
+# 	if (field.fieldsize, field.translation) in shapes: 
+# 		continue
+
+# 	field.egsinp_text = field.create_egsinp_text(template, idx)
+# 	#field.create_egs_file(path)
+# 	shapes.append((field.fieldsize, field.translation))
+# 	#pprint.pprint(field.__dict__)
+# 	#field.plot_mlc()
+
+# scatter_hist_2D_data(shapes) 
 
