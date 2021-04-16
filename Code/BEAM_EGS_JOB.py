@@ -2,10 +2,8 @@
 
 import paramiko
 import os
-import time
 from pydicom import dcmread
 import random
-import re
 import numpy as np
 
 hostname = "login1.nemo.uni-freiburg.de"
@@ -26,7 +24,7 @@ dosxyznrc_path = "/".join(dcm_path.split("/")[:-1])
 egsinp_beam = "MR-Linac_model_10x10_0x0"
 n_histories = 1000000
 IPARALLEL = 20
-ANGLE = 315.00
+ANGLE = 225.00
 jobs_path = "/Users/simongutwein/localfolder/EGSnrc/jobs"
 
 all_files = os.listdir(dosxyznrc_path)

@@ -41,7 +41,7 @@ for i in range(110):
 	pixel[:,:,i] = dat.pixel_array
 
 # input("Path:   ")
-filename = "/Users/simongutwein/localfolder/EGSnrc/egs_home/dosxyznrc/phantom_file.3ddose"
+filename = "/Users/simongutwein/localfolder/EGSnrc/egs_home/dosxyznrc/n_hist_10000000_angle_270/phantom_file.3ddose"
 
 x, y, z, dose_3D = dose_distribution_3D(filename)
 
