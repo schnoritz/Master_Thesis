@@ -176,7 +176,7 @@ def debug(dat=None, rotate=True):
 
 if __name__ == "__main__":
     
-    volume = np.array(rgb2gray(plt.imread("/Users/simongutwein/Studium/Masterarbeit/CT.jpg")))
+    volume = np.array(rgb2gray(plt.imread("/Users/simongutwein/Studium/Masterarbeit/CT_2.jpg")))
     volume = np.resize(volume, (64, volume.shape[0], volume.shape[1]))
     volume = volume.transpose(1, 2, 0)
     radio_depth_volume = np.empty((volume.shape[0], volume.shape[1]))

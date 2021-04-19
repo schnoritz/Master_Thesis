@@ -6,16 +6,22 @@ import paramiko
 import random
 import numpy as np
 from pydicom import dcmread
+from glob import glob
 
 def server_login():
-    """logs into the BW-HPC server"""
+    """logs into the BW-HPC server
 
+    Returns:
+        client: returns paramiko client 
+    """
     hostname = "login1.nemo.uni-freiburg.de"
     username = "tu_zxoys08"
     password = "Derzauberkoenig1!"
     client = paramiko.SSHClient()
     client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
     client.connect(hostname=hostname, username=username, password=password)
+    
+    return client
 
 
 def needed_paths(local_dosxyznrc_path, home_directory):
@@ -89,7 +95,7 @@ def create_ctcreate_file(local_dosxyznrc_path, dose_file_path, server_dcm_path):
         fout.write("0, 0 \n")
 
 
-def execute_ct_create(local_dosxyznrc_path):
+def execute_ct_create(client, local_dosxyznrc_path):
     """executes the ctcreate command on the given server
 
     Args:
@@ -105,7 +111,7 @@ def execute_ct_create(local_dosxyznrc_path):
     for line in stdout:
         continue
 
-    print("EGSPHANT FILE CREATED")
+    print("Finished: .egsphant file was created.")
 
 
 def get_iso_position(local_dosxyznrc_path):
@@ -168,7 +174,7 @@ def create_egsinp_file(local_dosxyznrc_path, pos_x, pos_y, pos_z, angle, beam_co
         fout.write('2, 0, 2, 0, 0, 0, 0, 0\n')
         fout.write('BEAM_MR-Linac,' + beam_config + ',521ELEKTA\n')
 
-        fout.write(str(int(n_histories/iparallel)) + ", 0, 500," + 
+        fout.write(str(int(n_histories)) + ", 0, 500," + 
             str(random.randint(0, 10000)) + "," +  
             str(random.randint(0, 10000)) + ", 100.0, 1, 4, 0, 1, 2.0, 0, 0, 0, 40, 0, 0\n")
 
@@ -236,6 +242,11 @@ def create_parallel_files(egsinp_lines, local_dosxyznrc_path, pos_x, pos_y, pos_
     parallel_line[12] = " " + str(iparallel)
     parallel_line[7] = " 0"
 
+    files = glob(local_dosxyznrc_path + 'phantom_file_w*.*')
+    if files:
+        for name in files:
+            os.remove(name)
+
     for i in range(iparallel):
         with open(local_dosxyznrc_path + 'phantom_file_w' + str(i+1) + '.egsinp', 'w+') as fout:
             
@@ -248,7 +259,7 @@ def create_parallel_files(egsinp_lines, local_dosxyznrc_path, pos_x, pos_y, pos_
             fout.write(file_text)
 
 
-def create_job_file(jobs_path, local_dcm_path, iparallel):
+def create_job_file(jobs_path, local_dcm_path, iparallel, nodes, ppn):
     """creates the job file which can be executed for parallel simulation
 
     Args:
@@ -260,7 +271,7 @@ def create_job_file(jobs_path, local_dcm_path, iparallel):
     with open(jobs_path + '/job_' + local_dcm_path.split("/")[-1] + '.sh', 'w+') as fout:
 
         fout.write('#!/bin/bash\n')
-        fout.write("#MSUB -l nodes=4:ppn=20\n")
+        fout.write("#MSUB -l nodes=" + str(nodes) +":ppn=" + str(ppn) + "\n")
         fout.write('#MSUB -l walltime=4:00:00:00\n')
         fout.write('#MSUB -l mem=64gb\n')
         fout.write('#MSUB -N EGSnrc\n')
@@ -278,9 +289,11 @@ def create_job_file(jobs_path, local_dcm_path, iparallel):
         fout.write(command)
 
 
-def execute_job_file():
-    """executes the created job on the BW-HPC cluster """
-
+def execute_job_file(client):
+    """executes the created job on the BW-HPC cluster 
+    Args:
+        client (client): paramiko client where the command is executed
+    """
     client.exec_command('cd EGSnrc/jobs; chmod +x ./job.sh')
     _, stdout, _ = client.exec_command('msub ./EGSnrc/jobs/job_p_pat.sh')
 
@@ -292,7 +305,15 @@ def execute_job_file():
 
 if __name__ == '__main__':
 
-    server_login()
+    dcm_folder = "p_pat" #select folder located in "dosxyznrc" folder
+    beam_config = "MR-Linac_model_5x5_0x0" #chose name of beam configuration
+    n_histories = 500000 #select number of histories
+    gantry_angle = 270 + (72.5) # select angle (number in brackets is from top down position)
+    iparallel = 20 #number of parallel calculations
+    ppn = 20 
+    nodes = 4 #number of nodes for server calculation
+
+    client = server_login()
     dcm_folder = "p_pat"
     local_dosxyznrc_path = "/Users/simongutwein/localfolder/EGSnrc/egs_home/dosxyznrc/"
     local_dcm_path = local_dosxyznrc_path + dcm_folder
@@ -301,22 +322,11 @@ if __name__ == '__main__':
     dose_file_path = local_dosxyznrc_path + "MbaseMRL_Dose.dcm"
     jobs_path = "/Users/simongutwein/localfolder/EGSnrc/jobs"
 
-    beam_config = "MR-Linac_model_10x10_0x0"
-    n_histories = 1000000
-    gantry_angle = 270 + 0
-    iparallel = 20
-
     create_listfile(local_dcm_path, server_dcm_path)
     create_ctcreate_file(local_dosxyznrc_path, dose_file_path, server_dcm_path)
-    execute_ct_create(local_dosxyznrc_path)
+    execute_ct_create(client, local_dosxyznrc_path)
     iso_x, iso_y, iso_z = get_iso_position(local_dosxyznrc_path)
     lines = create_egsinp_file(local_dosxyznrc_path, iso_x, iso_y, iso_z, gantry_angle, beam_config, n_histories, iparallel)
     create_parallel_files(lines, local_dosxyznrc_path, iso_x, iso_y, iso_z, gantry_angle, beam_config, n_histories, iparallel)
-    create_job_file(jobs_path, local_dcm_path, iparallel)
-    execute_job_file()
-
-
-
-    
-
-
+    create_job_file(jobs_path, local_dcm_path, iparallel, nodes, ppn)
+    execute_job_file(client)
