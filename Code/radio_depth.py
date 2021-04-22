@@ -9,6 +9,7 @@ from time import time
 
 
 class ray():
+    
     def __init__(self, origin_position, voxel_position, target_volume):
 
         self.origin_pos = np.array(origin_position)

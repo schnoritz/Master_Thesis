@@ -81,8 +81,8 @@ def get_colormap(cmap, threshold):
 
 if __name__ == "__main__":
 
-	filepath_3ddose = "/Users/simongutwein/localfolder/EGSnrc/egs_home/dosxyznrc/phantom_file.3ddose"
-	filepath_ct_dose = "/Users/simongutwein/localfolder/EGSnrc/egs_home/dosxyznrc/p_pat/"
+	filepath_3ddose = "/Users/simongutwein/localfolder/EGSnrc/egs_home/dosxyznrc/p_225_5x5_0x0.3ddose"
+	filepath_ct_dose = "/Users/simongutwein/localfolder/EGSnrc/egs_home/dosxyznrc/p/"
 	filepath_ct_image = "/Users/simongutwein/Downloads/DeepDosePC1/"
 
 	dose_3d = read_3ddose_file(filepath_3ddose)

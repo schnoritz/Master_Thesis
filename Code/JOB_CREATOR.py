@@ -24,42 +24,21 @@ def server_login():
     return client
 
 
-def needed_paths(local_dosxyznrc_path, home_directory):
-    """generates the needed paths for following functions
-
-    Args:
-        local_dosxyznrc_path (str):     the local path of the dosxyznrc folder
-        home_directory (str):           home directory on BW-HPC of type: "/home/tu/tu_tu/tu_YOUR-ID/"
-
-    Returns:
-        str, str: server path to dosxyznrc directory, server path to chosen dcm directory
-    """
-
-    directories = local_dosxyznrc_path.split("/")
-    egsnrc_folder = directories.index("EGSnrc")
-    local_dcm_path = local_dosxyznrc_path + dcm_folder
-    server_dosxyznrc_path = home_directory + \
-        "/".join(directories[egsnrc_folder:])
-    server_dcm_path = server_dosxyznrc_path + dcm_folder + "/"
-
-    return server_dosxyznrc_path, server_dcm_path
-
-
-def create_listfile(local_dcm_path, server_dcm_path):
+def create_listfile(path):
     """creates a listfile in the directory of the CT images
     Args:
         local_dcm_path (str):       path to the CT images wanted to be used as phantom data
         server_dcm_path (str):      path to the same directory but on BW-HPC
     """
-    used_files = [file_ for file_ in sorted(os.listdir(local_dcm_path)) if not file_.startswith('._') \
+    used_files = [file_ for file_ in sorted(os.listdir(path)) if not file_.startswith('._') \
         and not file_.startswith(".") and not file_ == "listfile.txt"]
 
-    with open(local_dcm_path + '/listfile.txt', 'w+') as fout:
+    with open(path + '/listfile.txt', 'w+') as fout:
         for filename in used_files:
-            fout.write(server_dcm_path + filename + '\n')
+            fout.write(path + filename + '\n')
 
 
-def create_ctcreate_file(local_dosxyznrc_path, dose_file_path, server_dcm_path):
+def create_ctcreate_file(path, dose_file_path, dcm_folder):
     """creates the file needed for the ctcreate command in EGSnrc
 
     Args:
@@ -69,7 +48,7 @@ def create_ctcreate_file(local_dosxyznrc_path, dose_file_path, server_dcm_path):
     """
     dose_file_dat = dcmread(dose_file_path)
 
-    with open(local_dosxyznrc_path + 'ctcreate_file.txt', 'w+') as fout:
+    with open(path + 'ctcreate_file.txt', 'w+') as fout:
     
         image_position = np.array(dose_file_dat.ImagePositionPatient)/10
         dose_dimensions = dose_file_dat.pixel_array.shape
@@ -84,7 +63,7 @@ def create_ctcreate_file(local_dosxyznrc_path, dose_file_path, server_dcm_path):
         zupper = image_position[2]-pixel_spacing[0] / 2+dose_dimensions[0]*pixel_spacing[0]
 
         fout.write("DICOM \n")
-        fout.write(server_dcm_path + "listfile.txt\n")
+        fout.write(path + dcm_folder + "listfile.txt\n")
         fout.write(str("%.4f" % xlower) + ", " + str("%.4f" % xupper) + \
             ", " + str("%.4f" % ylower) + ", " + str("%.4f" % yupper) + \
             ", " + str("%.4f" % zlower) + ", " + str("%.4f" % zupper) + "\n")
@@ -95,15 +74,15 @@ def create_ctcreate_file(local_dosxyznrc_path, dose_file_path, server_dcm_path):
         fout.write("0, 0 \n")
 
 
-def execute_ct_create(client, local_dosxyznrc_path):
+def execute_ct_create(client, path):
     """executes the ctcreate command on the given server
 
     Args:
         local_dosxyznrc_path ([type]): path to the local drectory of dosxyznrc
     """    
 
-    if os.path.isfile(local_dosxyznrc_path + "listfile.txt.egsphant"):
-        os.remove(local_dosxyznrc_path + "listfile.txt.egsphant")
+    if os.path.isfile(path + "listfile.txt.egsphant"):
+        os.remove(path + "listfile.txt.egsphant")
 
     _, stdout, _ = client.exec_command('cd EGSnrc/egs_home/dosxyznrc; \
          ctcreate ctcreate_file.txt -p 700icru')
@@ -114,7 +93,7 @@ def execute_ct_create(client, local_dosxyznrc_path):
     print("Finished: .egsphant file was created.")
 
 
-def get_iso_position(local_dosxyznrc_path):
+def get_iso_position(path):
     """reads out iso center position from egsphant file
 
     Args:
@@ -124,7 +103,7 @@ def get_iso_position(local_dosxyznrc_path):
         str, str, str: returns the iso center position as strings to be used in .egsinp files
     """  
 
-    with open(local_dosxyznrc_path + "listfile.txt.egsphant", "r") as fout:
+    with open(path + "listfile.txt.egsphant", "r") as fout:
 
         for i in range(7):
             fout.readline()
@@ -140,12 +119,12 @@ def get_iso_position(local_dosxyznrc_path):
         return str(pos_x), str(pos_y), str(pos_z)
 
 
-def create_egsinp_file(local_dosxyznrc_path, pos_x, pos_y, pos_z, angle, beam_config, n_histories, iparallel):
+def create_egsinp_file(path, pos_x, pos_y, pos_z, angle, beam_config, n_histories, iparallel, filename):
     """creates the needed .egsinp file which is needed to combine the created .pardose files in 
        parallel calculation. 
 
     Args:
-        local_dosxyznrc_path (str):     path to the local dosxyznrc directory
+        path (str):     path to the local dosxyznrc directory
         pos_x (str):                    iso position of the phamtom in x direction
         pos_y (str):                    iso position of the phamtom in y direction
         pos_z (str):                    iso position of the phamtom in z direction
@@ -158,7 +137,7 @@ def create_egsinp_file(local_dosxyznrc_path, pos_x, pos_y, pos_z, angle, beam_co
         str: the lines from the .egsinp file created in this function
     """
 
-    with open(local_dosxyznrc_path + 'phantom_file.egsinp', 'w+') as fout:
+    with open(path + filename + '.egsinp', 'w+') as fout:
 
         fout.write('CT Phantom from listfile.txt.egsphant\n')
         fout.write('0\n')
@@ -209,18 +188,18 @@ def create_egsinp_file(local_dosxyznrc_path, pos_x, pos_y, pos_z, angle, beam_co
         fout.write(' #########################\n')
         fout.close()
 
-    with open(local_dosxyznrc_path + 'phantom_file.egsinp', 'r') as fout:
+    with open(path + filename + '.egsinp', 'r') as fout:
         lines = fout.readlines()
 
     return lines
 
 
-def create_parallel_files(egsinp_lines, local_dosxyznrc_path, pos_x, pos_y, pos_z, angle, beam_config, n_histories, iparallel):
+def create_parallel_files(egsinp_lines, path, pos_x, pos_y, pos_z, angle, beam_config, n_histories, iparallel, filename):
     """creates the needed .egsinp files which are needed to calculate the .pardose files
        which will be recombined to .3ddose file
     Args:
         egsinp_lines (list):            given list of text from .egsinp file
-        local_dosxyznrc_path (str):     path to the local dosxyznrc directory
+        path (str):                     path to the dosxyznrc directory
         pos_x (str):                    iso position of the phamtom in x direction
         pos_y (str):                    iso position of the phamtom in y direction
         pos_z (str):                    iso position of the phamtom in z direction
@@ -228,8 +207,7 @@ def create_parallel_files(egsinp_lines, local_dosxyznrc_path, pos_x, pos_y, pos_
         beam_config (str):              name of the wanted beam configuration placed inside "BEAM_MR-Linac" folder
         n_histories (int):              number of simulated histories
         iparallel (int):                number of parallel jobs
-
-    """
+     """
 
     position_angle_line = egsinp_lines[5].split(",")
     position_angle_line[6] = " " + format(angle, '.2f')
@@ -242,13 +220,14 @@ def create_parallel_files(egsinp_lines, local_dosxyznrc_path, pos_x, pos_y, pos_
     parallel_line[12] = " " + str(iparallel)
     parallel_line[7] = " 0"
 
-    files = glob(local_dosxyznrc_path + 'phantom_file_w*.*')
+    files = glob(path + "*" + str(angle) +"_w*.*")
     if files:
         for name in files:
-            os.remove(name)
+            if not "egsrun" in name:
+                os.remove(name)
 
     for i in range(iparallel):
-        with open(local_dosxyznrc_path + 'phantom_file_w' + str(i+1) + '.egsinp', 'w+') as fout:
+        with open(path + filename + '_w' + str(i+1) + '.egsinp', 'w+') as fout:
             
             parallel_line[13] = " " + str(i+1)
             parallel_line[3] = " " + str(random.randint(0, 10000)) 
@@ -259,7 +238,7 @@ def create_parallel_files(egsinp_lines, local_dosxyznrc_path, pos_x, pos_y, pos_
             fout.write(file_text)
 
 
-def create_job_file(jobs_path, local_dcm_path, iparallel, nodes, ppn):
+def create_job_file(jobs_path, iparallel, nodes, ppn, filename):
     """creates the job file which can be executed for parallel simulation
 
     Args:
@@ -268,7 +247,7 @@ def create_job_file(jobs_path, local_dcm_path, iparallel, nodes, ppn):
         iparallel (int):       number of desired parallel simulations
     """
 
-    with open(jobs_path + '/job_' + local_dcm_path.split("/")[-1] + '.sh', 'w+') as fout:
+    with open(jobs_path + '/job.sh', 'w+') as fout:
 
         fout.write('#!/bin/bash\n')
         fout.write("#MSUB -l nodes=" + str(nodes) +":ppn=" + str(ppn) + "\n")
@@ -280,11 +259,11 @@ def create_job_file(jobs_path, local_dcm_path, iparallel, nodes, ppn):
 
         for i in range(iparallel):
 
-            command.append("dosxyznrc -i phantom_file_w" +
+            command.append("dosxyznrc -i " + filename + "_w" +
                         str(i+1) + ".egsinp -p 700icru")
 
         command = " & ".join(command) + " & wait\n\n"
-        command += "dosxyznrc -i phantom_file.egsinp -p 700icru"
+        command += "dosxyznrc -i " + filename + ".egsinp" + " -p 700icru"
 
         fout.write(command)
 
@@ -295,7 +274,7 @@ def execute_job_file(client):
         client (client): paramiko client where the command is executed
     """
     client.exec_command('cd EGSnrc/jobs; chmod +x ./job.sh')
-    _, stdout, _ = client.exec_command('msub ./EGSnrc/jobs/job_p_pat.sh')
+    _, stdout, _ = client.exec_command('msub ./EGSnrc/jobs/job.sh')
 
     for string in stdout:
         if string.strip():
@@ -303,30 +282,30 @@ def execute_job_file(client):
     print("Job-ID: " + job_id)
 
 
-if __name__ == '__main__':
+def create_entire_job(n, gantry, par_jobs, ppn, nodes, beam_config):
 
-    dcm_folder = "p_pat" #select folder located in "dosxyznrc" folder
+    dcm_folder = "p/" #select folder located in "dosxyznrc" folder
     beam_config = "MR-Linac_model_5x5_0x0" #chose name of beam configuration
-    n_histories = 500000 #select number of histories
-    gantry_angle = 270 + (72.5) # select angle (number in brackets is from top down position)
-    iparallel = 20 #number of parallel calculations
-    ppn = 20 
-    nodes = 4 #number of nodes for server calculation
+    beam_info = "_".join(beam_config.split("_")[-2:])
+
+    target_filename = dcm_folder[:-1] + "_" + str(int(gantry - 270)) + "_" + beam_info
 
     client = server_login()
-    dcm_folder = "p_pat"
-    local_dosxyznrc_path = "/Users/simongutwein/localfolder/EGSnrc/egs_home/dosxyznrc/"
-    local_dcm_path = local_dosxyznrc_path + dcm_folder
-    home_directory = "/home/tu/tu_tu/tu_zxoys08/"
-    server_dosxyznrc_path, server_dcm_path = needed_paths(local_dosxyznrc_path, home_directory)
-    dose_file_path = local_dosxyznrc_path + "MbaseMRL_Dose.dcm"
-    jobs_path = "/Users/simongutwein/localfolder/EGSnrc/jobs"
+    dosxyznrc_path = "/home/tu/tu_tu/tu_zxoys08/EGSnrc/egs_home/dosxyznrc/"
+    dose_file_path = dosxyznrc_path + "MbaseMRL_Dose.dcm"
+    jobs_path = "/home/tu/tu_tu/tu_zxoys08/EGSnrc/jobs"
 
-    create_listfile(local_dcm_path, server_dcm_path)
-    create_ctcreate_file(local_dosxyznrc_path, dose_file_path, server_dcm_path)
-    execute_ct_create(client, local_dosxyznrc_path)
-    iso_x, iso_y, iso_z = get_iso_position(local_dosxyznrc_path)
-    lines = create_egsinp_file(local_dosxyznrc_path, iso_x, iso_y, iso_z, gantry_angle, beam_config, n_histories, iparallel)
-    create_parallel_files(lines, local_dosxyznrc_path, iso_x, iso_y, iso_z, gantry_angle, beam_config, n_histories, iparallel)
-    create_job_file(jobs_path, local_dcm_path, iparallel, nodes, ppn)
+    create_listfile(dosxyznrc_path + dcm_folder)
+    create_ctcreate_file(dosxyznrc_path, dose_file_path, dcm_folder)
+    execute_ct_create(client, dosxyznrc_path)
+    iso_x, iso_y, iso_z = get_iso_position(dosxyznrc_path)
+    lines = create_egsinp_file(dosxyznrc_path, iso_x, iso_y, iso_z, gantry, beam_config, n, par_jobs, target_filename)
+    create_parallel_files(lines, dosxyznrc_path, iso_x, iso_y, iso_z, gantry, beam_config, n, par_jobs, target_filename)
+    create_job_file(jobs_path, par_jobs, nodes, ppn, target_filename)
     execute_job_file(client)
+
+if __name__ == "__main__":
+    nums = 8
+    beam = "MR-Linac_model_10x10_0x0"
+    for i in range(nums):
+        create_entire_job(10000, i*360/nums + 270, 10, 10, 4, beam)
