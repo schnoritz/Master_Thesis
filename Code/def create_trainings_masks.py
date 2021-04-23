@@ -42,6 +42,7 @@ def scale_fieldsize(fs, px_sp=1.171875):
     #wie hier rundsen? problem: vielleicht immer aufrunden?   
     return np.array([np.round(fs/px_sp, 0), np.round(fs/px_sp,0), np.round(fs/3,0)]).astype("float")
 
+
 @njit
 def calc_distance_source(dist, origin):
     """calculates 3d mask of source distance of easch pixel
@@ -87,44 +88,72 @@ def calc_distance_center(dist, origin, iso):
 @timeit
 def create_trainings_masks(SID, angle, fs):
 
-
+    # define needed directories
     main_dir = "/work/ws/nemo/tu_zxoys08-egs_dat-0/"
-
     training = main_dir + "training/"
-
     binary = training + "binary/"
     center_distance = training + "center_distance/"
     source_distance = training + "source_distance/"
 
+    #define target filenames for binary file with field information and with out for center and source distance
     target_filename = str(angle) + "_" + str(int(fs/10)) + \
         "x" + str(int(fs/10)) + "_0x0.npy"
 
-    print("Creating: " + target_filename)
+    target_filename_cs = str(angle) + ".npy"
 
+
+    print("Creating: " + target_filename)
+    
+    #define size of desired output array
     target_size = (512, 512, 110)
 
+    #calculate iso center in middle of the 3d volume 
     iso_center = np.array([target_size[0]/2-1, target_size[1]/2-1, target_size[2]/2-1]).astype("float")
     origin = get_origin(SID, angle, iso_center).astype("float")
     fs = scale_fieldsize(fs)
 
-    dist_source = np.empty(target_size).astype("float")
-    calc_distance_source(dist_source, origin)
-    print("------------------------------------------")
+    # calculate source distance map
+    save_source = False
+    if not os.path.isfile(source_distance + target_filename_cs):
+        dist_source = np.empty(target_size).astype("float")
+        calc_distance_source(dist_source, origin)
+        print("------------------------------------------")
+        save_source = True
+    else: 
+        print(center_distance + target_filename_cs + " already exists!")
 
-    dist_center = np.empty(target_size).astype("float")
-    calc_distance_center(dist_center, origin, iso_center)
-    print("------------------------------------------")
+    # calculate center beam distance map
+    save_center = False
+    if not os.path.isfile(center_distance + target_filename_cs):
+        dist_center = np.empty(target_size).astype("float")
+        calc_distance_center(dist_center, origin, iso_center)
+        print("------------------------------------------")
+        save_center = True
+    else:
+        print(center_distance + target_filename_cs + " already exists!")
 
-    binary_mask = np.empty(target_size).astype("float")
-    get_binary_mask(binary_mask, angle, fs, origin, iso_center)
-    print("------------------------------------------")
+    # calculate binary mask array
+    save_binary = False
+    if not os.path.isfile(binary + target_filename):
+        binary_mask = np.empty(target_size).astype("float")
+        get_binary_mask(binary_mask, angle, fs, origin, iso_center)
+        print("------------------------------------------")
+        save_binary = True
+    else:
+        print(binary + target_filename + " already exists!")
 
-    save_to_path(center_distance + target_filename, dist_center)
-    print("Saved Center Distance")
-    save_to_path(source_distance + target_filename, dist_source)
-    print("Saved Source Distance")
-    save_to_path(binary + target_filename, binary_mask)
-    print("saved Binary Mask")
+    # save generated 3d volumes to given path
+    if save_source:
+        save_to_path(source_distance + target_filename_cs, dist_source)
+        print("Saved Source Distance")
+
+    if save_center:
+        save_to_path(center_distance + target_filename_cs, dist_center)
+        print("Saved Center Distance")
+
+    if save_binary:
+        save_to_path(binary + target_filename, binary_mask)
+        print("saved Binary Mask")
 
 
 def save_to_path(filepath, arr):
@@ -134,11 +163,9 @@ def save_to_path(filepath, arr):
         filepath (str): desired filepath
         arr (np.array): array to be saved
     """
-    if not os.path.isfile(filepath):
-        with open(filepath, "wb+") as fout:
-            np.save(fout, arr)
-    else: 
-        print(filepath + " already exists.")
+    with open(filepath, "wb+") as fout:
+        np.save(fout, arr)
+
 
 
 def get_binary_mask(mask, angle, fs, origin, iso):
@@ -216,12 +243,12 @@ def intersection(p, n, iso, r_dir):
 
     Returns:
         [type]: [description]
-    """    
-	ndotu = n.dot(r_dir)
-	w = p - iso
-	si = -n.dot(w) / ndotu
-	inter = w + si * r_dir + iso
-	return inter
+    """
+    ndotu = n.dot(r_dir)
+    w = p - iso
+    si = -n.dot(w) / ndotu
+    inter = w + si * r_dir + iso
+    return inter
 
 
 @njit
@@ -285,5 +312,5 @@ def calc_trainings_masks(fs, num_angles=8, SID=1435):
 
 if __name__ == "__main__":
 
-    calc_trainings_masks(10)
+    calc_trainings_masks(2)
 
