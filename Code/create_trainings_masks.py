@@ -87,6 +87,7 @@ def calc_distance_center(dist, origin, iso):
 
 @timeit
 def create_trainings_masks(SID, angle, fs):
+    
 
     # define needed directories
     main_dir = "/work/ws/nemo/tu_zxoys08-egs_dat-0/"
