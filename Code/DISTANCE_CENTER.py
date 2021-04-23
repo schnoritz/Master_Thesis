@@ -22,7 +22,10 @@ if __name__ == "__main__":
     iso_center=np.array([256., 256., 55.]).astype("float")
     vec = iso_center - origin
     distance = distance_matrix(shape, origin, iso_center)
-    print(distance.shape)
+    
+    
+
+
 
     # for i in range(shape[2]):
     #     plt.imshow(distance[:, :, i], cmap="gist_ncar")

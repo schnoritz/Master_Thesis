@@ -59,12 +59,12 @@ def get_ct_image(dose_files, image_files):
 	return ct_image
 
 
-def upscale(dose3d, ct3d):
+def upscale(dose3d, target_shape):
 
-	target_width = ct3d.shape[0]
+	target_width = target_shape[0]
 	target_height = int(target_width/dose3d.shape[1]*dose3d.shape[0])
-	add = np.zeros((target_width-target_height, target_width, ct3d.shape[2]))
-	resized = resize(dose3d, (target_height, target_width, ct3d.shape[2]))
+	add = np.zeros((target_width-target_height, target_width, target_shape[2]))
+	resized = resize(dose3d, (target_height, target_width, target_shape[2]))
 	final_dose = np.concatenate((add, resized), axis=0)
 
 	return final_dose
@@ -88,17 +88,12 @@ if __name__ == "__main__":
 	dose_3d = read_3ddose_file(filepath_3ddose)
 	ct_3d = get_ct_image(filepath_ct_dose, filepath_ct_image)
 
-	dose_3d_upscaled = upscale(dose_3d, ct_3d)
-
-	with open('beam_xyz.npy', 'wb+') as fout:
-		#can be read with np.load(fin)
-		np.save(fout, dose_3d_upscaled)
-		np.save(fout, ct_3d)
+	dose_3d = upscale(dose_3d, ct_3d.shape)
 		
 	dose_cmap = get_colormap(pl.cm.jet, 10)
 	ct_cmap = get_colormap(pl.cm.bone, 7)
 
-	dose_cmap_applied = dose_cmap(dose_3d_upscaled/dose_3d_upscaled.max())
+	dose_cmap_applied = dose_cmap(dose_3d/dose_3d.max())
 	ct_cmap_applied = ct_cmap(ct_3d/ct_3d.max())
 
 	for slice_ in range(ct_3d.shape[2]):

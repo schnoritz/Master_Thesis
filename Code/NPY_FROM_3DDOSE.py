@@ -11,16 +11,15 @@ dose_files = os.listdir(dir_path + dose)
 
 for file_ in dose_files:
    
+    target_filename = "_".join(file_.split(".")[0].split("_")[1:]) + ".npy"
     dose_vol = read_3ddose_file(dir_path + dose + file_)
-    target_size = np.empty((512, 512, 110))
-    dose_vol = upscale(dose_vol, target_size)
+    dose_vol = upscale(dose_vol, (512, 512, 110))
     print(file_, dose_vol.shape)
-    target_filename = file_.split(".")[0] + ".npy"
+
     #    for i in range(target_size.shape[2]):
     #        plt.imshow(dose_vol[:, :, i])
     #        plt.show()
     
-    open(dir_path + dose + target_filename, 'wb+').close()
     with open(dir_path + dose + target_filename, 'wb+') as fout:
         np.save(fout, dose_vol)
 

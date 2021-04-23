@@ -282,10 +282,9 @@ def execute_job_file(client):
     print("Job-ID: " + job_id)
 
 
-def create_entire_job(n, gantry, par_jobs, ppn, nodes, beam_config):
+def create_entire_job(n, gantry, par_jobs, ppn, nodes, beam_config, patient):
 
-    dcm_folder = "p/" #select folder located in "dosxyznrc" folder
-    beam_config = "MR-Linac_model_5x5_0x0" #chose name of beam configuration
+    dcm_folder = patient #select folder located in "dosxyznrc" folder
     beam_info = "_".join(beam_config.split("_")[-2:])
 
     target_filename = dcm_folder[:-1] + "_" + str(int(gantry - 270)) + "_" + beam_info
@@ -308,4 +307,4 @@ if __name__ == "__main__":
     nums = 8
     beam = "MR-Linac_model_10x10_0x0"
     for i in range(nums):
-        create_entire_job(10000, i*360/nums + 270, 10, 10, 4, beam)
+        create_entire_job(n=10000, gantry=i*360/nums + 270, par_jobs=10, ppn=10, nodes=4, beam_config=beam, patient="p/")
