@@ -1,18 +1,18 @@
 #code to calculate radiological depth on a volume
 
-
 import numpy as np
 import math
 from numba import njit, prange
 import matplotlib.pyplot as plt
 from time import time
+import numba
 
 
-class ray():
-    
+class Ray():
+
     def __init__(self, origin_position, voxel_position, target_volume):
 
-        self.origin_pos = np.array(origin_position)
+        self.origin_pos = np.round(np.array(origin_position), 4)
         self.voxel_pos = np.array(voxel_position)
         self.target_volume = target_volume
         self.ray_vector = np.array(voxel_position - origin_position)
@@ -20,15 +20,34 @@ class ray():
 
     def calculate_path(self):
 
-        a_min= calc_a_min(self.target_volume, self.origin_pos, self.ray_vector)
+        a_min = calc_a_min(self.target_volume,
+                           self.origin_pos, self.ray_vector)
         a_max = 1
 
-        i_x_min, i_x_max, i_y_min, i_y_max, i_z_min, i_z_max = get_min_max_index(self.target_volume, self.origin_pos, self.ray_vector, a_min)
-        
-        a = calc_alpha(self.origin_pos, self.voxel_pos, i_x_min, i_x_max, i_y_min, i_y_max, i_z_min, i_z_max, a_min, a_max)
-        depth = calc_depth(self.origin_pos, self.ray_vector, a, self.target_volume)
-            
+        outer_inter = np.empty((3, 2))
+        get_min_max_index(self.target_volume, self.origin_pos,
+                          self.ray_vector, a_min, outer_inter)
+
+        a = calc_alpha(self.origin_pos, self.voxel_pos,
+                       outer_inter, a_min, a_max)
+        depth = calc_depth(self.origin_pos, self.ray_vector,
+                           a, self.target_volume)
+
         return depth
+
+
+@njit
+def check_alpha(r, eps, v, origin, idx):
+
+    if abs(r[idx]) <= eps:
+        a = np.array([np.inf, np.inf])
+    else:
+        a = np.array([(0-origin[idx])/(r[idx]),
+                      (v[idx]-origin[idx])/(r[idx])])
+
+    a = a[a > 0].min()
+
+    return a
 
 
 @njit
@@ -37,22 +56,10 @@ def calc_a_min(target, origin, ray_vec):
     a_min = 0
     plane = 'N'
     volume_dim = np.array(target.shape)-1
+    epsilon = 1e-5
 
-    if ray_vec[0] == 0:
-        a_x = np.array([np.inf, np.inf])
-    else:
-        a_x = np.array([(0-origin[0])/(ray_vec[0]),
-                        (volume_dim[0]-origin[0])/(ray_vec[0])])
-
-    a_x = a_x[a_x > 0].min()
-
-    if ray_vec[1] == 0:
-        a_y = np.array([np.inf, np.inf])
-    else:
-        a_y = np.array([(0-origin[1])/(ray_vec[1]),
-                        (volume_dim[1]-origin[1])/(ray_vec[1])])
-
-    a_y = a_y[a_y > 0].min()
+    a_x = check_alpha(ray_vec, epsilon, volume_dim, origin, 0)
+    a_y = check_alpha(ray_vec, epsilon, volume_dim, origin, 1)
 
     if origin[0] + a_y * ray_vec[0] > volume_dim[0] or origin[0] + a_y * ray_vec[0] < 0:
         a_min = a_x
@@ -65,56 +72,43 @@ def calc_a_min(target, origin, ray_vec):
 
 
 @njit
-def get_min_max_index(target, origin, ray_vec, a_min):
+def check_direction(r, mm, idx, origin, a_min):
 
-    if ray_vec[0] < 0:
-        i_x_min = int(np.ceil(origin[0] + ray_vec[0]))
-        i_x_max = int(np.floor(origin[0] + a_min*ray_vec[0]))
-    elif ray_vec[0] > 0:
-        i_x_min = int(np.floor(origin[0] + a_min*ray_vec[0]))
-        i_x_max = int(np.ceil(origin[0] + ray_vec[0]))
+    if r[idx] < 0:
+        mm[idx][0] = int(np.ceil(abs(origin[idx] + r[idx])))
+        mm[idx][1] = int(np.floor(abs(origin[idx] + a_min*r[idx])))
+
+    elif r[idx] > 0:
+        mm[idx][0] = int(np.floor(abs(origin[idx] + a_min*r[idx])))
+        mm[idx][1] = int(np.ceil(abs(origin[idx] + r[idx])))
+
     else:
-        i_x_min, i_x_max = -1, -1
-
-
-    if ray_vec[1] < 0:
-        i_y_min = int(np.ceil(origin[1] + ray_vec[1]))
-        i_y_max = int(np.floor(origin[1] + a_min*ray_vec[1]))
-    elif ray_vec[1] > 0:
-        i_y_min = int(np.floor(origin[1] + a_min*ray_vec[1]))
-        i_y_max = int(np.ceil(origin[1] + ray_vec[1]))
-    else:
-        i_y_min, i_y_max = -1, -1
-    
-    if ray_vec[2] < 0:
-        i_z_min = int(np.ceil(origin[2] + ray_vec[2]))
-        i_z_max = int(np.floor(origin[2] + a_min*ray_vec[2]))
-    elif ray_vec[2] > 0:
-        i_z_min = int(np.floor(origin[2] + a_min*ray_vec[2]))
-        i_z_max = int(np.ceil(origin[2] + ray_vec[2]))
-    else:
-        i_z_min, i_z_max = -1, -1
-
-
-    return i_x_min, i_x_max, i_y_min, i_y_max, i_z_min, i_z_max
+        mm[idx][0], mm[idx][1] = -1, -1
 
 
 @njit
-def calc_alpha(origin, voxel, i_x_min, i_x_max, i_y_min, i_y_max, i_z_min, i_z_max, a_min, a_max):
+def get_min_max_index(target, origin, ray_vec, a_min, min_max):
+
+    for direction in range(2):
+        check_direction(ray_vec, min_max, direction, origin, a_min)
+
+
+@njit
+def calc_alpha(origin, voxel, min_max, a_min, a_max):
 
     a_x = []
-    if not i_x_min == -1:
-        for i in range(i_x_min, i_x_max+1):
+    if not min_max[0][0] == -1:
+        for i in range(min_max[0][0], min_max[0][1]+1):
             a_x.append((origin[0]-i)/(origin[0]-voxel[0]))
 
     a_y = []
-    if not i_y_min == -1:
-        for i in range(i_y_min, i_y_max+1):
+    if not min_max[1][0] == -1:
+        for i in range(min_max[1][0], min_max[1][1]+1):
             a_y.append((origin[1]-i)/(origin[1]-voxel[1]))
 
     a_z = []
-    if not i_z_min == -1:
-        for i in range(i_z_min, i_z_max+1):
+    if not min_max[2][0] == -1:
+        for i in range(min_max[2][0], min_max[2][1]+1):
             a_z.append((origin[2]-i)/(origin[2]-voxel[2]))
 
     a_x, a_y, a_z = np.array(a_x), np.array(a_y), np.array(a_z)
@@ -122,85 +116,32 @@ def calc_alpha(origin, voxel, i_x_min, i_x_max, i_y_min, i_y_max, i_z_min, i_z_m
     a = a[a <= a_max]
     a = a[a >= a_min]
     a = np.unique(np.sort(a))
-    
+
     return a
+
 
 @njit
 def calc_depth(origin, ray_vector, a, target_volume):
-    intersections = np.empty((len(a),3))
-    diff = np.empty((intersections.shape[0]-1,intersections.shape[1]))
+
+    intersections = np.empty((len(a), 3))
+    diff = np.empty((intersections.shape[0]-1, intersections.shape[1]))
     lengths = np.empty(diff.shape[0])
     depth = 0.0
 
     for i in prange(len(a)):
-        intersections[i,:] = origin + a[i]*ray_vector
-    
-    inter = np.ceil(intersections[:-1])#-1
-    # with np.printoptions(threshold=np.inf):
-    #     print(np.round(intersections,1))
-   
+        intersections[i, :] = origin + a[i]*ray_vector
+
+    inter = np.ceil(intersections[:-1])  # -1
+
     for i in prange(len(intersections)-1):
         diff[i] = intersections[i] - intersections[i+1]
 
     for i in prange(len(diff)):
-        lengths[i] = np.sqrt(np.square(diff[i][0]) + np.square(diff[i][1]) + np.square(diff[i][2]))
+        lengths[i] = np.sqrt(np.square(diff[i][0]) +
+                             np.square(diff[i][1]) + np.square(diff[i][2]))
 
     for i in prange(len(lengths)):
-        depth += lengths[i] * target_volume[int(inter[i][0]), int(inter[i][1]), int(inter[i][2])]   
+        depth += lengths[i] * \
+            target_volume[int(inter[i][0]), int(inter[i][1]), int(inter[i][2])]
 
     return depth
-
-def rgb2gray(rgb):
-
-    r, g, b = rgb[:, :, 0], rgb[:, :, 1], rgb[:, :, 2]
-    gray = 0.2989 * r + 0.5870 * g + 0.1140 * b
-
-    return gray
-
-def debug(dat=None, rotate=True):
-
-    if rotate==True:
-        angle = np.linspace(0, 1, 40, endpoint=False)*2*np.pi
-        x = np.round(800*np.cos(angle),0)
-        y = np.round(800*np.sin(angle),0)
-        origin = []
-        for i,j in zip(x,y):
-            origin.append([i,j,35])
-
-        origins = np.array(origin)
-        #print(origins)
-    else:
-        origins = [np.array(dat)]
-        #print(origins)
-    return origins
-
-
-if __name__ == "__main__":
-    
-    volume = np.array(rgb2gray(plt.imread("/Users/simongutwein/Studium/Masterarbeit/CT_2.jpg")))
-    volume = np.resize(volume, (64, volume.shape[0], volume.shape[1]))
-    volume = volume.transpose(1, 2, 0)
-    radio_depth_volume = np.empty((volume.shape[0], volume.shape[1]))
-    voxel = np.array([95,15,20])
-    origin = np.array([-800., 0., 35.])
-    curr_ray = ray(origin, voxel, volume)
-    print(curr_ray.path)
-
-
-    for origin in debug(rotate=True):
-        print(origin)
-        needed_time = []
-        start = time()
-        for i in range(volume.shape[0]):
-            for j in range(volume.shape[1]):
-                voxel = np.array([i, j, 20])
-                curr_ray = ray(origin, voxel, volume)
-                radio_depth_volume[i, j] = curr_ray.path
-                
-        needed_time = time()-start
-        time_per_voxel = needed_time/(volume.shape[0]*volume.shape[1])
-        print("Needed Time (all): ", needed_time, "\nTime per Voxel: ", time_per_voxel)
-
-        plt.imshow(radio_depth_volume, cmap="jet")
-        plt.imshow(volume[:, :, 20], cmap="gray", alpha=0.5)
-        plt.show()
