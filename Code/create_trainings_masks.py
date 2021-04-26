@@ -4,6 +4,14 @@ import matplotlib.pyplot as plt
 from numba import njit
 import progressbar
 from FUNCTIONS import timeit
+import argparse
+
+# parser = argparse.ArgumentParser(description="Calculate Trainings Data for a Specific Fieldsize")
+
+# parser.add_argument('fs', type=int, help="Fieldsize in x and y Direction")
+# parser.add_argument('-n','--num_angles', type=int, metavar="", help="Number of Angle Segments", nargs='?', default=8)
+# parser.add_argument('-sid', '--SID', type=int, metavar="", help="Source Iso Center Distance", nargs='?', default=1435)
+# args = parser.parse_args()
 
 #creates distance to center, distance to source and binary 
 
@@ -312,6 +320,7 @@ def calc_trainings_masks(fs, num_angles=8, SID=1435):
         create_trainings_masks(SID, angle, fs)
 
 if __name__ == "__main__":
+    pass
 
-    calc_trainings_masks(2)
+    #calc_trainings_masks(args.fs, args.num_angles, args.SID)
 
