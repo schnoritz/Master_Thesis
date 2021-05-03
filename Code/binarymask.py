@@ -108,7 +108,7 @@ def create_binary_mask(file, angle):
         (rotated_dim[0] - iso_center[0]) * increase_per_slice
 
     leaf_positions, jaws = get_leaf_positions(file)
-    jaws = jaws*voxel_size[0]
+    jaws = jaws/voxel_size[0]
     first_layer = get_first_layer(
         leaf_positions, jaws, first_layer_factor, fieldsize_px[0], fieldsize_px[1], rotated_dim)
 
