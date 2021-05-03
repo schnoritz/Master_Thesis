@@ -305,6 +305,6 @@ def create_entire_job(n, gantry, par_jobs, ppn, nodes, beam_config, patient):
 
 if __name__ == "__main__":
     nums = 8
-    beam = "MR-Linac_model_10x10_0x0"
-    for i in range(nums):
-        create_entire_job(n=10000, gantry=i*360/nums + 270, par_jobs=10, ppn=10, nodes=4, beam_config=beam, patient="p/")
+    beam = "MR-Linac_model_5x5_0x0"
+    for angle in np.linspace(0,360, nums, endpoint=False):
+        create_entire_job(n=100000000, gantry=angle + 270, par_jobs=50, ppn=20, nodes=8, beam_config=beam, patient="p/")

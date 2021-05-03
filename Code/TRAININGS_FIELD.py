@@ -364,6 +364,21 @@ class trainingData():
 				for line in self.egsinp_text:
 					f.write("%s\n" % line)
 
+	def create_iso_file(self, path):
+		field_path = f"{path}/MR-Linac_model_{self.fieldsize[0]}x{self.fieldsize[1]}_{self.translation[0]}x{self.translation[1]}.txt"	
+		
+		if not Path(field_path).is_file():
+			MLC_txt = [[f"{self.MLC_iso[0,i]:.4f}",
+							f"{self.MLC_iso[1,i]:.4f}", "1"] for i in range(self.num_leafes)]
+			MLC_txt = [", ".join(i) for i in MLC_txt]
+			JAW_txt = [
+				", ".join([f"{self.JAW_iso[0]:.4f}", f"{self.JAW_iso[1]:.4f}", "2"])]
+
+			with open(field_path, "x") as f:
+				for line in MLC_txt:
+					f.write("%s\n" % line)
+				for line in JAW_txt:
+					f.write("%s\n" % line)
 
 """############################################################################################################################################################
 																PROGRAMM START
@@ -379,6 +394,7 @@ for i in range(2,11):
 #field.plot_mlc()
 	field.egsinp_text = field.create_egsinp_text(template, idx)
 	field.create_egs_file(path)
+	field.create_iso_file(path)
 
 # while len(shapes) < batch_size:
 

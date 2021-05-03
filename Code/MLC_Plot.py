@@ -5,7 +5,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.patches as ptc
 
-file = open("/Users/simongutwein/Documents/GitHub/Master_Thesis/Data/MR-Linac_model_22X22.egsinp")
+file = open(
+	"/Users/simongutwein/Documents/GitHub/Master_Thesis/Data/training_data/MR-Linac_model_9x9_0x0.egsinp")
 
 i=0
 

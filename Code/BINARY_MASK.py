@@ -19,12 +19,6 @@ def binary_mask(mask, origin, iso, bord, n):
                 np.round_(intersection(point, n, iso, point - origin), 6, inter)
                 mask[x, y, z] = check(bord, inter)
 
-    
-
-
-
-
-
 
 @njit
 def intersection(p, n, iso, r_dir):
