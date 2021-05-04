@@ -26,8 +26,6 @@ while True:
 		JAW_dat = file.readline()
 		break
 
-#print(info,JAW_dat)
-
 info = np.array(info.replace(',', '').split())
 info = info.astype(float)
 left_MLC = info[0::3]+41.5
@@ -42,8 +40,6 @@ JAW = np.array(JAW)
 
 ax = plt.barh(range(len(left_MLC)),left_offset,left=left_MLC)
 plt.barh(range(len(left_MLC)),right_offset,left=right_MLC)
-#plt.yticks(np.linspace(0,79,8),np.around(np.linspace(-28.6,28.6,8),decimals=2))
-#plt.xticks(np.linspace(-5.4,5.4,10),np.around(np.linspace(-54,54,10),decimals=2))
 ax = plt.gca()
 ax.add_patch(ptc.Rectangle((-5.4,-0.4),10.8,39.9+JAW[0],facecolor="r",alpha=0.5))
 ax.add_patch(ptc.Rectangle((-5.4,39.5+JAW[1]),10.8,39.9-JAW[1]+0.4, facecolor="r",alpha=0.5))

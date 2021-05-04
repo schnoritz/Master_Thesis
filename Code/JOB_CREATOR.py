@@ -238,7 +238,7 @@ def create_parallel_files(egsinp_lines, path, pos_x, pos_y, pos_z, angle, beam_c
             fout.write(file_text)
 
 
-def create_job_file(jobs_path, iparallel, nodes, ppn, filename):
+def create_job_file(jobs_path, iparallel, nodes, ppn, filename, gantry):
     """creates the job file which can be executed for parallel simulation
 
     Args:
@@ -263,7 +263,9 @@ def create_job_file(jobs_path, iparallel, nodes, ppn, filename):
                         str(i+1) + ".egsinp -p 700icru")
 
         command = " & ".join(command) + " & wait\n\n"
-        command += "dosxyznrc -i " + filename + ".egsinp" + " -p 700icru"
+        command += "dosxyznrc -i " + filename + ".egsinp" + " -p 700icru & wait\n\n"
+        
+        command += "python3 clean_dosxyznrc_folder.py " + gantry
 
         fout.write(command)
 
@@ -285,7 +287,7 @@ def execute_job_file(client):
 def create_entire_job(n, gantry, par_jobs, ppn, nodes, beam_config, patient):
 
     dcm_folder = patient #select folder located in "dosxyznrc" folder
-    beam_info = "_".join(beam_config.split("_")[-2:])
+    beam_info = beam_config.split("_")[-1]
 
     target_filename = dcm_folder[:-1] + "_" + str(int(gantry - 270)) + "_" + beam_info
 
@@ -300,11 +302,14 @@ def create_entire_job(n, gantry, par_jobs, ppn, nodes, beam_config, patient):
     iso_x, iso_y, iso_z = get_iso_position(dosxyznrc_path)
     lines = create_egsinp_file(dosxyznrc_path, iso_x, iso_y, iso_z, gantry, beam_config, n, par_jobs, target_filename)
     create_parallel_files(lines, dosxyznrc_path, iso_x, iso_y, iso_z, gantry, beam_config, n, par_jobs, target_filename)
-    create_job_file(jobs_path, par_jobs, nodes, ppn, target_filename)
+    create_job_file(jobs_path, par_jobs, nodes, ppn,
+                    target_filename, str(int(gantry - 270)))
     execute_job_file(client)
 
 if __name__ == "__main__":
     nums = 8
-    beam = "MR-Linac_model_5x5_0x0"
+    beam = "MR-Linac_model_3x3"
+
     for angle in np.linspace(0,360, nums, endpoint=False):
-        create_entire_job(n=100000000, gantry=angle + 270, par_jobs=50, ppn=20, nodes=8, beam_config=beam, patient="p/")
+
+        create_entire_job(n=10000, gantry=angle + 270, par_jobs=10, ppn=20, nodes=4, beam_config=beam, patient="p/")

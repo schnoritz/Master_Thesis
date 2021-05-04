@@ -387,9 +387,9 @@ class trainingData():
 batch_size = 10000
 shapes = []
 template, idx = read_template()
-path = "/Users/simongutwein/Documents/GitHub/Master_Thesis/Data/training_data"
+path = "/Users/simongutwein/Documents/GitHub/Master_Thesis/Data/training_fields"
 
-for i in range(2,11):
+for i in range(7,8):
 	field = trainingData(fieldsize=(i,i),translation=(0,0))
 #field.plot_mlc()
 	field.egsinp_text = field.create_egsinp_text(template, idx)

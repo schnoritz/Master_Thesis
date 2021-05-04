@@ -3,33 +3,36 @@ import os
 from READ_3DDOSE import read_3ddose_file, upscale
 import matplotlib.pyplot as plt
 
-dir_path = "/work/ws/nemo/tu_zxoys08-egs_dat-0/"
-dose = "test/"
-binary = "binary/"
-dose_files = os.listdir(dir_path + dose)
-
-
-for file_ in dose_files:
+def npy_from_3ddose(file_path, target_path=None, target_volume=(512, 512, 110), save=False):
    
-    target_filename = "_".join(file_.split(".")[0].split("_")[1:]) + ".npy"
-    dose_vol = read_3ddose_file(dir_path + dose + file_)
-    dose_vol = upscale(dose_vol, (512, 512, 110))
-    print(file_, dose_vol.shape)
-
-    #    for i in range(target_size.shape[2]):
-    #        plt.imshow(dose_vol[:, :, i])
-    #        plt.show()
+    target_filename = file_path.split("/")[-1].split(".")[0] + ".npy"
     
-    with open(dir_path + dose + target_filename, 'wb+') as fout:
-        np.save(fout, dose_vol)
+    if target_path[-1] != "/":
+        target_path += "/"
 
-    with open(dir_path + dose + target_filename, 'rb') as fin:
-        dose_vol = np.load(fin)
+    if not os.path.isfile(target_path + target_filename) or save == False:
+        dose_vol = read_3ddose_file(file_path)
+        dose_vol = upscale(dose_vol, target_volume)
+
+    if save:
+
+        if not os.path.isfile(target_path + target_filename):
+            with open(target_path + target_filename, 'wb+') as fout:
+                np.save(fout, dose_vol)
+                print(target_path + target_filename + " saved!")
+        else:
+            print(target_path + target_filename + " already exists!")
+
+    else: 
+
+        return dose_vol
+
+if __name__ == "__main__":
+
+    dose_file = "/home/baumgartner/sgutwein84/training_data/3ddose/"
+    output_path = "/home/baumgartner/sgutwein84/training_data/training/target"
+    files = [x for x in os.listdir(dose_file) if not x.startswith(".")]
+    for file_ in files:
+        npy_from_3ddose(dose_file + file_, output_path, save=True)
     
-    with open(dir_path + binary + target_filename, 'rb') as fin:
-        binary_vol = np.load(fin)
-
-    for slice_ in range(dose_vol.shape[2]):
-        plt.imshow(dose_vol[:, :, slice_])
-        plt.imshow(binary_vol[:, :, slice_])
-        plt.show()
+    
