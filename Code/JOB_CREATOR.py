@@ -308,7 +308,7 @@ def create_entire_job(n, gantry, par_jobs, ppn, nodes, beam_config, patient):
 
 if __name__ == "__main__":
     nums = 8
-    beam = "MR-Linac_model_3x3"
+    beam = "MR-Linac_model_8x8"
 
     for angle in np.linspace(0,360, nums, endpoint=False):
 
