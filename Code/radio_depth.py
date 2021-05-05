@@ -9,10 +9,10 @@ import numba
 
 
 class Ray():
-
+    
     def __init__(self, origin_position, voxel_position, target_volume):
 
-        self.origin_pos = np.round(np.array(origin_position), 4)
+        self.origin_pos = np.round(np.array(origin_position),4)
         self.voxel_pos = np.array(voxel_position)
         self.target_volume = target_volume
         self.ray_vector = np.array(voxel_position - origin_position)
@@ -20,21 +20,16 @@ class Ray():
 
     def calculate_path(self):
 
-        a_min = calc_a_min(self.target_volume,
-                           self.origin_pos, self.ray_vector)
+        a_min= calc_a_min(self.target_volume, self.origin_pos, self.ray_vector)
         a_max = 1
 
-        outer_inter = np.empty((3, 2))
-        get_min_max_index(self.target_volume, self.origin_pos,
-                          self.ray_vector, a_min, outer_inter)
-
-        a = calc_alpha(self.origin_pos, self.voxel_pos,
-                       outer_inter, a_min, a_max)
-        depth = calc_depth(self.origin_pos, self.ray_vector,
-                           a, self.target_volume)
-
+        outer_inter = np.empty((3,2))
+        get_min_max_index(self.target_volume, self.origin_pos, self.ray_vector, a_min, outer_inter)
+        
+        a = calc_alpha(self.origin_pos, self.voxel_pos, outer_inter, a_min, a_max)
+        depth = calc_depth(self.origin_pos, self.ray_vector, a, self.target_volume)
+            
         return depth
-
 
 @njit
 def check_alpha(r, eps, v, origin, idx):
@@ -43,12 +38,11 @@ def check_alpha(r, eps, v, origin, idx):
         a = np.array([np.inf, np.inf])
     else:
         a = np.array([(0-origin[idx])/(r[idx]),
-                      (v[idx]-origin[idx])/(r[idx])])
-
+                        (v[idx]-origin[idx])/(r[idx])])
+    
     a = a[a > 0].min()
 
     return a
-
 
 @njit
 def calc_a_min(target, origin, ray_vec):
@@ -69,7 +63,6 @@ def calc_a_min(target, origin, ray_vec):
         a_min = np.array([a_x, a_y]).min()
 
     return a_min
-
 
 @njit
 def check_direction(r, mm, idx, origin, a_min):
@@ -97,18 +90,18 @@ def get_min_max_index(target, origin, ray_vec, a_min, min_max):
 def calc_alpha(origin, voxel, min_max, a_min, a_max):
 
     a_x = []
-    if not min_max[0][0] == -1:
-        for i in range(min_max[0][0], min_max[0][1]+1):
+    if not int(min_max[0][0]) == -1:
+        for i in range(int(min_max[0][0]), int(min_max[0][1])+1):
             a_x.append((origin[0]-i)/(origin[0]-voxel[0]))
 
     a_y = []
-    if not min_max[1][0] == -1:
-        for i in range(min_max[1][0], min_max[1][1]+1):
+    if not int(min_max[1][0]) == -1:
+        for i in range(int(min_max[1][0]), int(min_max[1][1])+1):
             a_y.append((origin[1]-i)/(origin[1]-voxel[1]))
 
     a_z = []
-    if not min_max[2][0] == -1:
-        for i in range(min_max[2][0], min_max[2][1]+1):
+    if not int(min_max[2][0]) == -1:
+        for i in range(int(min_max[2][0]), int(min_max[2][1])+1):
             a_z.append((origin[2]-i)/(origin[2]-voxel[2]))
 
     a_x, a_y, a_z = np.array(a_x), np.array(a_y), np.array(a_z)
@@ -116,32 +109,32 @@ def calc_alpha(origin, voxel, min_max, a_min, a_max):
     a = a[a <= a_max]
     a = a[a >= a_min]
     a = np.unique(np.sort(a))
-
+    
     return a
-
 
 @njit
 def calc_depth(origin, ray_vector, a, target_volume):
 
-    intersections = np.empty((len(a), 3))
-    diff = np.empty((intersections.shape[0]-1, intersections.shape[1]))
+    intersections = np.empty((len(a),3))
+    diff = np.empty((intersections.shape[0]-1,intersections.shape[1]))
     lengths = np.empty(diff.shape[0])
     depth = 0.0
 
     for i in prange(len(a)):
-        intersections[i, :] = origin + a[i]*ray_vector
-
-    inter = np.ceil(intersections[:-1])  # -1
-
+        intersections[i,:] = origin + a[i]*ray_vector
+    
+    #inter = np.ceil(intersections[:-1])#-1
+    inter = np.empty_like(intersections)
+    np.round_(intersections, 8, inter)
+    inter = inter.astype(numba.int32)
+   
     for i in prange(len(intersections)-1):
         diff[i] = intersections[i] - intersections[i+1]
 
     for i in prange(len(diff)):
-        lengths[i] = np.sqrt(np.square(diff[i][0]) +
-                             np.square(diff[i][1]) + np.square(diff[i][2]))
+        lengths[i] = np.sqrt(np.square(diff[i][0]) + np.square(diff[i][1]) + np.square(diff[i][2]))
 
     for i in prange(len(lengths)):
-        depth += lengths[i] * \
-            target_volume[int(inter[i][0]), int(inter[i][1]), int(inter[i][2])]
+        depth += lengths[i] * target_volume[int(inter[i][0]), int(inter[i][1]), int(inter[i][2])]   
 
     return depth

@@ -32,14 +32,9 @@ def npy_from_3ddose(file_path, target_path=None, target_volume=(512, 512, 110)):
 
 if __name__ == "__main__":
 
-    # dose_file = "/home/baumgartner/sgutwein84/training_data/3ddose/"
-    # output_path = "/home/baumgartner/sgutwein84/training_data/training/target"
-    # files = [x for x in os.listdir(dose_file) if not x.startswith(".")]
-    # for file_ in files:
-    #     npy_from_3ddose(dose_file + file_, output_path, save=True)
+    dose_file = "/home/baumgartner/sgutwein84/training_data/3ddose/"
+    output_path = "/home/baumgartner/sgutwein84/training_data/training/target"
+    files = [x for x in os.listdir(dose_file) if x.split(".")[-1] == "3ddose"]
+    for file_ in files:
+        npy_from_3ddose(dose_file + file_, output_path)
 
-    vol = npy_from_3ddose("/Users/simongutwein/home/tu/tu_tu/tu_zxoys08/EGSnrc/egs_home/dosxyznrc/output/p_90_2x2.3ddose", "test_path")
-    
-    for i in range(vol.shape[2]):
-        plt.imshow(vol[:, :, i])
-        plt.show()

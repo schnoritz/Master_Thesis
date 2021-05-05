@@ -1,29 +1,13 @@
 from pydicom import dcmread
 import numpy as np
+from radio_depth import *
 import os
-import re
-from natsort import natsorted, ns
-from create_trainings_masks import plot_volume, get_origin
-from RADIO_DEPTH import *
-
-def create_ct_arr(files_in, files_out):
-
-    files = [i for i in os.listdir(files_in) if not i.startswith(".")]
-    ct = np.empty((512, 512, len(files)))
-    i = -1
-    for file_ in natsorted(files, key=lambda y: y.lower()):
-        i += 1
-        dat = dcmread(files_in + file_)
-        ct[:, :, i] = dat.pixel_array
-
-    with open(files_out + "p.npy", "wb+") as fout:
-        np.save(fout, ct)
-
-    return ct
+import sys
+import warnings
 
 def create_radio_depth(radio_depth_volume, ct, origin, angle, files_out):
 
-    log_file = "/Users/simongutwein/Studium/Masterarbeit/log.txt"
+    log_file = "/home/baumgartner/sgutwein84/training_data/log.txt"
 
     progress = -5
     for x in range(ct.shape[0]):
@@ -34,39 +18,75 @@ def create_radio_depth(radio_depth_volume, ct, origin, angle, files_out):
         for y in range(ct.shape[1]):
             for z in range(ct.shape[2]):
                 voxel = np.array([x, y, z])
-                voxel = np.array([0, 0, 0])
+
                 try:
-                    curr_ray = ray(origin, voxel, ct)
-                except:
-                    with open(log_file, "a") as fout:
-                        fout.writelines(["(" + str(x) + "," + str(y) + "," + str(z) + ") "])
+                    curr_ray = Ray(origin, voxel, ct)
+
+                except Exception as ex:
+                    if not type(ex).__name__ == "KeyboardInterrupt":
+                        with open(log_file, "a") as fout:
+                            fout.writelines(["Angle" + str(angle) +"(" + str(x) + "," + str(y) + "," + str(z) + ") , " + str(ex)])
+                                 
                 radio_depth_volume[x, y, z] = curr_ray.path
 
-    with open(files_out + str(angle) + ".npy", "wb+") as fout:
+    with open(files_out + str(int(angle)) + ".npy", "wb+") as fout:
         np.save(fout, radio_depth_volume)
+
+def get_origin(SID, phi, iso, px_sp=1.171875):
+    """calculates origin position on 3d volume dimensions with voxel size of 1.171875 as standard
+
+    Args:
+        SID (int): source iso center distance in mm
+        phi (int): angle from top down view in degree ([0-360[)
+        iso (np.array((3,1))): [description]
+        px_sp (float, optional): [voxel size in x and y dimension]. Defaults to 1.171875.
+
+    Returns:
+        origin (np.array((3,1)): origin position in 3d space with x, y, z 
+    """
+    phi = phi*np.pi/180
+
+    pixel_SID = int(SID/px_sp)
+    origin = np.array([iso[0] - np.cos(phi)*pixel_SID, iso[1] +
+                       np.sin(phi)*pixel_SID, iso[2]]).astype("float")
+
+    return origin
 
 if __name__ == "__main__":
 
-    dcm_files = "/work/ws/nemo/tu_zxoys08-egs_dat-0/training/dcm/p/"
-    target_dir = "/work/ws/nemo/tu_zxoys08-egs_dat-0/training/ct/p/"
+    if not sys.warnoptions:
+        warnings.simplefilter("ignore")
 
-    with open("/Users/simongutwein/Studium/Masterarbeit/p.npy", 'rb') as fin:
+    patient = "p"
+    in_folder = "/home/baumgartner/sgutwein84/training_data/training/ct/" + patient + ".npy"
+    out_folder = "/home/baumgartner/sgutwein84/training_data/training/radio_depth/"
+
+    if not os.path.isdir(out_folder):
+        os.mkdir(out_folder)
+
+    with open(in_folder, 'rb') as fin:
         ct_volume = np.load(fin)
-    #ct_volume = create_ct_arr(dcm_files, target_dir)
 
-    #print(ct_volume.shape)
+    print(f"CT Volume Shape: {ct_volume.shape}")
 
-    angle = 180
-    radio_depth_path = "/work/ws/nemo/tu_zxoys08-egs_dat-0/training/radiological_depth/p/"
-    
-    iso = np.array([ct_volume.shape[0]/2-1,
-                   ct_volume.shape[1]/2-1, ct_volume.shape[2]/2-1]).astype("float")
-    origin = get_origin(1435, angle, iso)
-    print(origin)
-    radio_depth = np.empty_like(ct_volume)
-    create_radio_depth(radio_depth, ct_volume, origin, angle, radio_depth_path)
+    for angle in np.linspace(0,360,8, endpoint=False):
 
-    #plot_volume(radio_depth)
+        iso = np.array([ct_volume.shape[0]/2-1,
+                    ct_volume.shape[1]/2-1, ct_volume.shape[2]/2-1]).astype("float")
+
+        origin = get_origin(1435, angle, iso)
+        
+        print(f"Origin Position at: {origin}")
+
+        radio_depth = np.zeros(ct_volume.shape)
+
+        target_name = patient + "_" + str(int(angle))
+
+        if not os.path.isfile(out_folder + target_name + ".npy"):
+            print(f"Creating {target_name}.npy")
+            create_radio_depth(radio_depth, ct_volume, origin, angle, out_folder)
+        else:
+            print(out_folder + target_name + ".npy, already exists!")
 
 
     

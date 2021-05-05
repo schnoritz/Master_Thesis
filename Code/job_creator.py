@@ -252,7 +252,7 @@ def create_job_file(jobs_path, iparallel, nodes, ppn, filename, gantry):
         fout.write('#!/bin/bash\n')
         fout.write("#MSUB -l nodes=" + str(nodes) +":ppn=" + str(ppn) + "\n")
         fout.write('#MSUB -l walltime=4:00:00:00\n')
-        fout.write('#MSUB -l mem=64gb\n')
+        fout.write('#MSUB -l pmem=6gb\n')
         fout.write('#MSUB -N EGSnrc\n')
         fout.write("#MSUB -o /home/tu/tu_tu/tu_zxoys08/EGSnrc/jobs\n")
         command = []
@@ -308,8 +308,9 @@ def create_entire_job(n, gantry, par_jobs, ppn, nodes, beam_config, patient):
 
 if __name__ == "__main__":
     nums = 8
-    beam = "MR-Linac_model_8x8"
+    beam = "MR-Linac_model_10x10"
+    pj = 20
 
     for angle in np.linspace(0,360, nums, endpoint=False):
+        create_entire_job(n=10000, gantry=angle + 270, par_jobs=pj, ppn=1, nodes=pj, beam_config=beam, patient="p/")
 
-        create_entire_job(n=10000, gantry=angle + 270, par_jobs=10, ppn=20, nodes=4, beam_config=beam, patient="p/")
