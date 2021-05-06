@@ -4,7 +4,6 @@ import torchvision.transforms.functional as tf
 
 #implementation of this architecture: https://lmb.informatik.uni-freiburg.de/people/ronneber/u-net/u-net-architecture.png
 
-
 class DoubleConv(nn.Module):
     def __init__(self, in_channels, out_channels):
         super(DoubleConv, self).__init__()
@@ -22,11 +21,11 @@ class DoubleConv(nn.Module):
     def forward(self, x):
         return self.conv(x)
 
-class UNET(nn.Module):
+class Dose3DUNET(nn.Module):
     def __init__(
-        self, in_channels=5, out_channels=1, features=[64, 128, 256, 512]
+        self, in_channels=5, out_channels=1, features=[64, 128, 256]
     ):
-        super(UNET, self).__init__()
+        super(Dose3DUNET, self).__init__()
         self.downs = nn.ModuleList()
         self.ups = nn.ModuleList()
         self.pool = nn.MaxPool3d(kernel_size=2, stride=2)
@@ -69,7 +68,7 @@ class UNET(nn.Module):
 
             concat_skip = torch.cat((skip_connection, x), dim=1)
             x = self.ups[idx+1](concat_skip)
-            print(x.shape)
+            #print(x.shape)
 
         return self.final_conv(x)
 
@@ -77,7 +76,7 @@ def test():
     # mit x = torch.randn((batch_size, in_channels, W, H, D))
     x = torch.randn((10, 5, 32, 32, 32))
     
-    model = UNET(in_channels=5, out_channels=1) 
+    model = Dose3DUNet(in_channels=5, out_channels=1) 
     #print(model)
     preds = model(x)  
     print(f"Inputsize is: {x.shape}")    
