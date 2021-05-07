@@ -50,7 +50,6 @@ class Dose3DUNET(nn.Module):
     def forward(self, x):
         skip_connections = []
         for down in self.downs:
-            print(x.shape)
             x = down(x)
             skip_connections.append(x)
             x = self.pool(x)
@@ -68,7 +67,6 @@ class Dose3DUNET(nn.Module):
 
             concat_skip = torch.cat((skip_connection, x), dim=1)
             x = self.ups[idx+1](concat_skip)
-            #print(x.shape)
 
         return self.final_conv(x)
 

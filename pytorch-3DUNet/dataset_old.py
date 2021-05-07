@@ -9,6 +9,7 @@ class DoseDataset(Dataset):
         self.files = pd.read_excel(csv_path)
         self.transforms = transforms
         self.patch_size = patch_size
+
     
     def __len__(self):
         return len(self.files)
@@ -25,7 +26,8 @@ class DoseDataset(Dataset):
         training_patches, target_patch = self.extract_patch_from3d(training_arrays, target_array, idxs)
         
         return (training_patches.double(), target_patch.double())
-        
+
+
     def extract_patch_from3d(self, training, target, idxs):
         
         training_patches = []
