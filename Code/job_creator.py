@@ -238,7 +238,7 @@ def create_parallel_files(egsinp_lines, path, pos_x, pos_y, pos_z, angle, beam_c
             fout.write(file_text)
 
 
-def create_job_file(jobs_path, iparallel, nodes, ppn, filename, gantry):
+def create_job_file(jobs_path, iparallel, nodes, ppn, filename, gantry, n_histories):
     """creates the job file which can be executed for parallel simulation
 
     Args:
@@ -254,7 +254,7 @@ def create_job_file(jobs_path, iparallel, nodes, ppn, filename, gantry):
         fout.write('#MSUB -l walltime=4:00:00:00\n')
         fout.write('#MSUB -l mem=64gb\n')
         fout.write('#MSUB -N EGSnrc\n')
-        fout.write("#MSUB -o /home/tu/tu_tu/tu_zxoys08/EGSnrc/jobs\n")
+        fout.write("#MSUB -o /home/tu/tu_tu/tu_zxoys08/EGSnrc/jobs\n\n")
         command = []
 
         for i in range(iparallel):
@@ -265,7 +265,7 @@ def create_job_file(jobs_path, iparallel, nodes, ppn, filename, gantry):
         command = " & ".join(command) + " & wait\n\n"
         command += "dosxyznrc -i " + filename + ".egsinp" + " -p 700icru & wait\n\n"
         
-        command += "python3 clean_dosxyznrc_folder.py " + gantry
+        command += f"python3 clean_dosxyznrc_folder.py {gantry} {n_histories}" 
 
         fout.write(command)
 
@@ -303,15 +303,15 @@ def create_entire_job(n, gantry, par_jobs, ppn, nodes, beam_config, patient):
     lines = create_egsinp_file(dosxyznrc_path, iso_x, iso_y, iso_z, gantry, beam_config, n, par_jobs, target_filename)
     create_parallel_files(lines, dosxyznrc_path, iso_x, iso_y, iso_z, gantry, beam_config, n, par_jobs, target_filename)
     create_job_file(jobs_path, par_jobs, nodes, ppn,
-                    target_filename, str(int(gantry - 270)))
+                    target_filename, str(int(gantry - 270)), n)
     execute_job_file(client)
 
 if __name__ == "__main__":
     nums = 8
     beam = "MR-Linac_model_2x2"
-    pj = 40
+    pj = 20
 
     for angle in np.linspace(0,360, nums, endpoint=False):
 
-        create_entire_job(n=1000000, gantry=angle + 270, par_jobs=pj, ppn=10, nodes=pj//4, beam_config=beam, patient="p/")
+        create_entire_job(n=1000000, gantry=angle + 270, par_jobs=pj, ppn=pj, nodes=1, beam_config=beam, patient="p/")
 
