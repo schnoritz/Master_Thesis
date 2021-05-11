@@ -32,8 +32,8 @@ def npy_from_3ddose(file_path, target_path=None, target_volume=(512, 512, 110)):
 
 if __name__ == "__main__":
 
-    dose_file = "/home/baumgartner/sgutwein84/training_data/3ddose/"
-    output_path = "/home/baumgartner/sgutwein84/training_data/training/target"
+    dose_file = "/Users/simongutwein/Studium/Masterarbeit/"
+    output_path = "/Users/simongutwein/Studium/Masterarbeit/"
     files = [x for x in os.listdir(dose_file) if x.split(".")[-1] == "3ddose"]
     for file_ in files:
         npy_from_3ddose(dose_file + file_, output_path)

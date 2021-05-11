@@ -32,7 +32,7 @@ def get_leaf_positions(path):
     return positions, jaws
 
 
-def get_first_layer(positions, jaws, first_layer_fac, transversal_size, sagital_size, dim, pixel_shift):
+def get_first_layer(positions, jaws, first_layer_fac, transversal_size, sagital_size, dim):
 
 
     fl_positions = []
@@ -91,40 +91,28 @@ def clipped_zoom(img, scale):
     return out
 
 
-def get_iso_center(dim, plan_file_dat, voxel_size):
+def create_binary_mask(egsphant, egsinp, angle):
 
-    shift = plan_file_dat.BeamSequence[0].ControlPointSequence[0].IsocenterPosition
-    pixel_shift = np.round((np.array(shift)/voxel_size[0])).astype(int)
-    pixel_shift = [pixel_shift[1], pixel_shift[0]]
-
-    iso_center = np.array(
-        [dim[0]//2-1-pixel_shift[1], dim[1]//2-1, dim[2]//2-1], dtype=int)
-
-    return iso_center, pixel_shift
-
-def create_binary_mask(file, plan_file, angle):
-
-    voxel_size = [1.171875, 1.171875, 3]
+    voxel_size = np.array([1.171875, 1.171875, 3])
     SID = 1435
     
-    plan_file_dat = dcmread(plan_file)
+    iso_center, num_slices = get_iso_center(egsphant, egsinp, voxel_size)
+    output_dim = np.array([512, 512, num_slices], dtype=int)
+    shift = output_dim//2 - iso_center 
 
-    fieldsize_px = [int(np.round(220 / voxel_size[2])),
-                    int(np.round(570 / voxel_size[0]))]
-
-    output_dim = [512, 512, 110]
     rotated_dim = np.array(
-        [1.1*np.sqrt(2*(output_dim[0]**2)), 1.1*np.sqrt(2*(output_dim[1]**2)), output_dim[2]], dtype=int)
-
-    iso_center, pixel_shift = get_iso_center(rotated_dim, plan_file_dat, voxel_size)
+        [1.1*np.sqrt(2*(output_dim[0]**2)), 1.1*np.sqrt(2*(output_dim[1]**2)), output_dim[2]+2*shift[2]], dtype=int)
 
     fac = [(voxel_size[0] * (SID + i * voxel_size[0]))/(2 * SID) / (voxel_size[0]/2) for i in range(0-iso_center[0], rotated_dim[0] - iso_center[0])]
 
     leaf_positions, jaws = get_leaf_positions(file)
     jaws = jaws/voxel_size[0]
 
+    fieldsize_px = [int(np.round(220 / voxel_size[2])),
+                    int(np.round(570 / voxel_size[0]))]
+
     first_layer = get_first_layer(
-        leaf_positions, jaws, fac[0], fieldsize_px[0], fieldsize_px[1], rotated_dim, pixel_shift)
+        leaf_positions, jaws, fac[0], fieldsize_px[0], fieldsize_px[1], rotated_dim)
 
     fac = [fac[i]/fac[0] for i in range(1,len(fac))]
     fac.insert(0, 1)
@@ -135,31 +123,67 @@ def create_binary_mask(file, plan_file, angle):
 
     rotated = ndimage.rotate(beam, -angle, axes=(
         0, 1), reshape=False, prefilter=False)
+    print(rotated.shape)
 
-    # len_vec = np.sqrt(pixel_shift[0]**2 + pixel_shift[1]**2)
-    # center_shift = [len_vec * np.cos(np.radians(angle)), len_vec * np.sin(np.radians(angle))]
+    len_vec = np.sqrt(shift[0]**2 + shift[1]**2)
+    center_shift = np.array([np.round(len_vec * np.sin(np.radians(angle))), np.round(len_vec * np.cos(np.radians(angle))), shift[2]], dtype=int)
 
-    crop = np.array([(rotated.shape[0]-output_dim[0])//2 - int(np.round(pixel_shift[0]/2)),
-                    (rotated.shape[1]-output_dim[1])//2,
-                    (rotated.shape[2]-output_dim[2])//2], dtype=int)
+    #########################################################################################
 
+    center_window = np.array([(rotated.shape[0]-output_dim[0])//2, (rotated.shape[1]-output_dim[1])//2, (rotated.shape[2]-output_dim[2])//2])
+    shifted_window = center_window - center_shift
+    crop = np.array([ 0, 0, 0], dtype=int)
 
-    output = rotated[crop[0]:crop[0]+output_dim[0], 
-                     crop[1]:crop[1]+output_dim[1],
-                     crop[2]:crop[2]+output_dim[2]]
+    output = rotated[shifted_window[0]:shifted_window[0] + output_dim[0],
+                     shifted_window[1]:shifted_window[1] + output_dim[1], 
+                     shifted_window[2]:shifted_window[2] + output_dim[2]]
+
+    print(output.shape)
+
+    #########################################################################################
 
     return output
 
+def get_iso_center(egsphant_path, egsinp_file, ct_voxel_size):
+
+    fac = np.array([3, 3, 3])/ct_voxel_size
+
+    with open(egsphant, "r") as fin:
+        lines = fin.readlines()
+    shape = np.array(
+        list(filter(None, np.array(lines[6].strip().split(" ")))), dtype=int)
+    print(shape)
+
+    pos = np.array([lines[7].strip().split(" ")[0], lines[8].strip().split(" ")[
+                   0], lines[9].strip().split(" ")[0]], dtype=float)
+
+    with open(egsinp_file, "r") as fin:
+
+        lines = fin.readlines()
+        iso = np.array(lines[5].split(",")[2:5], dtype=float)
+
+    iso_pos_vox = np.round((iso-pos)/0.3).astype(int)
+    
+    top = int(shape[0]-shape[1])
+    iso_pos_vox[1] += top
+
+    iso_pos_vox = np.round(iso_pos_vox*fac).astype(int)
+    iso_pos_vox[0], iso_pos_vox[1] = iso_pos_vox[1], iso_pos_vox[0]
+
+    return iso_pos_vox, shape[2]
+
+
+
 if __name__ == "__main__":
 
-    #file = "/Users/simongutwein/Studium/Masterarbeit/MbaseMRL.dcm"
-    #plan_file = "/Users/simongutwein/Studium/Masterarbeit/MbaseMRL.dcm"
-    plan_file = "/home/baumgartner/sgutwein84/container/utils/p_plan.dcm"
+    egsinp = "/Users/simongutwein/Studium/Masterarbeit/p.egsinp"
+    egsphant = "/Users/simongutwein/Studium/Masterarbeit/p.egsphant"
+
 
     for angle in [90]:
         for fz in [2]:#[2,3,4,5,6,7,8,9,10]:
             file = f"/home/baumgartner/sgutwein84/container/training_data/training_fields/MR-Linac_model_{fz}x{fz}.txt"
-            binary_mask = create_binary_mask(file, plan_file, angle=angle)
+            binary_mask = create_binary_mask(egsphant, egsinp, angle=angle)
 
             dose = np.load(
                 f"/home/baumgartner/sgutwein84/container/training_data/training/target/p_{int(angle)}_{fz}x{fz}.npy")
