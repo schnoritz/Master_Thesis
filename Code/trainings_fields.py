@@ -46,7 +46,7 @@ To-Do:
 [✔] möglichkeit bieten bei class auch ein festdefniniertes Feld zu erstellen
 """
 
-from IMPORTS import *
+from imports import *
 
 class trainingData():
 	'''

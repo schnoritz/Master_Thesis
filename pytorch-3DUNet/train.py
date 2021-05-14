@@ -39,21 +39,22 @@ def parse():
     return args
 
 
-def train(UNET, epochs, train_loader, optimizer, criterion, device, save_dir):
+def train(UNET, epochs, train_loader, test_loader, optimizer, criterion, device, save_dir):
 
     print("Start Training!")
 
-    losses = []
+    train_losses = []
+    val_losses = []
     for epoch in range(epochs):
 
         print(f"Epoch {epoch+1}/{epochs}")
 
-        epoch_loss = 0
-        #for _, (masks, true_dose) in enumerate(train_loader):
-        for i in range(4):
+        train_loss = 0
+        for batch_idx, (masks, true_dose) in enumerate(train_loader):
+        #for i in range(4):
 
-            masks = torch.randn((2, 5, 16, 16, 16)).double()
-            true_dose = torch.randn((2, 1, 16, 16, 16)).double()
+        # masks = torch.randn((2, 5, 16, 16, 16)).double()
+        # true_dose = torch.randn((2, 1, 16, 16, 16)).double()
             
             if device.type == 'cuda':
                 masks = masks.cuda()
@@ -66,24 +67,47 @@ def train(UNET, epochs, train_loader, optimizer, criterion, device, save_dir):
 
             loss = criterion(dose_pred, true_dose)
 
-            epoch_loss += loss.item()
+            train_loss += loss.item()
             
             optimizer.zero_grad()
             loss.backward()
             optimizer.step()
                 
             print(f"Loss is: {np.round(loss.item(),4)}")  
-        
+
+        train_loss = train_loss/batch_idx
+        val_loss = validate(UNET, criterion)
+        train_losses.append(train_loss)
+
         if len(losses) > 1:
-            if epoch_loss < losses[-1]:
-                torch.save(UNET.state_dict(), PATH)
+            if val_loss < val_losses[-1]:
+                torch.save(UNET.state_dict(), save_dir + f"test_model.pth")
         
         else:
             torch.save(UNET.state_dict(), save_dir + f"test_model.pth")
 
-        losses.append(epoch_loss)
+        val_losses.append(val_loss)
 
     return losses
+
+def validate(NET, criterion):
+
+    with torch.no_grad():
+        val_loss
+        for batch_idx, (masks, target) in enumerate(test_loader):
+
+            pred = NET(masks)
+            
+            val_loss += criterion(pred, target).item()
+
+        
+    return val_loss/batch_idx
+
+
+
+
+
+
 
 class RMSELoss(nn.Module):
     def __init__(self):
@@ -149,7 +173,7 @@ def setup_training(epochs, batch_size, patch_size, save_dir, train_fraction, roo
     criterion = RMSELoss()
     optimizer = optim.Adam(my_UNET.parameters(), 10E-4, (0.9, 0.99), 10E-8)
 
-    losses = train(my_UNET, epochs, train_loader, save_dir=save_dir,
+    losses = train(my_UNET, epochs, train_loader, test_laoder, save_dir=save_dir,
                    optimizer=optimizer, criterion=criterion, device=device)
 
     plt.plot(losses)
