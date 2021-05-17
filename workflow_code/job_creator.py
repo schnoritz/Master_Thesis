@@ -2,6 +2,7 @@
 #   Individuelle Eingabe von CT-Bildern, Gantry-Winkel, Anzahl der Simulierten Teilchen und des genutzten Strahls
 
 import os
+import shutil
 import paramiko
 import random
 import numpy as np
@@ -87,8 +88,8 @@ def execute_ct_create(client, path):
     if os.path.isfile(path + "listfile.txt.egsphant"):
         os.remove(path + "listfile.txt.egsphant")
 
-    _, stdout, _ = client.exec_command('cd EGSnrc/egs_home/dosxyznrc; \
-         ctcreate ctcreate_file.txt -p 700icru'                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        )
+    _, stdout, _ = client.exec_command(f'cd {path}; \
+         ctcreate ctcreate_file.txt -p 700icru'                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           )
 
     for line in stdout:
         continue
@@ -172,7 +173,7 @@ def create_egsinp_file(path, pos_x, pos_y, pos_z, angle, beam_config, n_historie
 
 
 def create_parallel_files(egsinp_lines, path, pos_x, pos_y, pos_z, angle,
-                          beam_config, n_histories, iparallel, filename):
+                          n_histories, iparallel, filename):
     """creates the needed .egsinp files which are needed to calculate the .pardose files
        which will be recombined to .3ddose file
     Args:
@@ -182,7 +183,6 @@ def create_parallel_files(egsinp_lines, path, pos_x, pos_y, pos_z, angle,
         pos_y (str):                    iso position of the phamtom in y direction
         pos_z (str):                    iso position of the phamtom in z direction
         angle (float):                  desired angle of gantry for simulation
-        beam_config (str):              name of the wanted beam configuration placed inside "BEAM_MR-Linac" folder
         n_histories (int):              number of simulated histories
         iparallel (int):                number of parallel jobs
      """
@@ -217,7 +217,7 @@ def create_parallel_files(egsinp_lines, path, pos_x, pos_y, pos_z, angle,
             fout.write(file_text)
 
 
-def create_job_file(jobs_path, iparallel, nodes, ppn, filename, n_histories, config, num):
+def create_job_file(jobs_path, iparallel, nodes, ppn, filename, n_histories):
     """creates the job file which can be executed for parallel simulation
 
     Args:
@@ -234,6 +234,7 @@ def create_job_file(jobs_path, iparallel, nodes, ppn, filename, n_histories, con
         fout.write('#MSUB -l pmem=6gb\n')
         fout.write('#MSUB -N EGSnrc\n')
         fout.write("#MSUB -o /home/tu/tu_tu/tu_zxoys08/EGSnrc/jobs\n\n")
+        fout.write("#MSUB -m bea\n\n")
         command = []
 
         for i in range(iparallel):
@@ -242,11 +243,12 @@ def create_job_file(jobs_path, iparallel, nodes, ppn, filename, n_histories, con
                         str(i+1) + ".egsinp -p 700icru")
 
         command = " & ".join(command) + " & wait\n\n"
-        command += "dosxyznrc -i " + filename + ".egsinp" + " -p 700icru & wait\n\n"
+        command += "dosxyznrc -i " +  filename + ".egsinp" + " -p 700icru & wait\n\n"
 
         command += 'echo "Start cleaning!"\n\n'
-        str_nhist = f"{n_histories:.0e}".upper().replace("+","")
-        command += f"python3 clean_dosxyznrc_folder_plan.py {str_nhist} {config} {num}"
+        str_nhist = f"{n_histories:.0e}".upper().replace("+", "")
+
+        command += f"python3 clean_after_job.py {filename} {str_nhist}"
 
         fout.write(command)
 
@@ -270,13 +272,20 @@ def create_entire_job(n, gantry, par_jobs, ppn, nodes, beam_config, patient, iso
     dcm_folder = patient + "/" #select folder located in "dosxyznrc" folder
     beam_info = beam_config.split("_")[-1]
 
-    target_filename = dcm_folder[:-1] + "_" + beam_info
+    if iso_center is not None:
+        target_filename = dcm_folder[:-1] + "_" + beam_info
+    else:
+        target_filename = dcm_folder[:-1] + "_" + str(int(gantry)-270) + "_" + beam_info
 
     client = server_login()
     dosxyznrc_path = "/home/tu/tu_tu/tu_zxoys08/EGSnrc/egs_home/dosxyznrc/"
-    plan_file_path = dosxyznrc_path + f"planfiles/{patient[0]}_plan.dcm"
     dose_file_path = dosxyznrc_path + f"dosefiles/{patient[0]}_dose.dcm"
     jobs_path = "/home/tu/tu_tu/tu_zxoys08/EGSnrc/jobs"
+    job_folder = dosxyznrc_path + target_filename + "/"
+
+    if os.path.isdir(job_folder):
+        shutil.rmtree(job_folder)
+    os.mkdir(job_folder)
 
     create_listfile(dosxyznrc_path + dcm_folder)
     create_ctcreate_file(dosxyznrc_path, dose_file_path, dcm_folder)
@@ -286,9 +295,9 @@ def create_entire_job(n, gantry, par_jobs, ppn, nodes, beam_config, patient, iso
         '''hier eventuell das isocenter etwas variieren? also sowas wie:
         iso_x, iso_y, iso_z = 3*np.randn(1), 3*np.randn(1), 3*np.randn(1)
         '''
-        iso_x, iso_y, iso_z = np.random.normal(0, 1, 1), \
-                              np.random.normal(0, 1, 1), \
-                              np.random.normal(0, 1, 1)
+        iso_x, iso_y, iso_z = np.round(np.random.normal(0, 1, 1),2)[0], \
+                              np.round(np.random.normal(0, 1, 1),2)[0], \
+                              np.round(np.random.normal(0, 1, 1),2)[0]
 
     else:
         iso_x, iso_y, iso_z = iso_center[0], iso_center[1], iso_center[2]
@@ -297,10 +306,10 @@ def create_entire_job(n, gantry, par_jobs, ppn, nodes, beam_config, patient, iso
                                beam_config, n, par_jobs, target_filename)
 
     create_parallel_files(lines, dosxyznrc_path, iso_x, iso_y, iso_z, gantry,
-                          beam_config, n, par_jobs, target_filename)
+                          n, par_jobs, target_filename)
 
     create_job_file(jobs_path, par_jobs, nodes, ppn,
-                    target_filename, n, beam_config, beam_config.split(".")[0].split("_")[-1])
+                    target_filename, n)
 
     execute_job_file(client)
 
@@ -399,7 +408,7 @@ def create_beam_config(patient, num, jaws, leafes):
     leafes_lines = [f"{np.round(leafes_egsinp[0][i],4)}, {np.round(leafes_egsinp[1][i],4)}, 1\n" for i in range(80)]
     jaws_lines = f"{np.round(jaws_egsinp[0],4)}, {np.round(jaws_egsinp[1],4)}, 2\n"
 
-    template = open("/Users/simongutwein/home/tu/tu_tu/tu_zxoys08/EGSnrc/egs_home/BEAM_MR-Linac/template.egsinp", "r")
+    template = open("/home/tu/tu_tu/tu_zxoys08/EGSnrc/egs_home/BEAM_MR-Linac/template.egsinp", "r")
     lines = template.readlines()
     lines.insert(197, jaws_lines)
     lines.pop(198)
@@ -430,6 +439,7 @@ def get_eginp_lines(jaws, leafes):
 
     return jaws_lines, leafes_lines
 
+
 def setup_plan_calculation(patient, plan_file):
 
     jaws, leafes, angles, iso_centers = extract_plan_infos(plan_file)
@@ -442,16 +452,20 @@ def setup_plan_calculation(patient, plan_file):
 
     return angles,iso_centers,config_files
 
+
 if __name__ == "__main__":
 
+    plan = True
     patient = "p"
-    # plan_file = f"/Users/simongutwein/home/tu/tu_tu/tu_zxoys08/EGSnrc/egs_home/dosxyznrc/planfiles/{patient}_plan.dcm"
-    # dose_file = f"/Users/simongutwein/home/tu/tu_tu/tu_zxoys08/EGSnrc/egs_home/dosxyznrc/dosefiles/{patient}_dose.dcm"
-    num_hist = 10000
-    pj = 5
+    num_hist = 1000
+    pj = int(num_hist/2000000)
+    if pj <= 1:
+        pj = 2
 
-    if "plan_file" in locals() and "dose_file" in locals():
+    if plan:
 
+        plan_file = f"/Users/simongutwein/home/tu/tu_tu/tu_zxoys08/EGSnrc/egs_home/dosxyznrc/planfiles/{patient}_plan.dcm"
+        dose_file = f"/Users/simongutwein/home/tu/tu_tu/tu_zxoys08/EGSnrc/egs_home/dosxyznrc/dosefiles/{patient}_dose.dcm"
         angles, iso_centers, config_files = setup_plan_calculation(patient, plan_file)
 
         for config in range(len(config_files)):
@@ -466,10 +480,16 @@ if __name__ == "__main__":
                             iso_center=iso_centers[config])
     else:
 
-        beam = "beam_config_2x2"
+        beam = "beam_config_3x3"
 
         num_angles = 8
 
         for angle in np.linspace(0,360, num_angles, endpoint=False):
 
-            create_entire_job(n=num_hist, gantry=angle + 270, par_jobs=pj, ppn=1, nodes=pj, beam_config=beam, patient=patient)
+            create_entire_job(n=num_hist,
+                              gantry=angle + 270,
+                              par_jobs=pj,
+                              ppn=2,
+                              nodes=pj,
+                              beam_config=beam,
+                              patient=patient)

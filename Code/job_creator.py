@@ -2,12 +2,16 @@
 #   Individuelle Eingabe von CT-Bildern, Gantry-Winkel, Anzahl der Simulierten Teilchen und des genutzten Strahls
 
 import os
+import shutil
 import paramiko
 import random
 import numpy as np
 from pydicom import dcmread
 from glob import glob
 from natsort import natsorted
+import math
+import matplotlib.pyplot as plt
+
 
 def server_login():
     """logs into the BW-HPC server
@@ -21,7 +25,7 @@ def server_login():
     client = paramiko.SSHClient()
     client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
     client.connect(hostname=hostname, username=username, password=password)
-    
+
     return client
 
 
@@ -49,7 +53,7 @@ def create_ctcreate_file(path, dose_file_path, dcm_folder):
     dose_file_dat = dcmread(dose_file_path)
 
     with open(path + 'ctcreate_file.txt', 'w+') as fout:
-    
+
         image_position = np.array(dose_file_dat.ImagePositionPatient)/10
         dose_dimensions = dose_file_dat.pixel_array.shape
         pixel_spacing = np.array(dose_file_dat.PixelSpacing)/10
@@ -67,10 +71,10 @@ def create_ctcreate_file(path, dose_file_path, dcm_folder):
         fout.write(str("%.4f" % xlower) + ", " + str("%.4f" % xupper) + \
             ", " + str("%.4f" % ylower) + ", " + str("%.4f" % yupper) + \
             ", " + str("%.4f" % zlower) + ", " + str("%.4f" % zupper) + "\n")
-        
+
         fout.write(str(pixel_spacing[0]) + ", " +
                 str(pixel_spacing[1]) + ", " + str(pixel_spacing[0]) + "\n")
-        
+
         fout.write("0, 0 \n")
 
 
@@ -79,61 +83,19 @@ def execute_ct_create(client, path):
 
     Args:
         local_dosxyznrc_path ([type]): path to the local drectory of dosxyznrc
-    """    
+    """
 
     if os.path.isfile(path + "listfile.txt.egsphant"):
         os.remove(path + "listfile.txt.egsphant")
 
-    _, stdout, _ = client.exec_command('cd EGSnrc/egs_home/dosxyznrc; \
-         ctcreate ctcreate_file.txt -p 700icru')
+    _, stdout, _ = client.exec_command(f'cd {path}; \
+         ctcreate ctcreate_file.txt -p 700icru'                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           )
 
     for line in stdout:
         continue
 
     print("Finished: .egsphant file was created.")
 
-
-# def get_iso_position(path):
-#     """reads out iso center position from egsphant file
-
-#     Args:
-#         local_dosxyznrc_path (str):         path to the local dosxyznrc folder
-
-#     Returns:
-#         str, str, str: returns the iso center position as strings to be used in .egsinp files
-#     """  
-
-#     with open(path + "listfile.txt.egsphant", "r") as fout:
-
-#         for i in range(7):
-#             fout.readline()
-    
-#         x = np.array(fout.readline().split()).astype("float")
-#         y = np.array(fout.readline().split()).astype("float")
-#         z = np.array(fout.readline().split()).astype("float")
-
-#         pos_x = np.round(np.take(x, x.size//2), 2)
-#         pos_y = np.round(np.take(y, y.size//2), 2)
-#         pos_z = np.round(np.take(z, z.size//2), 2)
-
-#         return str(pos_x), str(pos_y), str(pos_z)
-
-
-def get_iso_position(planfile):
-    """reads out iso center position from egsphant file
-
-    Args:
-        local_dosxyznrc_path (str):         path to the local dosxyznrc folder
-
-    Returns:
-        str, str, str: returns the iso center position as strings to be used in .egsinp files
-    """
-
-    with dcmread(planfile) as fout:
-
-        center = fout.BeamSequence[0].ControlPointSequence[0].IsocenterPosition
-
-        return str(np.round(center[0]/10,2)), str(np.round(center[1]/10,2)), str(np.round(center[2]/10,2))
 
 def create_egsinp_file(path, pos_x, pos_y, pos_z, angle, beam_config, n_histories, iparallel, filename):
     """creates the needed .egsinp file which is needed to combine the created .pardose files in 
@@ -161,16 +123,16 @@ def create_egsinp_file(path, pos_x, pos_y, pos_z, angle, beam_config, n_historie
         fout.write('0.7, 0.01, 0\n')
         fout.write('1, 0, 0,\n')
 
-        fout.write('2, 9, ' +  
-            pos_x + ', ' +  
-            pos_y + ', ' + 
-            pos_z + ', 90.00, ' + format(angle, '.2f') + ', 30, 270, 1, 40\n')
+        fout.write('2, 9, ' +
+            str(pos_x) + ', ' +
+            str(pos_y) + ', ' +
+            str(pos_z) + ', 90.00, ' + format(angle, '.2f') + ', 30, 270, 1, 40\n')
 
         fout.write('2, 0, 2, 0, 0, 0, 0, 0\n')
         fout.write('BEAM_MR-Linac,' + beam_config + ',521ELEKTA\n')
 
-        fout.write(str(int(n_histories)) + ", 0, 500," + 
-            str(random.randint(0, 10000)) + "," +  
+        fout.write(str(int(n_histories)) + ", 0, 500," +
+            str(random.randint(0, 10000)) + "," +
             str(random.randint(0, 10000)) + ", 100.0, 1, 4, 0, 1, 2.0, 0, 0, 0, 40, 0, 0\n")
 
         fout.write(' #########################\n')
@@ -210,7 +172,8 @@ def create_egsinp_file(path, pos_x, pos_y, pos_z, angle, beam_config, n_historie
     return lines
 
 
-def create_parallel_files(egsinp_lines, path, pos_x, pos_y, pos_z, angle, beam_config, n_histories, iparallel, filename):
+def create_parallel_files(egsinp_lines, path, pos_x, pos_y, pos_z, angle,
+                          n_histories, iparallel, filename):
     """creates the needed .egsinp files which are needed to calculate the .pardose files
        which will be recombined to .3ddose file
     Args:
@@ -220,16 +183,15 @@ def create_parallel_files(egsinp_lines, path, pos_x, pos_y, pos_z, angle, beam_c
         pos_y (str):                    iso position of the phamtom in y direction
         pos_z (str):                    iso position of the phamtom in z direction
         angle (float):                  desired angle of gantry for simulation
-        beam_config (str):              name of the wanted beam configuration placed inside "BEAM_MR-Linac" folder
         n_histories (int):              number of simulated histories
         iparallel (int):                number of parallel jobs
      """
 
     position_angle_line = egsinp_lines[5].split(",")
     position_angle_line[6] = " " + format(angle, '.2f')
-    position_angle_line[2] = " " + pos_x
-    position_angle_line[3] = " " + pos_y
-    position_angle_line[4] = " " + pos_z
+    position_angle_line[2] = " " + str(pos_x)
+    position_angle_line[3] = " " + str(pos_y)
+    position_angle_line[4] = " " + str(pos_z)
     egsinp_lines[5] = ",".join(position_angle_line)
 
     parallel_line = egsinp_lines[8].split(",")
@@ -245,9 +207,9 @@ def create_parallel_files(egsinp_lines, path, pos_x, pos_y, pos_z, angle, beam_c
 
     for i in range(iparallel):
         with open(path + filename + '_w' + str(i+1) + '.egsinp', 'w+') as fout:
-            
+
             parallel_line[13] = " " + str(i+1)
-            parallel_line[3] = " " + str(random.randint(0, 10000)) 
+            parallel_line[3] = " " + str(random.randint(0, 10000))
             parallel_line[4] = " " + str(random.randint(0, 10000))
             egsinp_lines[8] = ','.join(parallel_line)
 
@@ -255,7 +217,7 @@ def create_parallel_files(egsinp_lines, path, pos_x, pos_y, pos_z, angle, beam_c
             fout.write(file_text)
 
 
-def create_job_file(jobs_path, iparallel, nodes, ppn, filename, gantry, n_histories):
+def create_job_file(jobs_path, iparallel, nodes, ppn, filename, n_histories):
     """creates the job file which can be executed for parallel simulation
 
     Args:
@@ -272,6 +234,7 @@ def create_job_file(jobs_path, iparallel, nodes, ppn, filename, gantry, n_histor
         fout.write('#MSUB -l pmem=6gb\n')
         fout.write('#MSUB -N EGSnrc\n')
         fout.write("#MSUB -o /home/tu/tu_tu/tu_zxoys08/EGSnrc/jobs\n\n")
+        fout.write("#MSUB -m bea\n\n")
         command = []
 
         for i in range(iparallel):
@@ -280,11 +243,12 @@ def create_job_file(jobs_path, iparallel, nodes, ppn, filename, gantry, n_histor
                         str(i+1) + ".egsinp -p 700icru")
 
         command = " & ".join(command) + " & wait\n\n"
-        command += "dosxyznrc -i " + filename + ".egsinp" + " -p 700icru & wait\n\n"
-        
+        command += "dosxyznrc -i " +  filename + ".egsinp" + " -p 700icru & wait\n\n"
 
-        str_nhist = f"{n_histories:.0e}".upper().replace("+","")
-        command += f"python3 clean_dosxyznrc_folder.py {gantry} {str_nhist}" 
+        command += 'echo "Start cleaning!"\n\n'
+        str_nhist = f"{n_histories:.0e}".upper().replace("+", "")
+
+        command += f"python3 clean_after_job.py {filename} {str_nhist}"
 
         fout.write(command)
 
@@ -303,36 +267,230 @@ def execute_job_file(client):
     print("Job-ID: " + job_id)
 
 
-def create_entire_job(n, gantry, par_jobs, ppn, nodes, beam_config, patient):
+def create_entire_job(n, gantry, par_jobs, ppn, nodes, beam_config, patient, iso_center=None):
 
-    dcm_folder = patient #select folder located in "dosxyznrc" folder
+    dcm_folder = patient + "/" #select folder located in "dosxyznrc" folder
     beam_info = beam_config.split("_")[-1]
 
-    target_filename = dcm_folder[:-1] + "_" + str(int(gantry - 270)) + "_" + beam_info
+    if iso_center is not None:
+        target_filename = dcm_folder[:-1] + "_" + beam_info
+    else:
+        target_filename = dcm_folder[:-1] + "_" + str(int(gantry)-270) + "_" + beam_info
 
     client = server_login()
     dosxyznrc_path = "/home/tu/tu_tu/tu_zxoys08/EGSnrc/egs_home/dosxyznrc/"
-    plan_file_path = dosxyznrc_path + f"planfiles/{patient[0]}_plan.dcm"
     dose_file_path = dosxyznrc_path + f"dosefiles/{patient[0]}_dose.dcm"
     jobs_path = "/home/tu/tu_tu/tu_zxoys08/EGSnrc/jobs"
+    job_folder = dosxyznrc_path + target_filename + "/"
+
+    if os.path.isdir(job_folder):
+        shutil.rmtree(job_folder)
+    os.mkdir(job_folder)
 
     create_listfile(dosxyznrc_path + dcm_folder)
     create_ctcreate_file(dosxyznrc_path, dose_file_path, dcm_folder)
     execute_ct_create(client, dosxyznrc_path)
-    iso_x, iso_y, iso_z = get_iso_position(plan_file_path)
-    lines = create_egsinp_file(dosxyznrc_path, iso_x, iso_y, iso_z, gantry, beam_config, n, par_jobs, target_filename)
-    create_parallel_files(lines, dosxyznrc_path, iso_x, iso_y, iso_z, gantry, beam_config, n, par_jobs, target_filename)
+
+    if iso_center is  None:
+        '''hier eventuell das isocenter etwas variieren? also sowas wie:
+        iso_x, iso_y, iso_z = 3*np.randn(1), 3*np.randn(1), 3*np.randn(1)
+        '''
+        iso_x, iso_y, iso_z = np.round(np.random.normal(0, 1, 1),2)[0], \
+                              np.round(np.random.normal(0, 1, 1),2)[0], \
+                              np.round(np.random.normal(0, 1, 1),2)[0]
+
+    else:
+        iso_x, iso_y, iso_z = iso_center[0], iso_center[1], iso_center[2]
+
+    lines = create_egsinp_file(dosxyznrc_path, iso_x, iso_y, iso_z, gantry,
+                               beam_config, n, par_jobs, target_filename)
+
+    create_parallel_files(lines, dosxyznrc_path, iso_x, iso_y, iso_z, gantry,
+                          n, par_jobs, target_filename)
+
     create_job_file(jobs_path, par_jobs, nodes, ppn,
-                    target_filename, str(int(gantry - 270)), n)
+                    target_filename, n)
+
     execute_job_file(client)
+
+
+def extract_plan_infos(plan_file):
+
+    jaws = []
+    leafes = []
+    angles = []
+    iso_centers = []
+
+    plan = dcmread(plan_file)
+    for beam in plan.BeamSequence:
+
+        angles.extend([float(beam.ControlPointSequence[0].GantryAngle)]* len(beam.ControlPointSequence))
+        iso_centers.extend([beam.ControlPointSequence[0].IsocenterPosition] * len(beam.ControlPointSequence))
+
+        for sequence in beam.ControlPointSequence:
+
+            jaws.append(sequence.BeamLimitingDevicePositionSequence[0].LeafJawPositions)
+            leafes.append(sequence.BeamLimitingDevicePositionSequence[1].LeafJawPositions)
+
+    jaws = np.array(jaws)
+    leafes = np.array(leafes)
+    angles = np.array(angles)
+    iso_centers = np.array(iso_centers)/10
+
+
+    return jaws, leafes, angles, iso_centers
+
+
+def calculate_new_mlc(leafes, radius=41.5, ssd=143.5, cil=35.77-0.09):
+
+    MLC_egsinp = np.zeros((2, 80))
+
+    #calculate new MLC Positions for egsinp
+    for j in range(2):
+        for i in range(80):
+            if j == 0:
+                if leafes[j,i] <= 0:
+                    MLC_egsinp[j,i] = (((cil + math.sqrt(pow(radius, 2)-pow(math.cos(abs(leafes[j,i]*10)*0.1/ssd)*radius, 2)))*abs(leafes[j,i]*10)*0.1/ssd + math.cos(abs(leafes[j,i]*10)*0.1/ssd)*radius)*(-1))
+                if leafes[j,i]*10 > 0:
+                    MLC_egsinp[j,i] = ((-(cil - math.sqrt(pow(radius, 2)-pow(math.cos(abs(leafes[j,i]*10)*0.1/ssd)*radius, 2)))*abs(leafes[j,i]*10)*0.1/ssd + math.cos(abs(leafes[j,i]*10)*0.1/ssd)*radius)*(-1))
+            else:
+                if leafes[j,i]*10 >= 0:
+                    MLC_egsinp[j,i] = ((cil + math.sqrt(pow(radius, 2)-pow(math.cos(abs(leafes[j,i]*10)*0.1/ssd)*radius, 2)))*abs(leafes[j,i]*10)*0.1/ssd + math.cos(abs(leafes[j,i]*10)*0.1/ssd)*radius)
+                if leafes[j,i]*10 < 0:
+                    MLC_egsinp[j,i] = (-(cil - math.sqrt(pow(radius, 2)-pow(math.cos(abs(leafes[j,i]*10)*0.1/ssd)*radius, 2)))*abs(leafes[j,i]*10)*0.1/ssd + math.cos(abs(leafes[j,i]*10)*0.1/ssd)*radius)
+
+    return MLC_egsinp
+
+
+def calculate_new_jaw(jaws, cil=44.35 - 0.09, radius=13.0, ssd=143.5):
+
+    new_JAWS = np.zeros(2)
+
+    #calculate new JAW Positions for egsinp
+    if jaws[0] <= 0:
+        new_JAWS[0] = ((cil + math.sqrt(
+            pow(radius, 2) -
+            pow(math.cos(abs(jaws[0] * 10) * 0.1 / ssd) * radius, 2)))
+                       * abs(jaws[0] * 10) * 0.1 / ssd +
+                       math.cos(abs(jaws[0] * 10) * 0.1 / ssd) *
+                       radius) * (-1)
+    if jaws[0] > 0:
+        new_JAWS[0] = (-(cil - math.sqrt(
+            pow(radius, 2) -
+            pow(math.cos(abs(jaws[0] * 10) * 0.1 / ssd) * radius, 2)))
+                       * abs(jaws[0] * 10) * 0.1 / ssd +
+                       math.cos(abs(jaws[0] * 10) * 0.1 / ssd) *
+                       radius) * (-1)
+    if jaws[1] >= 0:
+        new_JAWS[1] = (cil + math.sqrt(
+            pow(radius, 2) -
+            pow(math.cos(abs(jaws[1] * 10) * 0.1 / ssd) * radius, 2))
+                       ) * abs(jaws[1] * 10) * 0.1 / ssd + math.cos(
+                           abs(jaws[1] * 10) * 0.1 / ssd) * radius
+    if jaws[1] < 0:
+        new_JAWS[1] = -(cil - math.sqrt(
+            pow(radius, 2) -
+            pow(math.cos(abs(jaws[1] * 10) * 0.1 / ssd) * radius, 2))
+                        ) * abs(jaws[1] * 10) * 0.1 / ssd + math.cos(
+                            abs(jaws[1] * 10) * 0.1 / ssd) * radius
+
+    return new_JAWS
+
+
+def create_beam_config(num, jaws, leafes):
+
+    leafes = np.reshape(leafes, (2,80))
+    leafes /= 10
+    jaws /= 10
+    leafes_egsinp = calculate_new_mlc(leafes)
+    jaws_egsinp = calculate_new_jaw(jaws)
+
+    leafes_lines = [f"{np.round(leafes_egsinp[0][i],4)}, {np.round(leafes_egsinp[1][i],4)}, 1\n" for i in range(80)]
+    jaws_lines = f"{np.round(jaws_egsinp[0],4)}, {np.round(jaws_egsinp[1],4)}, 2\n"
+
+    template = open("/home/tu/tu_tu/tu_zxoys08/EGSnrc/egs_home/BEAM_MR-Linac/template.egsinp", "r")
+    lines = template.readlines()
+    lines.insert(197, jaws_lines)
+    lines.pop(198)
+
+    lines.pop(183)
+
+    i=0
+    for line in leafes_lines:
+        lines.insert(183+i, line)
+        i+=1
+
+    with open( f"/Users/simongutwein/home/tu/tu_tu/tu_zxoys08/EGSnrc/egs_home/BEAM_MR-Linac/beam_config_{num}.egsinp", "w+") as out:
+        out.writelines(lines)
+        out.close()
+
+    return f"beam_config_{num}"
+
+
+def get_eginp_lines(jaws, leafes):
+    jaws_lines = [
+        ", ".join(str(e) for e in x.tolist()) + ", 2\n" for x in jaws
+    ]
+    leafes_reshaped = leafes.reshape((leafes.shape[0], 80, 2), order="F")
+    leafes_lines = []
+    for x in leafes_reshaped:
+        for i in x:
+            leafes_lines.append(", ".join(str(z) for z in i) + ", 1\n")
+    leafes_lines = np.reshape(leafes_lines, (leafes.shape[0], 80))
+
+    return jaws_lines, leafes_lines
+
+
+def setup_plan_calculation(patient, plan_file):
+
+    jaws, leafes, angles, iso_centers = extract_plan_infos(plan_file)
+
+    #jaws_lines, leafes_lines = get_eginp_lines(jaws, leafes)
+
+    config_files = []
+    for config in range(len(angles)):
+        config_files.append(create_beam_config(config, jaws[config], leafes[config]))
+
+    return angles,iso_centers,config_files
+
 
 if __name__ == "__main__":
 
-    nums = 8
-    beam = "MR-Linac_model_2x2"
-    pj = 5
-    patient = "p/"
+    plan = True
+    patient = "p"
+    num_hist = 1000
+    pj = int(num_hist/2000000)
+    if pj <= 1:
+        pj = 2
 
-    for angle in np.linspace(0,360, nums, endpoint=False):
+    if plan:
 
-        create_entire_job(n=1000, gantry=angle + 270, par_jobs=pj, ppn=1, nodes=pj, beam_config=beam, patient=patient)
+        plan_file = f"/Users/simongutwein/home/tu/tu_tu/tu_zxoys08/EGSnrc/egs_home/dosxyznrc/planfiles/{patient}_plan.dcm"
+        dose_file = f"/Users/simongutwein/home/tu/tu_tu/tu_zxoys08/EGSnrc/egs_home/dosxyznrc/dosefiles/{patient}_dose.dcm"
+        angles, iso_centers, config_files = setup_plan_calculation(patient, plan_file)
+
+        for config in range(len(config_files)):
+
+            create_entire_job(n=num_hist,
+                            gantry=angles[config] + 270,
+                            par_jobs=pj,
+                            ppn=1,
+                            nodes=pj,
+                            beam_config=config_files[config],
+                            patient=patient,
+                            iso_center=iso_centers[config])
+    else:
+
+        beam = "beam_config_3x3"
+
+        num_angles = 8
+
+        for angle in np.linspace(0,360, num_angles, endpoint=False):
+
+            create_entire_job(n=num_hist,
+                              gantry=angle + 270,
+                              par_jobs=pj,
+                              ppn=2,
+                              nodes=pj,
+                              beam_config=beam,
+                              patient=patient)

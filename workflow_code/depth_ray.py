@@ -2,7 +2,6 @@ import numpy as np
 from numba import njit, prange
 import numba
 
-
 class Ray():
     
     def __init__(self, origin_position, voxel_position, target_volume):
@@ -11,7 +10,7 @@ class Ray():
         self.voxel_pos = np.array(voxel_position)
         self.target_volume = target_volume
         self.ray_vector = np.array(voxel_position - origin_position)
-        self.path = self.calculate_path()
+        self.radiological_depth = self.calculate_path()
 
     def calculate_path(self):
 

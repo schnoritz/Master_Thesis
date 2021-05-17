@@ -5,7 +5,7 @@ import os
 import sys
 import warnings
 
-def create_radio_depth(radio_depth_volume, ct, origin, angle, files_out):
+def create_radio_depth(radio_depth_volume, ct, origin, angle, files_out, target_name):
 
     log_file = "/home/baumgartner/sgutwein84/training_data/log.txt"
 
@@ -29,7 +29,7 @@ def create_radio_depth(radio_depth_volume, ct, origin, angle, files_out):
                                  
                 radio_depth_volume[x, y, z] = curr_ray.path
 
-    with open(files_out + str(int(angle)) + ".npy", "wb+") as fout:
+    with open(files_out + target_name + ".npy", "wb+") as fout:
         np.save(fout, radio_depth_volume)
 
 def get_origin(SID, phi, iso, px_sp=1.171875):
@@ -84,7 +84,7 @@ if __name__ == "__main__":
 
         if not os.path.isfile(out_folder + target_name + ".npy"):
             print(f"Creating {target_name}.npy")
-            create_radio_depth(radio_depth, ct_volume, origin, angle, out_folder)
+            create_radio_depth(radio_depth, ct_volume, origin, angle, out_folder, target_name)
         else:
             print(out_folder + target_name + ".npy, already exists!")
 

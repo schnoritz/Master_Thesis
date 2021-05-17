@@ -6,7 +6,7 @@ import shutil
 def parse():
     parser = argparse.ArgumentParser(description='Clean dosxyznrc folder.')
     parser.add_argument('angle', type=int, metavar='', help='angle to define deleted files')
-    parser.add_argument('nhist', type=int, metavar='',
+    parser.add_argument('nhist', type=str, metavar='',
                         help='number of histories')
     parser.add_argument('--dir', type=str, default="/home/tu/tu_tu/tu_zxoys08/EGSnrc/egs_home/dosxyznrc")
     args = parser.parse_args()

@@ -1,6 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 #from skimage.transform import resize
+import cv2
 from cv2 import resize
 from scipy import ndimage
 from time import time
@@ -50,7 +51,7 @@ def get_first_layer(positions, jaws, first_layer_fac, transversal_size, sagital_
             fl[219+int(np.round(bot*20)):, i] = 0
         i+=1
 
-    fl = resize(fl, (sagital_size, transversal_size))
+    fl = resize(fl, (sagital_size, transversal_size), interpolation=cv2.INTER_LINEAR)
 
     l_jaw_idx = int(np.round(sagital_size/2)) + int(np.round(jaws[0]*first_layer_fac))
     r_jaw_idx = int(np.round(sagital_size/2)) + int(np.round(jaws[1]*first_layer_fac))
@@ -85,27 +86,27 @@ def clipped_zoom(img, scale):
     new_w = int(np.ceil(scale*w))
     top = int(np.round((new_h - h) / 2,0))
     left = int(np.round((new_w - w) / 2,0))
-    out = resize(img,(new_w, new_h))
+    out = resize(img,(new_w, new_h), interpolation=cv2.INTER_LINEAR)
     out = out[top:top+h, left:left+w]
 
     return out
 
 
-def create_binary_mask(egsphant, egsinp, angle):
+def create_binary_mask(egsphant, egsinp, beam_config):
 
     voxel_size = np.array([1.171875, 1.171875, 3])
     SID = 1435
-    
-    iso_center, num_slices = get_iso_center(egsphant, egsinp, voxel_size)
+
+    iso_center, angle, num_slices = get_iso_center(egsphant, egsinp, voxel_size)
     output_dim = np.array([512, 512, num_slices], dtype=int)
-    shift = output_dim//2 - iso_center 
+    shift = iso_center - output_dim//2
 
     rotated_dim = np.array(
         [1.1*np.sqrt(2*(output_dim[0]**2)), 1.1*np.sqrt(2*(output_dim[1]**2)), output_dim[2]+2*shift[2]], dtype=int)
 
     fac = [(voxel_size[0] * (SID + i * voxel_size[0]))/(2 * SID) / (voxel_size[0]/2) for i in range(0-iso_center[0], rotated_dim[0] - iso_center[0])]
 
-    leaf_positions, jaws = get_leaf_positions(file)
+    leaf_positions, jaws = get_leaf_positions(beam_config)
     jaws = jaws/voxel_size[0]
 
     fieldsize_px = [int(np.round(220 / voxel_size[2])),
@@ -122,25 +123,25 @@ def create_binary_mask(egsphant, egsinp, angle):
     beam = np.transpose(beam, (2,1,0))
 
     rotated = ndimage.rotate(beam, -angle, axes=(
-        0, 1), reshape=False, prefilter=False)
-    print(rotated.shape)
+        0, 1), reshape=False, prefilter=False, order=1)
 
-    len_vec = np.sqrt(shift[0]**2 + shift[1]**2)
-    center_shift = np.array([np.round(len_vec * np.sin(np.radians(angle))), np.round(len_vec * np.cos(np.radians(angle))), shift[2]], dtype=int)
+    #len_vec = np.sqrt(shift[0]**2 + shift[1]**2)
+    #center_shift = np.array([np.round(len_vec * np.sin(np.radians(angle))), np.round(len_vec * np.cos(np.radians(angle))),0 ], dtype=int)
 
     #########################################################################################
 
     center_window = np.array([(rotated.shape[0]-output_dim[0])//2, (rotated.shape[1]-output_dim[1])//2, (rotated.shape[2]-output_dim[2])//2])
-    shifted_window = center_window - center_shift
-    crop = np.array([ 0, 0, 0], dtype=int)
+    shifted_window = center_window - shift
 
     output = rotated[shifted_window[0]:shifted_window[0] + output_dim[0],
                      shifted_window[1]:shifted_window[1] + output_dim[1], 
                      shifted_window[2]:shifted_window[2] + output_dim[2]]
 
-    print(output.shape)
+    output[output >= 0.5] = 1
+    output[output < 0.5] = 0
 
     #########################################################################################
+
 
     return output
 
@@ -148,11 +149,11 @@ def get_iso_center(egsphant_path, egsinp_file, ct_voxel_size):
 
     fac = np.array([3, 3, 3])/ct_voxel_size
 
-    with open(egsphant, "r") as fin:
+    with open(egsphant_path, "r") as fin:
         lines = fin.readlines()
+        
     shape = np.array(
         list(filter(None, np.array(lines[6].strip().split(" ")))), dtype=int)
-    print(shape)
 
     pos = np.array([lines[7].strip().split(" ")[0], lines[8].strip().split(" ")[
                    0], lines[9].strip().split(" ")[0]], dtype=float)
@@ -161,6 +162,7 @@ def get_iso_center(egsphant_path, egsinp_file, ct_voxel_size):
 
         lines = fin.readlines()
         iso = np.array(lines[5].split(",")[2:5], dtype=float)
+        angle = np.array(lines[5].split(",")[6], dtype = float) -270
 
     iso_pos_vox = np.round((iso-pos)/0.3).astype(int)
     
@@ -170,20 +172,21 @@ def get_iso_center(egsphant_path, egsinp_file, ct_voxel_size):
     iso_pos_vox = np.round(iso_pos_vox*fac).astype(int)
     iso_pos_vox[0], iso_pos_vox[1] = iso_pos_vox[1], iso_pos_vox[0]
 
-    return iso_pos_vox, shape[2]
-
+    return iso_pos_vox, angle, shape[2]
 
 
 if __name__ == "__main__":
 
-    egsinp = "/Users/simongutwein/Studium/Masterarbeit/p.egsinp"
-    egsphant = "/Users/simongutwein/Studium/Masterarbeit/p.egsphant"
+    # egsinp = "/Users/simongutwein/Studium/Masterarbeit/p.egsinp"
+    # egsphant = "/Users/simongutwein/Studium/Masterarbeit/p.egsphant"
+    egsinp = "/home/baumgartner/sgutwein84/container/training_data/egsinp/p.egsinp"
+    egsphant = "/home/baumgartner/sgutwein84/container/training_data/egsphant/p.egsphant"
 
-
-    for angle in [90]:
+    for angle in [0, 45, 90, 135, 180, 225, 270, 315]:
         for fz in [2]:#[2,3,4,5,6,7,8,9,10]:
             file = f"/home/baumgartner/sgutwein84/container/training_data/training_fields/MR-Linac_model_{fz}x{fz}.txt"
-            binary_mask = create_binary_mask(egsphant, egsinp, angle=angle)
+            
+            binary_mask = create_binary_mask(egsphant, egsinp)
 
             dose = np.load(
                 f"/home/baumgartner/sgutwein84/container/training_data/training/target/p_{int(angle)}_{fz}x{fz}.npy")
@@ -191,10 +194,10 @@ if __name__ == "__main__":
             im = np.zeros((512, 512))
             im[254:256, 254:256] = 1
             plt.imshow(im)
-            plt.imshow(binary_mask[:, :, 55],alpha =0.5)
-            plt.imshow(dose[:, :, 55], alpha = 0.5)
+            plt.imshow(binary_mask[:, :, 37])
+            plt.imshow(dose[:, :, 37], alpha = 0.3)
             plt.show()
             
-            plt.savefig(f"/home/baumgartner/sgutwein84/container/utils/test/image_{int(angle)}_{fz}x{fz}")
+            plt.savefig(f"/home/baumgartner/sgutwein84/container/utils/test/image_{int(angle)}_{fz}x{fz}.svg")
             plt.close()
             print(f"Image for Angle {angle} and fieldsize {fz} saved!")

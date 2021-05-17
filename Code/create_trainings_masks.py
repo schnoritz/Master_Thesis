@@ -2,9 +2,8 @@ import os
 import numpy as np
 import matplotlib.pyplot as plt
 from numba import njit
-import progressbar
-from FUNCTIONS import timeit
 import argparse
+from binarymask import create_binary_mask
 
 # parser = argparse.ArgumentParser(description="Calculate Trainings Data for a Specific Fieldsize")
 
@@ -93,76 +92,10 @@ def calc_distance_center(dist, origin, iso):
                 dist[x, y, z] = np.linalg.norm(np.cross((point - iso), n))
 
 
-@timeit
-def create_trainings_masks(SID, angle, fs):
-    
+def check_existance(dir):
+    if not os.path.isdir(dir):
+        os.mkdir(dir)
 
-    # define needed directories
-    main_dir = "/work/ws/nemo/tu_zxoys08-egs_dat-0/"
-    training = main_dir + "training/"
-    binary = training + "binary/"
-    center_distance = training + "center_distance/"
-    source_distance = training + "source_distance/"
-
-    #define target filenames for binary file with field information and with out for center and source distance
-    target_filename = str(angle) + "_" + str(int(fs/10)) + \
-        "x" + str(int(fs/10)) + "_0x0.npy"
-
-    target_filename_cs = str(angle) + ".npy"
-
-
-    print("Creating: " + target_filename)
-    
-    #define size of desired output array
-    target_size = (512, 512, 110)
-
-    #calculate iso center in middle of the 3d volume 
-    iso_center = np.array([target_size[0]/2-1, target_size[1]/2-1, target_size[2]/2-1]).astype("float")
-    origin = get_origin(SID, angle, iso_center).astype("float")
-    fs = scale_fieldsize(fs)
-
-    # calculate source distance map
-    save_source = False
-    if not os.path.isfile(source_distance + target_filename_cs):
-        dist_source = np.empty(target_size).astype("float")
-        calc_distance_source(dist_source, origin)
-        print("------------------------------------------")
-        save_source = True
-    else: 
-        print(center_distance + target_filename_cs + " already exists!")
-
-    # calculate center beam distance map
-    save_center = False
-    if not os.path.isfile(center_distance + target_filename_cs):
-        dist_center = np.empty(target_size).astype("float")
-        calc_distance_center(dist_center, origin, iso_center)
-        print("------------------------------------------")
-        save_center = True
-    else:
-        print(center_distance + target_filename_cs + " already exists!")
-
-    # calculate binary mask array
-    save_binary = False
-    if not os.path.isfile(binary + target_filename):
-        binary_mask = np.empty(target_size).astype("float")
-        get_binary_mask(binary_mask, angle, fs, origin, iso_center)
-        print("------------------------------------------")
-        save_binary = True
-    else:
-        print(binary + target_filename + " already exists!")
-
-    # save generated 3d volumes to given path
-    if save_source:
-        save_to_path(source_distance + target_filename_cs, dist_source)
-        print("Saved Source Distance")
-
-    if save_center:
-        save_to_path(center_distance + target_filename_cs, dist_center)
-        print("Saved Center Distance")
-
-    if save_binary:
-        save_to_path(binary + target_filename, binary_mask)
-        print("saved Binary Mask")
 
 
 def save_to_path(filepath, arr):
@@ -303,7 +236,84 @@ def plot_volume(volume):
         plt.show()
 
 
-def calc_trainings_masks(fs, num_angles=8, SID=1435):
+def create_trainings_masks(SID, angle, fs, target_dir, field_file, plan_file):
+
+    # define needed directories
+    training = target_dir + "training/"
+    binary = training + "binary/"
+    center_distance = training + "center_distance/"
+    source_distance = training + "source_distance/"
+
+    check_existance(training)
+    check_existance(binary)
+    check_existance(center_distance)
+    check_existance(source_distance)
+
+    #define target filenames for binary file with field information and with out for center and source distance
+    target_filename = str(angle) + "_" + str(int(fs)) + \
+        "x" + str(int(fs)) + ".npy"
+
+    target_filename_cs = str(angle) + ".npy"
+
+    print("Creating: " + target_filename)
+
+    #define size of desired output array
+    target_size = (512, 512, 110)
+
+    #calculate iso center in middle of the 3d volume
+    iso_center = np.array(
+        [target_size[0]/2-1, target_size[1]/2-1, target_size[2]/2-1]).astype("float")
+    origin = get_origin(SID, angle, iso_center).astype("float")
+
+    # calculate source distance map
+    save_source = False
+    if not os.path.isfile(source_distance + target_filename_cs):
+        print("Creating Source)
+        dist_source = np.empty(target_size).astype("float")
+        calc_distance_source(dist_source, origin)
+        print("------------------------------------------")
+        save_source = True
+    else:
+        print(center_distance + target_filename_cs + " already exists!")
+
+    # calculate center beam distance map
+    save_center = False
+    if not os.path.isfile(center_distance + target_filename_cs):
+        print("Creating Center")
+        dist_center = np.empty(target_size).astype("float")
+        calc_distance_center(dist_center, origin, iso_center)
+        print("------------------------------------------")
+        save_center = True
+    else:
+        print(center_distance + target_filename_cs + " already exists!")
+
+    # calculate binary mask array
+    save_binary = False
+    if not os.path.isfile(binary + target_filename):
+        print("Creating Binary")
+        binary_mask = create_binary_mask(field_file, plan_file, angle)
+        print("------------------------------------------")
+        save_binary = True
+    else:
+        print(binary + target_filename + " already exists!\n\n")
+        print("------------------------------------------")
+
+
+    # save generated 3d volumes to given path
+    if save_source:
+        save_to_path(source_distance + target_filename_cs, dist_source)
+        print("Saved Source Distance")
+
+    if save_center:
+        save_to_path(center_distance + target_filename_cs, dist_center)
+        print("Saved Center Distance")
+
+    if save_binary:
+        save_to_path(binary + target_filename, binary_mask)
+        print("saved Binary Mask\n\n")
+
+
+def calc_trainings_masks(fs, target_folder, plan_file, num_angles=8, SID=1435):
     """creates masks in training folder
 
     Args:
@@ -311,16 +321,25 @@ def calc_trainings_masks(fs, num_angles=8, SID=1435):
         num_angles (int, optional): number of stops which are calcualted between 0 and 360. Defaults to 8.
         SID (int, optional): Surface Iso Center distance . Defaults to 1435 for MR-Linac.
     """
-    fs = int(fs*10)  
+    field_filefolder = target_folder + "training_fields/"
+    field_file = field_filefolder + f"MR-Linac_model_{str(fs)}x{str(fs)}.txt"
+
     angles = np.linspace(0,360,num_angles, endpoint=False).astype("int")
     angles_str = [str(angle) for angle in angles]
-    print("Angles: " + ", ".join(angles_str) + "\nFieldsize: " + str(int(fs/10)))
+    print("Angles: " + ", ".join(angles_str) + "\nFieldsize: " + str(int(fs)))
 
     for angle in angles:
-        create_trainings_masks(SID, angle, fs)
+        create_trainings_masks(SID, angle, fs, target_folder, field_file, plan_file)
 
 if __name__ == "__main__":
-    pass
+
+    sizes = [2, 3, 4, 5, 6, 7, 8, 9, 10]
+    
+    target_folder = "/home/baumgartner/sgutwein84/container/training_data/"
+    plan_file = "/home/baumgartner/sgutwein84/container/utils/p_plan.dcm"
+
+    for size in sizes:
+        calc_trainings_masks(size, target_folder, plan_file)
 
     #calc_trainings_masks(args.fs, args.num_angles, args.SID)
 
