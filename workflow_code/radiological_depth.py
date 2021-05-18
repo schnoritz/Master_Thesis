@@ -2,12 +2,13 @@ import numpy as np
 import torch
 from tqdm import tqdm
 from depth_ray import Ray
+from utils import define_iso_center, define_origin_position
 
-def radiological_depth(ct, egsinp):
+def radiological_depth(ct, egsinp, egsphant):
 
     egsinp_lines = open(egsinp).readlines()
 
-    iso_center = define_iso_center(egsinp_lines[5])
+    iso_center = define_iso_center(egsinp_lines[5], egsphant)
     origin_position = define_origin_position(egsinp_lines[5], iso_center)
 
     ct_volume = np.array(torch.load(ct), dtype=float)
@@ -31,25 +32,9 @@ def calc_depth(ct_volume, origin_position):
     return depth_volume
 
 
-def define_iso_center(egsinp):
+# if __name__ == "__main__":
 
-    return np.array(egsinp.split(",")[2:5], dtype=np.float16)
-
-
-def define_origin_position(egsinp, iso_center, px_sp=1.171875):
-
-    angle = np.radians(float(egsinp[6])-270)
-
-    pixel_SID = int(1435/px_sp)
-    origin = np.array([iso_center[0] - np.cos(angle)*pixel_SID,
-                       iso_center[1] + np.sin(angle)*pixel_SID,
-                       iso_center[2]]).astype("float")
-
-    return origin
-
-
-if __name__ == "__main__":
-
-    radiological_depth(
-        "/home/baumgartner/sgutwein84/container/output/p.pt",
-        "/home/baumgartner/sgutwein84/container/output/p_0_2x2/p_0_2x2.egsinp")
+#     depth_volume = radiological_depth(
+#         "/home/baumgartner/sgutwein84/container/output/p.pt",
+#         "/home/baumgartner/sgutwein84/container/output/p_0_2x2/p_0_2x2.egsinp",
+#         "/home/baumgartner/sgutwein84/container/output/p.egsphant")

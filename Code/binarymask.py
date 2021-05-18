@@ -16,7 +16,7 @@ def get_leaf_positions(path):
             jaws = np.array(dcm.BeamSequence[0].ControlPointSequence[0].BeamLimitingDevicePositionSequence[0][0x300a, 0x011c][:], float)
 
             positions = np.array([leafes[:80], leafes[80:]]).T
-            
+
     else:
 
         with open(path, "r") as fin:
@@ -41,7 +41,7 @@ def get_first_layer(positions, jaws, first_layer_fac, transversal_size, sagital_
         fl_positions.append(leaf * first_layer_fac)
 
     #0.05cm * 220 -> genaugikeit der leafes auf halben mm
-    fl = np.ones((440, 80))  
+    fl = np.ones((440, 80))
 
     i = 0
     for top, bot in fl_positions:
@@ -72,7 +72,7 @@ def get_first_layer(positions, jaws, first_layer_fac, transversal_size, sagital_
 def scale_beam(fl, dim, scale):
 
     vol = np.empty((fl.shape[0], fl.shape[1], dim[0]))
-    
+
     for slice in range(dim[0]):
         vol[:, :, slice] = clipped_zoom(fl, scale[slice])
 
@@ -134,7 +134,7 @@ def create_binary_mask(egsphant, egsinp, beam_config):
     shifted_window = center_window - shift
 
     output = rotated[shifted_window[0]:shifted_window[0] + output_dim[0],
-                     shifted_window[1]:shifted_window[1] + output_dim[1], 
+                     shifted_window[1]:shifted_window[1] + output_dim[1],
                      shifted_window[2]:shifted_window[2] + output_dim[2]]
 
     output[output >= 0.5] = 1
@@ -151,7 +151,7 @@ def get_iso_center(egsphant_path, egsinp_file, ct_voxel_size):
 
     with open(egsphant_path, "r") as fin:
         lines = fin.readlines()
-        
+
     shape = np.array(
         list(filter(None, np.array(lines[6].strip().split(" ")))), dtype=int)
 
@@ -165,7 +165,7 @@ def get_iso_center(egsphant_path, egsinp_file, ct_voxel_size):
         angle = np.array(lines[5].split(",")[6], dtype = float) -270
 
     iso_pos_vox = np.round((iso-pos)/0.3).astype(int)
-    
+
     top = int(shape[0]-shape[1])
     iso_pos_vox[1] += top
 
@@ -179,25 +179,24 @@ if __name__ == "__main__":
 
     # egsinp = "/Users/simongutwein/Studium/Masterarbeit/p.egsinp"
     # egsphant = "/Users/simongutwein/Studium/Masterarbeit/p.egsphant"
-    egsinp = "/home/baumgartner/sgutwein84/container/training_data/egsinp/p.egsinp"
-    egsphant = "/home/baumgartner/sgutwein84/container/training_data/egsphant/p.egsphant"
+    egsinp = "/home/baumgartner/sgutwein84/container/output/p_0_2x2/p_0_2x2.egsinp"
+    egsphant = "/home/baumgartner/sgutwein84/container/output/p.egsphant"
 
     for angle in [0, 45, 90, 135, 180, 225, 270, 315]:
         for fz in [2]:#[2,3,4,5,6,7,8,9,10]:
-            file = f"/home/baumgartner/sgutwein84/container/training_data/training_fields/MR-Linac_model_{fz}x{fz}.txt"
-            
-            binary_mask = create_binary_mask(egsphant, egsinp)
+            file = "/home/baumgartner/sgutwein84/container/output/p_0_2x2/beam_config_2x2.egsinp"
 
-            dose = np.load(
-                f"/home/baumgartner/sgutwein84/container/training_data/training/target/p_{int(angle)}_{fz}x{fz}.npy")
+            binary_mask = create_binary_mask(egsphant, egsinp,)
 
-            im = np.zeros((512, 512))
-            im[254:256, 254:256] = 1
-            plt.imshow(im)
-            plt.imshow(binary_mask[:, :, 37])
-            plt.imshow(dose[:, :, 37], alpha = 0.3)
-            plt.show()
-            
+            # dose = np.load(
+            #     "/home/baumgartner/sgutwein84/container/training_data/training/target/p_{int(angle)}_{fz}x{fz}.npy")
+
+            for i in range(binary_mask.shape[2]):
+
+                plt.imshow(binary_mask[:, :, i])
+                #plt.imshow(dose[:, :, 37], alpha = 0.3)
+                plt.show()
+
             plt.savefig(f"/home/baumgartner/sgutwein84/container/utils/test/image_{int(angle)}_{fz}x{fz}.svg")
             plt.close()
             print(f"Image for Angle {angle} and fieldsize {fz} saved!")

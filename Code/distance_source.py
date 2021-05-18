@@ -3,7 +3,6 @@ import matplotlib.pyplot as plt
 from numba import njit
 from FUNCTIONS import *
 
-@timeit
 @njit
 def distance_matrix(shape, origin):
     dist = np.empty(shape)

@@ -85,17 +85,17 @@ def calc_alpha(origin, voxel, min_max, a_min, a_max):
 
     a_x = []
     if not int(min_max[0][0]) == -1:
-        for i in range(int(min_max[0][0]), int(min_max[0][1])+1):
+        for i in prange(int(min_max[0][0]), int(min_max[0][1])+1):
             a_x.append((origin[0]-i)/(origin[0]-voxel[0]))
 
     a_y = []
     if not int(min_max[1][0]) == -1:
-        for i in range(int(min_max[1][0]), int(min_max[1][1])+1):
+        for i in prange(int(min_max[1][0]), int(min_max[1][1])+1):
             a_y.append((origin[1]-i)/(origin[1]-voxel[1]))
 
     a_z = []
     if not int(min_max[2][0]) == -1:
-        for i in range(int(min_max[2][0]), int(min_max[2][1])+1):
+        for i in prange(int(min_max[2][0]), int(min_max[2][1])+1):
             a_z.append((origin[2]-i)/(origin[2]-voxel[2]))
 
     a_x, a_y, a_z = np.array(a_x), np.array(a_y), np.array(a_z)
