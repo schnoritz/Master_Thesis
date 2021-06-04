@@ -1,9 +1,9 @@
 .DS_Store
 Masterarbeit_Text/.DS_Store
-Code/__pycache__
+Code/__pycache__/*
 .vscode/launch.json
 .vscode/settings.json
 Data/MRI_Phantom_Reference2X2.dcm_1.3ddose
-workflow_code/__pycache__
+workflow_code/__pycache__/*
 Data
-pytorch-3DUNet/saved_models
+pytorch-3DUNet/saved_models/*
