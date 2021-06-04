@@ -4,9 +4,14 @@ import os
 from pydicom import dcmread
 import matplotlib.pyplot as plt
 
+
 def read_in(ct_path):
 
-    return [ct_path + x for x in os.listdir(ct_path) if not x.startswith(".")]
+    for file in os.listdir(ct_path):
+        if file.startswith("."):
+            os.remove(ct_path + "/" + file)
+    return [ct_path + x for x in os.listdir(ct_path) if not x.startswith(".") and not "listfile" in x]
+
 
 def sort_ct_slices(files):
 
@@ -44,20 +49,20 @@ def convert_ct_array(ct_path, tensor=False):
     slices = read_in(ct_path)
     sorted_slices = sort_ct_slices(slices)
     stack = stack_ct_images(sorted_slices)
-    np.transpose(stack, (1, 2, 0))
+    stack = np.transpose(stack, (1, 2, 0))
     converted = convert_stack(stack, tensor=tensor)
 
     return converted
 
 
-# if __name__ == "__main__":
+if __name__ == "__main__":
 
-#     ct_images = "/Users/simongutwein/Studium/Masterarbeit/15"
+    ct_images = "/Users/simongutwein/Studium/Masterarbeit/15"
 
-#     stack = convert_ct_array(ct_images)
-#     print(stack.shape)
+    stack = convert_ct_array(ct_images)
+    print(stack.shape)
 
-#     for i in range(stack.shape[2]):
-#         plt.imshow(stack[:, :, i])
-#         plt.show()
-#         plt.close()
+    for i in range(stack.shape[2]):
+        plt.imshow(stack[:, :, i])
+        plt.show()
+        plt.close()

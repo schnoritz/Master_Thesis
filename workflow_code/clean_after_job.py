@@ -32,10 +32,7 @@ def clean_folder(filename, str_nhist, dir="/home/tu/tu_tu/tu_zxoys08/EGSnrc/egs_
 
     beam_file = "beam_config_" + beam_info + ".egsinp"
 
-    if "x" in filename:
-        beam_txt_file = "beam_config_" + beam_info + ".txt"
-    else:
-        plan_file = f"{dir}planfiles/{patient}_plan.dcm"
+    beam_txt_file = "beam_config_" + beam_info + ".txt"
 
     egsinp_file = filename + ".egsinp"
 
@@ -54,10 +51,7 @@ def clean_folder(filename, str_nhist, dir="/home/tu/tu_tu/tu_zxoys08/EGSnrc/egs_
 
     os.rename(dir + egsinp_file, dir + filename + "/" + egsinp_file)
     shutil.copyfile(beam_folder + beam_file, dir + filename + "/" + beam_file)
-    if "x" in filename:
-        shutil.copyfile(beam_folder + beam_txt_file, dir + filename + "/" + beam_txt_file)
-    else:
-        shutil.copyfile(plan_file, f"{dir}{filename}/{patient}_plan.dcm")
+    shutil.copyfile(beam_folder + beam_txt_file, dir + filename + "/" + beam_txt_file)
     os.rename(dir + filename + ".3ddose", dir + filename + "/" + filename + "_" + str_nhist + ".3ddose")
 
 
