@@ -5,3 +5,4 @@ Code/__pycache__
 .vscode/settings.json
 Data/MRI_Phantom_Reference2X2.dcm_1.3ddose
 workflow_code/__pycache__
+Data
