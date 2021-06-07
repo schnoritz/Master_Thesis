@@ -1,3 +1,8 @@
+import matplotlib.pyplot as plt
+import torch
+import torch.nn as nn
+
+
 def plot_patches(patches, target, idx):
 
     fig, axs = plt.subplots(1, 6, figsize=(24, 4))
@@ -23,3 +28,25 @@ def plot_patches(patches, target, idx):
         plt.savefig(name)
 
     plt.close()
+
+
+class RMSELoss(nn.Module):
+    def __init__(self):
+        super().__init__()
+        self.mse = nn.MSELoss()
+
+    def forward(self, y_hat, y):
+        return torch.sqrt(self.mse(y_hat, y))
+
+
+class Color:
+    PURPLE = '\033[95m'
+    CYAN = '\033[96m'
+    DARKCYAN = '\033[36m'
+    BLUE = '\033[94m'
+    GREEN = '\033[92m'
+    YELLOW = '\033[93m'
+    RED = '\033[91m'
+    BOLD = '\033[1m'
+    UNDERLINE = '\033[4m'
+    END = '\033[0m'

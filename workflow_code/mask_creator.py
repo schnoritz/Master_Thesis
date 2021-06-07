@@ -98,6 +98,8 @@ def create_mask_files(egsinp_file,
     stack = torch.stack((binary_mask, torch.tensor(ct_mask), radio_depth_mask,
                         center_mask, source_mask))
 
+    dose_mask = torch.unsqueeze(dose_mask, 0)
+
     torch.save(
         stack, f"/home/baumgartner/sgutwein84/container/training_data/{segment}/training_data.pt"
     )
