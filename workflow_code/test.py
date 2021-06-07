@@ -4,6 +4,8 @@ import torch
 import random
 from pprint import pprint
 import os
+import pickle
+from model import Dose3DUNET
 
 
 def check_improvement(epochs, top_k=5):
@@ -21,37 +23,71 @@ def check_improvement(epochs, top_k=5):
 
 if __name__ == "__main__":
 
-    segments = [f"p_{i}" for i in range(40)]
+    model = Dose3DUNET()
+    model.load_state_dict(torch.load(
+        "/home/baumgartner/sgutwein84/container/pytorch-3DUNet/saved_models/UNET_epoch10.pth"))
+    model.eval()
+    model = model.float()
 
-    training = torch.randn((5, 512, 512, 110))
-    target = torch.randn((1, 512, 512, 110))
+    mask = torch.load(
+        "/home/baumgartner/sgutwein84/container/training_data/p_13/training_data.pt")
 
-    for seg in segments:
-        os.mkdir(
-            f"/home/baumgartner/sgutwein84/container/trainings_data/{seg}"
-        )
+    mask = torch.unsqueeze(mask, 0)
+    mask = mask.float()
+    print(mask.shape)
+    pred = model(mask)
+    print(pred.shape)
 
-        torch.save(
-            training,
-            f'/home/baumgartner/sgutwein84/container/trainings_data/{seg}/training_data.pt'
-        )
+    for i in range(110):
+        plt.imshow(pred[0, :, :, i])
+        plt.show()
+        plt.savefig(
+            f"/home/baumgartner/sgutwein84/container/logs/test/img_{i}")
 
-        torch.save(
-            target,
-            f'/home/baumgartner/sgutwein84/container/trainings_data/{seg}/target_data.pt'
-        )
+    # segments = [f"p_{i}" for i in range(40)]
+
+    # training = torch.randn((5, 512, 512, 110))
+    # target = torch.randn((1, 512, 512, 110))
+
+    # for seg in segments:
+    #     os.mkdir(
+    #         f"/home/baumgartner/sgutwein84/container/trainings_data/{seg}"
+    #     )
+
+    #     torch.save(
+    #         training,
+    #         f'/home/baumgartner/sgutwein84/container/trainings_data/{seg}/training_data.pt'
+    #     )
+
+    #     torch.save(
+    #         target,
+    #         f'/home/baumgartner/sgutwein84/container/trainings_data/{seg}/target_data.pt'
+    #     )
 
     # epochs = []
     # for epoch in range(100):
 
-    #     train_loss = np.round(random.uniform(0.5, 10), 4)
-    #     test_loss = np.round(train_loss + random.uniform(-0.5, 0.5), 4)
+    #     train_loss = np.round(random.uniform(0.5, 10)*(1/(epoch+1)), 4)
+    #     test_loss = np.round(train_loss + random.uniform(0, 0.5), 4)
 
     #     epochs.append({
     #         "epoch": epoch+1,
     #         "train_loss": train_loss,
     #         "test_loss": test_loss
     #     })
+
+    #     if epoch > 5:
+    #         top5 = [sorted(epochs, key=lambda k: k['test_loss'])[i]["epoch"]
+    #                 for i in range(5)]
+    #         print(top5)
+
+    # test_losses = [epochs[i]["test_loss"] for i in range(len(epochs))]
+    # train_losses = [epochs[i]["train_loss"] for i in range(len(epochs))]
+    # plt.plot(test_losses, color="red")
+    # plt.plot(train_losses,  color="blue")
+    # plt.vlines(np.array(top5)-1, ymin=0, ymax=1, color="green")
+    # plt.legend()
+    # plt.show()
 
     # pprint(sorted(epochs, key=lambda k: k['test_loss'])[:5])
 

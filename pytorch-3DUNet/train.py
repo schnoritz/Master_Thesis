@@ -13,6 +13,7 @@ from torch import optim
 import argparse
 import torchio as tio
 from utils import RMSELoss, Color
+import pickle
 
 
 def parse():
@@ -79,6 +80,7 @@ def train(unet, num_epochs, train_loader, test_loader, optimizer, criterion, dev
             optimizer.zero_grad()
             loss.backward()
             optimizer.step()
+            print(f"Epoch Loss is: {np.round(loss.item(),4)}")
 
         train_loss = train_loss/num
         test_loss = validate(unet, criterion, test_loader, device)
@@ -172,10 +174,10 @@ def define_calculation_device(use_gpu):
         device = torch.device('cpu')
 
     if device.type == 'cuda':
-        print(torch.cuda.get_device_name(0))
-        print('Memory Usage:')
-        print('Allocated:', round(torch.cuda.memory_allocated(0)/1024**3, 1), 'GB')
-        print('Cached:   ', round(torch.cuda.memory_reserved(0)/1024**3, 1), 'GB')
+        print("Device: " + torch.cuda.get_device_name(0))
+        # print('Memory Usage:')
+        # print('Allocated:', round(torch.cuda.memory_allocated(0)/1024**3, 1), 'GB')
+        # print('Cached:   ', round(torch.cuda.memory_reserved(0)/1024**3, 1), 'GB')
 
     return device
 
@@ -201,8 +203,8 @@ def setup_training(
         patch_size=patch_size, probability_map='sampling_map')
 
     # tbd
-    samples_per_volume = 256
-    queue_length = samples_per_volume*4
+    samples_per_volume = 512
+    queue_length = samples_per_volume*2
 
     train_queue = tio.Queue(
         train_set,
@@ -253,9 +255,16 @@ def setup_training(
         device=device
     )
 
-    plt.plot(losses)
+    test_losses = [losses[i]["test_loss"] for i in range(len(losses))]
+    train_losses = [losses[i]["train_loss"] for i in range(len(losses))]
+    plt.plot(test_losses)
+    plt.plot(train_losses)
     plt.show()
     plt.savefig("/home/baumgartner/sgutwein84/container/logs/loss.png")
+
+    fout = open(save_dir + "epochs_losses.pkl", "wb")
+    pickle.dump(losses, fout)
+    fout.close()
 
 
 if __name__ == "__main__":
@@ -265,10 +274,10 @@ if __name__ == "__main__":
 
     setup_training(
         num_epochs=10,
-        batch_size=32,
+        batch_size=64,
         patch_size=32,
         save_dir="/home/baumgartner/sgutwein84/container/pytorch-3DUNet/saved_models/",
         train_fraction=0.7,
-        data_path="/home/baumgartner/sgutwein84/container/trainings_data",
+        data_path="/home/baumgartner/sgutwein84/container/training_data",
         use_gpu=True
     )
