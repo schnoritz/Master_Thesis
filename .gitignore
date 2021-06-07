@@ -3,12 +3,6 @@ Masterarbeit_Text/.DS_Store
 Code/__pycache__/*
 .vscode/launch.json
 .vscode/settings.json
-<<<<<<< HEAD
 Data/*
-workflow_code/*
-=======
-Data/MRI_Phantom_Reference2X2.dcm_1.3ddose
 workflow_code/__pycache__/*
-Data
->>>>>>> aff5fa288de9ca5337a931000bbba063efbed67a
 pytorch-3DUNet/saved_models/*
