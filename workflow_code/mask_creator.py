@@ -10,6 +10,7 @@ import numpy as np
 import torch
 import shutil
 import subprocess
+import os
 
 
 def parse():
@@ -66,9 +67,16 @@ def parse():
 def create_mask_files(egsinp_file,
                       egsphant_file, beam_config_file, dose_file, segment, output_folder):
 
+    if not os.path.isdir(f'/home/baumgartner/sgutwein84/container/training_data{output_folder}'):
+
+        subprocess.run(
+            ['mkdir',
+             f'/home/baumgartner/sgutwein84/container/training_data{output_folder}']
+        )
+
     subprocess.run(
         ['mkdir',
-            f'/home/baumgartner/sgutwein84/container/training_data/{segment}']
+            f'/home/baumgartner/sgutwein84/container/training_data{output_folder}/{segment}']
     )
 
     dose_mask = dose_to_pt(dose_file, tensor=True)
@@ -95,17 +103,24 @@ def create_mask_files(egsinp_file,
         egsinp_file, egsphant_file, beam_config_file, px_sp=np.array([1.171875, 1.171875, 3]), SID=1435, tensor=True
     )
     # creates stack of size (5, 512  512, num_slices)
-    stack = torch.stack((binary_mask, torch.tensor(ct_mask), radio_depth_mask,
-                        center_mask, source_mask))
+    stack = torch.stack((
+        binary_mask,
+        torch.tensor(ct_mask),
+        radio_depth_mask,
+        center_mask,
+        source_mask))
 
     dose_mask = torch.unsqueeze(dose_mask, 0)
 
+    stack = stack.float()
+    dose_mask = dose_mask.float()
+
     torch.save(
-        stack, f"/home/baumgartner/sgutwein84/container/training_data/{segment}/training_data.pt"
+        stack, f"/home/baumgartner/sgutwein84/container/training_data{output_folder}/{segment}/training_data.pt"
     )
 
     torch.save(
-        dose_mask, f"/home/baumgartner/sgutwein84/container/training_data/{segment}/target_data.pt"
+        dose_mask, f"/home/baumgartner/sgutwein84/container/training_data{output_folder}/{segment}/target_data.pt"
     )
 
     # shutil.move(f"/home/baumgartner/sgutwein84/container/{output_folder}/{segment}",
@@ -118,4 +133,7 @@ if __name__ == "__main__":
 
     args = parse()
     create_mask_files(args.egsinp_file,
-                      args.egsphant_file, args.beam_config_file, args.dose_file, args.segment, args.output_folder)
+                      args.egsphant_file,
+                      args.beam_config_file,
+                      args.dose_file, args.segment,
+                      args.output_folder)

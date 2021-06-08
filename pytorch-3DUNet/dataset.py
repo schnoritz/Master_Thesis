@@ -24,7 +24,7 @@ def load_subject(subject_path, sampling_scheme):
     binary = torch.load(f"{subject_path}/training_data.pt")[0, :, :, :]
     # -> [0, :, :, :], da binary mask an erster Stelle ist
 
-    binary = torch.randn((512, 512, 110))
+    #binary = torch.randn((512, 512, 110))
 
     sampling_map = create_sampling_map(binary, sampling_scheme=sampling_scheme)
 

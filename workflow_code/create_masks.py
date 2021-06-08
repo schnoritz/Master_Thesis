@@ -45,7 +45,7 @@ def create_mask_files(dir):
     for segment in segments:
 
         patient = segment.split("_")[0]
-        output_folder = dir.split("/")[-2]
+        output_folder = dir.split("/")[-2].split("_")[-1]
 
         egsinp_file = f"{dir}{segment}/{segment}.egsinp"
         egsphant_file = f"{dir}{patient}_listfile.txt.egsphant"
@@ -79,6 +79,7 @@ def create_segment_job_file(
     task_line.append("\n")
     lines[16] = " ".join(task_line)
     lines[18] = f'echo "Finished creating masks for {segment}"'
+    lines.insert(1, f"#SBATCH --job-name '{segment}'\n")
     with open(
         "/Users/simongutwein/home/baumgartner/sgutwein84/container/job.sh", "w+"
     ) as fout:
@@ -102,6 +103,6 @@ def execute_job_file():
 
 if __name__ == "__main__":
 
-    dir = "/home/baumgartner/sgutwein84/container/output_20210522/"
+    dir = "/home/baumgartner/sgutwein84/container/output_20210608/"
 
     create_mask_files(dir)

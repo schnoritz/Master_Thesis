@@ -1,6 +1,5 @@
 import torch
 import torch.nn as nn
-import torch.nn.functional as nnf
 import torchvision.transforms.functional as tf
 from resize_right import resize
 from interp_methods import linear
@@ -73,9 +72,6 @@ class Dose3DUNET(nn.Module):
                     interp_method=linear,
                     support_sz=2
                 )
-
-            # evtl auch
-            #nnf.interpolate(input=x, size=skip_connection.shape, mode='nearest')
 
             concat_skip = torch.cat((skip_connection, x), dim=1)
             x = self.ups[idx+1](concat_skip)

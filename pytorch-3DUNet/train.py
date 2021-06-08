@@ -72,15 +72,17 @@ def train(unet, num_epochs, train_loader, test_loader, optimizer, criterion, dev
                 true_dose.to(device)
 
             dose_pred = unet(masks)
+            print(dose_pred.shape)
 
             loss = criterion(dose_pred, true_dose)
 
             train_loss += loss.item()
+            print(loss)
 
             optimizer.zero_grad()
             loss.backward()
             optimizer.step()
-            print(f"Epoch Loss is: {np.round(loss.item(),4)}")
+            print(f"Epoch Loss is: {loss.item()}")
 
         train_loss = train_loss/num
         test_loss = validate(unet, criterion, test_loader, device)
@@ -242,7 +244,7 @@ def setup_training(
         my_UNET.cuda().to(device)
 
     criterion = RMSELoss()
-    optimizer = optim.Adam(my_UNET.parameters(), 10E-4, (0.9, 0.99), 10E-8)
+    optimizer = optim.Adam(my_UNET.parameters(), 10E-5, (0.9, 0.99), 10E-8)
 
     losses = train(
         unet=my_UNET,
@@ -273,11 +275,11 @@ if __name__ == "__main__":
     # setup_training(args.num_epochs, args.batch_size, args.patch_size, args.train_fraction, args.root_dir, args.save_dir, args.use_gpu)
 
     setup_training(
-        num_epochs=10,
+        num_epochs=100,
         batch_size=64,
         patch_size=32,
         save_dir="/home/baumgartner/sgutwein84/container/pytorch-3DUNet/saved_models/",
-        train_fraction=0.7,
-        data_path="/home/baumgartner/sgutwein84/container/training_data",
+        train_fraction=0.9,
+        data_path="/home/baumgartner/sgutwein84/container/training_data20210608",
         use_gpu=True
     )

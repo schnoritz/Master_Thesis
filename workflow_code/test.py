@@ -6,6 +6,7 @@ from pprint import pprint
 import os
 import pickle
 from model import Dose3DUNET
+from pt_3ddose import dose_to_pt
 
 
 def check_improvement(epochs, top_k=5):
@@ -23,26 +24,32 @@ def check_improvement(epochs, top_k=5):
 
 if __name__ == "__main__":
 
-    model = Dose3DUNET()
-    model.load_state_dict(torch.load(
-        "/home/baumgartner/sgutwein84/container/pytorch-3DUNet/saved_models/UNET_epoch10.pth"))
-    model.eval()
-    model = model.float()
+    file = "/Users/simongutwein/Studium/Masterarbeit/p_7_1E07.3ddose"
 
-    mask = torch.load(
-        "/home/baumgartner/sgutwein84/container/training_data/p_13/training_data.pt")
+    dose = dose_to_pt(file, tensor=True)
+    dose = dose.float()
+    dose = torch.unsqueeze(dose, 0)
 
-    mask = torch.unsqueeze(mask, 0)
-    mask = mask.float()
-    print(mask.shape)
-    pred = model(mask)
-    print(pred.shape)
+    dose = torch.load(
+        "/Users/simongutwein/Documents/GitHub/Master_Thesis/Data/p_39/target_data.pt")
 
     for i in range(110):
-        plt.imshow(pred[0, :, :, i])
+        plt.imshow(dose[0, :, :, i])
         plt.show()
-        plt.savefig(
-            f"/home/baumgartner/sgutwein84/container/logs/test/img_{i}")
+
+    # mask = torch.unsqueeze(mask, 0)
+    # mask = mask.float()
+    # print(f"Input shape: {mask.shape}")
+    # pred = model(mask)
+    # print(f"Prediction shape: {pred.shape}")
+
+    # pred = pred.detach().numpy()
+
+    # for i in range(110):
+    #     plt.imshow(pred[0, 0, :, :, i])
+    #     plt.show()
+    #     plt.savefig(
+    #         f"/home/baumgartner/sgutwein84/container/logs/test/img_{i}")
 
     # segments = [f"p_{i}" for i in range(40)]
 
