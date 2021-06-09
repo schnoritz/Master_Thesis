@@ -1,10 +1,10 @@
 import os
+from numpy.lib.shape_base import get_array_wrap
 # from torch._C import double, float
 
 from torchio.data import queue
-from dataset import SubjectDataset
+from dataset import SubjectDataset, setup_loaders
 import numpy as np
-from torch.utils.data import DataLoader
 import matplotlib.pyplot as plt
 from model import Dose3DUNET
 import torch
@@ -12,8 +12,11 @@ import torch.nn as nn
 from torch import optim
 import argparse
 import torchio as tio
-from utils import RMSELoss, Color
+import utils
 import pickle
+
+# test
+from torchvision.transforms import Normalize
 
 
 def parse():
@@ -32,10 +35,10 @@ def parse():
                         help='percent used for for training 0=0, 1=100%')
 
     parser.add_argument(
-        '--rootdir', type=str, default="/home/baumgartner/sgutwein84/container/training_data/training/")
+        '--root_dir', type=str, default="/home/baumgartner/sgutwein84/container/training_data/training/")
 
     parser.add_argument(
-        '--savepath', type=str, default="/home/baumgartner/sgutwein84/container/3D-UNet/saved_models/")
+        '--save_dir', type=str, default="/home/baumgartner/sgutwein84/container/3D-UNet/saved_models/")
 
     parser.add_argument('--use_gpu', type=bool, metavar='', default=True,
                         help='Number of samples for one batch')
@@ -45,82 +48,21 @@ def parse():
     return args
 
 
-def train(unet, num_epochs, train_loader, test_loader, optimizer, criterion, device, save_dir):
+def get_training_data(batch, device):
 
-    print("Start Training!")
-    total_patches = 0
-    epochs = []
-    for epoch in range(num_epochs):
+    masks = batch["trainings_data"]['data']
+    true_dose = batch["target_data"]['data']
+    masks = masks.float()
+    true_dose = true_dose.float()
 
-        print(Color.BOLD + f"Epoch {epoch+1}/{num_epochs}" + Color.END)
+    if device.type == 'cuda':
+        masks = masks.cuda()
+        true_dose = true_dose.cuda()
 
-        train_loss = 0
-        for num, batch in enumerate(train_loader):
+        masks.to(device)
+        true_dose.to(device)
 
-            masks = batch["trainings_data"]['data']
-            true_dose = batch["target_data"]['data']
-            masks = masks.float()
-            true_dose = true_dose.float()
-
-            total_patches += masks.shape[0]
-
-            if device.type == 'cuda':
-                masks = masks.cuda()
-                true_dose = true_dose.cuda()
-
-                masks.to(device)
-                true_dose.to(device)
-
-            dose_pred = unet(masks)
-            print(dose_pred.shape)
-
-            loss = criterion(dose_pred, true_dose)
-
-            train_loss += loss.item()
-            print(loss)
-
-            optimizer.zero_grad()
-            loss.backward()
-            optimizer.step()
-            print(f"Epoch Loss is: {loss.item()}")
-
-        train_loss = train_loss/num
-        test_loss = validate(unet, criterion, test_loader, device)
-        print(f"Train Loss is: {np.round(train_loss,4)}")
-        print(f"Test Loss is:  {np.round(test_loss,4)}\n")
-
-        epochs.append({
-            "epoch": epoch+1,
-            "train_loss": train_loss,
-            "test_loss": test_loss
-        })
-
-        save = check_improvement(epochs, top_k=5)
-        if save:
-            torch.save(
-                unet.state_dict(),
-                save_dir + f"UNET_epoch{epoch+1}.pth"
-            )
-            if type(save) == int:
-                os.remove(
-                    save_dir + f"UNET_epoch{save}.pth")
-
-    print(f"Network has seen: {total_patches} Patches!")
-
-    return epochs
-
-
-def check_improvement(epochs, top_k=5):
-
-    curr_epoch = epochs[-1]
-    epochs = sorted(epochs, key=lambda k: k['test_loss'])
-    if epochs.index(curr_epoch) < top_k:
-        if len(epochs) > top_k:
-            return epochs[top_k]["epoch"]
-        else:
-            return True
-    else:
-        return False
+    return masks, true_dose
 
 
 def validate(unet, criterion, test_loader, device):
@@ -149,39 +91,59 @@ def validate(unet, criterion, test_loader, device):
     return val_loss/num
 
 
-def get_train_test_sets(dataset, train_fraction):
+def train(unet, num_epochs, train_loader, test_loader, optimizer, criterion, device, save_dir):
 
-    num = len(dataset)
+    print("Start Training!\n")
+    total_patches = 0
+    epochs = []
+    for epoch in range(num_epochs):
 
-    train_n, test_n = int(np.ceil(num*train_fraction)
-                          ), int(np.floor(num*(1-train_fraction)))
+        # print(utils.Color.BOLD +
+        #       f"Epoch {epoch+1}/{num_epochs}" + utils.Color.END)
+        print(f"---- Epoch {epoch+1}/{num_epochs} ----")
 
-    train_set, test_set = torch.utils.data.random_split(
-        dataset, [train_n, test_n])
+        train_loss = 0
+        for num, batch in enumerate(train_loader):
 
-    return train_set, test_set
+            masks, true_dose = get_training_data(batch, device)
 
+            if torch.isnan(torch.sum(masks)) or torch.isnan(torch.sum(true_dose)) or torch.isinf(torch.sum(masks)) or torch.isinf(torch.sum(true_dose)):
+                print('invalid input detected at iteration ', num)
+                print(masks.max(), masks.min(),
+                      true_dose.max(), true_dose.min())
 
-def define_calculation_device(use_gpu):
+            dose_pred = unet(masks)
+            # print(dose_pred.shape)
 
-    if use_gpu:
-        if torch.cuda.is_available():
-            print("Using CUDA!")
-            device = torch.device('cuda')
-        else:
-            print("Using CPU!")
-            device = torch.device('cpu')
-    else:
-        print("Using CPU!")
-        device = torch.device('cpu')
+            loss = criterion(dose_pred, true_dose)
+            train_loss += loss.item()
 
-    if device.type == 'cuda':
-        print("Device: " + torch.cuda.get_device_name(0))
-        # print('Memory Usage:')
-        # print('Allocated:', round(torch.cuda.memory_allocated(0)/1024**3, 1), 'GB')
-        # print('Cached:   ', round(torch.cuda.memory_reserved(0)/1024**3, 1), 'GB')
+            optimizer.zero_grad()
+            loss.backward()
+            optimizer.step()
 
-    return device
+            #print(f"Epoch Loss is: {loss.item()}")
+            total_patches += masks.shape[0]
+
+        train_loss = train_loss/num
+        test_loss = validate(unet, criterion, test_loader, device)
+        print(f"Train Loss is: {np.round(train_loss,4)}")
+        print(f"Test Loss is:  {np.round(test_loss,4)}\n")
+
+        epochs.append({
+            "epoch": epoch+1,
+            "train_loss": train_loss,
+            "test_loss": test_loss
+        })
+
+        save = utils.check_improvement(epochs, top_k=5)
+
+        if save:
+            utils.save_model(unet, save_dir, epoch, save)
+
+    print(f"Network has seen: {total_patches} Patches!")
+
+    return epochs
 
 
 def setup_training(
@@ -194,48 +156,16 @@ def setup_training(
     use_gpu
 ):
 
-    device = define_calculation_device(use_gpu)
+    device = utils.define_calculation_device(use_gpu)
 
-    SubjectList = SubjectDataset(data_path)
+    SubjectList = SubjectDataset(data_path, sampling_scheme="beam")
     print(f'Number of Segments: {len(SubjectList)}')
 
-    train_set, test_set = get_train_test_sets(SubjectList, train_fraction)
-
-    sampler = tio.data.WeightedSampler(
-        patch_size=patch_size, probability_map='sampling_map')
-
-    # tbd
-    samples_per_volume = 512
-    queue_length = samples_per_volume*2
-
-    train_queue = tio.Queue(
-        train_set,
-        queue_length,
-        samples_per_volume,
-        sampler,
-        shuffle_patches=True,
-        # shuffle_subjects=True
-    )
-
-    test_queue = tio.Queue(
-        test_set,
-        queue_length,
-        samples_per_volume,
-        sampler,
-        shuffle_patches=True,
-        # shuffle_subjects=True
-    )
-
-    train_loader = DataLoader(
-        dataset=train_queue,
+    train_loader, test_loader = setup_loaders(
+        SubjectList,
         batch_size=batch_size,
-        num_workers=2
-    )
-
-    test_loader = DataLoader(
-        dataset=test_queue,
-        batch_size=batch_size,
-        num_workers=2
+        patch_size=patch_size,
+        train_fraction=train_fraction
     )
 
     my_UNET = Dose3DUNET().float()
@@ -243,8 +173,8 @@ def setup_training(
     if device.type == 'cuda':
         my_UNET.cuda().to(device)
 
-    criterion = RMSELoss()
-    optimizer = optim.Adam(my_UNET.parameters(), 10E-5, (0.9, 0.99), 10E-8)
+    criterion = utils.RMSELoss()
+    optimizer = optim.Adam(my_UNET.parameters(), 10E-4, (0.9, 0.99), 10E-8)
 
     losses = train(
         unet=my_UNET,
@@ -261,6 +191,7 @@ def setup_training(
     train_losses = [losses[i]["train_loss"] for i in range(len(losses))]
     plt.plot(test_losses)
     plt.plot(train_losses)
+    plt.yscale("log")
     plt.show()
     plt.savefig("/home/baumgartner/sgutwein84/container/logs/loss.png")
 
@@ -271,15 +202,23 @@ def setup_training(
 
 if __name__ == "__main__":
 
-    # args = parse()
-    # setup_training(args.num_epochs, args.batch_size, args.patch_size, args.train_fraction, args.root_dir, args.save_dir, args.use_gpu)
-
+    args = parse()
     setup_training(
-        num_epochs=100,
-        batch_size=64,
-        patch_size=32,
-        save_dir="/home/baumgartner/sgutwein84/container/pytorch-3DUNet/saved_models/",
-        train_fraction=0.9,
-        data_path="/home/baumgartner/sgutwein84/container/training_data20210608",
-        use_gpu=True
+        num_epochs=args.num_epochs,
+        batch_size=args.batch_size,
+        patch_size=args.patch_size,
+        train_fraction=args.train_fraction,
+        data_path=args.root_dir,
+        save_dir=args.save_dir,
+        use_gpu=args.use_gpu
     )
+
+    # setup_training(
+    #     num_epochs=10,
+    #     batch_size=16,
+    #     patch_size=32,
+    #     save_dir="/home/baumgartner/sgutwein84/container/pytorch-3DUNet/saved_models/",
+    #     train_fraction=0.9,
+    #     data_path="/home/baumgartner/sgutwein84/container/training_data20210522",
+    #     use_gpu=True
+    # )

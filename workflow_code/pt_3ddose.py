@@ -4,6 +4,7 @@ import cv2
 from cv2 import resize
 import torch
 
+
 def dose_to_pt(dose_path, tensor=False):
     """creates a 3D PyTorch Tensor of shape (512, 512, num_slices)
 
@@ -15,13 +16,13 @@ def dose_to_pt(dose_path, tensor=False):
     """
 
     dose = read_dose(dose_path)
-    dose = upscale(dose, target_size=(512,512,dose.shape[2]))
-    dose = dose.astype(np.float32)
+    dose = upscale(dose, target_size=(512, 512, dose.shape[2]))
 
     if tensor:
         return torch.tensor(dose)
     else:
         return dose
+
 
 def read_dose(filepath):
     """reads in a .3ddose file
@@ -57,9 +58,11 @@ def upscale(dose, target_size):
     """
 
     target_height = int(target_size[0] / dose.shape[1] * dose.shape[0])
-    add = np.zeros((target_size[0] - target_height, target_size[0], target_size[2]))
+    add = np.zeros((target_size[0] - target_height,
+                   target_size[0], target_size[2]))
 
-    resized = resize(dose, (target_size[0], target_height), interpolation=cv2.INTER_NEAREST)
+    resized = resize(
+        dose, (target_size[0], target_height), interpolation=cv2.INTER_NEAREST)
     final_dose = np.concatenate((add, resized), axis=0)
 
     return final_dose

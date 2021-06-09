@@ -1,5 +1,6 @@
 import matplotlib.pyplot as plt
 import numpy as np
+from numpy.core.defchararray import startswith
 import torch
 import random
 from pprint import pprint
@@ -24,32 +25,33 @@ def check_improvement(epochs, top_k=5):
 
 if __name__ == "__main__":
 
-    file = "/Users/simongutwein/Studium/Masterarbeit/p_7_1E07.3ddose"
+    model = Dose3DUNET().float()
+    model.load_state_dict(torch.load(
+        "/home/baumgartner/sgutwein84/container/pytorch-3DUNet/saved_models/UNET_epoch97.pth"))
+    mask = torch.load(
+        "/home/baumgartner/sgutwein84/container/training_data20210522/p_17/training_data.pt")
+    target = torch.load(
+        "/home/baumgartner/sgutwein84/container/training_data20210522/p_17/target_data.pt")
 
-    dose = dose_to_pt(file, tensor=True)
-    dose = dose.float()
-    dose = torch.unsqueeze(dose, 0)
+    mask = torch.unsqueeze(mask, 0)
+    mask = mask.float()
+    print(f"Input shape: {mask.shape}")
+    pred = model(mask)
+    print(f"Prediction shape: {pred.shape}")
 
-    dose = torch.load(
-        "/Users/simongutwein/Documents/GitHub/Master_Thesis/Data/p_39/target_data.pt")
+    pred = pred.detach().numpy()
 
     for i in range(110):
-        plt.imshow(dose[0, :, :, i])
+        plt.imshow(pred[0, 0, :, :, i])
         plt.show()
-
-    # mask = torch.unsqueeze(mask, 0)
-    # mask = mask.float()
-    # print(f"Input shape: {mask.shape}")
-    # pred = model(mask)
-    # print(f"Prediction shape: {pred.shape}")
-
-    # pred = pred.detach().numpy()
-
-    # for i in range(110):
-    #     plt.imshow(pred[0, 0, :, :, i])
-    #     plt.show()
-    #     plt.savefig(
-    #         f"/home/baumgartner/sgutwein84/container/logs/test/img_{i}")
+        plt.savefig(
+            f"/home/baumgartner/sgutwein84/container/logs/test0/pred_{i}")
+        plt.close()
+        plt.imshow(target[0, :, :, i])
+        plt.show()
+        plt.savefig(
+            f"/home/baumgartner/sgutwein84/container/logs/test0/target_{i}")
+        plt.close()
 
     # segments = [f"p_{i}" for i in range(40)]
 

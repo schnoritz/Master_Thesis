@@ -29,8 +29,7 @@ def server_login():
 def get_segments(dir):
 
     return [
-        x
-        for x in os.listdir(dir)
+        x for x in os.listdir(dir)
         if not x.startswith(".") and not "egsphant" in x and "_" in x
     ]
 
@@ -103,6 +102,6 @@ def execute_job_file():
 
 if __name__ == "__main__":
 
-    dir = "/home/baumgartner/sgutwein84/container/output_20210608/"
+    dir = "/home/baumgartner/sgutwein84/container/output_20210522/"
 
     create_mask_files(dir)

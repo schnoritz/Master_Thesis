@@ -1,6 +1,7 @@
 import matplotlib.pyplot as plt
 import torch
 import torch.nn as nn
+import os
 
 
 def plot_patches(patches, target, idx):
@@ -50,3 +51,48 @@ class Color:
     BOLD = '\033[1m'
     UNDERLINE = '\033[4m'
     END = '\033[0m'
+
+
+def define_calculation_device(use_gpu):
+
+    if use_gpu:
+        if torch.cuda.is_available():
+            print("Using CUDA!")
+            device = torch.device('cuda')
+        else:
+            print("Using CPU!")
+            device = torch.device('cpu')
+    else:
+        print("Using CPU!")
+        device = torch.device('cpu')
+
+    if device.type == 'cuda':
+        print("Device: " + torch.cuda.get_device_name(0))
+        # print('Memory Usage:')
+        # print('Allocated:', round(torch.cuda.memory_allocated(0)/1024**3, 1), 'GB')
+        # print('Cached:   ', round(torch.cuda.memory_reserved(0)/1024**3, 1), 'GB')
+
+    return device
+
+
+def save_model(unet, save_dir, epoch, save):
+    torch.save(
+        unet.state_dict(),
+        save_dir + f"UNET_epoch{epoch+1}.pth"
+    )
+    if type(save) == int:
+        os.remove(
+            save_dir + f"UNET_epoch{save}.pth")
+
+
+def check_improvement(epochs, top_k=5):
+
+    curr_epoch = epochs[-1]
+    epochs = sorted(epochs, key=lambda k: k['test_loss'])
+    if epochs.index(curr_epoch) < top_k:
+        if len(epochs) > top_k:
+            return epochs[top_k]["epoch"]
+        else:
+            return True
+    else:
+        return False
