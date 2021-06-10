@@ -27,7 +27,7 @@ if __name__ == "__main__":
 
     model = Dose3DUNET().float()
     model.load_state_dict(torch.load(
-        "/home/baumgartner/sgutwein84/container/pytorch-3DUNet/saved_models/UNET_epoch97.pth"))
+        "/home/baumgartner/sgutwein84/container/pytorch-3DUNet/saved_models/UNET_epoch653.pth"))
     mask = torch.load(
         "/home/baumgartner/sgutwein84/container/training_data20210522/p_17/training_data.pt")
     target = torch.load(
