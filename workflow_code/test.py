@@ -8,6 +8,7 @@ import os
 import pickle
 from model import Dose3DUNET
 from pt_3ddose import dose_to_pt
+from time import time
 
 
 def check_improvement(epochs, top_k=5):
@@ -29,14 +30,20 @@ if __name__ == "__main__":
     model.load_state_dict(torch.load(
         "/home/baumgartner/sgutwein84/container/pytorch-3DUNet/saved_models/UNET_epoch653.pth"))
     mask = torch.load(
-        "/home/baumgartner/sgutwein84/container/training_data20210522/p_17/training_data.pt")
+        "/home/baumgartner/sgutwein84/container/training_data20210522/p_22/training_data.pt")
     target = torch.load(
-        "/home/baumgartner/sgutwein84/container/training_data20210522/p_17/target_data.pt")
+        "/home/baumgartner/sgutwein84/container/training_data20210522/p_22/target_data.pt")
+
+    # an device senden
+    device = torch.device("cuda")
 
     mask = torch.unsqueeze(mask, 0)
     mask = mask.float()
+    mask.to(device)
     print(f"Input shape: {mask.shape}")
+    start = time()
     pred = model(mask)
+    print(f"Prediction took {time()-start} seconds")
     print(f"Prediction shape: {pred.shape}")
 
     pred = pred.detach().numpy()

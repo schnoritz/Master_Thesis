@@ -1,6 +1,5 @@
 import argparse
 from pt_3ddose import dose_to_pt
-from plot_array import plot_array
 from radiological_depth import radiological_depth
 from binary_mask import create_binary_mask
 from pt_ct import convert_ct_array
@@ -11,6 +10,9 @@ import torch
 import shutil
 import subprocess
 import os
+
+from scipy.ndimage import binary_closing
+import matplotlib.pyplot as plt
 
 
 def parse():
@@ -64,8 +66,17 @@ def parse():
     return args
 
 
-def create_mask_files(egsinp_file,
-                      egsphant_file, beam_config_file, dose_file, segment, output_folder):
+def create_mask_files(
+    egsinp_file,
+    egsphant_file,
+    beam_config_file,
+    dose_file,
+    segment,
+    output_folder
+):
+
+    set_zero = True
+    patient = segment.split("_")[0]
 
     if not os.path.isdir(f'/home/baumgartner/sgutwein84/container/training_data{output_folder}'):
 
@@ -79,36 +90,55 @@ def create_mask_files(egsinp_file,
             f'/home/baumgartner/sgutwein84/container/training_data{output_folder}/{segment}']
     )
 
-    dose_mask = dose_to_pt(dose_file, tensor=True)
+    #dose_mask = dose_to_pt(dose_file, tensor=True)
 
-    ct_mask = np.load(
-        "/home/baumgartner/sgutwein84/container/output_20210522/p/p.npy"
-    )
-    #ct_mask = convert_ct_array("/home/baumgartner/sgutwein84/container/DeepDosePC1-4", tensor=True)
+    ct_mask = convert_ct_array(
+        f"/home/baumgartner/sgutwein84/container/{output_folder}/ct/{patient}", tensor=False)
 
-    radio_depth_mask = radiological_depth(
-        "/home/baumgartner/sgutwein84/container/output_20210522/p/p.npy", egsinp_file, egsphant_file, tensor=True
-    )
-    #radio_depth_mask = torch.ones((512, 512, 110))
+    # radio_depth_mask = radiological_depth(
+    #     "/home/baumgartner/sgutwein84/container/output_20210522/p/p.npy", egsinp_file, egsphant_file, tensor=True
+    # )
+    # #radio_depth_mask = torch.ones((512, 512, 110))
 
-    center_mask = distance_center(
-        egsinp_file, egsphant_file, ct_mask.shape, tensor=True
-    )
+    # center_mask = distance_center(
+    #     egsinp_file, egsphant_file, ct_mask.shape, tensor=True
+    # )
 
-    source_mask = distance_source(
-        egsinp_file, egsphant_file, ct_mask.shape, tensor=True
-    )
+    # source_mask = distance_source(
+    #     egsinp_file, egsphant_file, ct_mask.shape, tensor=True
+    # )
 
-    binary_mask = create_binary_mask(
-        egsinp_file, egsphant_file, beam_config_file, px_sp=np.array([1.171875, 1.171875, 3]), SID=1435, tensor=True
-    )
+    # binary_mask = create_binary_mask(
+    #     egsinp_file, egsphant_file, beam_config_file, px_sp=np.array([1.171875, 1.171875, 3]), SID=1435, tensor=True
+    # )
+
+    binary_mask = torch.ones((512, 512, 110))
+    radio_depth_mask = torch.ones((512, 512, 110))
+    center_mask = torch.ones((512, 512, 110))
+    source_mask = torch.ones((512, 512, 110))
+
     # creates stack of size (5, 512  512, num_slices)
     stack = torch.stack((
         binary_mask,
-        torch.tensor(ct_mask),
+        ct_mask,
         radio_depth_mask,
         center_mask,
         source_mask))
+
+    if set_zero:
+        # treshhold muss noch genau bestimmt werden
+        mask = stack[1, :, :, :] < 150
+        stack[0, mask] = 0
+        stack[2, mask] = 0
+        stack[3, mask] = 0
+        stack[4, mask] = 0
+
+    for i in range(2, 5):
+        for j in range(110):
+            plt.imshow(stack[i, :, :, j])
+            plt.imshow(stack[1, :, :, j], alpha=0.5, cmap="bone")
+            plt.show()
+            plt.close()
 
     dose_mask = torch.unsqueeze(dose_mask, 0)
 
@@ -131,9 +161,24 @@ def create_mask_files(egsinp_file,
 
 if __name__ == "__main__":
 
-    args = parse()
-    create_mask_files(args.egsinp_file,
-                      args.egsphant_file,
-                      args.beam_config_file,
-                      args.dose_file, args.segment,
-                      args.output_folder)
+    # args = parse()
+    # create_mask_files(args.egsinp_file,
+    #                   args.egsphant_file,
+    #                   args.beam_config_file,
+    #                   args.dose_file, args.segment,
+    #                   args.output_folder)
+
+    # debug
+    egsinp_file = "/Users/simongutwein/home/baumgartner/sgutwein84/container/output_20210522/p_0/p_0.egsinp"
+    egsphant_file = "/Users/simongutwein/home/baumgartner/sgutwein84/container/output_20210522/p_0/p_0.egsinp"
+    beam_config_file = "/Users/simongutwein/home/baumgartner/sgutwein84/container/output_20210522/p_0/beam_config_p_0.egsinp"
+    dose_file = "/Users/simongutwein/home/baumgartner/sgutwein84/container/output_20210522/p_0/p_0_1E06.3ddose"
+    segment = "p_0"
+    output_folder = "output_20210522"
+
+    create_mask_files(egsinp_file,
+                      egsphant_file,
+                      beam_config_file,
+                      dose_file,
+                      segment,
+                      output_folder)

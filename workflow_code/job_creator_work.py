@@ -6,7 +6,7 @@ import shutil
 import paramiko
 import random
 import numpy as np
-from pydicom import dcmread
+from pydicom import dcmread, uid
 from glob import glob
 from natsort import natsorted
 import math
@@ -51,10 +51,11 @@ def create_ctcreate_file(path, dose_file_path, dcm_folder):
         dose_file_path (str):           path to the dose file used for EGSnrc
         dcm_path (str):                 path to the directory of the used CT images
     """
-    dose_file_dat = dcmread(dose_file_path)
+    dose_file_dat = dcmread(dose_file_path, force=True)
     patient = dcm_folder.split("/")[-2]
     with open(path + f'{patient}_ctcreate_file.txt', 'w+') as fout:
 
+        dose_file_dat.file_meta.TransferSyntaxUID = uid.ImplicitVRLittleEndian
         image_position = np.array(dose_file_dat.ImagePositionPatient)/10
         dose_dimensions = dose_file_dat.pixel_array.shape
         pixel_spacing = np.array(dose_file_dat.PixelSpacing)/10
@@ -132,9 +133,9 @@ def create_egsinp_file(path, pos_x, pos_y, pos_z, angle, beam_config, n_historie
         fout.write('1, 0, 0,\n')
 
         fout.write('2, 9, ' +
-                   str(pos_x) + ', ' +
-                   str(pos_y) + ', ' +
-                   str(pos_z) + ', 90.00, ' + format(angle, '.2f') + ', 30, 270, 1, 40\n')
+                   str(np.round(pos_x, 4)) + ', ' +
+                   str(np.round(pos_y, 4)) + ', ' +
+                   str(np.round(pos_z, 4)) + ', 90.00, ' + format(angle, '.2f') + ', 30, 270, 1, 40\n')
 
         fout.write('2, 0, 2, 0, 0, 0, 0, 0\n')
         fout.write('BEAM_MR-Linac,' + beam_config + ',521ELEKTA\n')
@@ -197,9 +198,9 @@ def create_parallel_files(egsinp_lines, path, pos_x, pos_y, pos_z, angle,
 
     position_angle_line = egsinp_lines[5].split(",")
     position_angle_line[6] = " " + format(angle, '.2f')
-    position_angle_line[2] = " " + str(pos_x)
-    position_angle_line[3] = " " + str(pos_y)
-    position_angle_line[4] = " " + str(pos_z)
+    position_angle_line[2] = " " + str(np.round(pos_x, 4))
+    position_angle_line[3] = " " + str(np.round(pos_y, 4))
+    position_angle_line[4] = " " + str(np.round(pos_z, 4))
     egsinp_lines[5] = ",".join(position_angle_line)
 
     parallel_line = egsinp_lines[8].split(",")
@@ -238,7 +239,7 @@ def create_job_file(jobs_path, iparallel, nodes, ppn, filename, n_histories):
 
         fout.write('#!/bin/bash\n')
         fout.write("#MSUB -l nodes=" + str(nodes) + ":ppn=" + str(ppn) + "\n")
-        fout.write('#MSUB -l walltime=4:00:00:00\n')
+        fout.write('#MSUB -l walltime=1:00:00:00\n')
         fout.write('#MSUB -l pmem=6gb\n')
         fout.write('#MSUB -N EGSnrc\n')
         fout.write("#MSUB -o /home/tu/tu_tu/tu_zxoys08/EGSnrc/jobs\n")
@@ -289,7 +290,7 @@ def create_entire_job(n, gantry, par_jobs, ppn, nodes, beam_config, patient, iso
 
     client = server_login()
     dosxyznrc_path = "/work/ws/nemo/tu_zxoys08-EGS-0/egs_home/dosxyznrc/"
-    dose_file_path = dosxyznrc_path + f"dosefiles/{patient[0]}_dose.dcm"
+    dose_file_path = dosxyznrc_path + f"dosefiles/{patient}_dose.dcm"
     jobs_path = "/home/tu/tu_tu/tu_zxoys08/EGSnrc/jobs"
     job_folder = dosxyznrc_path + target_filename + "/"
 
@@ -355,7 +356,7 @@ def extract_plan_infos(plan_file):
     angles = []
     iso_centers = []
 
-    plan = dcmread(plan_file)
+    plan = dcmread(plan_file, force=True)
     for beam in plan.BeamSequence:
 
         angles.extend([float(beam.ControlPointSequence[0].GantryAngle)]
@@ -512,11 +513,11 @@ def setup_plan_calculation(patient, plan_file):
 if __name__ == "__main__":
 
     plan = True
-    patient = "p"
-    num_hist = 1000000
+    patient = "p0"
+    num_hist = 10000000
     pj = int(num_hist/2000000)
     if pj <= 1:
-        pj = 10
+        pj = 2
 
     if plan:
 

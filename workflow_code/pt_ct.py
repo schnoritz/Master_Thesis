@@ -1,7 +1,7 @@
 import torch
 import numpy as np
 import os
-from pydicom import dcmread
+from pydicom import dcmread, uid
 import matplotlib.pyplot as plt
 
 
@@ -27,7 +27,8 @@ def stack_ct_images(sorted_ct):
 
     stack = []
     for _, file in sorted_ct:
-        dcm = dcmread(file)
+        dcm = dcmread(file, force=True)
+        dcm.file_meta.TransferSyntaxUID = uid.ImplicitVRLittleEndian
         stack.append(dcm.pixel_array)
 
     return np.stack(stack, axis=0)
@@ -57,7 +58,7 @@ def convert_ct_array(ct_path, tensor=False):
 
 if __name__ == "__main__":
 
-    ct_images = "/Users/simongutwein/Studium/Masterarbeit/15"
+    ct_images = "/Users/simongutwein/Studium/Masterarbeit/DATA/p2/test/"
 
     stack = convert_ct_array(ct_images)
     print(stack.shape)

@@ -37,6 +37,7 @@ def create_binary_mask(
 
     beam = np.transpose(beam, (2, 1, 0))
 
+    # äquivalent quadartische Feldgröße
     field_area = calc_field_area(rotated_iso_loc, px_sp, beam)
 
     output = rotate_crop(angle, output_dim, shift, beam)
