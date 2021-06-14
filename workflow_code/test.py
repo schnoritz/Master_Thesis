@@ -12,6 +12,7 @@ from time import time
 from pt_ct import convert_ct_array
 from scipy import ndimage
 import matplotlib.animation as ani
+from pydicom import dcmread
 
 
 def animation(train_pixels, target_pixels, gif_name):
@@ -33,17 +34,10 @@ def animation(train_pixels, target_pixels, gif_name):
 
 if __name__ == "__main__":
 
-    training = torch.load(
-        "/Users/simongutwein/Studium/Masterarbeit/p0_0/training_data.pt")
-    target = torch.load(
-        "/Users/simongutwein/Studium/Masterarbeit/p0_0/target_data.pt")
-
-    training = training.permute(0, 3, 1, 2)
-    target = target.permute(0, 3, 1, 2)
-
-    for j in range(len(training)):
-        animation(np.array(training[j]), np.array(target[0]),
-                  f"/Users/simongutwein/Studium/Masterarbeit/save/test{j}.gif")
+    slices = "/Users/simongutwein/work/ws/nemo/tu_zxoys08-EGS-0/egs_home/dosxyznrc/p3"
+    dose_mask = torch.randn((512, 512, 131))
+    stack = convert_ct_array(slices, target_size=dose_mask.shape, tensor=True)
+    print(stack.shape, type(stack))
 
     # model = Dose3DUNET().float()
     # model.load_state_dict(torch.load(

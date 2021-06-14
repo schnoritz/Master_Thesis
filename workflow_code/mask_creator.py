@@ -96,10 +96,10 @@ def create_mask_files(
     ct_mask = convert_ct_array(
         f"/home/baumgartner/sgutwein84/container/output_{output_folder}/ct/{patient}", tensor=True)
 
-    radio_depth_mask = radiological_depth(
-        np.array(ct_mask), egsinp_file, egsphant_file, tensor=True
-    )
-    #radio_depth_mask = torch.ones((512, 512, 110))
+    # radio_depth_mask = radiological_depth(
+    #     np.array(ct_mask), egsinp_file, egsphant_file, tensor=True
+    # )
+    radio_depth_mask = torch.ones_like(dose_mask)
 
     center_mask = distance_center(
         egsinp_file, egsphant_file, ct_mask.shape, tensor=True
@@ -112,6 +112,9 @@ def create_mask_files(
     binary_mask = create_binary_mask(
         egsinp_file, egsphant_file, beam_config_file, px_sp=np.array([1.171875, 1.171875, 3]), SID=1435, tensor=True
     )
+
+    print(dose_mask.shape, ct_mask.shape, radio_depth_mask.shape,
+          center_mask.shape, source_mask.shape, binary_mask.shape)
 
     # creates stack of size (5, 512  512, num_slices)
     stack = torch.stack((

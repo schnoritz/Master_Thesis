@@ -3,6 +3,7 @@ import numpy as np
 import os
 from pydicom import dcmread, uid
 import matplotlib.pyplot as plt
+from scipy.interpolate import RegularGridInterpolator
 
 
 def read_in(ct_path):
@@ -37,12 +38,12 @@ def stack_ct_images(sorted_ct):
 def convert_stack(stack, tensor=False):
 
     if tensor:
-        return torch.from_numpy(stack.astype(np.float32))
+        return stack.float()
     else:
-        return stack.astype(np.float32)
+        return np.array(stack).astype(np.float32)
 
 
-def convert_ct_array(ct_path, tensor=False):
+def convert_ct_array(ct_path, target_size=None, tensor=False):
 
     if ct_path[-1] != "/":
         ct_path += "/"
@@ -50,7 +51,17 @@ def convert_ct_array(ct_path, tensor=False):
     slices = read_in(ct_path)
     sorted_slices = sort_ct_slices(slices)
     stack = stack_ct_images(sorted_slices)
-    stack = np.transpose(stack, (1, 2, 0))
+    stack = torch.tensor(np.transpose(
+        stack, (1, 2, 0)).astype(np.float32))
+
+    stack = stack.unsqueeze(0)
+    stack = stack.unsqueeze(0)
+
+    if target_size:
+        stack = torch.nn.functional.interpolate(
+            stack, size=tuple(target_size), mode="trilinear")
+
+    stack = stack.squeeze()
     converted = convert_stack(stack, tensor=tensor)
 
     return converted

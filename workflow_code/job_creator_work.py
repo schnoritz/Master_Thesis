@@ -59,14 +59,15 @@ def create_ctcreate_file(path, dose_file_path, dcm_folder):
         image_position = np.array(dose_file_dat.ImagePositionPatient)/10
         dose_dimensions = dose_file_dat.pixel_array.shape
         pixel_spacing = np.array(dose_file_dat.PixelSpacing)/10
+        slice_spacing = float(dose_file_dat.SliceThickness)/10
 
         xlower = image_position[0]-pixel_spacing[0]/2
         ylower = image_position[1]-pixel_spacing[1]/2
-        zlower = image_position[2]-pixel_spacing[0]/2
+        zlower = image_position[2]-slice_spacing/2
 
         xupper = xlower + dose_dimensions[2]*pixel_spacing[0]
         yupper = ylower + dose_dimensions[1]*pixel_spacing[1]
-        zupper = zlower + dose_dimensions[0]*pixel_spacing[0]
+        zupper = zlower + dose_dimensions[0]*slice_spacing
 
         fout.write("DICOM \n")
         fout.write(path + dcm_folder + f"{patient}_listfile.txt\n")
@@ -75,7 +76,7 @@ def create_ctcreate_file(path, dose_file_path, dcm_folder):
                    ", " + str("%.4f" % zlower) + ", " + str("%.4f" % zupper) + "\n")
 
         fout.write(str(pixel_spacing[0]) + ", " +
-                   str(pixel_spacing[1]) + ", " + str(pixel_spacing[0]) + "\n")
+                   str(pixel_spacing[1]) + ", " + str(slice_spacing) + "\n")
 
         fout.write("0, 0 \n")
 
