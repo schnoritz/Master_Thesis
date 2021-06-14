@@ -12,7 +12,14 @@ def radiological_depth(ct, egsinp, egsphant, tensor=False):
     iso_center = define_iso_center(egsinp_lines[5], egsphant)
     origin_position = define_origin_position(egsinp_lines[5], iso_center)
 
-    ct_volume = np.load(ct).astype(np.float)
+    if type(ct) == str:
+        ct_volume = np.load(ct).astype(np.float)
+
+    elif isinstance(ct, np.ndarray):
+        ct_volume = ct.astype(float)
+
+    elif isinstance(ct, torch.Tensor):
+        ct_volume = np.array(ct).astype(float)
 
     depth = calc_depth(ct_volume, origin_position)
 

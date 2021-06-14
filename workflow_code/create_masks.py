@@ -55,7 +55,7 @@ def create_mask_files(dir):
             egsinp_file, egsphant_file, beam_config_file, dose_file, segment, output_folder
         )
 
-        execute_job_file()
+        execute_job_file(segment)
 
 
 def create_segment_job_file(
@@ -85,7 +85,7 @@ def create_segment_job_file(
         fout.writelines(lines)
 
 
-def execute_job_file():
+def execute_job_file(segment):
 
     client = server_login()
 
@@ -97,11 +97,13 @@ def execute_job_file():
         if line:
             job_id = line.split()[-1]
 
-    print(f"JOB-ID: {job_id}")
+    print(f"JOB-ID: {job_id} for segment: {segment}")
+
+    client.close()
 
 
 if __name__ == "__main__":
 
-    dir = "/home/baumgartner/sgutwein84/container/output_20210522/"
+    dir = "/home/baumgartner/sgutwein84/container/output_20210614/"
 
     create_mask_files(dir)

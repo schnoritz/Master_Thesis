@@ -239,11 +239,12 @@ def create_job_file(jobs_path, iparallel, nodes, ppn, filename, n_histories):
 
         fout.write('#!/bin/bash\n')
         fout.write("#MSUB -l nodes=" + str(nodes) + ":ppn=" + str(ppn) + "\n")
+        fout.write(f'#MSUB -N  {filename} calculation\n')
         fout.write('#MSUB -l walltime=1:00:00:00\n')
         fout.write('#MSUB -l pmem=6gb\n')
         fout.write('#MSUB -N EGSnrc\n')
         fout.write("#MSUB -o /home/tu/tu_tu/tu_zxoys08/EGSnrc/jobs\n")
-        fout.write("#MSUB -m bea\n\n")
+        fout.write("#MSUB -m a\n\n")
         command = []
 
         for i in range(iparallel):
@@ -263,7 +264,7 @@ def create_job_file(jobs_path, iparallel, nodes, ppn, filename, n_histories):
         fout.write(command)
 
 
-def execute_job_file(client):
+def execute_job_file(client, filename):
     """executes the created job on the BW-HPC cluster 
     Args:
         client (client): paramiko client where the command is executed
@@ -274,7 +275,7 @@ def execute_job_file(client):
     for string in stdout:
         if string.strip():
             job_id = string.strip()
-    print("Job-ID: " + job_id)
+    print(f"Job-ID: {job_id} for segment {filename}")
 
 
 def create_entire_job(n, gantry, par_jobs, ppn, nodes, beam_config, patient, iso_center=None):
@@ -303,9 +304,7 @@ def create_entire_job(n, gantry, par_jobs, ppn, nodes, beam_config, patient, iso
     egsphant_path = execute_ct_create(client, dosxyznrc_path, dcm_folder)
 
     if iso_center is None:
-        '''hier eventuell das isocenter etwas variieren? also sowas wie:
-        iso_x, iso_y, iso_z = 3*np.randn(1), 3*np.randn(1), 3*np.randn(1)
-        '''
+
         center_coordinates = get_center(egsphant_path)
 
         shifted_center = np.squeeze(center_coordinates +
@@ -325,7 +324,9 @@ def create_entire_job(n, gantry, par_jobs, ppn, nodes, beam_config, patient, iso
     create_job_file(jobs_path, par_jobs, nodes, ppn,
                     target_filename, n)
 
-    execute_job_file(client)
+    execute_job_file(client, target_filename)
+
+    client.close()
 
 
 def get_center(egsphant):
@@ -513,7 +514,7 @@ def setup_plan_calculation(patient, plan_file):
 if __name__ == "__main__":
 
     plan = True
-    patient = "p0"
+    patient = "p5"
     num_hist = 10000000
     pj = int(num_hist/2000000)
     if pj <= 1:
@@ -525,6 +526,8 @@ if __name__ == "__main__":
         dose_file = f"/work/ws/nemo/tu_zxoys08-EGS-0/egs_home/dosxyznrc/dosefiles/{patient}_dose.dcm"
         angles, iso_centers, config_files = setup_plan_calculation(
             patient, plan_file)
+
+        print(f"Creating {len(angles)} Jobs for all Segments.")
 
         for config in range(len(config_files)):
 

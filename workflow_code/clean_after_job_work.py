@@ -47,17 +47,17 @@ def clean_folder(filename, str_nhist, dir="/work/ws/nemo/tu_zxoys08-EGS-0/egs_ho
     egsinp_file = filename + ".egsinp"
     dose_file = filename + ".3ddose"
 
-    if os.path.isfile(dir + egsinp_file):
-        os.rename(dir + egsinp_file, dir + filename + "/" + egsinp_file)
-    if os.path.isfile(dir + dose_file):
-        os.rename(dir + dose_file, dir + filename + "/" +
-                  filename + "_" + str_nhist + ".3ddose")
+    # if os.path.isfile(dir + egsinp_file):
+    #     os.rename(dir + egsinp_file, dir + filename + "/" + egsinp_file)
+    # if os.path.isfile(dir + dose_file):
+    #     os.rename(dir + dose_file, dir + filename + "/" +
+    #               filename + "_" + str_nhist + ".3ddose")
 
-    shutil.copyfile(beam_folder + beam_file, dir + filename + "/" + beam_file)
-    shutil.copyfile(beam_folder + beam_txt_file, dir +
-                    filename + "/" + beam_txt_file)
+    # shutil.copyfile(beam_folder + beam_file, dir + filename + "/" + beam_file)
+    # shutil.copyfile(beam_folder + beam_txt_file, dir +
+    #                 filename + "/" + beam_txt_file)
 
-    shutil.move(dir + filename, dir + "output/" + filename)
+    # shutil.move(dir + filename, dir + "output/" + filename)
 
     for file in par_files:
         os.remove(file)
@@ -82,9 +82,10 @@ def clean_folder(filename, str_nhist, dir="/work/ws/nemo/tu_zxoys08-EGS-0/egs_ho
 
 if __name__ == "__main__":
 
-    args = parse()
-    clean_folder(args.filename, args.str_nhist, dir=args.dir)
-
+    #args = parse()
+    #clean_folder(args.filename, args.str_nhist, dir=args.dir)
+    clean_folder(
+        "p5_74", "1E10", dir="/work/ws/nemo/tu_zxoys08-EGS-0/egs_home/dosxyznrc/")
     # import numpy as np
     # fz = 2
     # str_nhist = "1E03"

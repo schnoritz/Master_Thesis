@@ -9,7 +9,7 @@ def read_in(ct_path):
 
     for file in os.listdir(ct_path):
         if file.startswith("."):
-            os.remove(ct_path + "/" + file)
+            os.remove(ct_path + file)
     return [ct_path + x for x in os.listdir(ct_path) if not x.startswith(".") and not "listfile" in x]
 
 
@@ -57,13 +57,4 @@ def convert_ct_array(ct_path, tensor=False):
 
 
 if __name__ == "__main__":
-
-    ct_images = "/Users/simongutwein/Studium/Masterarbeit/DATA/p2/test/"
-
-    stack = convert_ct_array(ct_images)
-    print(stack.shape)
-
-    for i in range(stack.shape[2]):
-        plt.imshow(stack[:, :, i])
-        plt.show()
-        plt.close()
+    pass

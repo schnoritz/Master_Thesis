@@ -1,24 +1,42 @@
 import matplotlib.pyplot as plt
 import numpy as np
 import torch
-import random
-from pprint import pprint
 import os
-import pickle
+from utils import save_model
 from model import Dose3DUNET
-from resize_right import resize
-from interp_methods import linear
+
 
 if __name__ == "__main__":
 
-    #dat= torch.ones((1,5,512,512,110))
-    dat = torch.load(
-        "/Users/simongutwein/home/baumgartner/sgutwein84/container/training_data/p_0/training_data.pt")
-    dat = torch.unsqueeze(dat, 0)
-    resized = resize(dat, out_shape=(1, 5, 512, 512, 111),
-                     interp_method=linear,  support_sz=2)
-    print(resized.shape)
+    model = Dose3DUNET().float()
+    optimizer = torch.optim.Adam(model.parameters())
 
-    for i in range(111):
-        plt.imshow(resized[0, 0, :, :, i])
-        plt.show()
+    save_dir = "/Users/simongutwein/Studium/Masterarbeit/save/"
+
+    save_model(
+        model=model,
+        optimizer=optimizer,
+        train_loss=10,
+        test_loss=15,
+        save_dir=save_dir,
+        epoch=100,
+        save=True)
+
+    model_info = torch.load(
+        "/Users/simongutwein/Studium/Masterarbeit/save/UNET_epoch100.pt")
+
+    model.load_state_dict(model_info['model_state_dict'])
+    optimizer.load_state_dict(model_info['optimizer_state_dict'])
+    curr_train_loss = model_info['train_loss']
+    curr_test_loss = model_info['test_loss']
+    epoch = model_info['epoch']
+
+    model.eval()
+
+    # do something here
+
+    model.test()
+
+    # start test routine here
+
+    pass

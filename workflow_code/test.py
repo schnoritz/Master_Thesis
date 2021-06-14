@@ -1,4 +1,5 @@
 import matplotlib.pyplot as plt
+from numba.core.registry import TargetRegistry
 import numpy as np
 from numpy.core.defchararray import startswith
 import torch
@@ -6,59 +7,77 @@ import random
 from pprint import pprint
 import os
 import pickle
-from model import Dose3DUNET
 from pt_3ddose import dose_to_pt
 from time import time
+from pt_ct import convert_ct_array
+from scipy import ndimage
+import matplotlib.animation as ani
 
 
-def check_improvement(epochs, top_k=5):
+def animation(train_pixels, target_pixels, gif_name):
+    eps = 1e-120
+    ntrain = train_pixels/(train_pixels.max()+eps)
+    ntarget = target_pixels/(target_pixels.max()+eps)
+    fig = plt.figure(figsize=(8, 8))
+    anim = plt.imshow((ntrain[0]+ntarget[0])/2)
+    plt.grid(False)
 
-    curr_epoch = epochs[-1]
-    epochs = sorted(epochs, key=lambda k: k['test_loss'])
-    if epochs.index(curr_epoch) < top_k:
-        if len(epochs) > top_k:
-            return epochs[top_k]["epoch"]
-        else:
-            return True
-    else:
-        return False
+    def update(i):
+        anim.set_array((ntrain[i]+ntarget[i])/2)
+        return anim,
+
+    a = ani.FuncAnimation(fig, update, frames=range(
+        len(train_pixels)), interval=200, blit=True)
+    a.save(gif_name, writer=ani.PillowWriter(fps=24))
 
 
 if __name__ == "__main__":
 
-    model = Dose3DUNET().float()
-    model.load_state_dict(torch.load(
-        "/home/baumgartner/sgutwein84/container/pytorch-3DUNet/saved_models/UNET_epoch653.pth"))
-    mask = torch.load(
-        "/home/baumgartner/sgutwein84/container/training_data20210522/p_22/training_data.pt")
+    training = torch.load(
+        "/Users/simongutwein/Studium/Masterarbeit/p0_0/training_data.pt")
     target = torch.load(
-        "/home/baumgartner/sgutwein84/container/training_data20210522/p_22/target_data.pt")
+        "/Users/simongutwein/Studium/Masterarbeit/p0_0/target_data.pt")
 
-    # an device senden
-    device = torch.device("cuda")
+    training = training.permute(0, 3, 1, 2)
+    target = target.permute(0, 3, 1, 2)
 
-    mask = torch.unsqueeze(mask, 0)
-    mask = mask.float()
-    mask.to(device)
-    print(f"Input shape: {mask.shape}")
-    start = time()
-    pred = model(mask)
-    print(f"Prediction took {time()-start} seconds")
-    print(f"Prediction shape: {pred.shape}")
+    for j in range(len(training)):
+        animation(np.array(training[j]), np.array(target[0]),
+                  f"/Users/simongutwein/Studium/Masterarbeit/save/test{j}.gif")
 
-    pred = pred.detach().numpy()
+    # model = Dose3DUNET().float()
+    # model.load_state_dict(torch.load(
+    #     "/home/baumgartner/sgutwein84/container/pytorch-3DUNet/saved_models/UNET_epoch653.pth"))
+    # mask = torch.load(
+    #     "/home/baumgartner/sgutwein84/container/training_data20210522/p_22/training_data.pt")
+    # target = torch.load(
+    #     "/home/baumgartner/sgutwein84/container/training_data20210522/p_22/target_data.pt")
 
-    for i in range(110):
-        plt.imshow(pred[0, 0, :, :, i])
-        plt.show()
-        plt.savefig(
-            f"/home/baumgartner/sgutwein84/container/logs/test0/pred_{i}")
-        plt.close()
-        plt.imshow(target[0, :, :, i])
-        plt.show()
-        plt.savefig(
-            f"/home/baumgartner/sgutwein84/container/logs/test0/target_{i}")
-        plt.close()
+    # # an device senden
+    # device = torch.device("cuda")
+
+    # mask = torch.unsqueeze(mask, 0)
+    # mask = mask.float()
+    # mask.to(device)
+    # print(f"Input shape: {mask.shape}")
+    # start = time()
+    # pred = model(mask)
+    # print(f"Prediction took {time()-start} seconds")
+    # print(f"Prediction shape: {pred.shape}")
+
+    # pred = pred.detach().numpy()
+
+    # for i in range(110):
+    #     plt.imshow(pred[0, 0, :, :, i])
+    #     plt.show()
+    #     plt.savefig(
+    #         f"/home/baumgartner/sgutwein84/container/logs/test0/pred_{i}")
+    #     plt.close()
+    #     plt.imshow(target[0, :, :, i])
+    #     plt.show()
+    #     plt.savefig(
+    #         f"/home/baumgartner/sgutwein84/container/logs/test0/target_{i}")
+    #     plt.close()
 
     # segments = [f"p_{i}" for i in range(40)]
 

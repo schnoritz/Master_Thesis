@@ -139,7 +139,15 @@ def train(unet, num_epochs, train_loader, test_loader, optimizer, criterion, dev
         save = utils.check_improvement(epochs, top_k=5)
 
         if save:
-            utils.save_model(unet, save_dir, epoch, save)
+            utils.save_model(
+                model=unet,
+                optimizer=optimizer,
+                train_loss=train_loss,
+                test_loss=test_loss,
+                save_dir=save_dir,
+                epoch=epoch,
+                save=save
+            )
 
     print(f"Network has seen: {total_patches} Patches!")
 
