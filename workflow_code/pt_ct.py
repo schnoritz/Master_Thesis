@@ -59,7 +59,7 @@ def convert_ct_array(ct_path, target_size=None, tensor=False):
 
     if target_size:
         stack = torch.nn.functional.interpolate(
-            stack, size=tuple(target_size), mode="trilinear")
+            stack, size=tuple(target_size), mode="trilinear", align_corners=True)
 
     stack = stack.squeeze()
     converted = convert_stack(stack, tensor=tensor)
