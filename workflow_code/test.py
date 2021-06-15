@@ -37,7 +37,7 @@ if __name__ == "__main__":
     slices = "/Users/simongutwein/work/ws/nemo/tu_zxoys08-EGS-0/egs_home/dosxyznrc/p3"
     dose_mask = torch.randn((512, 512, 131))
     stack = convert_ct_array(slices, target_size=dose_mask.shape, tensor=True)
-    print(stack.shape, type(stack))
+    print(stack.shape, stack.dtype)
 
     # model = Dose3DUNET().float()
     # model.load_state_dict(torch.load(
