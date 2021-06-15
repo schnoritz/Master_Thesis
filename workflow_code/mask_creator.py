@@ -94,8 +94,12 @@ def create_mask_files(
     dose_mask = dose_to_pt(dose_file, tensor=True)
 
     ct_mask = convert_ct_array(
-        f"/home/baumgartner/sgutwein84/container/output_{output_folder}/ct/{patient}", tensor=True)
+        ct_path=f"/home/baumgartner/sgutwein84/container/output_{output_folder}/ct/{patient}",
+        target_size=dose_mask.shape,
+        tensor=True
+    )
 
+    assert dose_mask.shape == ct_mask.shape, "shapes of dose and ct dont match"
     # radio_depth_mask = radiological_depth(
     #     np.array(ct_mask), egsinp_file, egsphant_file, tensor=True
     # )
