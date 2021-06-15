@@ -66,16 +66,16 @@ class Dose3DUNET(nn.Module):
             skip_connection = skip_connections[idx//2]
 
             # implementation of resizing of skip connection
+            # if x.shape != skip_connection.shape:
+            #     x = resize(
+            #         input=x,
+            #         out_shape=skip_connection.shape,
+            #         interp_method=linear,
+            #         support_sz=2
+            #     )
             if x.shape != skip_connection.shape:
-                x = resize(
-                    input=x,
-                    out_shape=skip_connection.shape,
-                    interp_method=linear,
-                    support_sz=2
-                )
-
-            # evtl auch
-            #nnf.interpolate(input=x, size=skip_connection.shape, mode='nearest')
+                x = nnf.interpolate(
+                    input=x, size=skip_connection.shape[2:], mode='nearest')
 
             concat_skip = torch.cat((skip_connection, x), dim=1)
             x = self.ups[idx+1](concat_skip)
@@ -85,9 +85,9 @@ class Dose3DUNET(nn.Module):
 
 def test():
     # mit x = torch.randn((batch_size, in_channels, W, H, D))
-    x = torch.randn((10, 5, 32, 32, 32))
+    x = torch.randn((10, 5, 64, 64, 65))
 
-    model = Dose3DUNet(in_channels=5, out_channels=1)
+    model = Dose3DUNET(in_channels=5, out_channels=1)
     # print(model)
     preds = model(x)
     print(f"Inputsize is: {x.shape}")
