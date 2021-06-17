@@ -99,11 +99,26 @@ def create_mask_files(
         tensor=True
     )
 
+    if set_zero:
+        # treshhold muss noch genau bestimmt werden
+        mask = np.array(ct_mask > 200).astype(bool)
+        for i in range(mask.shape[2]):
+            mask[:, :, i] = ndimage.binary_fill_holes(
+                mask[:, :, i]).astype(bool)
+        mask = np.invert(mask)
+
+    plt.imshow(np.invert(mask[:, :, 20]))
+    plt.show()
+
     assert dose_mask.shape == ct_mask.shape, "shapes of dose and ct dont match"
-    # radio_depth_mask = radiological_depth(
-    #     np.array(ct_mask), egsinp_file, egsphant_file, tensor=True
-    # )
-    radio_depth_mask = torch.ones_like(dose_mask)
+    if set_zero:
+        radio_depth_mask = radiological_depth(
+            np.array(ct_mask), egsinp_file, egsphant_file, mask=np.invert(mask), tensor=True
+        )
+    else:
+        radio_depth_mask = radiological_depth(
+            np.array(ct_mask), egsinp_file, egsphant_file, tensor=True
+        )
 
     center_mask = distance_center(
         egsinp_file, egsphant_file, ct_mask.shape, tensor=True
@@ -129,13 +144,6 @@ def create_mask_files(
         source_mask))
 
     if set_zero:
-        # treshhold muss noch genau bestimmt werden
-        mask = np.array(stack[1, :, :, :] > 150).astype(bool)
-        for i in range(mask.shape[2]):
-            mask[:, :, i] = ndimage.binary_fill_holes(
-                mask[:, :, i]).astype(bool)
-        mask = np.invert(mask)
-
         stack[0, mask] = 0
         stack[2, mask] = 0
         stack[3, mask] = 0
@@ -170,12 +178,12 @@ if __name__ == "__main__":
                       args.output_folder)
 
     # debug
-    # egsinp_file = "/Users/simongutwein/home/baumgartner/sgutwein84/container/output_20210522/p_0/p_0.egsinp"
-    # egsphant_file = "/Users/simongutwein/home/baumgartner/sgutwein84/container/output_20210522/p_0/p_0.egsinp"
-    # beam_config_file = "/Users/simongutwein/home/baumgartner/sgutwein84/container/output_20210522/p_0/beam_config_p_0.egsinp"
-    # dose_file = "/Users/simongutwein/home/baumgartner/sgutwein84/container/output_20210522/p_0/p_0_1E06.3ddose"
-    # segment = "p_0"
-    # output_folder = "output_20210522"
+    # egsinp_file = "/Users/simongutwein/home/baumgartner/sgutwein84/container/output_20210614/p0_0/p0_0.egsinp"
+    # egsphant_file = "/Users/simongutwein/home/baumgartner/sgutwein84/container/output_20210614/p0_0/p0_0.egsinp"
+    # beam_config_file = "/Users/simongutwein/home/baumgartner/sgutwein84/container/output_20210614/p0_0/beam_config_p0_0.egsinp"
+    # dose_file = "/Users/simongutwein/home/baumgartner/sgutwein84/container/output_20210614/p0_0/p0_0_1E07.3ddose"
+    # segment = "p0_0"
+    # output_folder = "20210614"
 
     # create_mask_files(egsinp_file,
     #                   egsphant_file,

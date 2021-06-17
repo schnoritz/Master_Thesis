@@ -5,7 +5,7 @@ from depth_ray import Ray
 from utils import define_iso_center, define_origin_position
 
 
-def radiological_depth(ct, egsinp, egsphant, tensor=False):
+def radiological_depth(ct, egsinp, egsphant, mask=False, tensor=False):
 
     egsinp_lines = open(egsinp).readlines()
 
@@ -21,7 +21,7 @@ def radiological_depth(ct, egsinp, egsphant, tensor=False):
     elif isinstance(ct, torch.Tensor):
         ct_volume = np.array(ct).astype(float)
 
-    depth = calc_depth(ct_volume, origin_position)
+    depth = calc_depth(ct_volume, origin_position, mask)
 
     if tensor:
         return torch.tensor(depth, dtype=torch.float32)
@@ -29,16 +29,30 @@ def radiological_depth(ct, egsinp, egsphant, tensor=False):
         return depth.astype(np.float32)
 
 
-def calc_depth(ct_volume, origin_position):
+def calc_depth(ct_volume, origin_position, mask):
 
     depth_volume = np.zeros_like(ct_volume, dtype=float)
 
-    for x in tqdm(range(ct_volume.shape[0])):
-        for y in range(ct_volume.shape[1]):
-            for z in range(ct_volume.shape[2]):
-                vox = np.array([x, y, z], dtype=float)
-                ray = Ray(origin_position, vox, ct_volume)
-                depth_volume[x, y, z] = ray.radiological_depth
+    if not isinstance(mask, np.ndarray):
+        for x in tqdm(range(ct_volume.shape[0])):
+            for y in range(ct_volume.shape[1]):
+                for z in range(ct_volume.shape[2]):
+                    vox = np.array([x, y, z], dtype=float)
+                    ray = Ray(origin_position, vox, ct_volume)
+                    depth_volume[x, y, z] = ray.radiological_depth
+
+    elif isinstance(mask, np.ndarray):
+        for x in tqdm(range(ct_volume.shape[0])):
+            for y in range(ct_volume.shape[1]):
+                for z in range(ct_volume.shape[2]):
+
+                    if mask[x, y, z] != 0:
+                        vox = np.array([x, y, z], dtype=float)
+                        ray = Ray(origin_position, vox, ct_volume)
+                        depth_volume[x, y, z] = ray.radiological_depth
+
+                    else:
+                        depth_volume[x, y, z] = 0
 
     return depth_volume
 

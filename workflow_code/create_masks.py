@@ -11,7 +11,7 @@ import matplotlib.pyplot as plt
 
 
 def server_login():
-    """logs into the BW-HPC server
+    """logs into the ML-Cloud
 
     Returns:
         client: returns paramiko client

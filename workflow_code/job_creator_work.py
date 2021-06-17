@@ -59,15 +59,14 @@ def create_ctcreate_file(path, dose_file_path, dcm_folder):
         image_position = np.array(dose_file_dat.ImagePositionPatient)/10
         dose_dimensions = dose_file_dat.pixel_array.shape
         pixel_spacing = np.array(dose_file_dat.PixelSpacing)/10
-        slice_spacing = float(dose_file_dat.SliceThickness)/10
 
         xlower = image_position[0]-pixel_spacing[0]/2
         ylower = image_position[1]-pixel_spacing[1]/2
-        zlower = image_position[2]-slice_spacing/2
+        zlower = image_position[2]-pixel_spacing[0]/2
 
         xupper = xlower + dose_dimensions[2]*pixel_spacing[0]
         yupper = ylower + dose_dimensions[1]*pixel_spacing[1]
-        zupper = zlower + dose_dimensions[0]*slice_spacing
+        zupper = zlower + dose_dimensions[0]*pixel_spacing[0]
 
         fout.write("DICOM \n")
         fout.write(path + dcm_folder + f"{patient}_listfile.txt\n")
@@ -76,7 +75,7 @@ def create_ctcreate_file(path, dose_file_path, dcm_folder):
                    ", " + str("%.4f" % zlower) + ", " + str("%.4f" % zupper) + "\n")
 
         fout.write(str(pixel_spacing[0]) + ", " +
-                   str(pixel_spacing[1]) + ", " + str(slice_spacing) + "\n")
+                   str(pixel_spacing[1]) + ", " + str(pixel_spacing[0]) + "\n")
 
         fout.write("0, 0 \n")
 
@@ -353,32 +352,35 @@ def get_center(egsphant):
 
 def extract_plan_infos(plan_file):
 
-    jaws = []
     leafes = []
+    jaws = []
+    isocenters = []
     angles = []
-    iso_centers = []
 
-    plan = dcmread(plan_file, force=True)
-    for beam in plan.BeamSequence:
+    dat = dcmread(plan_file, force=True)
 
-        angles.extend([float(beam.ControlPointSequence[0].GantryAngle)]
-                      * len(beam.ControlPointSequence))
-        iso_centers.extend(
-            [beam.ControlPointSequence[0].IsocenterPosition] * len(beam.ControlPointSequence))
+    for beam in dat.BeamSequence:
+        angles.extend(
+            [float(beam.ControlPointSequence[0].GantryAngle)] * (len(beam.ControlPointSequence)//2))
+        isocenters.extend(
+            [beam.ControlPointSequence[0].IsocenterPosition] * (len(beam.ControlPointSequence)//2))
 
-        for sequence in beam.ControlPointSequence:
+        for num, seq in enumerate(beam.ControlPointSequence):
+            if num % 2 == 0:
+                jaws.append(
+                    seq.BeamLimitingDevicePositionSequence[0].LeafJawPositions)
+                leafes.append(
+                    seq.BeamLimitingDevicePositionSequence[1].LeafJawPositions)
 
-            jaws.append(
-                sequence.BeamLimitingDevicePositionSequence[0].LeafJawPositions)
-            leafes.append(
-                sequence.BeamLimitingDevicePositionSequence[1].LeafJawPositions)
+        assert len(leafes) == len(jaws) == len(isocenters) == len(
+            angles), "Number of Leafes, Jaws , Isocenters or Angles not correct."
 
     jaws = np.array(jaws)
     leafes = np.array(leafes)
     angles = np.array(angles)
-    iso_centers = np.array(iso_centers)/10
+    isocenters = np.array(isocenters)/10
 
-    return jaws, leafes, angles, iso_centers
+    return jaws, leafes, angles, isocenters
 
 
 def calculate_new_mlc(leafes, radius=41.5, ssd=143.5, cil=35.77-0.09):
@@ -484,25 +486,9 @@ def create_beam_config(patient, num, jaws, leafes):
     return f"beam_config_{patient}_{num}"
 
 
-def get_eginp_lines(jaws, leafes):
-    jaws_lines = [
-        ", ".join(str(e) for e in x.tolist()) + ", 2\n" for x in jaws
-    ]
-    leafes_reshaped = leafes.reshape((leafes.shape[0], 80, 2), order="F")
-    leafes_lines = []
-    for x in leafes_reshaped:
-        for i in x:
-            leafes_lines.append(", ".join(str(z) for z in i) + ", 1\n")
-    leafes_lines = np.reshape(leafes_lines, (leafes.shape[0], 80))
-
-    return jaws_lines, leafes_lines
-
-
 def setup_plan_calculation(patient, plan_file):
 
     jaws, leafes, angles, iso_centers = extract_plan_infos(plan_file)
-
-    #jaws_lines, leafes_lines = get_eginp_lines(jaws, leafes)
 
     config_files = []
     for config in range(len(angles)):
@@ -515,7 +501,7 @@ def setup_plan_calculation(patient, plan_file):
 if __name__ == "__main__":
 
     plan = True
-    patient = "p4"
+    patient = "p0"
     num_hist = 10000000
     pj = int(num_hist/2000000)
     if pj <= 1:
