@@ -98,8 +98,6 @@ def train(unet, num_epochs, train_loader, test_loader, optimizer, criterion, dev
     epochs = []
     for epoch in range(num_epochs):
 
-        # print(utils.Color.BOLD +
-        #       f"Epoch {epoch+1}/{num_epochs}" + utils.Color.END)
         print(f"---- Epoch {epoch+1}/{num_epochs} ----")
 
         train_loss = 0
@@ -113,7 +111,6 @@ def train(unet, num_epochs, train_loader, test_loader, optimizer, criterion, dev
                       true_dose.max(), true_dose.min())
 
             dose_pred = unet(masks)
-            # print(dose_pred.shape)
 
             loss = criterion(dose_pred, true_dose)
             train_loss += loss.item()
@@ -136,7 +133,7 @@ def train(unet, num_epochs, train_loader, test_loader, optimizer, criterion, dev
             "test_loss": test_loss
         })
 
-        save = utils.check_improvement(epochs, top_k=5)
+        save = utils.check_improvement(epochs, top_k=10)
 
         if save:
             utils.save_model(
@@ -166,11 +163,11 @@ def setup_training(
 
     device = utils.define_calculation_device(use_gpu)
 
-    SubjectList = SubjectDataset(data_path, sampling_scheme="beam")
-    print(f'Number of Segments: {len(SubjectList)}')
+    subject_list = SubjectDataset(data_path, sampling_scheme="beam")
+    print(f'Number of Segments: {len(subject_list)}')
 
     train_loader, test_loader = setup_loaders(
-        SubjectList,
+        subject_list=subject_list,
         batch_size=batch_size,
         patch_size=patch_size,
         train_fraction=train_fraction
@@ -183,6 +180,9 @@ def setup_training(
 
     criterion = utils.RMSELoss()
     optimizer = optim.Adam(my_UNET.parameters(), 10E-4, (0.9, 0.99), 10E-8)
+
+    print(
+        f"Training-Data shape: [{batch_size} ,5 ,{patch_size},{patch_size},{patch_size}]")
 
     losses = train(
         unet=my_UNET,
@@ -210,23 +210,23 @@ def setup_training(
 
 if __name__ == "__main__":
 
-    args = parse()
-    setup_training(
-        num_epochs=args.num_epochs,
-        batch_size=args.batch_size,
-        patch_size=args.patch_size,
-        train_fraction=args.train_fraction,
-        data_path=args.root_dir,
-        save_dir=args.save_dir,
-        use_gpu=args.use_gpu
-    )
-
+    # args = parse()
     # setup_training(
-    #     num_epochs=10,
-    #     batch_size=16,
-    #     patch_size=32,
-    #     save_dir="/home/baumgartner/sgutwein84/container/pytorch-3DUNet/saved_models/",
-    #     train_fraction=0.9,
-    #     data_path="/home/baumgartner/sgutwein84/container/training_data20210522",
-    #     use_gpu=True
+    #     num_epochs=args.num_epochs,
+    #     batch_size=args.batch_size,
+    #     patch_size=args.patch_size,
+    #     train_fraction=args.train_fraction,
+    #     data_path=args.root_dir,
+    #     save_dir=args.save_dir,
+    #     use_gpu=args.use_gpu
     # )
+
+    setup_training(
+        num_epochs=10,
+        batch_size=2,
+        patch_size=32,
+        save_dir="/home/baumgartner/sgutwein84/container/pytorch-3DUNet/saved_models/",
+        train_fraction=0.9,
+        data_path="/home/baumgartner/sgutwein84/container/training_data20210620",
+        use_gpu=True
+    )

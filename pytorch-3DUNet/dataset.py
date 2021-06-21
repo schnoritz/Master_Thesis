@@ -25,8 +25,6 @@ def load_subject(subject_path, sampling_scheme):
     binary = torch.load(f"{subject_path}/training_data.pt")[0, :, :, :]
     # -> [0, :, :, :], da binary mask an erster Stelle ist
 
-    #binary = torch.randn((512, 512, 110))
-
     sampling_map = create_sampling_map(binary, sampling_scheme=sampling_scheme)
 
     subject = tio.Subject(
@@ -74,8 +72,14 @@ def get_train_test_sets(dataset, train_fraction):
 
     num = len(dataset)
 
-    train_n, test_n = int(np.ceil(num*train_fraction)
-                          ), int(np.floor(num*(1-train_fraction)))
+    train_n = int(np.ceil(num*train_fraction))
+    test_n = num - train_n
+
+    assert train_n + \
+        test_n == num, f"Splitting of Training-Data does not match! num={num}. train_n={train_n}, test_n={test_n}"
+
+    print(
+        f"Number of total Samples: {num}\nTraining-Samples: {train_n}\nTest-Samples: {test_n}")
 
     train_set, test_set = torch.utils.data.random_split(
         dataset, [train_n, test_n])
@@ -84,9 +88,9 @@ def get_train_test_sets(dataset, train_fraction):
 
 
 # samples_per_volume=512, queue_length=1024,):
-def setup_loaders(SubjectList, train_fraction=0.9, patch_size=32, batch_size=64, samples_per_volume=64, queue_length=128,):
+def setup_loaders(subject_list, train_fraction=0.9, patch_size=32, batch_size=64, samples_per_volume=64, queue_length=128,):
 
-    train_set, test_set = get_train_test_sets(SubjectList, train_fraction)
+    train_set, test_set = get_train_test_sets(subject_list, train_fraction)
 
     sampler = tio.data.WeightedSampler(
         patch_size=patch_size,

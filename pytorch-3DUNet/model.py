@@ -2,8 +2,6 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as nnf
 import torchvision.transforms.functional as tf
-from resize_right import resize
-from interp_methods import linear
 
 # implementation of this architecture: https://lmb.informatik.uni-freiburg.de/people/ronneber/u-net/u-net-architecture.png
 
@@ -66,13 +64,6 @@ class Dose3DUNET(nn.Module):
             skip_connection = skip_connections[idx//2]
 
             # implementation of resizing of skip connection
-            # if x.shape != skip_connection.shape:
-            #     x = resize(
-            #         input=x,
-            #         out_shape=skip_connection.shape,
-            #         interp_method=linear,
-            #         support_sz=2
-            #     )
             if x.shape != skip_connection.shape:
                 x = nnf.interpolate(
                     input=x, size=skip_connection.shape[2:], mode='nearest')

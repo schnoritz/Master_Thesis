@@ -41,13 +41,13 @@ def create_mask_files(dir):
 
     segments = get_segments(dir)
 
-    for segment in segments:
+    for num, segment in enumerate(segments):
 
         patient = segment.split("_")[0]
         output_folder = dir.split("/")[-2].split("_")[-1]
 
         egsinp_file = f"{dir}{segment}/{segment}.egsinp"
-        egsphant_file = f"{dir}{patient}_listfile.txt.egsphant"
+        egsphant_file = f"{dir}/egsphant/{patient}_listfile.txt.egsphant"
         beam_config_file = f"{dir}{segment}/beam_config_{segment}.txt"
         dose_file = glob.glob(f"{dir}{segment}/{patient}*.3ddose")[0]
 
@@ -104,6 +104,6 @@ def execute_job_file(segment):
 
 if __name__ == "__main__":
 
-    dir = "/home/baumgartner/sgutwein84/container/output_20210614/"
+    dir = "/home/baumgartner/sgutwein84/container/output_20210620/"
 
     create_mask_files(dir)

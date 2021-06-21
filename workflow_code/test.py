@@ -36,45 +36,42 @@ def animation(train_pixels, target_pixels, gif_name):
 if __name__ == "__main__":
 
     training = torch.load(
-        "/Users/simongutwein/Studium/Masterarbeit/p0_0/training_data.pt")
+        "/Users/simongutwein/Studium/Masterarbeit/p1_22/training_data.pt")
 
     target = torch.load(
-        "/Users/simongutwein/Studium/Masterarbeit/p0_0/target_data.pt")
+        "/Users/simongutwein/Studium/Masterarbeit/p1_22/target_data.pt")
 
     print(target.max())
     print(training[0].max(), training[1].max(),
           training[2].max(), training[3].max(), training[4].max())
 
-    training[0] = training[0]
-    training[1] = training[1]/3000
-    training[2] = training[2]/3000
-    training[3] = training[3]/(1.171875)
-    training[4] = training[4]/(1435/1.171875)
-    target = target / 1E-17
+    slice = 37
+    cmap = "jet"
 
-    print(target.max())
-    print(training[0].max(), training[1].max(),
-          training[2].max(), training[3].max(), training[4].max())
+    for i in range(training.shape[3]):
+        plt.imshow(training[0, :, :, i], cmap="bone")
+        plt.imshow(target[0, :, :, i], cmap=cmap, alpha=0.5)
+        plt.show()
 
     mosaic = """
     AABBCCDDEEFF
     .HH..II..JJ.
     """
-    cmap = "jet"
+
     fig = plt.figure(constrained_layout=True, figsize=(60, 20))
     ax_dict = fig.subplot_mosaic(mosaic)
-    ax_dict["A"].imshow(training[0, :, :, 37], cmap=cmap)
-    ax_dict["B"].imshow(training[1, :, :, 37], cmap=cmap)
-    ax_dict["C"].imshow(training[2, :, :, 37], cmap=cmap)
-    ax_dict["D"].imshow(training[3, :, :, 37], cmap=cmap)
-    ax_dict["E"].imshow(training[4, :, :, 37], cmap=cmap)
-    ax_dict["F"].imshow(target[0, :, :, 37], cmap=cmap)
-    ax_dict["H"].imshow(training[0, :, :, 37], cmap=cmap)
-    ax_dict["H"].imshow(target[0, :, :, 37], cmap=cmap, alpha=0.7)
-    ax_dict["I"].imshow(training[1, :, :, 37], cmap=cmap)
-    ax_dict["I"].imshow(training[0, :, :, 37], cmap=cmap, alpha=0.8)
-    ax_dict["J"].imshow(training[1, :, :, 37], cmap=cmap)
-    ax_dict["J"].imshow(training[2, :, :, 37], cmap=cmap, alpha=0.8)
+    ax_dict["A"].imshow(training[0, :, :, slice], cmap=cmap)
+    ax_dict["B"].imshow(training[1, :, :, slice], cmap=cmap)
+    ax_dict["C"].imshow(training[2, :, :, slice], cmap=cmap)
+    ax_dict["D"].imshow(training[3, :, :, slice], cmap=cmap)
+    ax_dict["E"].imshow(training[4, :, :, slice], cmap=cmap)
+    ax_dict["F"].imshow(target[0, :, :, slice], cmap=cmap)
+    ax_dict["H"].imshow(training[0, :, :, slice], cmap=cmap)
+    ax_dict["H"].imshow(target[0, :, :, slice], cmap=cmap, alpha=0.9)
+    ax_dict["I"].imshow(training[1, :, :, slice], cmap=cmap)
+    ax_dict["I"].imshow(training[0, :, :, slice], cmap=cmap, alpha=0.8)
+    ax_dict["J"].imshow(training[1, :, :, slice], cmap=cmap)
+    ax_dict["J"].imshow(training[2, :, :, slice], cmap=cmap, alpha=0.8)
 
     plt.show()
 
@@ -171,21 +168,21 @@ if __name__ == "__main__":
     # target = torch.load(target_masks)
 
     # fig, ax = plt.subplots(1, 6, figsize=(48, 8))
-    # ax[0].imshow(training[0, :, :, 37])
-    # ax[1].imshow(training[1, :, :, 37])
-    # ax[2].imshow(training[2, :, :, 37])
-    # ax[3].imshow(training[3, :, :, 37])
-    # ax[4].imshow(training[4, :, :, 37])
-    # ax[5].imshow(target[:, :, 37])
+    # ax[0].imshow(training[0, :, :, slice])
+    # ax[1].imshow(training[1, :, :, slice])
+    # ax[2].imshow(training[2, :, :, slice])
+    # ax[3].imshow(training[3, :, :, slice])
+    # ax[4].imshow(training[4, :, :, slice])
+    # ax[5].imshow(target[:, :, slice])
     # plt.show()
 
     # fig, ax = plt.subplots(1, 4, figsize=(32, 8))
-    # ax[0].imshow(training[0, :, :, 37])
-    # ax[0].imshow(target[:, :, 37], alpha=0.5)
-    # ax[1].imshow(training[1, :, :, 37])
-    # ax[1].imshow(training[2, :, :, 37], alpha=0.5)
-    # ax[2].imshow(training[1, :, :, 37])
-    # ax[2].imshow(target[:, :, 37], alpha=0.5)
-    # ax[3].imshow(training[0, :, :, 37])
-    # ax[3].imshow(training[3, :, :, 37], alpha=0.1)
+    # ax[0].imshow(training[0, :, :, slice])
+    # ax[0].imshow(target[:, :, slice], alpha=0.5)
+    # ax[1].imshow(training[1, :, :, slice])
+    # ax[1].imshow(training[2, :, :, slice], alpha=0.5)
+    # ax[2].imshow(training[1, :, :, slice])
+    # ax[2].imshow(target[:, :, slice], alpha=0.5)
+    # ax[3].imshow(training[0, :, :, slice])
+    # ax[3].imshow(training[3, :, :, slice], alpha=0.1)
     # plt.show()

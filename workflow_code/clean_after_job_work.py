@@ -8,7 +8,7 @@ def parse():
     parser = argparse.ArgumentParser(description='Clean dosxyznrc folder.')
     parser.add_argument('filename', type=str, metavar='',
                         help='filename')
-    parser.add_argument('str_nhist', type=str, metavar='', hä
+    parser.add_argument('str_nhist', type=str, metavar='',
                         help='number of histories')
     parser.add_argument(
         '--dir', type=str, default="/work/ws/nemo/tu_zxoys08-EGS-0/egs_home/dosxyznrc/")

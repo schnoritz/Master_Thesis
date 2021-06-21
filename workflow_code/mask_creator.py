@@ -77,6 +77,7 @@ def create_mask_files(
 ):
 
     set_zero = True
+    normalize = True
     patient = segment.split("_")[0]
 
     if not os.path.isdir(f'/home/baumgartner/sgutwein84/container/training_data{output_folder}'):
@@ -100,17 +101,15 @@ def create_mask_files(
     )
 
     if set_zero:
-        # treshhold muss noch genau bestimmt werden
+        # treshhold muss noch genau bestimmt werden -> Daniela meinte 200 wird bei bestrahlungsplanung gemacht
         mask = np.array(ct_mask > 200).astype(bool)
         for i in range(mask.shape[2]):
             mask[:, :, i] = ndimage.binary_fill_holes(
                 mask[:, :, i]).astype(bool)
         mask = np.invert(mask)
 
-    plt.imshow(np.invert(mask[:, :, 20]))
-    plt.show()
-
     assert dose_mask.shape == ct_mask.shape, "shapes of dose and ct dont match"
+
     if set_zero:
         radio_depth_mask = radiological_depth(
             np.array(ct_mask), egsinp_file, egsphant_file, mask=np.invert(mask), tensor=True
@@ -132,9 +131,6 @@ def create_mask_files(
         egsinp_file, egsphant_file, beam_config_file, px_sp=np.array([1.171875, 1.171875, 3]), SID=1435, tensor=True
     )
 
-    print(dose_mask.shape, ct_mask.shape, radio_depth_mask.shape,
-          center_mask.shape, source_mask.shape, binary_mask.shape)
-
     # creates stack of size (5, 512  512, num_slices)
     stack = torch.stack((
         binary_mask,
@@ -150,6 +146,17 @@ def create_mask_files(
         stack[4, mask] = 0
 
     dose_mask = torch.unsqueeze(dose_mask, 0)
+
+    if normalize:
+        stack[0] = stack[0]
+        stack[1] = stack[1]/3000  # CT Mask
+        stack[2] = stack[2]/3000  # Radio Depth Mask
+        stack[3] = stack[3]/(1.171875)  # scale by pixel spacing
+        stack[4] = stack[4]/(1435/1.171875)  # scale by SID and pixel spacing
+        dose_mask = dose_mask / 1E-17
+
+        print(f"Dose Max-Value is: {np.round(dose_mask.max(),2)}")
+        print(f"Binary Mask Max-Value is: {np.round(stack[0].max(),2)}\nCT Max-Value is: {np.round(stack[1].max(),2)}\nRadiological-Depth Max-Value is: {np.round(stack[2].max(),2)}\nCenter-Beamline-Distance Max-Value is: {np.round(stack[3].max(),2)}\nSource-Distance Max-Value is: {np.round(stack[4].max(),2)}")
 
     stack = stack.float()
     dose_mask = dose_mask.float()
