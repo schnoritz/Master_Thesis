@@ -18,27 +18,29 @@ def server_login():
     return client
 
 
-client = server_login()
+if __name__ == "__main__":
 
-d = date.today()
-if int(d.month) < 10:
-    month = "0" + str(d.month)
-else:
-    month = str(d.month)
+    path = "/work/ws/nemo/tu_zxoys08-EGS-0/egs_home/dosxyznrc/output"
 
-if int(d.day) < 10:
-    day = "0" + str(d.day)
-else:
-    day = str(d.day)
+    client = server_login()
 
-base_dir_nemo = "/work/ws/nemo/tu_zxoys08-EGS-0/egs_home/dosxyznrc/"
+    d = date.today()
+    if int(d.month) < 10:
+        month = "0" + str(d.month)
+    else:
+        month = str(d.month)
 
-with open("/home/baumgartner/sgutwein84/copy_output.sh", "w") as fout:
+    if int(d.day) < 10:
+        day = "0" + str(d.day)
+    else:
+        day = str(d.day)
 
-    fout.write(
-        f"scp -r tu_zxoys08@login1.nemo.uni-freiburg.de:{base_dir_nemo}output /home/baumgartner/sgutwein84/container/output_{d.year}{month}{day}"
+    with open("/home/baumgartner/sgutwein84/copy_output.sh", "w") as fout:
+
+        fout.write(
+            f"scp -r tu_zxoys08@login1.nemo.uni-freiburg.de:{path} /home/baumgartner/sgutwein84/container/output_{d.year}{month}{day}"
+        )
+
+    _, stdout, _ = client.exec_command(
+        "./copy_output.sh"
     )
-
-_, stdout, _ = client.exec_command(
-    "./copy_output.sh"
-)

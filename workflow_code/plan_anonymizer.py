@@ -60,7 +60,7 @@ def create_anonymized_data(path):
 
     # get paths for all ct images
     ct_files = [anonymized_folder + x for x in os.listdir(
-        anonymized_folder) if not x.startswith(".") and x.lower().endswith(".dcm") and "CT" in x]
+        anonymized_folder) if not x.startswith(".") and x.lower().endswith(".dcm") and "image" in x]
 
     # create list of dict to sort the ct images depending on slice location
     ct_dict = []
@@ -88,7 +88,7 @@ def create_anonymized_data(path):
     dose_file = [anonymized_folder + x for x in os.listdir(
         anonymized_folder) if not x.startswith(".") and "Dose" in x]
     plan_file = [anonymized_folder + x for x in os.listdir(
-        anonymized_folder) if not x.startswith(".") and not "Dose" in x and not "CT" in x]
+        anonymized_folder) if not x.startswith(".") and not "Dose" in x and not "image" in x]
 
     os.rename(dose_file[0], "/".join(dose_file[0].split("/")
                                      [:-1]) + f"/{patient_name}_dose.dcm")
@@ -101,6 +101,6 @@ if __name__ == "__main__":
     # enter path to directory with patient ct, dose and plan files:
     path = "/Users/simongutwein/Studium/Masterarbeit/DATA/"
     files = [
-        path + x for x in os.listdir(path) if not x.startswith(".") and not "txt" in x]
+        path + x for x in os.listdir(path) if not x.startswith(".") and not "xlsx" in x]
     for file in files:
         create_anonymized_data(file)

@@ -242,7 +242,6 @@ def create_job_file(jobs_path, iparallel, nodes, ppn, filename, n_histories):
         fout.write(f'#MSUB -N  {filename} calculation\n')
         fout.write('#MSUB -l walltime=1:00:00:00\n')
         fout.write('#MSUB -l pmem=6gb\n')
-        fout.write('#MSUB -N EGSnrc\n')
         fout.write("#MSUB -o /home/tu/tu_tu/tu_zxoys08/EGSnrc/jobs\n")
         fout.write("#MSUB -m a\n\n")
         command = []

@@ -104,6 +104,6 @@ def execute_job_file(segment):
 
 if __name__ == "__main__":
 
-    dir = "/home/baumgartner/sgutwein84/container/output_20210620/"
+    dir = "/home/baumgartner/sgutwein84/container/output_20210622/"
 
     create_mask_files(dir)

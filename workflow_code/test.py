@@ -35,45 +35,58 @@ def animation(train_pixels, target_pixels, gif_name):
 
 if __name__ == "__main__":
 
-    training = torch.load(
-        "/Users/simongutwein/Studium/Masterarbeit/p1_22/training_data.pt")
+    path = "/Users/simongutwein/Studium/Masterarbeit/DATA/"
 
-    target = torch.load(
-        "/Users/simongutwein/Studium/Masterarbeit/p1_22/target_data.pt")
+    files = [
+        path + x for x in os.listdir(path) if not x.startswith(".") and not "xlsx" in x]
 
-    print(target.max())
-    print(training[0].max(), training[1].max(),
-          training[2].max(), training[3].max(), training[4].max())
+    segs = [x.split("/")[-1] for x in files]
 
-    slice = 37
-    cmap = "jet"
+    with open("/Users/simongutwein/move.sh", "w+") as fout:
+        fout.write("#!/bin/bash\n")
+        for seg in segs:
+            fout.write(
+                f"scp -r /Users/simongutwein/Studium/Masterarbeit/DATA/{seg}/{seg} tu_zxoys08@login1.nemo.uni-freiburg.de:/work/ws/nemo/tu_zxoys08-EGS-0/egs_home/dosxyznrc/\n")
 
-    for i in range(training.shape[3]):
-        plt.imshow(training[0, :, :, i], cmap="bone")
-        plt.imshow(target[0, :, :, i], cmap=cmap, alpha=0.5)
-        plt.show()
+    # training = torch.load(
+    #     "/Users/simongutwein/Studium/Masterarbeit/p1_22/training_data.pt")
 
-    mosaic = """
-    AABBCCDDEEFF
-    .HH..II..JJ.
-    """
+    # target = torch.load(
+    #     "/Users/simongutwein/Studium/Masterarbeit/p1_22/target_data.pt")
 
-    fig = plt.figure(constrained_layout=True, figsize=(60, 20))
-    ax_dict = fig.subplot_mosaic(mosaic)
-    ax_dict["A"].imshow(training[0, :, :, slice], cmap=cmap)
-    ax_dict["B"].imshow(training[1, :, :, slice], cmap=cmap)
-    ax_dict["C"].imshow(training[2, :, :, slice], cmap=cmap)
-    ax_dict["D"].imshow(training[3, :, :, slice], cmap=cmap)
-    ax_dict["E"].imshow(training[4, :, :, slice], cmap=cmap)
-    ax_dict["F"].imshow(target[0, :, :, slice], cmap=cmap)
-    ax_dict["H"].imshow(training[0, :, :, slice], cmap=cmap)
-    ax_dict["H"].imshow(target[0, :, :, slice], cmap=cmap, alpha=0.9)
-    ax_dict["I"].imshow(training[1, :, :, slice], cmap=cmap)
-    ax_dict["I"].imshow(training[0, :, :, slice], cmap=cmap, alpha=0.8)
-    ax_dict["J"].imshow(training[1, :, :, slice], cmap=cmap)
-    ax_dict["J"].imshow(training[2, :, :, slice], cmap=cmap, alpha=0.8)
+    # print(target.max())
+    # print(training[0].max(), training[1].max(),
+    #       training[2].max(), training[3].max(), training[4].max())
 
-    plt.show()
+    # slice = 37
+    # cmap = "jet"
+
+    # for i in range(training.shape[3]):
+    #     plt.imshow(training[0, :, :, i], cmap="bone")
+    #     plt.imshow(target[0, :, :, i], cmap=cmap, alpha=0.5)
+    #     plt.show()
+
+    # mosaic = """
+    # AABBCCDDEEFF
+    # .HH..II..JJ.
+    # """
+
+    # fig = plt.figure(constrained_layout=True, figsize=(60, 20))
+    # ax_dict = fig.subplot_mosaic(mosaic)
+    # ax_dict["A"].imshow(training[0, :, :, slice], cmap=cmap)
+    # ax_dict["B"].imshow(training[1, :, :, slice], cmap=cmap)
+    # ax_dict["C"].imshow(training[2, :, :, slice], cmap=cmap)
+    # ax_dict["D"].imshow(training[3, :, :, slice], cmap=cmap)
+    # ax_dict["E"].imshow(training[4, :, :, slice], cmap=cmap)
+    # ax_dict["F"].imshow(target[0, :, :, slice], cmap=cmap)
+    # ax_dict["H"].imshow(training[0, :, :, slice], cmap=cmap)
+    # ax_dict["H"].imshow(target[0, :, :, slice], cmap=cmap, alpha=0.9)
+    # ax_dict["I"].imshow(training[1, :, :, slice], cmap=cmap)
+    # ax_dict["I"].imshow(training[0, :, :, slice], cmap=cmap, alpha=0.8)
+    # ax_dict["J"].imshow(training[1, :, :, slice], cmap=cmap)
+    # ax_dict["J"].imshow(training[2, :, :, slice], cmap=cmap, alpha=0.8)
+
+    # plt.show()
 
     # slices = "/Users/simongutwein/work/ws/nemo/tu_zxoys08-EGS-0/egs_home/dosxyznrc/p3"
     # dose_mask = torch.randn((512, 512, 131))

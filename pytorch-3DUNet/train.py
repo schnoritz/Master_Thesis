@@ -1,17 +1,11 @@
 import os
-from numpy.lib.shape_base import get_array_wrap
-# from torch._C import double, float
-
-from torchio.data import queue
 from dataset import SubjectDataset, setup_loaders
 import numpy as np
 import matplotlib.pyplot as plt
 from model import Dose3DUNET
 import torch
-import torch.nn as nn
 from torch import optim
 import argparse
-import torchio as tio
 import utils
 import pickle
 
@@ -42,6 +36,9 @@ def parse():
 
     parser.add_argument('--use_gpu', type=bool, metavar='', default=True,
                         help='Number of samples for one batch')
+
+    parser.add_argument('--pretrained_model', type=str, metavar='',
+                        help='specify path to pretrained model')
 
     args = parser.parse_args()
 
@@ -91,12 +88,15 @@ def validate(unet, criterion, test_loader, device):
     return val_loss/num
 
 
-def train(unet, num_epochs, train_loader, test_loader, optimizer, criterion, device, save_dir):
+def train(train_state, num_epochs, train_loader, test_loader, criterion, device, save_dir):
+
+    unet = train_state['UNET']
+    optimizer = train_state['optimizer']
 
     print("Start Training!\n")
     total_patches = 0
     epochs = []
-    for epoch in range(num_epochs):
+    for epoch in range(train_state['starting_epoch'], train_state['starting_epoch'] + num_epochs):
 
         print(f"---- Epoch {epoch+1}/{num_epochs} ----")
 
@@ -158,7 +158,8 @@ def setup_training(
     save_dir,
     train_fraction,
     data_path,
-    use_gpu
+    use_gpu,
+    pretrained_model
 ):
 
     device = utils.define_calculation_device(use_gpu)
@@ -174,23 +175,36 @@ def setup_training(
     )
 
     my_UNET = Dose3DUNET().float()
-
-    if device.type == 'cuda':
-        my_UNET.cuda().to(device)
-
     criterion = utils.RMSELoss()
     optimizer = optim.Adam(my_UNET.parameters(), 10E-4, (0.9, 0.99), 10E-8)
+
+    if pretrained_model is not None:
+        state = torch.load(pretrained_model)
+        train_state = {
+            'UNET': my_UNET.load_state_dict(state['model_state_dict']),
+            'optimizer': optimizer.load_state_dict(state['optimizer_state_dict']),
+            'starting_epoch': state['epoch'],
+        }
+
+    else:
+        train_state = {
+            'UNET': my_UNET,
+            'optimizer': optimizer,
+            'starting_epoch': 0,
+        }
+
+    if device.type == 'cuda':
+        train_state['UNET'] = train_state['UNET'].cuda().to(device)
 
     print(
         f"Training-Data shape: [{batch_size} ,5 ,{patch_size},{patch_size},{patch_size}]")
 
     losses = train(
-        unet=my_UNET,
+        train_state=train_state,
         num_epochs=num_epochs,
         train_loader=train_loader,
         test_loader=test_loader,
         save_dir=save_dir,
-        optimizer=optimizer,
         criterion=criterion,
         device=device
     )
@@ -210,23 +224,25 @@ def setup_training(
 
 if __name__ == "__main__":
 
-    # args = parse()
-    # setup_training(
-    #     num_epochs=args.num_epochs,
-    #     batch_size=args.batch_size,
-    #     patch_size=args.patch_size,
-    #     train_fraction=args.train_fraction,
-    #     data_path=args.root_dir,
-    #     save_dir=args.save_dir,
-    #     use_gpu=args.use_gpu
-    # )
-
+    args = parse()
     setup_training(
-        num_epochs=10,
-        batch_size=2,
-        patch_size=32,
-        save_dir="/home/baumgartner/sgutwein84/container/pytorch-3DUNet/saved_models/",
-        train_fraction=0.9,
-        data_path="/home/baumgartner/sgutwein84/container/training_data20210620",
-        use_gpu=True
+        num_epochs=args.num_epochs,
+        batch_size=args.batch_size,
+        patch_size=args.patch_size,
+        train_fraction=args.train_fraction,
+        data_path=args.root_dir,
+        save_dir=args.save_dir,
+        use_gpu=args.use_gpu,
+        pretrained_model=args.pretrained_model
     )
+
+    # setup_training(
+    #     num_epochs=10,
+    #     batch_size=2,
+    #     patch_size=32,
+    #     save_dir="/home/baumgartner/sgutwein84/container/pytorch-3DUNet/saved_models/",
+    #     train_fraction=0.9,
+    #     data_path="/home/baumgartner/sgutwein84/container/training_data20210620",
+    #     use_gpu=True,
+    #     pretrained_model=False
+    # )
