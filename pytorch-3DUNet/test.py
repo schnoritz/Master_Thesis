@@ -146,6 +146,7 @@ if __name__ == "__main__":
             print("Batchnumber: ", num+1)
             print(train.shape)
             print(target.shape)
+
             # plt.imshow(train[0, 0, :, :, 16])
             # plt.show()
             # plt.imshow(target[0, 0, :, :, 16])
