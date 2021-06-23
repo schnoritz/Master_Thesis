@@ -251,7 +251,7 @@ def create_job_file(jobs_path, iparallel, nodes, ppn, filename, n_histories):
             command.append("dosxyznrc -i " + filename + "_w" +
                            str(i+1) + ".egsinp -p 700icru")
 
-        command = " & ".join(command) + "\n\nwait\n\n"
+        command = " & ".join(command) + "\n\nwait\n\nsleep 2m\n\n"
         command += "dosxyznrc -i " + filename + ".egsinp" + " -p 700icru \n\nwait\n\n"
 
         command += 'sleep 2m\n\n'
@@ -500,7 +500,7 @@ def setup_plan_calculation(patient, plan_file):
 if __name__ == "__main__":
 
     plan = True
-    patient = "p16"
+    patient = "p30"
     num_hist = 10000000
     pj = int(num_hist/2000000)
     if pj <= 1:

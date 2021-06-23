@@ -39,7 +39,6 @@ class DataQueue():
         self.ps = ps
         self.spq = spq
         self.sps = sps
-        self.curr = 0
 
     def load_q(self, segs):
         self.sps
@@ -98,22 +97,33 @@ class DataQueue():
 
         return idxs[:sps]
 
-    def __len__(self):
-        return
+    def __iter__(self):
+        curr = 0
+        while curr < len(self.seg):
+            train, target = self.load_q(self.seg[curr:curr+self.spq])
+            yield (train, target)
+            curr += self.spq
+
+
+class Test():
+
+    def __init__(self):
+        self._size = 5
 
     def __iter__(self):
-        return self
-
-    def __next__(self):
-        if self.curr >= len(self.seg):
-            raise StopIteration
-        self.curr += self.spq
-        train, target = self.load_q(self.seg[self.curr-self.spq:self.curr])
-
-        return train, target
+        n = 0
+        while n < self._size:
+            yield n
+            n += 1
 
 
 if __name__ == "__main__":
+
+    test = Test()
+
+    for i in test:
+        for j in test:
+            print(i, j)
 
     subject_list = ["/Users/simongutwein/Studium/Masterarbeit/test_data/" + x for x in os.listdir(
         "/Users/simongutwein/Studium/Masterarbeit/test_data") if not x.startswith(".")]
@@ -132,26 +142,36 @@ if __name__ == "__main__":
     # Training-Samples: 376
     # Test-Samples: 93
 
-    batch_size = 16
-    segments_per_queue = 4
+    batch_size = 32
+    segments_per_queue = 2
 
     # 128 samples aus 128/32 segmenten laden -> shufflen -> in 4er batches yielden
 
-    data = DataQueue(train_set, batch_size, segments_per_queue, ps=32, sps=503)
     overall_start = time()
     total_number = 0
-    for (train_patches, target_patches) in data:
-        for num, (train, target) in enumerate(zip(train_patches, target_patches)):
-            total_number += train.shape[0]
-            print("Batchnumber: ", num+1)
-            print(train.shape)
-            print(target.shape)
+    epochs = 3
 
-            # plt.imshow(train[0, 0, :, :, 16])
-            # plt.show()
-            # plt.imshow(target[0, 0, :, :, 16])
-            # plt.show()
+    train_queue = DataQueue(train_set, batch_size,
+                            segments_per_queue, ps=32, sps=2000)
+    test_queue = DataQueue(test_set, batch_size,
+                           segments_per_queue, ps=32, sps=2000)
 
+    for epoch in range(epochs):
+        print("Epoch", epoch)
+        for num_queue, (train_patches, target_patches) in enumerate(train_queue):
+            print("train", num_queue)
+            for num, (train, target) in enumerate(zip(train_patches, target_patches)):
+                total_number += train.shape[0]
+                # print(train.shape)
+
+                #print("step: train")
+            if (num_queue+1) % 5 == 0:
+                print("Validate")
+                for (test_patches, target_patches_test) in test_queue:
+                    for num, (test, target) in enumerate(zip(test_patches, target_patches_test)):
+                        pass
+                        #print("step: validate")
+                        # print(test.shape)
     print(
         f"loading for all took: {time()-overall_start} seconds for {total_number} Patches\n")
 

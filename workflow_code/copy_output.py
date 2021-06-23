@@ -20,7 +20,7 @@ def server_login():
 
 if __name__ == "__main__":
 
-    path = "/work/ws/nemo/tu_zxoys08-EGS-0/egs_home/dosxyznrc/output"
+    path = "/work/ws/nemo/tu_zxoys08-EGS-0/output_20210622"
 
     client = server_login()
 

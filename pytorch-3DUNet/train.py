@@ -8,6 +8,8 @@ from torch import optim
 import argparse
 import utils
 import pickle
+import dataqueue
+from time import time
 
 # test
 from torchvision.transforms import Normalize
@@ -34,61 +36,59 @@ def parse():
     parser.add_argument(
         '--save_dir', type=str, default="/home/baumgartner/sgutwein84/container/3D-UNet/saved_models/")
 
-    parser.add_argument('--use_gpu', type=bool, metavar='', default=True,
-                        help='Number of samples for one batch')
+    parser.add_argument(
+        '--use_gpu', type=bool, metavar='', default=True, help='Number of samples for one batch')
 
-    parser.add_argument('--pretrained_model', type=str, metavar='',
-                        help='specify path to pretrained model')
+    parser.add_argument(
+        '--pretrained_model', type=str, metavar='', default="False", help='specify path to pretrained model')
 
     args = parser.parse_args()
 
     return args
 
 
-def get_training_data(batch, device):
+def get_training_data(train, target, device):
 
-    masks = batch["trainings_data"]['data']
-    true_dose = batch["target_data"]['data']
-    masks = masks.float()
-    true_dose = true_dose.float()
+    train = train.float()
+    target = target.float()
 
     if device.type == 'cuda':
-        masks = masks.cuda()
-        true_dose = true_dose.cuda()
+        train = train.cuda()
+        target = target.cuda()
 
-        masks.to(device)
-        true_dose.to(device)
+        train = train.to(device)
+        target = target.to(device)
 
-    return masks, true_dose
+    return train, target
 
 
-def validate(unet, criterion, test_loader, device):
+def validate(unet, criterion, test_queue, device):
 
     with torch.no_grad():
 
         val_loss = 0
-        for num, batch in enumerate(test_loader):
+        num = 0
+        for (test_patches, target_patches) in test_queue:
+            for (test_batch, target_batch) in zip(test_patches, target_patches):
+                num += 1
+                test_batch.float()
+                target_batch.float()
 
-            masks = batch["trainings_data"]['data']
-            true_dose = batch["target_data"]['data']
-            masks = masks.float()
-            true_dose = true_dose.float()
+                if device.type == 'cuda':
+                    test_batch = test_batch.cuda()
+                    target_batch = target_batch.cuda()
 
-            if device.type == 'cuda':
-                masks = masks.cuda()
-                true_dose = true_dose.cuda()
+                    test_batch.to(device)
+                    target_batch.to(device)
 
-                masks.to(device)
-                true_dose.to(device)
+                pred = unet(test_batch)
 
-            pred = unet(masks)
-
-            val_loss += criterion(pred, true_dose).item()
+                val_loss += criterion(pred, target_batch).item()
 
     return val_loss/num
 
 
-def train(train_state, num_epochs, train_loader, test_loader, criterion, device, save_dir):
+def train(train_state, num_epochs, train_queue, test_queue, criterion, device, save_dir):
 
     unet = train_state['UNET']
     optimizer = train_state['optimizer']
@@ -98,34 +98,38 @@ def train(train_state, num_epochs, train_loader, test_loader, criterion, device,
     epochs = []
     for epoch in range(train_state['starting_epoch'], train_state['starting_epoch'] + num_epochs):
 
-        print(f"---- Epoch {epoch+1}/{num_epochs} ----")
+        print(
+            f"---- Epoch {epoch+1}/{train_state['starting_epoch'] + num_epochs} ----")
 
         train_loss = 0
-        for num, batch in enumerate(train_loader):
+        num = 0
+        for (train_patches, target_patches) in train_queue:
+            for (train_batch, target_batch) in zip(train_patches, target_patches):
+                num += 1
 
-            masks, true_dose = get_training_data(batch, device)
+                train_batch, target_batch = get_training_data(
+                    train_batch, target_batch, device)
 
-            if torch.isnan(torch.sum(masks)) or torch.isnan(torch.sum(true_dose)) or torch.isinf(torch.sum(masks)) or torch.isinf(torch.sum(true_dose)):
-                print('invalid input detected at iteration ', num)
-                print(masks.max(), masks.min(),
-                      true_dose.max(), true_dose.min())
+                dose_pred = unet(train_batch)
 
-            dose_pred = unet(masks)
+                loss = criterion(dose_pred, target_batch)
+                train_loss += loss.item()
 
-            loss = criterion(dose_pred, true_dose)
-            train_loss += loss.item()
+                optimizer.zero_grad()
+                loss.backward()
+                optimizer.step()
 
-            optimizer.zero_grad()
-            loss.backward()
-            optimizer.step()
-
-            #print(f"Epoch Loss is: {loss.item()}")
-            total_patches += masks.shape[0]
+                # print(f"Epoch Loss is: {loss.item()}")
+                total_patches += train_batch.shape[0]
+                print(total_patches)
 
         train_loss = train_loss/num
-        test_loss = validate(unet, criterion, test_loader, device)
-        print(f"Train Loss is: {np.round(train_loss,4)}")
-        print(f"Test Loss is:  {np.round(test_loss,4)}\n")
+        test_loss = validate(unet, criterion, test_queue, device)
+
+        print(
+            f"Train Loss is: {np.round(train_loss,4)} after {total_patches} Patches")
+        print(
+            f"Test Loss is:  {np.round(test_loss,4)} after {total_patches} Patches\n")
 
         epochs.append({
             "epoch": epoch+1,
@@ -164,25 +168,59 @@ def setup_training(
 
     device = utils.define_calculation_device(use_gpu)
 
-    subject_list = SubjectDataset(data_path, sampling_scheme="beam")
+    # subject_list = SubjectDataset(data_path, sampling_scheme="beam")
+    if data_path[-1] != "/":
+        data_path += "/"
+
+    subject_list = [data_path +
+                    x for x in os.listdir(data_path) if not x.startswith(".")]
+
     print(f'Number of Segments: {len(subject_list)}')
 
-    train_loader, test_loader = setup_loaders(
-        subject_list=subject_list,
+    # train_loader, test_loader = setup_loaders(
+    #     subject_list=subject_list,
+    #     batch_size=batch_size,
+    #     patch_size=patch_size,
+    #     train_fraction=train_fraction
+    # )
+
+    train_set, test_set = dataqueue.get_train_test_sets(
+        subject_list, train_fraction=train_fraction)
+
+    train_queue = dataqueue.DataQueue(
+        segment_list=train_set,
         batch_size=batch_size,
+        segments_per_queue=5,
         patch_size=patch_size,
-        train_fraction=train_fraction
+        patches_per_segment=250
+    )
+
+    test_queue = dataqueue.DataQueue(
+        segment_list=test_set,
+        batch_size=batch_size,
+        segments_per_queue=5,
+        patch_size=patch_size,
+        patches_per_segment=250
     )
 
     my_UNET = Dose3DUNET().float()
     criterion = utils.RMSELoss()
     optimizer = optim.Adam(my_UNET.parameters(), 10E-4, (0.9, 0.99), 10E-8)
 
-    if pretrained_model is not None:
-        state = torch.load(pretrained_model)
+    if pretrained_model != "False":
+        model_name = pretrained_model.split("/")[-1]
+        print(f"\nUsing pretrained Model: {model_name}\n")
+        if torch.cuda.is_available():
+            state = torch.load(pretrained_model)
+        else:
+            state = torch.load(
+                pretrained_model, map_location=torch.device('cpu'))
+            my_UNET.load_state_dict(state['model_state_dict'])
+            optimizer.load_state_dict(state['optimizer_state_dict'])
+
         train_state = {
-            'UNET': my_UNET.load_state_dict(state['model_state_dict']),
-            'optimizer': optimizer.load_state_dict(state['optimizer_state_dict']),
+            'UNET': my_UNET,
+            'optimizer': optimizer,
             'starting_epoch': state['epoch'],
         }
 
@@ -194,16 +232,16 @@ def setup_training(
         }
 
     if device.type == 'cuda':
-        train_state['UNET'] = train_state['UNET'].cuda().to(device)
+        train_state['UNET'] = train_state['UNET'].to(device)
 
     print(
-        f"Training-Data shape: [{batch_size} ,5 ,{patch_size},{patch_size},{patch_size}]")
+        f"Training-Data shape: [{batch_size} ,5 ,{patch_size},{patch_size},{patch_size}]\n")
 
     losses = train(
         train_state=train_state,
         num_epochs=num_epochs,
-        train_loader=train_loader,
-        test_loader=test_loader,
+        train_queue=train_queue,
+        test_queue=test_queue,
         save_dir=save_dir,
         criterion=criterion,
         device=device
@@ -238,11 +276,11 @@ if __name__ == "__main__":
 
     # setup_training(
     #     num_epochs=10,
-    #     batch_size=2,
+    #     batch_size=16,
     #     patch_size=32,
     #     save_dir="/home/baumgartner/sgutwein84/container/pytorch-3DUNet/saved_models/",
     #     train_fraction=0.9,
-    #     data_path="/home/baumgartner/sgutwein84/container/training_data20210620",
+    #     data_path="/home/baumgartner/sgutwein84/container/training_data20210619",
     #     use_gpu=True,
-    #     pretrained_model=False
+    #     pretrained_model="False"
     # )
