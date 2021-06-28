@@ -8,7 +8,7 @@ from time import time
 class DataQueue():
 
     def __init__(self, segment_list, batch_size, segments_per_queue, patch_size, patches_per_segment):
-        self.segment_list = segment_list
+        self.segment_list = random.sample(segment_list, len(segment_list))
         self.batch_size = batch_size
         self.patch_size = patch_size
         self.segments_per_queue = segments_per_queue
@@ -26,6 +26,7 @@ class DataQueue():
         target_patches = []
         hp = self.patch_size/2
         for masks, target in data:
+
             idxs = self.get_sample_idx(masks)
             for i in idxs:
                 train_patches.append(
@@ -87,7 +88,7 @@ class DataQueue():
             curr += self.segments_per_queue
 
 
-def get_train_test_sets(dataset, train_fraction):
+def get_train_val_sets(dataset, train_fraction):
 
     num = len(dataset)
 
@@ -111,7 +112,7 @@ if __name__ == "__main__":
     subject_list = ["/Users/simongutwein/Studium/Masterarbeit/test_data/" + x for x in os.listdir(
         "/Users/simongutwein/Studium/Masterarbeit/test_data") if not x.startswith(".")]
 
-    train, test = get_train_test_sets(subject_list, train_fraction=0.8)
+    train, test = get_train_val_sets(subject_list, train_fraction=0.8)
 
     train_q = DataQueue(train, 16, 2, 32, 5000)
     test_q = DataQueue(test, 16, 2, 32, 5000)

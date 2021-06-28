@@ -11,6 +11,7 @@ from dataset import setup_loaders
 from pprint import pprint
 import random
 from time import time
+from model import Dose3DUNET
 
 
 def get_train_test_sets(dataset, train_fraction):
@@ -119,63 +120,108 @@ class Test():
 
 if __name__ == "__main__":
 
-    test = Test()
+    print(torch.cuda.device_count())
 
-    for i in test:
-        for j in test:
-            print(i, j)
+    # segment = "p2_16"
 
-    subject_list = ["/Users/simongutwein/Studium/Masterarbeit/test_data/" + x for x in os.listdir(
-        "/Users/simongutwein/Studium/Masterarbeit/test_data") if not x.startswith(".")]
+    # masks = torch.load(
+    #     f"/home/baumgartner/sgutwein84/container/prostate_training_data/{segment}/training_data.pt")
+    # masks = masks[:, :, :, 20:20+32]
+    # masks = torch.unsqueeze(masks, 0)
 
-    print(len(subject_list))
+    # masks = masks.to("cuda" if torch.cuda.is_available() else "cpu")
+    # print(masks.device)
 
-    train_set, test_set = get_train_test_sets(subject_list, 0.8)
-    print("Train-Set")
-    pprint(train_set)
-    print()
-    print("Test-Set")
-    pprint(test_set)
-    print("\n")
+    # dose = torch.load(
+    #     f"/home/baumgartner/sgutwein84/container/prostate_training_data/{segment}/target_data.pt")
+    # dose = dose[:, :, :, 20:20+32]
+    # dose = dose.squeeze()
 
-    # Number of total Samples: 469
-    # Training-Samples: 376
-    # Test-Samples: 93
+    # model = Dose3DUNET()
+    # print(torch.cuda.is_available())
 
-    batch_size = 32
-    segments_per_queue = 2
+    # checkpoint = torch.load(
+    #     "/home/baumgartner/sgutwein84/container/pytorch-3DUNet/saved_models/UNET_16.pt")
 
-    # 128 samples aus 128/32 segmenten laden -> shufflen -> in 4er batches yielden
+    # model.load_state_dict(checkpoint["model_state_dict"])
 
-    overall_start = time()
-    total_number = 0
-    epochs = 3
+    # model.float()
+    # model = model.to("cuda" if torch.cuda.is_available() else "cpu")
 
-    train_queue = DataQueue(train_set, batch_size,
-                            segments_per_queue, ps=32, sps=2000)
-    test_queue = DataQueue(test_set, batch_size,
-                           segments_per_queue, ps=32, sps=2000)
+    # pred = model(masks)
 
-    for epoch in range(epochs):
-        print("Epoch", epoch)
-        for num_queue, (train_patches, target_patches) in enumerate(train_queue):
-            print("train", num_queue)
-            for num, (train, target) in enumerate(zip(train_patches, target_patches)):
-                total_number += train.shape[0]
-                # print(train.shape)
+    # pred = pred.cpu().detach().numpy()
+    # pred = pred.squeeze()
 
-                #print("step: train")
-            if (num_queue+1) % 5 == 0:
-                print("Validate")
-                for (test_patches, target_patches_test) in test_queue:
-                    for num, (test, target) in enumerate(zip(test_patches, target_patches_test)):
-                        pass
-                        #print("step: validate")
-                        # print(test.shape)
-    print(
-        f"loading for all took: {time()-overall_start} seconds for {total_number} Patches\n")
+    # masks = masks.cpu().detach().numpy()
+    # masks = masks.squeeze()
 
-    # for i in train_loader:
+    # for i in range(32):
+    #     fig, ax = plt.subplots(1, 3)
+    #     ax[0].imshow(dose[:, :, i])
+    #     ax[1].imshow(pred[:, :, i])
+    #     ax[2].imshow(dose[:, :, i]-pred[:, :, i])
+    #     plt.savefig(
+    #         f"/home/baumgartner/sgutwein84/container/test/pred_{i}")
+    #     plt.close()
+
+    # test = Test()
+
+    # for i in test:
+    #     for j in test:
+    #         print(i, j)
+
+    # subject_list = ["/Users/simongutwein/Studium/Masterarbeit/test_data/" + x for x in os.listdir(
+    #     "/Users/simongutwein/Studium/Masterarbeit/test_data") if not x.startswith(".")]
+
+    # print(len(subject_list))
+
+    # train_set, test_set = get_train_test_sets(subject_list, 0.8)
+    # print("Train-Set")
+    # pprint(train_set)
+    # print()
+    # print("Test-Set")
+    # pprint(test_set)
+    # print("\n")
+
+    # # Number of total Samples: 469
+    # # Training-Samples: 376
+    # # Test-Samples: 93
+
+    # batch_size = 32
+    # segments_per_queue = 2
+
+    # # 128 samples aus 128/32 segmenten laden -> shufflen -> in 4er batches yielden
+
+    # overall_start = time()
+    # total_number = 0
+    # epochs = 3
+
+    # train_queue = DataQueue(train_set, batch_size,
+    #                         segments_per_queue, ps=32, sps=2000)
+    # test_queue = DataQueue(test_set, batch_size,
+    #                        segments_per_queue, ps=32, sps=2000)
+
+    # for epoch in range(epochs):
+    #     print("Epoch", epoch)
+    #     for num_queue, (train_patches, target_patches) in enumerate(train_queue):
+    #         print("train", num_queue)
+    #         for num, (train, target) in enumerate(zip(train_patches, target_patches)):
+    #             total_number += train.shape[0]
+    #             # print(train.shape)
+
+    #             #print("step: train")
+    #         if (num_queue+1) % 5 == 0:
+    #             print("Validate")
+    #             for (test_patches, target_patches_test) in test_queue:
+    #                 for num, (test, target) in enumerate(zip(test_patches, target_patches_test)):
+    #                     pass
+    #                     #print("step: validate")
+    #                     # print(test.shape)
+    # print(
+    #     f"loading for all took: {time()-overall_start} seconds for {total_number} Patches\n")
+
+    # # for i in train_loader:
     #     print(i['trainings_data']['data'].shape)
     #     print(i['target_data']['data'].shape)
 

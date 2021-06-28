@@ -10,6 +10,7 @@ import utils
 import pickle
 import dataqueue
 from time import time
+import sys
 
 # test
 from torchvision.transforms import Normalize
@@ -92,10 +93,11 @@ def train(train_state, num_epochs, train_queue, test_queue, criterion, device, s
 
     unet = train_state['UNET']
     optimizer = train_state['optimizer']
+    epochs = train_state['epochs']
 
     print("Start Training!\n")
     total_patches = 0
-    epochs = []
+
     for epoch in range(train_state['starting_epoch'], train_state['starting_epoch'] + num_epochs):
 
         print(
@@ -121,7 +123,6 @@ def train(train_state, num_epochs, train_queue, test_queue, criterion, device, s
 
                 # print(f"Epoch Loss is: {loss.item()}")
                 total_patches += train_batch.shape[0]
-                print(total_patches)
 
         train_loss = train_loss/num
         test_loss = validate(unet, criterion, test_queue, device)
@@ -130,6 +131,8 @@ def train(train_state, num_epochs, train_queue, test_queue, criterion, device, s
             f"Train Loss is: {np.round(train_loss,4)} after {total_patches} Patches")
         print(
             f"Test Loss is:  {np.round(test_loss,4)} after {total_patches} Patches\n")
+
+        sys.stdout.flush()
 
         epochs.append({
             "epoch": epoch+1,
@@ -147,7 +150,8 @@ def train(train_state, num_epochs, train_queue, test_queue, criterion, device, s
                 test_loss=test_loss,
                 save_dir=save_dir,
                 epoch=epoch,
-                save=save
+                save=save,
+                epochs=epochs
             )
 
     print(f"Network has seen: {total_patches} Patches!")
@@ -222,6 +226,7 @@ def setup_training(
             'UNET': my_UNET,
             'optimizer': optimizer,
             'starting_epoch': state['epoch'],
+            'epochs': state['epochs']
         }
 
     else:
@@ -229,6 +234,7 @@ def setup_training(
             'UNET': my_UNET,
             'optimizer': optimizer,
             'starting_epoch': 0,
+            'epochs': []
         }
 
     if device.type == 'cuda':
@@ -236,6 +242,8 @@ def setup_training(
 
     print(
         f"Training-Data shape: [{batch_size} ,5 ,{patch_size},{patch_size},{patch_size}]\n")
+
+    sys.stdout.flush()
 
     losses = train(
         train_state=train_state,

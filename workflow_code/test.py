@@ -35,19 +35,19 @@ def animation(train_pixels, target_pixels, gif_name):
 
 if __name__ == "__main__":
 
-    path = "/Users/simongutwein/Studium/Masterarbeit/DATA/"
-
-    files = [
-        path + x for x in os.listdir(path) if not x.startswith(".") and not "xlsx" in x]
-
-    segs = [x.split("/")[-1] for x in files]
+    path = "/Users/simongutwein/work/ws/nemo/tu_zxoys08-EGS-0/egs_home/dosxyznrc/output"
+    copy_path = "/Users/simongutwein/work/ws/nemo/tu_zxoys08-EGS-0/egs_home/dosxyznrc/"
+    files = [x.split("_")[0]
+             for x in os.listdir(path) if not x.startswith(".")]
+    files = list(dict.fromkeys(files))
 
     with open("/Users/simongutwein/move.sh", "w+") as fout:
         fout.write("#!/bin/bash\n")
-        for seg in segs:
+        for seg in files:
             fout.write(
-                f"scp -r /Users/simongutwein/Studium/Masterarbeit/DATA/{seg}/{seg} tu_zxoys08@login1.nemo.uni-freiburg.de:/work/ws/nemo/tu_zxoys08-EGS-0/egs_home/dosxyznrc/\n")
-
+                f"scp -r {copy_path}{seg} sgutwein84@134.2.168.52:/home/baumgartner/sgutwein84/container/output_20210625/ct\n")
+            fout.write(
+                f"scp -r {copy_path}{seg}_listfile.txt.egsphant sgutwein84@134.2.168.52:/home/baumgartner/sgutwein84/container/output_20210625/egsphant\n")
     # training = torch.load(
     #     "/Users/simongutwein/Studium/Masterarbeit/p1_22/training_data.pt")
 

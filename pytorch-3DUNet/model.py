@@ -8,6 +8,7 @@ import torchvision.transforms.functional as tf
 
 class DoubleConv(nn.Module):
     def __init__(self, in_channels, out_channels):
+
         super(DoubleConv, self).__init__()
         self.conv = nn.Sequential(
             nn.Conv3d(in_channels, out_channels, kernel_size=3,
@@ -50,6 +51,7 @@ class Dose3DUNET(nn.Module):
         self.final_conv = nn.Conv3d(features[0], out_channels, kernel_size=1)
 
     def forward(self, x):
+
         skip_connections = []
         for down in self.downs:
             x = down(x)
@@ -64,6 +66,7 @@ class Dose3DUNET(nn.Module):
             skip_connection = skip_connections[idx//2]
 
             # implementation of resizing of skip connection
+            # warining hinzufügen wenn das ausgeführt wird, evtl. mit padding arbeiten
             if x.shape != skip_connection.shape:
                 x = nnf.interpolate(
                     input=x, size=skip_connection.shape[2:], mode='nearest')
