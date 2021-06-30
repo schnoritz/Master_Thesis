@@ -27,7 +27,7 @@ def create_binary_mask(
     jaws = jaws / px_sp[0]
 
     fieldsize_px = [int(np.round(220 / px_sp[2])),
-                    int(np.round(570 / px_sp[0]))]
+                    int(np.round(570/2 / px_sp[0]))]  # changed from int(np.round(570 / px_sp[0]
 
     entry_plane = get_entry_plane(
         leafes, jaws, first_fac, fieldsize_px[0], fieldsize_px[1], rotated_dim
@@ -233,33 +233,34 @@ def paddedzoom(img, zoomfactor):
     return cv2.warpAffine(img, M, img.shape[::-1])
 
 
-# def clipped_zoom(img, scale):
-
-#     h, w = img.shape[:2]
-#     new_h = int(np.ceil(scale * h))
-#     new_w = int(np.ceil(scale * w))
-#     top = int(np.round((new_h - h) / 2))
-#     left = int(np.round((new_w - w) / 2))
-#     out = resize(img, (new_w, new_h), interpolation=cv2.INTER_NEAREST)
-#     out = out[top : top + h, left : left + w]
-
-#     return out
-
-
 # if __name__ == "__main__":
 
-#     path = "/home/baumgartner/sgutwein84/container/output/p_0_4x4/p_0_4x4.egsinp"
-#     phant = "/home/baumgartner/sgutwein84/container/output/p.egsphant"
-#     beam_config = "/home/baumgartner/sgutwein84/container/output/p_0_4x4/beam_config_4x4.txt"
-#     dose_path = "/home/baumgartner/sgutwein84/container/output/p_0_4x4/p_0_4x4_1E08.3ddose"
+#     segments = ["p0_0", "p17_12", "p18_30", "p10_20", "p19_10"]
+#     for segment in segments:
 
-#     dose = dose_to_pt(dose_path)
-#     binary = create_binary_mask(path, phant, beam_config)
+#         pat = segment.split("_")[0]
 
-#     for i in range(dose.shape[2]):
-#         im = resize(dose[:, :, i],(512,512), interpolation=cv2.INTER_NEAREST)
-#         im2 = resize(binary[:, :, i], (512, 512), interpolation=cv2.INTER_NEAREST)
-#         plt.imshow(im)
-#         plt.imshow(im2, alpha=0.5)
-#         plt.show()
-#         plt.close()
+#         path = f"/Users/simongutwein/Studium/Masterarbeit/test_data/{segment}/"
+#         phant = path + f"{pat}_listfile.txt.egsphant"
+#         beam_config = path + f"beam_config_{segment}.txt"
+#         dose_path = path + f"{segment}_1E07.3ddose"
+#         egsinp = path + f"{segment}.egsinp"
+
+#         dose = dose_to_pt(dose_path)
+#         binary = create_binary_mask(egsinp, phant, beam_config)
+
+#         x = True
+
+#         if x:
+#             for i in range(250, 251):
+#                 plt.imshow(dose[i, :, :], cmap="bone")
+#                 plt.imshow(binary[i, :, :], cmap="jet", alpha=0.5)
+#                 plt.show()
+#                 plt.close()
+#         else:
+
+#             for i in range(40, 70):
+#                 plt.imshow(dose[:, :, i], cmap="bone")
+#                 plt.imshow(binary[:, :, i], cmap="jet", alpha=0.5)
+#                 plt.show()
+#                 plt.close()

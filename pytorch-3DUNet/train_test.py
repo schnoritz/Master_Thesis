@@ -31,6 +31,9 @@ def parse():
     parser.add_argument('patch_size', type=int, metavar='',
                         help='Size of one 3D-Patch: [patchsize, patchsize, patchsize]')
 
+    parser.add_argument('experiment_name', type=str,
+                        metavar='', help='name for the experiment')
+
     parser.add_argument('--train_fraction', type=float, metavar='', default=0.9,
                         help='percent used for for training 0=0, 1=100%')
 
@@ -38,7 +41,7 @@ def parse():
         '--root_dir', type=str, default="/home/baumgartner/sgutwein84/container/training_data/training/")
 
     parser.add_argument(
-        '--save_dir', type=str, default="/home/baumgartner/sgutwein84/container/3D-UNet/saved_models/")
+        '--save_dir', type=str, default="")
 
     parser.add_argument(
         '--use_gpu', type=bool, metavar='', default=True, help='Number of samples for one batch')
@@ -49,21 +52,6 @@ def parse():
     args = parser.parse_args()
 
     return args
-
-
-def get_training_data(train, target, device):
-
-    train = train.float()
-    target = target.float()
-
-    if device.type == 'cuda':
-        train = train.cuda()
-        target = target.cuda()
-
-        train = train.to(device)
-        target = target.to(device)
-
-    return train, target
 
 
 def get_loss(unet, criterion, queue, device):
@@ -80,7 +68,7 @@ def get_loss(unet, criterion, queue, device):
 
                 patches += input_batch.shape[0]
 
-                input_batch, target_batch = get_training_data(
+                input_batch, target_batch = utils_test.get_training_data(
                     input_batch, target_batch, device)
 
                 pred = unet(input_batch)
@@ -140,6 +128,48 @@ def checkpoint(train_val_sets, train_state, curr_patches, num_patches, unet, cri
     return train_loss, val_loss
 
 
+def get_volume_prediction(net, device, curr_patches):
+
+    net.eval()
+
+    for seg in test_segments:
+
+        start = time()
+
+        masks = torch.load(f"{seg}/training_data.pt")
+        masks = masks[:, 128:128+256, 128:128+256, 25:25+16]
+        masks = torch.unsqueeze(masks, 0)
+        masks.to(device)
+
+        dose = torch.load(f"{seg}/target_data.pt")
+
+        pred = net(masks)
+
+        pred = pred.cpu().detach().numpy()
+        pred = pred.squeeze()
+
+        masks = masks.cpu().detach().numpy()
+        masks = masks.squeeze()
+
+        dose = dose.squeeze()
+        dose = dose[128:128+256, 128:128+256, 25:25+16]
+
+        fig, ax = plt.subplots(1, 4, figsize=(8, 2))
+        ax[0].imshow(masks[0, :, :, 8])
+        ax[1].imshow(dose[:, :, 8])
+        ax[2].imshow(pred[:, :, 8])
+        ax[3].imshow(dose[:, :, 8]-pred[:, :, 8])
+
+        writer.add_figure(f'{seg}/prediction',
+                          fig, global_step=curr_patches)
+
+        print("Test segment created!")
+
+        print(f"Test Segment creating took {time()-start} seconds.")
+
+        net.train()
+
+
 def train(train_val_sets, train_state, num_patches, train_queue, criterion, device, save_dir, batch_size, patch_size):
 
     unet = train_state['UNET']
@@ -157,13 +187,13 @@ def train(train_val_sets, train_state, num_patches, train_queue, criterion, devi
     while curr_patches < num_patches:
 
         for (train_patches, target_patches) in train_queue:
-            for (train_batch, target_batch) in tqdm(zip(train_patches, target_patches)):
+            for (train_batch, target_batch) in zip(train_patches, target_patches):
 
                 if curr_patches >= num_patches:
                     exit = True
                     break
 
-                train_batch, target_batch = get_training_data(
+                train_batch, target_batch = utils_test.get_training_data(
                     train_batch, target_batch, device)
 
                 dose_pred = unet(train_batch)
@@ -175,7 +205,7 @@ def train(train_val_sets, train_state, num_patches, train_queue, criterion, devi
                 optimizer.step()
 
                 curr_patches += train_batch.shape[0]
-                print(curr_patches)
+                print(f"{curr_patches} / {int(num*checkpoint_num)}")
                 sys.stdout.flush()
 
                 if curr_patches >= num*checkpoint_num:
@@ -193,6 +223,8 @@ def train(train_val_sets, train_state, num_patches, train_queue, criterion, devi
                         patch_size,
                     )
 
+                    get_volume_prediction(unet, device, curr_patches)
+
                     epochs.append({
                         "num_patches": curr_patches+train_state['start_patch_num'],
                         "train_loss": train_loss,
@@ -200,8 +232,8 @@ def train(train_val_sets, train_state, num_patches, train_queue, criterion, devi
                         "model_num": train_state['model_num'] + num
                     })
 
-                    if len(epochs) >= 21:
-                        if all([i > epochs[-21]['val_loss'] for i in [x['val_loss'] for x in epochs[-20:]]]):
+                    if len(epochs) >= 36:
+                        if all([i > epochs[-36]['val_loss'] for i in [x['val_loss'] for x in epochs[-35:]]]):
                             early_stopping = True
                             break
 
@@ -240,7 +272,7 @@ def train(train_val_sets, train_state, num_patches, train_queue, criterion, devi
 
     if early_stopping == True:
         print(
-            f"Network has seen: {train_state['start_patch_num'] + num_patches} Patches and was stopped due to no improvement over 20 validation steps!")
+            f"Network has seen: {train_state['start_patch_num'] + curr_patches} Patches and was stopped due to no improvement over 35 validation steps!")
 
     sys.stdout.flush()
 
@@ -258,27 +290,15 @@ def setup_training(
     pretrained_model
 ):
 
-    global checkpoint_num
-    global top_k
-    global val_patches
-    checkpoint_num = 1E5
-    val_patches = 5E3
-    top_k = 5
+    if data_path[-1] != "/":
+        data_path += "/"
 
-    global spq_loss
-    global pps_loss
-
-    spq_loss = 10
-    pps_loss = 500
-
-    spq_train = 10
-    pps_train = 5000
+    global test_segments
+    test_segments = [data_path + 'p0_0', data_path + 'p10_20']
 
     device = utils_test.define_calculation_device(use_gpu)
 
     # subject_list = SubjectDataset(data_path, sampling_scheme="beam")
-    if data_path[-1] != "/":
-        data_path += "/"
 
     subject_list = [data_path +
                     x for x in os.listdir(data_path) if not x.startswith(".")]
@@ -301,7 +321,7 @@ def setup_training(
         print(f"Using {torch.cuda.device_count()} GPU's")
 
     criterion = utils_test.RMSELoss()
-    optimizer = optim.Adam(my_UNET.parameters(), 10E-4, (0.9, 0.99), 10E-8)
+    optimizer = optim.Adam(my_UNET.parameters(), 10E-5, (0.9, 0.99), 10E-8)
 
     if pretrained_model != "False":
         model_name = pretrained_model.split("/")[-1]
@@ -332,7 +352,7 @@ def setup_training(
         }
 
     if device.type == 'cuda':
-        train_state['UNET'] = train_state['UNET'].to(device)
+        train_state['UNET'] = train_state['UNET'].cuda()
 
     print(
         f"Training-Data shape: [{batch_size} ,5 , {patch_size}, {patch_size}, {patch_size}]\n")
@@ -351,15 +371,6 @@ def setup_training(
         patch_size=patch_size
     )
 
-    val_losses = [losses[i]['val_loss'] for i in range(len(losses))]
-    train_losses = [losses[i]['train_loss'] for i in range(len(losses))]
-    patches = [losses[i]['num_patches'] for i in range(len(losses))]
-    plt.plot(patches, val_losses)
-    plt.plot(patches, train_losses)
-    plt.yscale("log")
-    plt.show()
-    plt.savefig("/home/baumgartner/sgutwein84/container/logs/loss.png")
-
     fout = open(save_dir + "epochs_losses.pkl", "wb")
     pickle.dump(losses, fout)
     fout.close()
@@ -367,31 +378,50 @@ def setup_training(
 
 if __name__ == "__main__":
 
+    args = parse()
+
+    global checkpoint_num
+    global val_patches
+    global top_k
+    checkpoint_num = args.batch_size * 1E3
+    val_patches = args.batch_size * 1E2
+    top_k = 5
+
+    global spq_loss
+    global pps_loss
+    spq_loss = 10
+    pps_loss = int(args.batch_size * 2)
+
+    global spq_train
+    global pps_train
+    spq_train = 10
+    pps_train = int(args.batch_size * 20)
+
     global writer
-    NAME = f"/home/baumgartner/sgutwein84/container/runs/model_{time()}"
+    NAME = f"/home/baumgartner/sgutwein84/container/pytorch-3DUNet/experiments/runs/model_{args.experiment_name}_{time()}"
+    print("Model information for Tensorboard saved under", NAME)
     writer = SummaryWriter(NAME)
 
-    # args = parse()
-    # setup_training(
-    #     num_patches=args.num_patches,
-    #     batch_size=args.batch_size,
-    #     patch_size=args.patch_size,
-    #     train_fraction=args.train_fraction,
-    #     data_path=args.root_dir,
-    #     save_dir=args.save_dir,
-    #     use_gpu=args.use_gpu,
-    #     pretrained_model=args.pretrained_model
-    # )
-
     setup_training(
-        num_patches=200000,
-        batch_size=16,
-        patch_size=32,
-        save_dir="/home/baumgartner/sgutwein84/container/pytorch-3DUNet/saved_models/",
-        train_fraction=0.9,
-        data_path="/home/baumgartner/sgutwein84/container/prostate_training_data",
-        use_gpu=True,
-        pretrained_model="False"
+        num_patches=args.num_patches,
+        batch_size=args.batch_size,
+        patch_size=args.patch_size,
+        train_fraction=args.train_fraction,
+        data_path=args.root_dir,
+        save_dir=args.save_dir,
+        use_gpu=args.use_gpu,
+        pretrained_model=args.pretrained_model
     )
+
+    # setup_training(
+    #     num_patches=1000,
+    #     batch_size=32,
+    #     patch_size=8,
+    #     save_dir="/Users/simongutwein/Studium/Masterarbeit",
+    #     train_fraction=0.8,
+    #     data_path="/Users/simongutwein/Studium/Masterarbeit/test_data",
+    #     use_gpu=True,
+    #     pretrained_model="False"
+    # )
 
     writer.close()

@@ -61,14 +61,24 @@ def define_calculation_device(use_gpu):
 
 def save_model(model, optimizer, train_loss, test_loss, save_dir, epoch, save, epochs):
 
-    torch.save({
-        'epoch': epoch,
-        'model_state_dict': model.state_dict(),
-        'optimizer_state_dict': optimizer.state_dict(),
-        'train_loss': train_loss,
-        'test_loss': test_loss,
-        'epochs': epochs
-    }, save_dir + f"UNET_epoch{epoch}.pt")
+    if torch.cuda.device_count() > 1:
+        torch.save({
+            'epoch': epoch,
+            'model_state_dict': model.module.state_dict(),
+            'optimizer_state_dict': optimizer.state_dict(),
+            'train_loss': train_loss,
+            'test_loss': test_loss,
+            'epochs': epochs
+        }, save_dir + f"UNET_epoch{epoch}.pt")
+    else:
+        torch.save({
+            'epoch': epoch,
+            'model_state_dict': model.state_dict(),
+            'optimizer_state_dict': optimizer.state_dict(),
+            'train_loss': train_loss,
+            'test_loss': test_loss,
+            'epochs': epochs
+        }, save_dir + f"UNET_epoch{epoch}.pt")
 
     if type(save) == int:
         os.remove(save_dir + f"UNET_epoch{save}.pt")
@@ -85,3 +95,16 @@ def check_improvement(epochs, top_k=5):
             return True
     else:
         return False
+
+
+def get_training_data(train, target, device):
+
+    train = train.float()
+    target = target.float()
+
+    if device.type == 'cuda':
+
+        train = train.to(device)
+        target = target.to(device)
+
+    return train, target

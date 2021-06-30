@@ -82,8 +82,10 @@ class DataQueue():
         curr = 0
         while curr < len(self.segment_list):
             # get segment_list per queue
+            start = time()
             train, target = self.load_q(
                 self.segment_list[curr:curr+self.segments_per_queue])
+            print(f"loading took {time()-start} seconds")
             yield (train, target)
             curr += self.segments_per_queue
 

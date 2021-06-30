@@ -5,165 +5,69 @@ import matplotlib.pyplot as plt
 import numpy as np
 import torch
 import os
+import torch.nn as nn
 from utils import save_model
 from model import Dose3DUNET
 from dataset import setup_loaders
 from pprint import pprint
 import random
 from time import time
-from model import Dose3DUNET
-
-
-def get_train_test_sets(dataset, train_fraction):
-
-    num = len(dataset)
-
-    train_n = int(np.ceil(num*train_fraction))
-    test_n = num - train_n
-
-    assert train_n + \
-        test_n == num, f"Splitting of Training-Data does not match! num={num}. train_n={train_n}, test_n={test_n}"
-
-    print(
-        f"Number of total Samples: {num}\nTraining-Samples: {train_n}\nTest-Samples: {test_n}")
-
-    random.shuffle(dataset)
-    train_set, test_set = dataset[:train_n], dataset[train_n:]
-
-    return train_set, test_set
-
-
-class DataQueue():
-    def __init__(self, seg, bs, spq, ps, sps):
-        self.seg = seg
-        self.bs = bs
-        self.ps = ps
-        self.spq = spq
-        self.sps = sps
-
-    def load_q(self, segs):
-        self.sps
-        data = []
-
-        for seg in segs:
-            data.append(
-                (torch.load(f"{seg}/training_data.pt"), torch.load(f"{seg}/target_data.pt")))
-
-        train_patches = []
-        target_patches = []
-        for masks, target in data:
-            idxs = self.get_sample_idx(self.sps, masks)
-            for i in idxs:
-                train_patches.append(
-                    masks[:, int(i[0]-self.ps/2):int(i[0]+self.ps/2), int(i[1]-self.ps/2):int(i[1]+self.ps/2), int(i[2]-self.ps/2):int(i[2]+self.ps/2)])
-                target_patches.append(
-                    target[:, int(i[0]-self.ps/2):int(i[0]+self.ps/2), int(i[1]-self.ps/2):int(i[1]+self.ps/2), int(i[2]-self.ps/2):int(i[2]+self.ps/2)])
-
-        train_patches = torch.stack(tuple(train_patches))
-        target_patches = torch.stack(tuple(target_patches))
-
-        train = []
-        target = []
-        curr = 0
-        for i in range(int(train_patches.shape[0]/self.bs)):
-            curr += self.bs
-            train.append(train_patches[curr-self.bs:curr, :, :, :])
-            target.append(target_patches[curr-self.bs:curr, :, :, :])
-
-        return train, target
-
-    def get_sample_idx(self, sps, masks):
-
-        binary = np.copy(masks[0, int(self.ps/2):masks[0].shape[0]-int(self.ps/2),
-                               int(self.ps/2):masks[0].shape[1]-int(self.ps/2),
-                               int(self.ps/2):masks[0].shape[2]-int(self.ps/2)])
-
-        binary[binary > 0] = 5
-        binary[binary == 0] = 1
-        binary = np.pad(binary, ((int(self.ps/2), int(self.ps/2)),
-                                 (int(self.ps/2), int(self.ps/2)),
-                                 (int(self.ps/2), int(self.ps/2))), 'constant')
-
-        num = random.randint(1, 5)
-        if num == 1:
-            idxs = []
-            for _ in range(sps):
-                idxs.append(np.array([random.randint(int(self.ps/2), binary.shape[0]-int(self.ps/2)),
-                            random.randint(
-                                int(self.ps/2), binary.shape[1]-int(self.ps/2)),
-                            random.randint(int(self.ps/2), binary.shape[2]-int(self.ps/2))]))
-        else:
-            idxs = np.argwhere(binary >= num)
-            np.random.shuffle(idxs)
-
-        return idxs[:sps]
-
-    def __iter__(self):
-        curr = 0
-        while curr < len(self.seg):
-            train, target = self.load_q(self.seg[curr:curr+self.spq])
-            yield (train, target)
-            curr += self.spq
-
-
-class Test():
-
-    def __init__(self):
-        self._size = 5
-
-    def __iter__(self):
-        n = 0
-        while n < self._size:
-            yield n
-            n += 1
+import dataqueue
 
 
 if __name__ == "__main__":
 
-    print(torch.cuda.device_count())
+    segment = "p0_0"
 
-    # segment = "p2_16"
+    masks = torch.load(
+        f"/home/baumgartner/sgutwein84/container/prostate_training_data/{segment}/training_data.pt")
+    masks = masks[:, :, :, 30:30+8]
+    masks = torch.unsqueeze(masks, 0)
 
-    # masks = torch.load(
-    #     f"/home/baumgartner/sgutwein84/container/prostate_training_data/{segment}/training_data.pt")
-    # masks = masks[:, :, :, 20:20+32]
-    # masks = torch.unsqueeze(masks, 0)
+    if torch.cuda.is_available():
+        masks = masks.cuda()
 
-    # masks = masks.to("cuda" if torch.cuda.is_available() else "cpu")
-    # print(masks.device)
+    print(masks.device)
 
-    # dose = torch.load(
-    #     f"/home/baumgartner/sgutwein84/container/prostate_training_data/{segment}/target_data.pt")
-    # dose = dose[:, :, :, 20:20+32]
-    # dose = dose.squeeze()
+    dose = torch.load(
+        f"/home/baumgartner/sgutwein84/container/prostate_training_data/{segment}/target_data.pt")
+    dose = dose[:, :, :, 30:38]
+    dose = dose.squeeze()
 
-    # model = Dose3DUNET()
-    # print(torch.cuda.is_available())
+    model = Dose3DUNET()
+    if torch.cuda.device_count() > 1:
+        model = nn.DataParallel(model)
+    print(torch.cuda.is_available())
 
-    # checkpoint = torch.load(
-    #     "/home/baumgartner/sgutwein84/container/pytorch-3DUNet/saved_models/UNET_16.pt")
+    checkpoint = torch.load(
+        "/home/baumgartner/sgutwein84/container/pytorch-3DUNet/bs_256_ps_16/UNET_4.pt", map_location="cuda:0")
 
-    # model.load_state_dict(checkpoint["model_state_dict"])
+    model.load_state_dict(checkpoint["model_state_dict"])
 
-    # model.float()
-    # model = model.to("cuda" if torch.cuda.is_available() else "cpu")
+    model.float()
 
-    # pred = model(masks)
+    model = model.to("cuda" if torch.cuda.is_available() else "cpu")
 
-    # pred = pred.cpu().detach().numpy()
-    # pred = pred.squeeze()
+    pred = model(masks)
 
-    # masks = masks.cpu().detach().numpy()
-    # masks = masks.squeeze()
+    pred = pred.cpu().detach().numpy()
+    pred = pred.squeeze()
 
-    # for i in range(32):
-    #     fig, ax = plt.subplots(1, 3)
-    #     ax[0].imshow(dose[:, :, i])
-    #     ax[1].imshow(pred[:, :, i])
-    #     ax[2].imshow(dose[:, :, i]-pred[:, :, i])
-    #     plt.savefig(
-    #         f"/home/baumgartner/sgutwein84/container/test/pred_{i}")
-    #     plt.close()
+    masks = masks.cpu().detach().numpy()
+    masks = masks.squeeze()
+
+    torch.save(pred, "/home/baumgartner/sgutwein84/container/test/pred.pt")
+    torch.save(dose, "/home/baumgartner/sgutwein84/container/test/true.pt")
+
+    for i in range(8):
+        fig, ax = plt.subplots(1, 4)
+        ax[0].imshow(masks[0, :, :, i])
+        ax[1].imshow(dose[:, :, i])
+        ax[2].imshow(pred[:, :, i])
+        ax[3].imshow(dose[:, :, i]-pred[:, :, i])
+        plt.savefig(
+            f"/home/baumgartner/sgutwein84/container/test/pred_{i}")
+        plt.close()
 
     # test = Test()
 

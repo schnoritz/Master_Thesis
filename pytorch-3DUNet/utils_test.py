@@ -87,3 +87,16 @@ def check_improvement(epochs, top_k=5):
             return True
     else:
         return False
+
+
+def get_training_data(train, target, device):
+
+    train = train.float()
+    target = target.float()
+
+    if device.type == 'cuda':
+
+        train = train.to(device)
+        target = target.to(device)
+
+    return train, target
