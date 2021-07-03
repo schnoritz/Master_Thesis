@@ -162,6 +162,9 @@ def get_volume_prediction(net, device, curr_patches):
 
         writer.add_figure(f'{seg}/prediction',
                           fig, global_step=curr_patches)
+        writer.flush()
+
+        plt.close(fig)
 
         print("Test segment created!")
 
@@ -173,13 +176,16 @@ def get_volume_prediction(net, device, curr_patches):
 def train(train_val_sets, train_state, num_patches, train_queue, criterion, device, save_dir, batch_size, patch_size):
 
     unet = train_state['UNET']
+    unet = unet.to(device)
     optimizer = train_state['optimizer']
+    utils_test.optimizer_to_device(optimizer, device)
     epochs = train_state['epochs']
 
     print("Start Training!\n")
 
-    curr_patches = 0
-    num = 1
+    curr_patches = train_state['start_patch_num']
+    num_patches = num_patches + curr_patches
+    num = int(curr_patches/checkpoint_num) + 1
     train_loss = 0
     exit = False
     early_stopping = False
@@ -226,7 +232,7 @@ def train(train_val_sets, train_state, num_patches, train_queue, criterion, devi
                     get_volume_prediction(unet, device, curr_patches)
 
                     epochs.append({
-                        "num_patches": curr_patches+train_state['start_patch_num'],
+                        "num_patches": curr_patches,
                         "train_loss": train_loss,
                         "val_loss": val_loss,
                         "model_num": train_state['model_num'] + num
@@ -246,8 +252,7 @@ def train(train_val_sets, train_state, num_patches, train_queue, criterion, devi
                             train_loss=train_loss,
                             val_loss=val_loss,
                             save_dir=save_dir,
-                            patches=train_state['start_patch_num'] +
-                            curr_patches,
+                            patches=curr_patches,
                             save=save,
                             epochs=epochs,
                             model_num=num
@@ -268,11 +273,11 @@ def train(train_val_sets, train_state, num_patches, train_queue, criterion, devi
 
     if exit == True:
         print(
-            f"Network has seen: {train_state['start_patch_num'] + num_patches} Patches!")
+            f"Network has seen: {num_patches} Patches!")
 
     if early_stopping == True:
         print(
-            f"Network has seen: {train_state['start_patch_num'] + curr_patches} Patches and was stopped due to no improvement over 35 validation steps!")
+            f"Network has seen: {curr_patches} Patches and was stopped due to no improvement over 35 validation steps!")
 
     sys.stdout.flush()
 
@@ -300,6 +305,39 @@ def setup_training(
 
     # subject_list = SubjectDataset(data_path, sampling_scheme="beam")
 
+    my_UNET = Dose3DUNET().float()
+    if torch.cuda.device_count() > 1:
+        my_UNET = nn.DataParallel(my_UNET)
+        print(f"Using {torch.cuda.device_count()} GPU's")
+
+    criterion = utils_test.RMSELoss()
+
+    if pretrained_model != "False":
+        model_name = pretrained_model.split("/")[-1]
+        print(f"\nUsing pretrained Model: {model_name}\n")
+        state = torch.load(pretrained_model, map_location=device)
+        my_UNET.load_state_dict(state['model_state_dict'])
+        optimizer = optim.Adam(my_UNET.parameters(), 10E-5, (0.9, 0.99), 10E-8)
+        optimizer.load_state_dict(state['optimizer_state_dict'])
+
+        train_state = {
+            'UNET': my_UNET,
+            'optimizer': optimizer,
+            'start_patch_num': state['patches'],
+            'epochs': state['epochs'],
+            'model_num': state['model_num']
+        }
+
+    else:
+        optimizer = optim.Adam(my_UNET.parameters(), 10E-5, (0.9, 0.99), 10E-8)
+        train_state = {
+            'UNET': my_UNET,
+            'optimizer': optimizer,
+            'start_patch_num': 0,
+            'epochs': [],
+            'model_num': 0
+        }
+
     subject_list = [data_path +
                     x for x in os.listdir(data_path) if not x.startswith(".")]
 
@@ -314,45 +352,6 @@ def setup_training(
         patch_size=patch_size,
         patches_per_segment=pps_train
     )
-
-    my_UNET = Dose3DUNET().float()
-    if torch.cuda.device_count() > 1:
-        my_UNET = nn.DataParallel(my_UNET)
-        print(f"Using {torch.cuda.device_count()} GPU's")
-
-    criterion = utils_test.RMSELoss()
-    optimizer = optim.Adam(my_UNET.parameters(), 10E-5, (0.9, 0.99), 10E-8)
-
-    if pretrained_model != "False":
-        model_name = pretrained_model.split("/")[-1]
-        print(f"\nUsing pretrained Model: {model_name}\n")
-        if torch.cuda.is_available():
-            state = torch.load(pretrained_model)
-        else:
-            state = torch.load(
-                pretrained_model, map_location=torch.device('cpu'))
-            my_UNET.load_state_dict(state['model_state_dict'])
-            optimizer.load_state_dict(state['optimizer_state_dict'])
-
-        train_state = {
-            'UNET': my_UNET,
-            'optimizer': optimizer,
-            'start_patch_num': state['patches'],
-            'epochs': state['epochs'],
-            'model_num': state['model_num']
-        }
-
-    else:
-        train_state = {
-            'UNET': my_UNET,
-            'optimizer': optimizer,
-            'start_patch_num': 0,
-            'epochs': [],
-            'model_num': 0
-        }
-
-    if device.type == 'cuda':
-        train_state['UNET'] = train_state['UNET'].cuda()
 
     print(
         f"Training-Data shape: [{batch_size} ,5 , {patch_size}, {patch_size}, {patch_size}]\n")

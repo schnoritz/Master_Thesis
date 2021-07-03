@@ -1,5 +1,6 @@
 import matplotlib.pyplot as plt
 import numpy as np
+from numpy.lib.function_base import _DIMENSION_NAME
 from numpy.random import gamma
 import torch
 import matplotlib.animation as ani
@@ -43,13 +44,19 @@ if __name__ == "__main__":
         pseudos.append(dat.pixel_array)
 
     cts = np.array(cts).astype("float")
-    cts -= 1000*np.ones_like(cts)
-    #cts[cts < 500] = np.nan
+    cts -= 1024*np.ones_like(cts)
     pseudos = np.array(pseudos).astype("float")
-    #pseudos[pseudos < 500] = np.nan
+    pseudos[pseudos < -200] = np.nan
+    pseudos[pseudos > 200] = np.nan
+    cts[cts < -200] = np.nan
+    cts[cts > 200] = np.nan
 
-    plt.hist(np.ndarray.flatten(cts), bins=100, alpha=0.5, density=True)
-    plt.hist(np.ndarray.flatten(pseudos), bins=100, alpha=0.5, density=True)
+    # plt.hist(np.ndarray.flatten(cts), bins=200, alpha=0.5, density=True)
+    # plt.hist(np.ndarray.flatten(pseudos), bins=200, alpha=0.5, density=True)
+    plt.hist(np.ndarray.flatten(cts), bins=200,
+             alpha=0.5, cumulative=True, density=True)
+    plt.hist(np.ndarray.flatten(pseudos), bins=200,
+             alpha=0.5, cumulative=True, density=True)
     plt.legend(["original ct", "pseudo ct"])
     plt.xlabel("Houndsfield units")
     plt.ylabel("occurrences")

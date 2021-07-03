@@ -54,7 +54,7 @@ def define_calculation_device(use_gpu):
         device = torch.device('cpu')
 
     if device.type == 'cuda':
-        print("Device: " + torch.cuda.get_device_name(0))
+        print(f"Device: {torch.cuda.get_device_name(0)}\n")
 
     return device
 
@@ -100,3 +100,11 @@ def get_training_data(train, target, device):
         target = target.to(device)
 
     return train, target
+
+
+def optimizer_to_device(optimizer, device):
+
+    for check in optimizer.state.values():
+        for k, v in check.items():
+            if torch.is_tensor(v):
+                check[k] = v.to(device)

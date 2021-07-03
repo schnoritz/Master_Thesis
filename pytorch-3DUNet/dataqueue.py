@@ -3,6 +3,7 @@ import os
 import numpy as np
 import random
 from time import time
+import sys
 
 
 class DataQueue():
@@ -86,6 +87,7 @@ class DataQueue():
             train, target = self.load_q(
                 self.segment_list[curr:curr+self.segments_per_queue])
             print(f"loading took {time()-start} seconds")
+            sys.stdout.flush()
             yield (train, target)
             curr += self.segments_per_queue
 
@@ -101,7 +103,7 @@ def get_train_val_sets(dataset, train_fraction):
         test_n == num, f"Splitting of Training-Data does not match! num={num}. train_n={train_n}, test_n={test_n}"
 
     print(
-        f"Number of total Samples: {num}\nTraining-Samples: {train_n}\nTest-Samples: {test_n}")
+        f"Number of total Samples: {num}\nTraining-Samples: {train_n}\nTest-Samples: {test_n}\n\n")
 
     random.shuffle(dataset)
     train_set, test_set = dataset[:train_n], dataset[train_n:]
