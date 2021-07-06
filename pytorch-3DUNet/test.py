@@ -13,72 +13,164 @@ from pprint import pprint
 import random
 from time import time
 import dataqueue
-from pynvml import *
+from pynvml import nvmlInit, nvmlDeviceGetHandleByIndex, nvmlDeviceGetMemoryInfo
+import pymedphys
+import sys
 
 
 if __name__ == "__main__":
 
-    print(torch.cuda.is_available())
-    print(torch.cuda.get_device_name(0))
+    # gamma_val = np.load("/Users/simongutwein/Studium/Masterarbeit/gamma.npy")
 
-    segment = "p0_0"
+    # print(np.nanmin(gamma_val), np.nanmax(gamma_val))
+    # dat = ~np.isnan(gamma_val)
+    # dat2 = ~np.isnan(gamma_val[gamma_val <= 1])
+    # all = np.count_nonzero(dat)
+    # true = np.count_nonzero(dat2)
+    # print(all, true, true/all)
 
-    device = torch.device("cuda:0")
+    # trues = np.copy(gamma_val)
+    # idx = gamma_val < 1
+    # trues[idx] = np.nan
 
-    target_dose = torch.load(
-        f"/home/baumgartner/sgutwein84/container/prostate_training_data/{segment}/target_data.pt")
-    target_dose = target_dose.squeeze()
+    # for i in range(trues.shape[2]):
+    #     fig, ax = plt.subplots(1, 2)
+    #     ax[0].imshow(gamma_val[:, :, i])
+    #     ax[1].imshow(trues[:, :, i])
+    #     plt.show()
+    root_path = "/home/baumgartner/sgutwein84/container/pytorch-3DUNet/experiments/bs256_ps16_epoch50" + "/"
 
-    masks = torch.load(
-        f"/home/baumgartner/sgutwein84/container/prostate_training_data/{segment}/training_data.pt")
-    masks = torch.unsqueeze(masks, 0)
+    for model_spec in [x for x in os.listdir(root_path) if not x.startswith(".") and not "pkl" in x]:
 
-    model = Dose3DUNET()
-    if torch.cuda.device_count() > 1:
+        segment = "p10_12"
+        model_path = root_path + model_spec
+        model_name = "/".join(model_path.split("/")[-2:])
+
+        print("Segment           :", segment)
+        print("Model Name        :", model_name)
+
+        device = torch.device("cuda")
+
+        target_dose = torch.load(
+            f"/home/baumgartner/sgutwein84/container/prostate_training_data/{segment}/target_data.pt")
+        target_dose = target_dose.squeeze()
+
+        masks = torch.load(
+            f"/home/baumgartner/sgutwein84/container/prostate_training_data/{segment}/training_data.pt")
+        masks = torch.unsqueeze(masks, 0)
+
+        model = Dose3DUNET()
+        if torch.cuda.device_count() > 1:
+            model = nn.DataParallel(model)
+
+        # checkpoint = torch.load(
+        #     "/home/baumgartner/sgutwein84/container/pytorch-3DUNet/experiments/bs256_ps16_epoch50/UNET_95.pt", map_location="cpu")
+        checkpoint = torch.load(model_path, map_location="cpu")
+        val_loss = np.round(checkpoint["val_loss"], 4)
+        print(f"Val Loss of Model : {val_loss}")
+
+        model.load_state_dict(checkpoint["model_state_dict"])
         model = nn.DataParallel(model)
-        print(torch.cuda.is_available(), torch.cuda.device_count)
+        model.float()
 
-    checkpoint = torch.load(
-        "/home/baumgartner/sgutwein84/container/pytorch-3DUNet/experiments/bs4_ps64/UNET_48.pt", map_location="cuda")
+        torch.cuda.empty_cache()
+        with torch.no_grad():
+            model = model.to(device)
+            model.eval()
+            preds = []
+            ps = 16
+            for i in range(0, masks.shape[4], ps):
+                mask = masks[0, :, :, :, i:i+ps]
+                if mask.shape[3] < ps:
+                    num = int(ps-mask.shape[3])
+                    added = torch.zeros(
+                        mask.shape[0], mask.shape[1], mask.shape[2], ps-mask.shape[3])
+                    mask = torch.cat((mask, added), 3)
 
-    model.load_state_dict(checkpoint["model_state_dict"])
-    model = nn.DataParallel(model)
-    model.float()
+                mask = mask.unsqueeze(0)
+                torch.cuda.empty_cache()
+                mask = mask.to(device)
 
-    model = model.to(device)
-    model.eval()
-    preds = []
-    ps = 128
-    for i in range(0, 512, ps):
-        for j in range(0, 512, ps):
+                pred = model(mask)
+                detached = pred.to('cpu')
 
-            mask = masks[0, :, j:j+ps, i:i+ps, :]
-            mask = mask.unsqueeze(0)
-            torch.cuda.empty_cache()
-            mask = mask.to(device)
-            print(mask.shape)
-            preds.append(model(mask).cpu().detach().squeeze())
-            del mask
-            torch.cuda.empty_cache()
+                detached = detached.detach().squeeze()
+                preds.append(detached)
+                del mask
+                del pred
+                del detached
+                torch.cuda.empty_cache()
 
-    print(len(preds))
-    stacked = []
-    for i in range(4):
-        stacked.append(torch.cat(preds[i*4:(i+1)*4]))
+            end = torch.cat(preds, 2)
+            end = end[:, :, :(-num)]
+            # print(end.shape, target_dose.shape)
 
-    print(len(stacked), stacked[0].shape)
-    end = torch.cat(stacked, 1)
+        # plt.imshow(end[:, :, 39])
+        # plt.savefig(
+        #     f"/Users/simongutwein/home/baumgartner/sgutwein84/container/test/{model_spec}")
+        # for i in range(target_dose.shape[2]):
+        #     fig, ax = plt.subplots(1, 2)
+        #     ax[0].imshow(end[:, :, i])
+        #     ax[1].imshow(target_dose[:, :, i])
+        #     plt.show()
+        #     plt.savefig(
+        #         f"/home/baumgartner/sgutwein84/container/test/out{i}.png")
+        #     plt.close(fig)
 
-    print(end.shape)
+        # for i in range(200, 300):
+        #     fig, ax = plt.subplots(1, 2)
+        #     ax[0].imshow(end[i, :, :])
+        #     ax[1].imshow(target_dose[i, :, :])
+        #     plt.show()
+        #     plt.savefig(
+        #         f"/home/baumgartner/sgutwein84/container/test/out_x{i}.png")
+        #     plt.close(fig)
+        # print("saved")
+        # sys.stdout.flush()
 
-    for i in range(end.shape[2]):
-        fig, ax = plt.subplots(1, 2)
-        ax[0].imshow(end[:, :, i])
-        ax[1].imshow(target_dose[:, :, i])
-        plt.show()
-        plt.savefig(
-            f"/home/baumgartner/sgutwein84/container/test/end_4_64_{i}.png")
-        plt.close(fig)
+        gamma_options = {
+            'dose_percent_threshold': 3,
+            'distance_mm_threshold': 3,
+            'lower_percent_dose_cutoff': 20,
+            'interp_fraction': 5,  # Should be 10 or more for more accurate results
+            'max_gamma': 1.1,
+            'ram_available': 2**37,
+            'quiet': True,
+            'local_gamma': False,
+            'random_subset': 20000
+        }
+
+        coords = (np.arange(0, 1.17*target_dose.shape[0], 1.17), np.arange(
+            0, 1.17*target_dose.shape[1], 1.17), np.arange(0, 3*target_dose.shape[2], 3))
+
+        start = time()
+        gamma_val = pymedphys.gamma(
+            coords, np.array(target_dose),
+            coords, np.array(end),
+            **gamma_options)
+        #print("gamma took", time()-start)
+
+        #np.save("/home/baumgartner/sgutwein84/container/test/gamma.npy", gamma_val)
+
+        #print(np.nanmin(gamma_val), np.nanmax(gamma_val))
+        dat = ~np.isnan(gamma_val)
+        dat2 = ~np.isnan(gamma_val[gamma_val <= 1])
+        all = np.count_nonzero(dat)
+        true = np.count_nonzero(dat2)
+        print(all, true, np.round((true/all)*100, 2), "%\n\n")
+
+    # trues = np.copy(gamma_val)
+    # idx = gamma_val < 1
+    # trues[idx] = np.nan
+
+    # for i in range(trues.shape[2]):
+    #     fig, ax = plt.subplots(1, 2)
+    #     ax[0].imshow(np.log(gamma_val[:, :, i]))
+    #     ax[1].imshow(np.log(trues[:, :, i]))
+    #     plt.savefig(
+    #         f"/home/baumgartner/sgutwein84/container/test/gamma{i}.png")
+    #     plt.close(fig)
+
     # pred = pred.cpu().detach().numpy()
     # pred = pred.squeeze()
 

@@ -6,4 +6,5 @@ Code/__pycache__/*
 Data/*
 workflow_code/__pycache__/*
 pytorch-3DUNet/saved_models/*
+pytorch-3DUNet/__pycache__/*
 /workflow_code/.vscode

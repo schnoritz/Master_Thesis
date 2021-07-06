@@ -59,17 +59,17 @@ def define_calculation_device(use_gpu):
     return device
 
 
-def save_model(model, optimizer, train_loss, val_loss, save_dir, patches, save, epochs, model_num):
+def save_model(model, optimizer, train_loss, validation_loss, save_dir, patches, save, epochs, generation):
 
     torch.save({
         'patches': patches,
         'model_state_dict': model.state_dict(),
         'optimizer_state_dict': optimizer.state_dict(),
         'train_loss': train_loss,
-        'val_loss': val_loss,
+        'validation_loss': validation_loss,
         'epochs': epochs,
-        'model_num': model_num
-    }, save_dir + f"UNET_{model_num}.pt")
+        'model_generation': generation
+    }, save_dir + f"UNET_{generation}.pt")
 
     if type(save) == int:
         if os.path.isfile(save_dir + f"UNET_{save}.pt"):
@@ -79,10 +79,10 @@ def save_model(model, optimizer, train_loss, val_loss, save_dir, patches, save, 
 def check_improvement(epochs, top_k=5):
 
     curr_epoch = epochs[-1]
-    epochs = sorted(epochs, key=lambda k: k['val_loss'])
+    epochs = sorted(epochs, key=lambda k: k['validation_loss'])
     if epochs.index(curr_epoch) < top_k:
         if len(epochs) > top_k:
-            return epochs[top_k]["model_num"]
+            return epochs[top_k]['model_generation']
         else:
             return True
     else:

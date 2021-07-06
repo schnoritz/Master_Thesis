@@ -22,20 +22,20 @@ from torch.utils.tensorboard import SummaryWriter
 def parse():
 
     parser = argparse.ArgumentParser(description='Train Model')
-    parser.add_argument('num_patches', type=int, metavar='',
+    parser.add_argument('-num_patches', type=int, metavar='',
                         help='Number of patches')
 
-    parser.add_argument('batch_size', type=int, metavar='',
+    parser.add_argument('-batch_size', type=int, metavar='',
                         help='Number of samples for one batch')
 
-    parser.add_argument('patch_size', type=int, metavar='',
+    parser.add_argument('-patch_size', type=int, metavar='',
                         help='Size of one 3D-Patch: [patchsize, patchsize, patchsize]')
 
-    parser.add_argument('experiment_name', type=str,
+    parser.add_argument('-experiment_name', type=str,
                         metavar='', help='name for the experiment')
 
-    parser.add_argument('--train_fraction', type=float, metavar='', default=0.9,
-                        help='percent used for for training 0=0, 1=100%')
+    parser.add_argument('-validation_segments', nargs='+',
+                        help='set segments used for validation')
 
     parser.add_argument(
         '--root_dir', type=str, default="/home/baumgartner/sgutwein84/container/training_data/training/")
@@ -49,86 +49,39 @@ def parse():
     parser.add_argument(
         '--pretrained_model', type=str, metavar='', default="False", help='specify path to pretrained model')
 
+    parser.add_argument(
+        '--learning_rate', type=float, metavar='', default=0.00001, help='specify the learning rate')
+
     args = parser.parse_args()
 
     return args
 
 
-def get_loss(unet, criterion, queue, device):
+def validate(unet, criterion, validation_queue, device):
 
     unet.eval()
+    curr = 0
     with torch.no_grad():
 
         loss = 0
-        patches = 0
-        exit = False
+        for num, (input_batch, target_batch) in enumerate(validation_queue):
+            curr += input_batch.shape[0]
+            print(f"{curr}/{len(validation_queue)}")
+            sys.stdout.flush()
+            input_batch, target_batch = utils_test.get_training_data(
+                input_batch, target_batch, device)
 
-        for (input_patches, target_patches) in queue:
-            for (input_batch, target_batch) in zip(input_patches, target_patches):
-
-                patches += input_batch.shape[0]
-
-                input_batch, target_batch = utils_test.get_training_data(
-                    input_batch, target_batch, device)
-
-                pred = unet(input_batch)
-                loss += criterion(pred, target_batch).item()
-
-                if patches >= val_patches:
-                    exit = True
-                    break
-
-            if exit == True:
-                break
+            pred = unet(input_batch)
+            loss += criterion(pred, target_batch).item()
 
     unet.train()
 
-    return loss/patches
-
-
-def checkpoint(train_val_sets, train_state, curr_patches, num_patches, unet, criterion, device, batch_size, patch_size):
-
-    print("Checkpoint reached!")
-
-    print(
-        f"---- Network has seen {train_state['start_patch_num'] + curr_patches}/{train_state['start_patch_num'] + num_patches} patches ----"
-    )
-
-    train_loss_queue = dataqueue.DataQueue(
-        segment_list=train_val_sets[0],
-        batch_size=batch_size,
-        segments_per_queue=spq_loss,
-        patch_size=patch_size,
-        patches_per_segment=pps_loss
-    )
-
-    val_loss_queue = dataqueue.DataQueue(
-        segment_list=train_val_sets[1],
-        batch_size=batch_size,
-        segments_per_queue=spq_loss,
-        patch_size=patch_size,
-        patches_per_segment=pps_loss
-    )
-
-    train_loss = get_loss(unet, criterion, train_loss_queue, device)
-
-    val_loss = get_loss(unet, criterion, val_loss_queue, device)
-
-    print(
-        f"Train Loss is: {np.round(train_loss,4)} after {curr_patches} Patches")
-    print(
-        f"Validation Loss is:  {np.round(val_loss,4)} after {curr_patches} Patches\n")
-
-    sys.stdout.flush()
-
-    writer.add_scalar('Loss/train', train_loss, curr_patches)
-    writer.add_scalar('Loss/validation', val_loss, curr_patches)
-    writer.flush()
-
-    return train_loss, val_loss
+    return loss / num
 
 
 def get_volume_prediction(net, device, curr_patches):
+
+    torch.cuda.empty_cache()
 
     net.eval()
 
@@ -154,11 +107,14 @@ def get_volume_prediction(net, device, curr_patches):
         dose = dose.squeeze()
         dose = dose[128:128+256, 128:128+256, 25:25+16]
 
-        fig, ax = plt.subplots(1, 4, figsize=(8, 2))
+        fig, ax = plt.subplots(1, 4, figsize=(16, 4))
         ax[0].imshow(masks[0, :, :, 8])
         ax[1].imshow(dose[:, :, 8])
         ax[2].imshow(pred[:, :, 8])
         ax[3].imshow(dose[:, :, 8]-pred[:, :, 8])
+
+        torch.cuda.empty_cache()
+        del masks
 
         writer.add_figure(f'{seg}/prediction',
                           fig, global_step=curr_patches)
@@ -173,7 +129,7 @@ def get_volume_prediction(net, device, curr_patches):
         net.train()
 
 
-def train(train_val_sets, train_state, num_patches, train_queue, criterion, device, save_dir, batch_size, patch_size):
+def train(train_state, num_patches, train_queue, validation_queue, criterion, device, save_dir, batch_size, patch_size):
 
     unet = train_state['UNET']
     unet = unet.to(device)
@@ -185,99 +141,82 @@ def train(train_val_sets, train_state, num_patches, train_queue, criterion, devi
 
     curr_patches = train_state['start_patch_num']
     num_patches = num_patches + curr_patches
-    num = int(curr_patches/checkpoint_num) + 1
-    train_loss = 0
-    exit = False
-    early_stopping = False
+    generation = train_state['model_generation']
 
     while curr_patches < num_patches:
 
-        for (train_patches, target_patches) in train_queue:
-            for (train_batch, target_batch) in zip(train_patches, target_patches):
+        generation += 1
+        torch.cuda.empty_cache()
+        train_queue.load_queue()
+        train_loss = 0
 
-                if curr_patches >= num_patches:
-                    exit = True
-                    break
+        for num, (train_batch, target_batch) in enumerate(train_queue):
 
-                train_batch, target_batch = utils_test.get_training_data(
-                    train_batch, target_batch, device)
+            train_batch, target_batch = utils_test.get_training_data(
+                train_batch,
+                target_batch,
+                device
+            )
 
-                dose_pred = unet(train_batch)
+            dose_pred = unet(train_batch)
 
-                loss = criterion(dose_pred, target_batch)
+            loss = criterion(dose_pred, target_batch)
+            train_loss += loss.item()
 
-                optimizer.zero_grad()
-                loss.backward()
-                optimizer.step()
+            optimizer.zero_grad()
+            loss.backward()
+            optimizer.step()
 
-                curr_patches += train_batch.shape[0]
-                print(f"{curr_patches} / {int(num*checkpoint_num)}")
-                sys.stdout.flush()
+            curr_patches += train_batch.shape[0]
+            print(f"{curr_patches} / {num_patches}")
+            sys.stdout.flush()
 
-                if curr_patches >= num*checkpoint_num:
+        train_loss /= num
 
-                    # hier training und validation loss neu berechnen z.B. 5000 patches aus train
-                    train_loss, val_loss = checkpoint(
-                        train_val_sets,
-                        train_state,
-                        curr_patches,
-                        num_patches,
-                        unet,
-                        criterion,
-                        device,
-                        batch_size,
-                        patch_size,
-                    )
+        validation_loss = validate(unet, criterion, validation_queue, device)
 
-                    get_volume_prediction(unet, device, curr_patches)
+        # hier noch ein skript schreiben was den gamma index errechnet
+        # evtl zu Zeitaufwendig, deswegen mal sehen
 
-                    epochs.append({
-                        "num_patches": curr_patches,
-                        "train_loss": train_loss,
-                        "val_loss": val_loss,
-                        "model_num": train_state['model_num'] + num
-                    })
+        print(f"Current Generation      : {generation}")
+        print(f"Current Patches         : {curr_patches}")
+        print(f"Current Training Loss   : {train_loss}")
+        print(f"Current Validation Loss : {validation_loss}")
 
-                    if len(epochs) >= 36:
-                        if all([i > epochs[-36]['val_loss'] for i in [x['val_loss'] for x in epochs[-35:]]]):
-                            early_stopping = True
-                            break
-
-                    save = utils_test.check_improvement(epochs, top_k=top_k)
-
-                    if save:
-                        utils_test.save_model(
-                            model=unet,
-                            optimizer=optimizer,
-                            train_loss=train_loss,
-                            val_loss=val_loss,
-                            save_dir=save_dir,
-                            patches=curr_patches,
-                            save=save,
-                            epochs=epochs,
-                            model_num=num
-                        )
-
-                    num += 1
-
-            if early_stopping == True:
-                break
-
-            if exit == True:
-                break
-
-        if exit == True or early_stopping == True:
-            break
+        writer.add_scalar("Loss / Training Loss", train_loss, curr_patches)
+        writer.add_scalar("Loss / Validation Loss",
+                          validation_loss, curr_patches)
 
         sys.stdout.flush()
 
-    if exit == True:
-        print(
-            f"Network has seen: {num_patches} Patches!")
+        get_volume_prediction(unet, device, curr_patches)
 
-    if early_stopping == True:
-        print(
-            f"Network has seen: {curr_patches} Patches and was stopped due to no improvement over 35 validation steps!")
+        epochs.append({
+            "num_patches": curr_patches,
+            "train_loss": train_loss,
+            "validation_loss": validation_loss,
+            "model_generation": train_state['model_generation'] + generation
+        })
+
+        # if len(epochs) >= 36:
+        #     if all([i > epochs[-36]['validation_loss'] for i in [x['validation_loss'] for x in epochs[-35:]]]):
+        #         early_stopping = True
+        #         break
+
+        save = utils_test.check_improvement(epochs, top_k=top_k)
+        print(save)
+        if save:
+            utils_test.save_model(
+                model=unet,
+                optimizer=optimizer,
+                train_loss=train_loss,
+                validation_loss=validation_loss,
+                save_dir=save_dir,
+                patches=curr_patches,
+                save=save,
+                epochs=epochs,
+                generation=generation
+            )
 
     sys.stdout.flush()
 
@@ -289,10 +228,11 @@ def setup_training(
     batch_size,
     patch_size,
     save_dir,
-    train_fraction,
+    validation_segments,
     data_path,
     use_gpu,
-    pretrained_model
+    pretrained_model,
+    learning_rate
 ):
 
     if data_path[-1] != "/":
@@ -313,11 +253,11 @@ def setup_training(
     criterion = utils_test.RMSELoss()
 
     if pretrained_model != "False":
-        model_name = pretrained_model.split("/")[-1]
-        print(f"\nUsing pretrained Model: {model_name}\n")
+        print(f"\nUsing pretrained Model: {pretrained_model}\n")
         state = torch.load(pretrained_model, map_location=device)
         my_UNET.load_state_dict(state['model_state_dict'])
-        optimizer = optim.Adam(my_UNET.parameters(), 10E-5, (0.9, 0.99), 10E-8)
+        optimizer = optim.Adam(my_UNET.parameters(),
+                               learning_rate, (0.9, 0.99), 10E-8)
         optimizer.load_state_dict(state['optimizer_state_dict'])
 
         train_state = {
@@ -325,32 +265,39 @@ def setup_training(
             'optimizer': optimizer,
             'start_patch_num': state['patches'],
             'epochs': state['epochs'],
-            'model_num': state['model_num']
+            'model_generation': state['model_generation']
         }
 
     else:
-        optimizer = optim.Adam(my_UNET.parameters(), 10E-5, (0.9, 0.99), 10E-8)
+        optimizer = optim.Adam(my_UNET.parameters(),
+                               learning_rate, (0.9, 0.99), 10E-8)
         train_state = {
             'UNET': my_UNET,
             'optimizer': optimizer,
             'start_patch_num': 0,
             'epochs': [],
-            'model_num': 0
+            'model_generation': 0
         }
+    validation_segments = [data_path + x for x in validation_segments]
+    print("Validation Segments used: ", [
+          x.split("/")[-1] for x in validation_segments])
 
     subject_list = [data_path +
-                    x for x in os.listdir(data_path) if not x.startswith(".")]
-
-    train_set, val_set = dataqueue.get_train_val_sets(
-        subject_list, train_fraction=train_fraction)
+                    x for x in os.listdir(data_path) if not x.startswith(".") and not data_path + x in validation_segments]
+    print(len(subject_list), len(validation_segments))
 
     # hier segments_per_queue und patches_per_segment hochscruaben / runterschrauben
     train_queue = dataqueue.DataQueue(
-        segment_list=train_set,
+        segment_list=subject_list,
         batch_size=batch_size,
         segments_per_queue=spq_train,
         patch_size=patch_size,
         patches_per_segment=pps_train
+    )
+
+    validation_queue = dataqueue.ValidationQueue(
+        segments=validation_segments,
+        batch_size=16
     )
 
     print(
@@ -359,10 +306,10 @@ def setup_training(
     sys.stdout.flush()
 
     losses = train(
-        train_val_sets=(train_set, val_set),
         train_state=train_state,
         num_patches=num_patches,
         train_queue=train_queue,
+        validation_queue=validation_queue,
         save_dir=save_dir,
         criterion=criterion,
         device=device,
@@ -379,22 +326,13 @@ if __name__ == "__main__":
 
     args = parse()
 
-    global checkpoint_num
-    global val_patches
     global top_k
-    checkpoint_num = args.batch_size * 1E3
-    val_patches = args.batch_size * 1E2
     top_k = 5
-
-    global spq_loss
-    global pps_loss
-    spq_loss = 10
-    pps_loss = int(args.batch_size * 2)
 
     global spq_train
     global pps_train
-    spq_train = 10
-    pps_train = int(args.batch_size * 20)
+    spq_train = 20
+    pps_train = int(args.batch_size * 100)
 
     global writer
     NAME = f"/home/baumgartner/sgutwein84/container/pytorch-3DUNet/experiments/runs/model_{args.experiment_name}_{time()}"
@@ -405,22 +343,12 @@ if __name__ == "__main__":
         num_patches=args.num_patches,
         batch_size=args.batch_size,
         patch_size=args.patch_size,
-        train_fraction=args.train_fraction,
+        validation_segments=args.validation_segments,
         data_path=args.root_dir,
         save_dir=args.save_dir,
         use_gpu=args.use_gpu,
-        pretrained_model=args.pretrained_model
+        pretrained_model=args.pretrained_model,
+        learning_rate=args.learning_rate
     )
-
-    # setup_training(
-    #     num_patches=1000,
-    #     batch_size=32,
-    #     patch_size=8,
-    #     save_dir="/Users/simongutwein/Studium/Masterarbeit",
-    #     train_fraction=0.8,
-    #     data_path="/Users/simongutwein/Studium/Masterarbeit/test_data",
-    #     use_gpu=True,
-    #     pretrained_model="False"
-    # )
 
     writer.close()

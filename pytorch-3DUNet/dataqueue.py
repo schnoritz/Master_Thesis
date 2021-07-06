@@ -5,17 +5,36 @@ import random
 from time import time
 import sys
 
+import matplotlib.pyplot as plt
+
 
 class DataQueue():
 
     def __init__(self, segment_list, batch_size, segments_per_queue, patch_size, patches_per_segment):
-        self.segment_list = random.sample(segment_list, len(segment_list))
+        self.segment_list = segment_list
         self.batch_size = batch_size
         self.patch_size = patch_size
         self.segments_per_queue = segments_per_queue
         self.patches_per_segment = patches_per_segment
+        self.available_segments = self.segment_list.copy()
 
-    def load_q(self, segs):
+    def reset_queue(self):
+        self.available_segments = self.segment_list.copy()
+
+    def load_queue(self):
+
+        if self.segments_per_queue > len(self.available_segments):
+            self.reset_queue()
+
+        curr_segments = random.sample(
+            self.available_segments, self.segments_per_queue)
+
+        for seg in curr_segments:
+            self.available_segments.remove(seg)
+
+        self.train, self.target = self.create_queue(curr_segments)
+
+    def create_queue(self, segs):
 
         data = []
 
@@ -81,15 +100,10 @@ class DataQueue():
 
     def __iter__(self):
         curr = 0
-        while curr < len(self.segment_list):
+        while curr < len(self.train):
             # get segment_list per queue
-            start = time()
-            train, target = self.load_q(
-                self.segment_list[curr:curr+self.segments_per_queue])
-            print(f"loading took {time()-start} seconds")
-            sys.stdout.flush()
-            yield (train, target)
-            curr += self.segments_per_queue
+            yield (self.train[curr], self.target[curr])
+            curr += 1
 
 
 def get_train_val_sets(dataset, train_fraction):
@@ -111,32 +125,68 @@ def get_train_val_sets(dataset, train_fraction):
     return train_set, test_set
 
 
+class ValidationQueue():
+
+    def __init__(self, segments, batch_size):
+        self.segments = segments
+        self.batch_size = batch_size
+        self.idxs = np.linspace(64, 512-64, 7, endpoint=True)
+        self.z_idxs = np.linspace(16, 86, 5, endpoint=True)
+        self.mask_patches, self.target_patches = self.get_batches()
+
+    def get_batches(self):
+        mask_patches = []
+        target_patches = []
+        for seg in self.segments:
+            mask = torch.load(seg + "/training_data.pt")
+            target = torch.load(seg + "/target_data.pt")
+
+            for x in self.idxs:
+                for y in self.idxs:
+                    for z in self.z_idxs:
+                        mask_patches.append(
+                            mask[:, int(x)-64:int(x)+64, int(y)-64:int(y)+64, int(z)-16:int(z)+16])
+                        target_patches.append(
+                            target[:, int(x)-64:int(x)+64, int(y)-64:int(y)+64, int(z)-16:int(z)+16])
+
+        return mask_patches, target_patches
+
+    def __len__(self):
+        return len(self.mask_patches)
+
+    def __iter__(self):
+        curr = 0
+        while curr < len(self.mask_patches):
+            yield(torch.stack(self.mask_patches[curr:curr+self.batch_size]), torch.stack(self.target_patches[curr:curr+self.batch_size]))
+            curr += self.batch_size
+
+
 if __name__ == "__main__":
 
     subject_list = ["/Users/simongutwein/Studium/Masterarbeit/test_data/" + x for x in os.listdir(
         "/Users/simongutwein/Studium/Masterarbeit/test_data") if not x.startswith(".")]
 
-    train, test = get_train_val_sets(subject_list, train_fraction=0.8)
+    # q = ValidationQueue(segments=subject_list, batch_size=16)
+    # for batch in q:
+    #     fig, ax = plt.subplots(4, 4)
+    #     for i in range(int(batch.shape[0]/4)):
+    #         for j in range(int(batch.shape[0]/4)):
+    #             ax[int(i), int(j)].imshow(
+    #                 torch.squeeze(batch[int(i*4) + j, 0, :, :, 16]))
+    #     plt.show()
 
-    train_q = DataQueue(train, 16, 2, 32, 5000)
-    test_q = DataQueue(test, 16, 2, 32, 5000)
-    epochs = 3
+    train_q = DataQueue(subject_list, 16, 2, 32, 100)
     start = time()
+    train_q.load_queue()
+    print(time()-start)
+    epochs = 20
+    number_needed = 2000
+
     total = 0
+    while total < number_needed:
+        print(total)
+        train_q.load_queue()
+        for train, test in train_q:
+            total += 16
 
-    for epoch in range(epochs):
-        print("Epoch: ", epoch+1)
-        num_batches = 0
-        for i, j in train_q:
-            for (k, l) in zip(i, j):
-                num_batches += 1
-                #print(k.shape, l.shape)
-                total += k.shape[0]
-        print(" ", num_batches, "train_batches")
-        num_batches = 0
-        for m, n in test_q:
-            for (o, p) in zip(m, n):
-                num_batches += 1
-        print(" ", num_batches, "val_baches")
-
-    print(total, "patches in", time()-start)
+    print(total)
