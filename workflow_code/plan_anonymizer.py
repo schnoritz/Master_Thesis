@@ -99,7 +99,7 @@ def create_anonymized_data(path):
 if __name__ == "__main__":
 
     # enter path to directory with patient ct, dose and plan files:
-    path = "/Users/simongutwein/Studium/Masterarbeit/DATA/"
+    path = "/Users/simongutwein/Studium/Masterarbeit/test/"
     files = [
         path + x for x in os.listdir(path) if not x.startswith(".") and not "xlsx" in x]
     for file in files:

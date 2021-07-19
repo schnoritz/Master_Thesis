@@ -9,13 +9,15 @@ from tqdm import tqdm
 from pt_3ddose import dose_to_pt
 import torch
 
+import nibabel as nib
+
 
 def create_binary_mask(
-    egsinp, egsphant, beam_config, px_sp=np.array([1.171875, 1.171875, 3]), SID=1435, tensor=False
+    egsinp, ct_path, beam_config, px_sp=np.array([1.171875, 1.171875, 3]), SID=1435, tensor=False
 ):
 
     angle, output_dim, shift, rotated_dim, rotated_iso_loc = setup_binary(
-        egsinp, egsphant
+        egsinp, ct_path
     )
 
     percentual_increase, first_fac = scaling_factor(
@@ -24,13 +26,12 @@ def create_binary_mask(
 
     leafes, jaws = get_leaf_positions(beam_config)
 
-    jaws = jaws / px_sp[0]
-
-    fieldsize_px = [int(np.round(220 / px_sp[2])),
-                    int(np.round(570/2 / px_sp[0]))]  # changed from int(np.round(570 / px_sp[0]
+    # changed from int(np.round(570/2 / px_sp[0]
+    fieldsize = [int(220 / px_sp[2]),
+                 int((576/1.388) / px_sp[0])]
 
     entry_plane = get_entry_plane(
-        leafes, jaws, first_fac, fieldsize_px[0], fieldsize_px[1], rotated_dim
+        leafes, jaws, first_fac, fieldsize, rotated_dim
     )
 
     beam = scale_beam(entry_plane, rotated_dim, percentual_increase)
@@ -54,12 +55,12 @@ def create_binary_mask(
         return output
 
 
-def setup_binary(egsinp, egsphant):
+def setup_binary(egsinp, ct_path):
 
     egsinp_lines = open(egsinp).readlines()
-    iso_center = define_iso_center(egsinp_lines[5], egsphant)
+    iso_center = define_iso_center(egsinp_lines[5], ct_path)
     angle = get_angle(egsinp_lines[5], radians=False)
-    num_slices = get_num_slices(egsphant)
+    num_slices = get_num_slices(ct_path)
     output_dim = np.array([512, 512, num_slices])
     shift = iso_center - output_dim // 2
     rotated_dim = np.array(
@@ -88,6 +89,7 @@ def rotate_crop(angle, output_dim, shift, beam):
     )
 
     shifted_window = center_window - shift
+    shifted_window[2] -= 1
 
     output = rotated[
         shifted_window[0]: shifted_window[0] + output_dim[0],
@@ -101,7 +103,6 @@ def rotate_crop(angle, output_dim, shift, beam):
 def calc_field_area(iso_rotated, px_sp, beam):
 
     iso_plane = beam[iso_rotated, :, :]
-    # iso_plane[iso_plane < 0.5] == 0; iso_plane[iso_plane >= 0.5] == 1
     voxel_area = px_sp[1] * px_sp[2]
     area = voxel_area * np.sum(iso_plane)
 
@@ -162,52 +163,41 @@ def get_leaf_positions(config_path):
     return leafes, jaws
 
 
-def get_entry_plane(leafes, jaws, entry_plane_fac, transversal_size, sagital_size, dim):
-
-    fl_positions = []
-    for leaf in leafes:
-        fl_positions.append(leaf * entry_plane_fac)
+def get_entry_plane(leafes, jaws, entry_plane_fac, size, dim):
 
     # 0.05cm * 220 -> genaugikeit der leafes auf halben mm
     fl = np.ones((440, 80))
-
     i = 0
-    for top, bot in fl_positions:
-        if top != 0:
-            fl[: 219 + int(np.round(top * 20)) - 1, i] = 0
-        if bot != 0:
-            fl[219 + int(np.round(bot * 20)):, i] = 0
+    for top, bot in leafes:
+        fl[: 220 + int(np.round(top * 20) * entry_plane_fac), i] = 0
+        fl[220 + int(np.round(bot * 20) * entry_plane_fac):, i] = 0
         i += 1
 
-    fl = resize(fl, (sagital_size, transversal_size),
-                interpolation=cv2.INTER_LINEAR)
+    fl = resize(fl, (440, 440),
+                interpolation=cv2.INTER_LINEAR_EXACT)
+
+    l_jaw_idx = 220 + int(np.round(jaws[0]) * entry_plane_fac)
+    r_jaw_idx = 221 + int(np.round(jaws[1]) * entry_plane_fac)
+
+    fl[:, :l_jaw_idx] = 0
+    fl[:, r_jaw_idx:] = 0
+
+    fl = resize(fl, (size[1], size[0]),
+                interpolation=cv2.INTER_LINEAR_EXACT)
     fl = np.flip(fl, 0)
 
-    l_jaw_idx = int(np.round(sagital_size / 2)) + int(
-        np.round(jaws[0] * entry_plane_fac)
-    )
-    r_jaw_idx = int(np.round(sagital_size / 2)) + int(
-        np.round(jaws[1] * entry_plane_fac)
-    )
-
-    fl[:, : l_jaw_idx - 1] = 0  # hier evtl  fl[:, :l_jaw_idx] = 0
-    fl[:, r_jaw_idx + 1:] = 0
-
     t_padding = [
-        int(np.floor((dim[2] - transversal_size) / 2)),
-        int(np.ceil((dim[2] - transversal_size) / 2)),
+        int(np.floor((dim[2] - size[0]) / 2)),
+        int(np.ceil((dim[2] - size[0]) / 2)),
     ]
+
     s_padding = [
-        int(np.floor((dim[0] - sagital_size) / 2)),
-        int(np.ceil((dim[0] - sagital_size) / 2)),
+        int(np.floor((dim[0] - size[1]) / 2)),
+        int(np.ceil((dim[0] - size[1]) / 2)),
     ]
 
     fl = np.pad(
-        fl,
-        ((t_padding[0], t_padding[1]), (s_padding[0], s_padding[1])),
-        "constant",
-        constant_values=0,
-    )
+        fl, ((t_padding[0], t_padding[1]), (s_padding[0], s_padding[1])), "constant", constant_values=0)
 
     return fl
 
@@ -233,34 +223,33 @@ def paddedzoom(img, zoomfactor):
     return cv2.warpAffine(img, M, img.shape[::-1])
 
 
-# if __name__ == "__main__":
+if __name__ == "__main__":
 
-#     segments = ["p0_0", "p17_12", "p18_30", "p10_20", "p19_10"]
-#     for segment in segments:
+    segments = ["p0_0", "p19_10", "p17_12", "p18_30", "p10_20"]
+    for segment in segments:
 
-#         pat = segment.split("_")[0]
+        pat = segment.split("_")[0]
 
-#         path = f"/Users/simongutwein/Studium/Masterarbeit/test_data/{segment}/"
-#         phant = path + f"{pat}_listfile.txt.egsphant"
-#         beam_config = path + f"beam_config_{segment}.txt"
-#         dose_path = path + f"{segment}_1E07.3ddose"
-#         egsinp = path + f"{segment}.egsinp"
+        path = f"/home/baumgartner/sgutwein84/container/output_prostate/{segment}/"
+        ct_path = f"/home/baumgartner/sgutwein84/container/output_prostate/ct/{pat}/"
+        beam_config = path + f"beam_config_{segment}.txt"
+        dose_path = path + f"{segment}_1E07.3ddose"
+        egsinp = path + f"{segment}.egsinp"
 
-#         dose = dose_to_pt(dose_path)
-#         binary = create_binary_mask(egsinp, phant, beam_config)
+        dose = dose_to_pt(dose_path, ct_path)
+        dose = dose/dose.max()
+        binary = create_binary_mask(egsinp, ct_path, beam_config)
 
-#         x = True
+        img = nib.Nifti1Image(np.array(dose), np.eye(4))
 
-#         if x:
-#             for i in range(250, 251):
-#                 plt.imshow(dose[i, :, :], cmap="bone")
-#                 plt.imshow(binary[i, :, :], cmap="jet", alpha=0.5)
-#                 plt.show()
-#                 plt.close()
-#         else:
+        img.header.get_xyzt_units()
+        img.to_filename(
+            f"/home/baumgartner/sgutwein84/container/predictions/dose_{segment}.nii.gz")
 
-#             for i in range(40, 70):
-#                 plt.imshow(dose[:, :, i], cmap="bone")
-#                 plt.imshow(binary[:, :, i], cmap="jet", alpha=0.5)
-#                 plt.show()
-#                 plt.close()
+        img = nib.Nifti1Image(np.array(binary), np.eye(4))
+
+        img.header.get_xyzt_units()
+        img.to_filename(
+            f"/home/baumgartner/sgutwein84/container/predictions/binary_{segment}.nii.gz")
+
+        print(f"{segment} done")

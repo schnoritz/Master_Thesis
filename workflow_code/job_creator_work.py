@@ -43,7 +43,7 @@ def create_listfile(path):
             fout.write(path + filename + '\n')
 
 
-def create_ctcreate_file(path, dose_file_path, dcm_folder):
+def create_ctcreate_file(path, dose_file_path, dcm_folder, entire_volume=False):
     """creates the file needed for the ctcreate command in EGSnrc
 
     Args:
@@ -67,6 +67,9 @@ def create_ctcreate_file(path, dose_file_path, dcm_folder):
         xupper = xlower + dose_dimensions[2]*pixel_spacing[0]
         yupper = ylower + dose_dimensions[1]*pixel_spacing[1]
         zupper = zlower + dose_dimensions[0]*pixel_spacing[0]
+
+        if entire_volume == True:
+            xlower = ylower = zlower = xupper = yupper = zupper = 0
 
         fout.write("DICOM \n")
         fout.write(path + dcm_folder + f"{patient}_listfile.txt\n")
@@ -500,7 +503,7 @@ def setup_plan_calculation(patient, plan_file):
 if __name__ == "__main__":
 
     plan = True
-    patient = "p40"
+    patient = "p0"
     num_hist = 10000000
     pj = int(num_hist/2000000)
     if pj <= 1:

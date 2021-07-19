@@ -5,11 +5,11 @@ from depth_ray import Ray
 from utils import define_iso_center, define_origin_position
 
 
-def radiological_depth(ct, egsinp, egsphant, mask=False, tensor=False):
+def radiological_depth(ct, egsinp, ct_path, mask=False, tensor=False):
 
     egsinp_lines = open(egsinp).readlines()
 
-    iso_center = define_iso_center(egsinp_lines[5], egsphant)
+    iso_center = define_iso_center(egsinp_lines[5], ct_path)
     origin_position = define_origin_position(egsinp_lines[5], iso_center)
 
     if type(ct) == str:

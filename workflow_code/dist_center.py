@@ -7,11 +7,11 @@ import torch
 import matplotlib.pyplot as plt
 
 
-def distance_center(egsinp_path, egsphant_path, shape, tensor=False):
+def distance_center(egsinp_path, ct_path, shape, tensor=False):
 
     egsinp_lines = open(egsinp_path).readlines()
 
-    iso_center = define_iso_center(egsinp_lines[5], egsphant_path)
+    iso_center = define_iso_center(egsinp_lines[5], ct_path)
     origin_position = define_origin_position(egsinp_lines[5], iso_center)
 
     if tensor:

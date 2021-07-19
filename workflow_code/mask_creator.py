@@ -27,12 +27,12 @@ def parse():
         help="",
     )
 
-    parser.add_argument(
-        "egsphant_file",
-        type=str,
-        metavar="",
-        help="",
-    )
+    # parser.add_argument(
+    #     "egsphant_file",
+    #     type=str,
+    #     metavar="",
+    #     help="",
+    # )
 
     parser.add_argument(
         "beam_config_file",
@@ -69,7 +69,6 @@ def parse():
 
 def create_mask_files(
     egsinp_file,
-    egsphant_file,
     beam_config_file,
     dose_file,
     segment,
@@ -79,30 +78,30 @@ def create_mask_files(
     set_zero = True
     normalize = True
     patient = segment.split("_")[0]
+    ct_path = f"/home/baumgartner/sgutwein84/container/output_{output_folder}/ct/{patient}"
 
-    if not os.path.isdir(f'/home/baumgartner/sgutwein84/container/training_data{output_folder}'):
+    if not os.path.isdir(f'/home/baumgartner/sgutwein84/container/training_{output_folder}'):
 
         subprocess.run(
             ['mkdir',
-             f'/home/baumgartner/sgutwein84/container/training_data{output_folder}']
+             f'/home/baumgartner/sgutwein84/container/training_{output_folder}']
         )
 
     subprocess.run(
         ['mkdir',
-            f'/home/baumgartner/sgutwein84/container/training_data{output_folder}/{segment}']
+            f'/home/baumgartner/sgutwein84/container/training_{output_folder}/{segment}']
     )
 
-    dose_mask = dose_to_pt(dose_file, tensor=True)
-
+    dose_mask = dose_to_pt(dose_file, ct_path, tensor=True)
     ct_mask = convert_ct_array(
-        ct_path=f"/home/baumgartner/sgutwein84/container/output_{output_folder}/ct/{patient}",
+        ct_path=ct_path,
         target_size=dose_mask.shape,
         tensor=True
     )
 
     if set_zero:
-        # treshhold muss noch genau bestimmt werden -> Daniela meinte 200 wird bei bestrahlungsplanung gemacht
-        mask = np.array(ct_mask > 200).astype(bool)
+        # treshhold muss noch genau bestimmt werden -> Daniela meinte 150 wird bei bestrahlungsplanung gemacht
+        mask = np.array(ct_mask > 150).astype(bool)
         for i in range(mask.shape[2]):
             mask[:, :, i] = ndimage.binary_fill_holes(
                 mask[:, :, i]).astype(bool)
@@ -112,23 +111,23 @@ def create_mask_files(
 
     if set_zero:
         radio_depth_mask = radiological_depth(
-            np.array(ct_mask), egsinp_file, egsphant_file, mask=np.invert(mask), tensor=True
+            np.array(ct_mask), egsinp_file, ct_path, mask=np.invert(mask), tensor=True
         )
     else:
         radio_depth_mask = radiological_depth(
-            np.array(ct_mask), egsinp_file, egsphant_file, tensor=True
+            np.array(ct_mask), egsinp_file, ct_path, tensor=True
         )
 
     center_mask = distance_center(
-        egsinp_file, egsphant_file, ct_mask.shape, tensor=True
+        egsinp_file, ct_path, ct_mask.shape, tensor=True
     )
 
     source_mask = distance_source(
-        egsinp_file, egsphant_file, ct_mask.shape, tensor=True
+        egsinp_file, ct_path, ct_mask.shape, tensor=True
     )
 
     binary_mask = create_binary_mask(
-        egsinp_file, egsphant_file, beam_config_file, px_sp=np.array([1.171875, 1.171875, 3]), SID=1435, tensor=True
+        egsinp_file, ct_path, beam_config_file, px_sp=np.array([1.171875, 1.171875, 3]), SID=1435, tensor=True
     )
 
     # creates stack of size (5, 512  512, num_slices)
@@ -162,39 +161,46 @@ def create_mask_files(
     dose_mask = dose_mask.float()
 
     torch.save(
-        stack, f"/home/baumgartner/sgutwein84/container/training_data{output_folder}/{segment}/training_data.pt"
+        stack, f"/home/baumgartner/sgutwein84/container/training_{output_folder}/{segment}/training_data.pt"
     )
 
     torch.save(
-        dose_mask, f"/home/baumgartner/sgutwein84/container/training_data{output_folder}/{segment}/target_data.pt"
+        dose_mask, f"/home/baumgartner/sgutwein84/container/training_{output_folder}/{segment}/target_data.pt"
     )
-
-    # shutil.move(f"/home/baumgartner/sgutwein84/container/{output_folder}/{segment}",
-    #             f"/home/baumgartner/sgutwein84/container/calculated_segments/{segment}")
-
-#print(stack.shape, dose_mask.shape)
 
 
 if __name__ == "__main__":
 
     args = parse()
     create_mask_files(args.egsinp_file,
-                      args.egsphant_file,
                       args.beam_config_file,
-                      args.dose_file, args.segment,
+                      args.dose_file,
+                      args.segment,
                       args.output_folder)
 
     # debug
-    # egsinp_file = "/Users/simongutwein/home/baumgartner/sgutwein84/container/output_20210614/p0_0/p0_0.egsinp"
-    # egsphant_file = "/Users/simongutwein/home/baumgartner/sgutwein84/container/output_20210614/p0_0/p0_0.egsinp"
-    # beam_config_file = "/Users/simongutwein/home/baumgartner/sgutwein84/container/output_20210614/p0_0/beam_config_p0_0.egsinp"
-    # dose_file = "/Users/simongutwein/home/baumgartner/sgutwein84/container/output_20210614/p0_0/p0_0_1E07.3ddose"
+    # egsinp_file = "/home/baumgartner/sgutwein84/container/output_prostate/p0_0/p0_0.egsinp"
+    # beam_config_file = "/home/baumgartner/sgutwein84/container/output_prostate/p0_0/beam_config_p0_0.txt"
+    # dose_file = "/home/baumgartner/sgutwein84/container/output_prostate/p0_0/p0_0_1E07.3ddose"
     # segment = "p0_0"
-    # output_folder = "20210614"
+    # output_folder = "prostate"
 
-    # create_mask_files(egsinp_file,
-    #                   egsphant_file,
-    #                   beam_config_file,
-    #                   dose_file,
-    #                   segment,
-    #                   output_folder)
+    # stack, dose_mask = create_mask_files(egsinp_file,
+    #                                      beam_config_file,
+    #                                      dose_file,
+    #                                      segment,
+    #                                      output_folder)
+
+    # fig, ax = plt.subplots(1, 6, figsize=(24, 4))
+    # dose_mask = dose_mask.squeeze()
+    # stack = stack.squeeze()
+    # print(dose_mask.shape)
+    # for i in range(dose_mask.shape[2]):
+    #     ax[0].imshow(stack[0, :, :, i])
+    #     ax[1].imshow(stack[1, :, :, i])
+    #     ax[2].imshow(stack[2, :, :, i])
+    #     ax[3].imshow(stack[3, :, :, i])
+    #     ax[4].imshow(stack[4, :, :, i])
+    #     ax[5].imshow(dose_mask[:, :, i])
+    #     plt.savefig(
+    #         f"/home/baumgartner/sgutwein84/container/test/new_{i}.png")

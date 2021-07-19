@@ -7,7 +7,7 @@ import glob
 import paramiko
 import matplotlib.pyplot as plt
 
-# argument parser for
+from pprint import pprint
 
 
 def server_login():
@@ -34,43 +34,42 @@ def get_segments(dir):
     ]
 
 
-def create_mask_files(dir):
+def create_mask_files(dir, segments=False):
 
     if dir[-1] != "/":
         dir += "/"
 
-    segments = get_segments(dir)
+    if segments == False:
+        segments = get_segments(dir)
 
-    for num, segment in enumerate(segments):
+    with server_login() as client:
+        for num, segment in enumerate(segments):
 
-        patient = segment.split("_")[0]
-        output_folder = dir.split("/")[-2].split("_")[-1]
+            patient = segment.split("_")[0]
+            output_folder = dir.split("/")[-2].split("_")[-1]
+            egsinp_file = f"{dir}{segment}/{segment}.egsinp"
+            beam_config_file = f"{dir}{segment}/beam_config_{segment}.txt"
+            dose_file = glob.glob(f"{dir}{segment}/{patient}*.3ddose")[0]
 
-        egsinp_file = f"{dir}{segment}/{segment}.egsinp"
-        egsphant_file = f"{dir}egsphant/{patient}_listfile.txt.egsphant"
-        beam_config_file = f"{dir}{segment}/beam_config_{segment}.txt"
-        dose_file = glob.glob(f"{dir}{segment}/{patient}*.3ddose")[0]
+            create_segment_job_file(
+                egsinp_file, beam_config_file, dose_file, segment, output_folder
+            )
 
-        create_segment_job_file(
-            egsinp_file, egsphant_file, beam_config_file, dose_file, segment, output_folder
-        )
-
-        execute_job_file(segment)
+            execute_job_file(segment, client)
 
 
 def create_segment_job_file(
-    egsinp_file, egsphant_file, beam_config_file, dose_file, segment, output_folder
+    egsinp_file, beam_config_file, dose_file, segment, output_folder
 ):
 
     with open(
-        "/Users/simongutwein/home/baumgartner/sgutwein84/container/job_template.sh", "r"
+        "/home/baumgartner/sgutwein84/container/job_template.sh", "r"
     ) as fin:
         lines = fin.readlines()
 
     task_line = lines[16]
     task_line = task_line.split()
     task_line.append(egsinp_file)
-    task_line.append(egsphant_file)
     task_line.append(beam_config_file)
     task_line.append(dose_file)
     task_line.append(segment)
@@ -80,14 +79,12 @@ def create_segment_job_file(
     lines[18] = f'echo "Finished creating masks for {segment}"'
     lines.insert(1, f"#SBATCH --job-name '{segment}'\n")
     with open(
-        "/Users/simongutwein/home/baumgartner/sgutwein84/container/job.sh", "w+"
+        "/home/baumgartner/sgutwein84/container/job.sh", "w+"
     ) as fout:
         fout.writelines(lines)
 
 
-def execute_job_file(segment):
-
-    client = server_login()
+def execute_job_file(segment, client):
 
     _, stdout, _ = client.exec_command(
         f"cd container; sbatch job.sh"
@@ -99,11 +96,16 @@ def execute_job_file(segment):
 
     print(f"JOB-ID: {job_id} for segment: {segment}")
 
-    client.close()
-
 
 if __name__ == "__main__":
 
-    dir = "/home/baumgartner/sgutwein84/container/output_20210625"
+    dir = "/home/baumgartner/sgutwein84/container/output_prostate"
+    patients = ["p0_", "p1_", "p2_", "p3_", "p4_", "p5_", "p7_", "p8_", "p9_"]
+    segments = []
+    for patient in patients:
+        segments.extend([x for x in os.listdir(
+            dir) if not "ct" in x and not "egsphant" in x and not x.startswith(".") and patient in x])
 
-    create_mask_files(dir)
+    pprint(segments)
+
+    create_mask_files(dir, segments)

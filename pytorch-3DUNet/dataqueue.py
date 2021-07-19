@@ -10,12 +10,13 @@ import matplotlib.pyplot as plt
 
 class DataQueue():
 
-    def __init__(self, segment_list, batch_size, segments_per_queue, patch_size, patches_per_segment):
+    def __init__(self, segment_list, batch_size, segments_per_queue, patch_size, patches_per_segment, sampling_scheme="equal"):
         self.segment_list = segment_list
         self.batch_size = batch_size
         self.patch_size = patch_size
         self.segments_per_queue = segments_per_queue
         self.patches_per_segment = patches_per_segment
+        self.sampling_scheme = sampling_scheme
         self.available_segments = self.segment_list.copy()
 
     def reset_queue(self):
@@ -79,24 +80,38 @@ class DataQueue():
                                hp:masks[0].shape[1]-hp,
                                hp:masks[0].shape[2]-hp])
 
-        binary[binary > 0] = 5
-        binary[binary == 0] = 1
-        binary = np.pad(binary, ((hp, hp),
-                                 (hp, hp),
-                                 (hp, hp)), 'constant')
+        if self.sampling_scheme == "beam":
 
-        num = random.randint(1, 5)
-        if num == 1:
+            binary[binary > 0] = 5
+            binary[binary == 0] = 1
+            binary = np.pad(binary, ((hp, hp),
+                                     (hp, hp),
+                                     (hp, hp)), 'constant')
+
+            num = random.randint(1, 5)
+            if num == 1:
+                idxs = []
+                for _ in range(self.patches_per_segment):
+                    idxs.append(np.array([random.randint(hp, binary.shape[0]-hp),
+                                random.randint(hp, binary.shape[1]-hp),
+                                random.randint(hp, binary.shape[2]-hp)]))
+            else:
+                idxs = np.argwhere(binary >= num)
+
+        elif self.sampling_scheme == "equal":
+
             idxs = []
             for _ in range(self.patches_per_segment):
                 idxs.append(np.array([random.randint(hp, binary.shape[0]-hp),
                             random.randint(hp, binary.shape[1]-hp),
                             random.randint(hp, binary.shape[2]-hp)]))
-        else:
-            idxs = np.argwhere(binary >= num)
-            np.random.shuffle(idxs)
+
+        np.random.shuffle(idxs)
 
         return idxs[:self.patches_per_segment]
+
+    def __len__(self):
+        return self.segments_per_queue*self.patches_per_segment
 
     def __iter__(self):
         curr = 0

@@ -68,4 +68,7 @@ def convert_ct_array(ct_path, target_size=None, tensor=False):
 
 
 if __name__ == "__main__":
-    pass
+
+    converted = convert_ct_array(
+        "/home/baumgartner/sgutwein84/container/output_prostate/ct/p32/", target_size=(512, 512, 138), tensor=True)
+    print(converted.shape)
