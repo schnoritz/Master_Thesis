@@ -7,7 +7,6 @@ from dist_center import distance_center
 from dist_source import distance_source
 import numpy as np
 import torch
-import shutil
 import subprocess
 import os
 
@@ -93,6 +92,7 @@ def create_mask_files(
     )
 
     dose_mask = dose_to_pt(dose_file, ct_path, tensor=True)
+
     ct_mask = convert_ct_array(
         ct_path=ct_path,
         target_size=dose_mask.shape,
@@ -119,15 +119,15 @@ def create_mask_files(
         )
 
     center_mask = distance_center(
-        egsinp_file, ct_path, ct_mask.shape, tensor=True
+        egsinp_file, ct_path, target_size=np.array(ct_mask).shape, tensor=True
     )
 
     source_mask = distance_source(
-        egsinp_file, ct_path, ct_mask.shape, tensor=True
+        egsinp_file, ct_path, target_size=np.array(ct_mask).shape, tensor=True
     )
 
     binary_mask = create_binary_mask(
-        egsinp_file, ct_path, beam_config_file, px_sp=np.array([1.171875, 1.171875, 3]), SID=1435, tensor=True
+        egsinp_file, ct_path, beam_config_file, target_size=np.array(ct_mask).shape, px_sp=np.array([1.171875, 1.171875, 3]), SID=1435, tensor=True
     )
 
     # creates stack of size (5, 512  512, num_slices)
@@ -148,8 +148,8 @@ def create_mask_files(
 
     if normalize:
         stack[0] = stack[0]
-        stack[1] = stack[1]/3000  # CT Mask
-        stack[2] = stack[2]/3000  # Radio Depth Mask
+        stack[1] = stack[1]/1800  # CT Mask
+        stack[2] = stack[2]/1800  # Radio Depth Mask
         stack[3] = stack[3]/(1.171875)  # scale by pixel spacing
         stack[4] = stack[4]/(1435/1.171875)  # scale by SID and pixel spacing
         dose_mask = dose_mask / 1E-17

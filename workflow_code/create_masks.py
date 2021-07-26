@@ -100,12 +100,17 @@ def execute_job_file(segment, client):
 if __name__ == "__main__":
 
     dir = "/home/baumgartner/sgutwein84/container/output_prostate"
-    patients = ["p0_", "p1_", "p2_", "p3_", "p4_", "p5_", "p7_", "p8_", "p9_"]
-    segments = []
-    for patient in patients:
-        segments.extend([x for x in os.listdir(
-            dir) if not "ct" in x and not "egsphant" in x and not x.startswith(".") and patient in x])
 
-    pprint(segments)
+    patients = None
+
+    if patients:
+        segments = []
+        for patient in patients:
+            segments.extend([x for x in os.listdir(
+                dir) if not "ct" in x and not "egsphant" in x and not x.startswith(".") and patient in x])
+
+        pprint(segments)
+    else:
+        segments = False
 
     create_mask_files(dir, segments)

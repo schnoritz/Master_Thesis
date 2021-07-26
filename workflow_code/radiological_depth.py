@@ -3,6 +3,7 @@ import torch
 from tqdm import tqdm
 from depth_ray import Ray
 from utils import define_iso_center, define_origin_position
+import sys
 
 
 def radiological_depth(ct, egsinp, ct_path, mask=False, tensor=False):
@@ -34,7 +35,7 @@ def calc_depth(ct_volume, origin_position, mask):
     depth_volume = np.zeros_like(ct_volume, dtype=float)
 
     if not isinstance(mask, np.ndarray):
-        for x in tqdm(range(ct_volume.shape[0])):
+        for x in tqdm(range(ct_volume.shape[0]), file=sys.stdout, postfix="\n"):
             for y in range(ct_volume.shape[1]):
                 for z in range(ct_volume.shape[2]):
                     vox = np.array([x, y, z], dtype=float)
@@ -42,7 +43,7 @@ def calc_depth(ct_volume, origin_position, mask):
                     depth_volume[x, y, z] = ray.radiological_depth
 
     elif isinstance(mask, np.ndarray):
-        for x in tqdm(range(ct_volume.shape[0])):
+        for x in tqdm(range(ct_volume.shape[0]), file=sys.stdout, postfix="\n"):
             for y in range(ct_volume.shape[1]):
                 for z in range(ct_volume.shape[2]):
 

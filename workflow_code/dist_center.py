@@ -3,11 +3,12 @@ from numba import njit, prange
 import numpy as np
 from tqdm import tqdm
 import torch
+import sys
 
 import matplotlib.pyplot as plt
 
 
-def distance_center(egsinp_path, ct_path, shape, tensor=False):
+def distance_center(egsinp_path, ct_path, target_size, tensor=False):
 
     egsinp_lines = open(egsinp_path).readlines()
 
@@ -15,19 +16,19 @@ def distance_center(egsinp_path, ct_path, shape, tensor=False):
     origin_position = define_origin_position(egsinp_lines[5], iso_center)
 
     if tensor:
-        return torch.tensor(calculate_distance(iso_center=iso_center, origin_position=origin_position, shape=shape), dtype=torch.float16)
+        return torch.tensor(calculate_distance(iso_center=iso_center, origin_position=origin_position, target_size=target_size), dtype=torch.float16)
     else:
         calculate_distance(iso_center=iso_center,
-                           origin_position=origin_position, shape=shape)
+                           origin_position=origin_position, target_size=target_size)
 
 
-def calculate_distance(iso_center, origin_position, shape):
+def calculate_distance(iso_center, origin_position, target_size):
 
-    distance_vol = np.zeros(shape)
+    distance_vol = np.zeros(target_size)
 
-    for x in tqdm(range(shape[0]), miniters=50):
-        for y in range(shape[1]):
-            for z in range(shape[2]):
+    for x in tqdm(range(target_size[0]), miniters=50, file=sys.stdout, postfix="\n"):
+        for y in range(target_size[1]):
+            for z in range(target_size[2]):
                 distance_vol[x, y, z] = distance(
                     x, y, z, iso_center, origin_position)
 

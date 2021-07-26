@@ -1,119 +1,83 @@
 import matplotlib.pyplot as plt
 import torch
+from pt_3ddose import dose_to_pt
+from pt_ct import convert_ct_array
+import numpy as np
+from pymedphys import gamma
+import os
+import paramiko
 
 
 if __name__ == "__main__":
 
-    masks = torch.load(
-        "/home/baumgartner/sgutwein84/container/training_prostate/p0_0/training_data.pt")
-    target = torch.load(
-        "/home/baumgartner/sgutwein84/container/training_prostate/p0_0/target_data.pt")
-
-    plt.imshow(masks[0, :, :, 37])
-    plt.imshow(target[0, :, :, 37], alpha=0.4)
-    plt.imshow(masks[1, :, :, 37], alpha=0.4)
-    plt.savefig(
-        "/home/baumgartner/sgutwein84/container/training_prostate/p0_0/test1.png")
-
-    plt.imshow(masks[0, 256, :, :], cmap="bone")
-    plt.imshow(target[0, 256, :, :], alpha=0.6)
-    plt.savefig(
-        "/home/baumgartner/sgutwein84/container/training_prostate/p0_0/test2.png")
-
-    # data_path = "/home/baumgartner/sgutwein84/container/training_data_prostate/p12_34/"
-
-    # masks = torch.load(data_path + "training_data.pt")
-    # target = torch.load(data_path + "target_data.pt")
-
-    # fig, ax = plt.subplots(1, 6, figsize=(10, 60))
-    # ax[0].imshow(masks[0, :, :, 38])
-    # ax[1].imshow(masks[1, :, :, 38])
-    # ax[2].imshow(masks[2, :, :, 38])
-    # ax[3].imshow(masks[3, :, :, 38])
-    # ax[4].imshow(masks[4, :, :, 38])
-    # ax[5].imshow(target[0, :, :, 38])
-    # plt.savefig("/home/baumgartner/sgutwein84/container/masks.png")
-
     # hostname = "134.2.168.52"
     # username = "sgutwein84"
     # password = "Derzauberkoenig1!"
-    # client = paramiko.SSHClient()
-    # client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-    # client.connect(hostname=hostname, username=username, password=password)
-    # z, stdout, stderr = client.exec_command(
-    #     f"top"
-    # )
-
-    # for i in stdout:
-    #     print(i)
-
-    # for i in stderr:
-    #     print(i)
-
-    # jobs.remove("354827")
-    # for ID in jobs:
-    #     print(ID)
+    # with paramiko.SSHClient() as client:
+    #     client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+    #     client.connect(hostname=hostname, username=username, password=password)
     #     _, stdout, _ = client.exec_command(
-    #         f"scancel {ID}"
+    #         f"squeue -u sgutwein84"
     #     )
 
-    # client.close()
-    # workbook = xlsxwriter.Workbook(
-    #     '/Users/simongutwein/Studium/Masterarbeit/segments.xlsx')
-    # worksheet = workbook.add_worksheet()
+    #     jobs = []
+    #     for line in stdout:
+    #         if line:
+    #             jobs.append(line.split()[0])
 
-    # # print(len([0.0, 20.0, 40.0, 60.0, 80.0, 100.0, 130.0, 150.0, 170.0,
-    # # 190.0, 220.0, 230.0, 260.0, 280.0, 300.0, 320.0, 340.0, 350.0]))
+    #     print(jobs)
+    #     jobs.remove("JOBID")
 
-    # dir = "/home/baumgartner/sgutwein84/container/output_prostate/"
+    #     for job in jobs:
+    #         _, stdout, _ = client.exec_command(
+    #             f"scancel {job}"
+    #         )
 
-    # segs = [x for x in os.listdir(
-    #     dir) if not "ct" in x and not "egsphant" in x and not x.startswith(".")]
+    # cts = ["/home/baumgartner/sgutwein84/container/output_prostate/ct/" + x for x in os.listdir(
+    #     "/home/baumgartner/sgutwein84/container/output_prostate/ct/") if not x.startswith(".")]
 
-    # patients = np.array([x.split("_")[0] for x in segs])
+    # fig, ax = plt.subplots(8, 5, figsize=(30, 48))
 
-    # print(len(np.unique(patients)))
+    # for num, ct in enumerate(cts):
+    #     ct_dat = convert_ct_array(ct)
 
-    # for patient in np.unique(patients):
-    #     count = [x for x in segs if patient + "_" in x]
-    #     print(f"{patient}: {len(count)}")
+    #     ax[num % 8, num // 8].imshow(ct_dat[:, 256, :])
+    #     ax[num % 8, num // 8].set_title(ct.split("/")[-1])
+    #     print("done ", ct.split("/")[-1])
 
-    # egsinp_files = [f"{dir}{x}/{x}.egsinp" for x in segs]
-    # beam_files = [f"{dir}{x}/beam_config_{x}.txt" for x in segs]
+    # plt.savefig("/home/baumgartner/sgutwein84/container/test/patients.png")
 
-    # segs_infos = []
-    # num = 0
-    # for egsinp, beam, seg in zip(egsinp_files, beam_files, segs):
+    files = ["/home/baumgartner/sgutwein84/p0_0_1E07_new.3ddose",
+             "/home/baumgartner/sgutwein84/p0_0_1E07_old.3ddose"]
+    ct_path = "/home/baumgartner/sgutwein84/container/output_prostate/ct/p0"
 
-    #     with open(egsinp) as fin:
-    #         lines = fin.readlines()
-    #         angle = float(lines[5].split(",")[6]) - 270
-    #         iso_shift = lines[5].split(",")[2:5]
+    dose = []
+    for dose_path in files:
+        dose.append(dose_to_pt(dose_path, ct_path))
 
-    #     with open(beam) as fin:
-    #         lines = fin.readlines()
-    #         lines = [x.split(",")[:2] for x in lines]
-    #         area = np.round(
-    #             np.array([float(x[1]) - float(x[0]) for x in lines]).sum(), 1)
+    gamma_options = {
+        'dose_percent_threshold': 1,
+        'distance_mm_threshold': 1,
+        'lower_percent_dose_cutoff': 1,
+        'interp_fraction': 5,  # Should be 10 or more for more accurate results
+        'max_gamma': 1.01,
+        'ram_available': 2**37,
+        'quiet': False,
+        'local_gamma': False,
+        'random_subset': 100000
+    }
 
-    #     worksheet.write(num, 0, seg)     # Writes an int
-    #     worksheet.write(num, 1, angle)  # Writes a float
-    #     worksheet.write(num, 2, ",".join(iso_shift))  # Writes a string
-    #     worksheet.write(num, 3, area)     # Writes None
-    #     num += 1
+    coords = (np.arange(0, 1.17*dose[0].shape[0], 1.17), np.arange(
+        0, 1.17*dose[0].shape[1], 1.17), np.arange(0, 3*dose[0].shape[2], 3))
 
-    #     segs_infos.append(
-    #         {
-    #             "segment": seg,
-    #             "angle": angle,
-    #             "iso_shift": iso_shift,
-    #             "area": np.round(area, 1)
-    #         }
-    #     )
+    gamma_val = gamma(
+        coords, np.array(dose[0]),
+        coords, np.array(dose[1]),
+        **gamma_options)
 
-    #     # print(f"Segment    : {seg}")
-    #     # print(f"Angle      : {angle}")
-    #     # print(f"ISO-Shift  : {iso_shift}")
-    #     # print(f"Area       : {np.round(area,1)}\n\n")
+    dat = ~np.isnan(gamma_val)
+    dat2 = ~np.isnan(gamma_val[gamma_val <= 1])
+    all = np.count_nonzero(dat)
+    true = np.count_nonzero(dat2)
 
-    # workbook.close()
+    print(np.round((true/all)*100, 4))

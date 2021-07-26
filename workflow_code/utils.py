@@ -41,11 +41,6 @@ def define_origin_position(egsinp, iso_center, px_sp=1.171875, SID=1435):
     return origin
 
 
-def get_num_slices(ct_path):
-
-    return len([x for x in os.listdir(ct_path) if "dcm" in x.lower() and not x.startswith(".")])
-
-
 def get_angle(egsinp, radians=False):
 
     if radians == False:

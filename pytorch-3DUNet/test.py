@@ -5,7 +5,6 @@ import numpy as np
 import torch
 import os
 import torch.nn as nn
-from model import Dose3DUNET
 from dataset import setup_loaders
 from pprint import pprint
 import random
@@ -20,6 +19,7 @@ import nibabel as nib
 from pydicom import dcmread, uid
 from torch.nn.functional import interpolate
 import argparse
+from model_UQ import Dose3DUNET
 
 
 def gamma_sample(unet, device, segment, segment_dir, lower_cutoff=20, partial_sample=20000, gamma_percentage=3, gamma_distance=3):
@@ -86,135 +86,98 @@ def gamma_sample(unet, device, segment, segment_dir, lower_cutoff=20, partial_sa
 
 if __name__ == "__main__":
 
-    # data_path = "/home/baumgartner/sgutwein84/container/training_data_prostate/"
-
-    # segments = [x.split("_")[0]
-    #             for x in os.listdir(data_path) if not x.startswith(".")]
-    # patients = list(dict.fromkeys(segments))
-    # patients = [x + "_0" for x in patients]
-    # print(patients)
-
-    # for pat in patients:
-
-    #     masks = torch.load(
-    #         "/home/baumgartner/sgutwein84/container/training_data_prostate/" + pat + "/training_data.pt")
-    #     target = torch.load(
-    #         "/home/baumgartner/sgutwein84/container/training_data_prostate/" + pat + "/target_data.pt")
-
-    #     plt.imshow(masks[1, :, 256, :])
-    #     plt.savefig(
-    #         f"/home/baumgartner/sgutwein84/container/predictions/test/{pat}.png")
-
-    # masks = torch.load(data_path + "training_data.pt")
-    # target = torch.load(data_path + "target_data.pt")
-
-    # fig, ax = plt.subplots(1, 6, figsize=(60, 10))
-    # ax[0].imshow(masks[0, :, :, 38])
-    # ax[1].imshow(masks[1, :, :, 38])
-    # ax[2].imshow(masks[2, :, :, 38])
-    # ax[3].imshow(masks[3, :, :, 38])
-    # ax[4].imshow(masks[4, :, :, 38])
-    # ax[5].imshow(target[0, :, :, 38])
-    # for i, title in enumerate(["Binary Beam Mask", "CT Volume", "Radiological Depth", "Beam Line Distance", "Source Distance", "Target Dose"]):
-    #     ax[i].set_title(title, fontweight="bold", size=40)
-    #     plt.setp(ax[i].get_xticklabels(), visible=False)
-    #     plt.setp(ax[i].get_yticklabels(), visible=False)
-
-    # plt.savefig("/home/baumgartner/sgutwein84/container/masks.png")
-
-    # masks = torch.load(
-    #     "/Users/simongutwein/home/baumgartner/sgutwein84/container/prostate_training_data/p3_3/training_data.pt")
-    # masks = masks.squeeze()
-    # print(masks.shape)
-    # for i in masks[1]:
-    #     plt.imshow(i[:, :, i])
-    #     plt.show()
-
-    # for seg in ["p36", "p37"]:
-    #     files = [f"/Users/simongutwein/work/ws/nemo/tu_zxoys08-EGS-0/egs_home/dosxyznrc/{seg}/" + x for x in os.listdir(
-    #         f"/Users/simongutwein/work/ws/nemo/tu_zxoys08-EGS-0/egs_home/dosxyznrc/{seg}") if not x.startswith(".")]
-
-    #     cts = []
-    #     for i in files:
-    #         dat = dcmread(i, force=True)
-    #         dat.file_meta.TransferSyntaxUID = uid.ImplicitVRLittleEndian
-    #         cts.append({
-    #             'image': dat.pixel_array,
-    #             'slice_location': dat.SliceLocation
-    #         })
-
-    #     ct_dict = sorted(cts, key=lambda d: d['slice_location'])
-
-    #     images = []
-    #     for i in range(len(ct_dict)):
-    #         images.append(ct_dict[i]["image"])
-
-    #     images = np.stack(images, axis=2)
-
-    #     plt.imshow(images[:, 256, :])
-    #     plt.show()
-
-    parser = argparse.ArgumentParser(description="Clean dosxyznrc folder.")
-
-    parser.add_argument(
-        "segment",
-        type=str,
-        metavar="",
-        help="",
-    )
-
-    args = parser.parse_args()
-
-    if not os.path.isdir(f"/home/baumgartner/sgutwein84/container/predictions/{args.segment}"):
-        os.makedirs(
-            f"/home/baumgartner/sgutwein84/container/predictions/{args.segment}")
-
-    segment_dir = "/home/baumgartner/sgutwein84/container/training_prostate/"
-
     device = torch.device(
-        "cuda") if torch.cuda.is_available else torch.device("cpu")
-
+        "cuda") if torch.cuda.is_available() else torch.device("cpu")
+    print(device)
     model_checkpoint = torch.load(
         "/home/baumgartner/sgutwein84/container/pytorch-3DUNet/experiments/bs32_ps32_corrected/UNET_267.pt", map_location="cpu")
+
+    segment = torch.load(
+        "/home/baumgartner/sgutwein84/container/training_prostate/p0_0/training_data.pt")
+    print("loaded")
+    segment = torch.nn.functional.pad(
+        segment, (0, 0, -240, -240, -240, -240))
+    segment = segment[:, :, 20:52]
+    print(segment.shape)
+    segment.to(device)
 
     model = Dose3DUNET()
     model.load_state_dict(model_checkpoint['model_state_dict'])
     model = torch.nn.DataParallel(model)
     model.to(device)
 
-    gamma, pred, target, masks = gamma_sample(
-        model, device, args.segment, segment_dir=segment_dir)
-    diff = pred-target
-    print(f"Gamma Value for {args.segment}: {gamma}")
-    binary = np.array(masks[0, :, :, :]).squeeze()
-    ct = np.array(masks[1, :, :, :]).squeeze()
+    pred = model(segment)
+    print(pred.shape)
+    (mean, variance, sample_variance) = model.get_uncertainty(segment, T=5)
+    print(variance.shape)
 
-    img = nib.Nifti1Image(np.array(pred), np.eye(4))
+    for i in range(variance.shape[4]):
+        plt.imshow(variance[0, 0, :, :, i].detach().numpy())
+        plt.savefig(
+            f"/Users/simongutwein/Studium/Masterarbeit/test/{i}.png")
+        plt.show()
 
-    img.header.get_xyzt_units()
-    img.to_filename(
-        f"/home/baumgartner/sgutwein84/container/predictions/{args.segment}/predicted_dose.nii.gz")
+    # parser = argparse.ArgumentParser(description="Clean dosxyznrc folder.")
 
-    img = nib.Nifti1Image(binary, np.eye(4))
+    # parser.add_argument(
+    #     "segment",
+    #     type=str,
+    #     metavar="",
+    #     help="",
+    # )
 
-    img.header.get_xyzt_units()
-    img.to_filename(
-        f"/home/baumgartner/sgutwein84/container/predictions/{args.segment}/binary_mask.nii.gz")
+    # args = parser.parse_args()
 
-    img = nib.Nifti1Image(np.array(target), np.eye(4))
+    # if not os.path.isdir(f"/home/baumgartner/sgutwein84/container/predictions/{args.segment}"):
+    #     os.makedirs(
+    #         f"/home/baumgartner/sgutwein84/container/predictions/{args.segment}")
 
-    img.header.get_xyzt_units()
-    img.to_filename(
-        f"/home/baumgartner/sgutwein84/container/predictions/{args.segment}/target_dose.nii.gz")
+    # segment_dir = "/home/baumgartner/sgutwein84/container/training_prostate/"
 
-    img = nib.Nifti1Image(np.array(diff), np.eye(4))
+    # device = torch.device(
+    #     "cuda") if torch.cuda.is_available else torch.device("cpu")
 
-    img.header.get_xyzt_units()
-    img.to_filename(
-        f"/home/baumgartner/sgutwein84/container/predictions/{args.segment}/difference.nii.gz")
+    # model_checkpoint = torch.load(
+    #     "/home/baumgartner/sgutwein84/container/pytorch-3DUNet/experiments/bs32_ps32_corrected/UNET_267.pt", map_location="cpu")
 
-    img = nib.Nifti1Image(np.array(ct), np.eye(4))
+    # model = Dose3DUNET()
+    # model.load_state_dict(model_checkpoint['model_state_dict'])
+    # model = torch.nn.DataParallel(model)
+    # model.to(device)
 
-    img.header.get_xyzt_units()
-    img.to_filename(
-        f"/home/baumgartner/sgutwein84/container/predictions/{args.segment}/ct.nii.gz")
+    # gamma, pred, target, masks = gamma_sample(
+    #     model, device, args.segment, segment_dir=segment_dir)
+    # diff = pred-target
+    # print(f"Gamma Value for {args.segment}: {gamma}")
+    # binary = np.array(masks[0, :, :, :]).squeeze()
+    # ct = np.array(masks[1, :, :, :]).squeeze()
+
+    # img = nib.Nifti1Image(np.array(pred), np.eye(4))
+
+    # img.header.get_xyzt_units()
+    # img.to_filename(
+    #     f"/home/baumgartner/sgutwein84/container/predictions/{args.segment}/predicted_dose.nii.gz")
+
+    # img = nib.Nifti1Image(binary, np.eye(4))
+
+    # img.header.get_xyzt_units()
+    # img.to_filename(
+    #     f"/home/baumgartner/sgutwein84/container/predictions/{args.segment}/binary_mask.nii.gz")
+
+    # img = nib.Nifti1Image(np.array(target), np.eye(4))
+
+    # img.header.get_xyzt_units()
+    # img.to_filename(
+    #     f"/home/baumgartner/sgutwein84/container/predictions/{args.segment}/target_dose.nii.gz")
+
+    # img = nib.Nifti1Image(np.array(diff), np.eye(4))
+
+    # img.header.get_xyzt_units()
+    # img.to_filename(
+    #     f"/home/baumgartner/sgutwein84/container/predictions/{args.segment}/difference.nii.gz")
+
+    # img = nib.Nifti1Image(np.array(ct), np.eye(4))
+
+    # img.header.get_xyzt_units()
+    # img.to_filename(
+    #     f"/home/baumgartner/sgutwein84/container/predictions/{args.segment}/ct.nii.gz")
