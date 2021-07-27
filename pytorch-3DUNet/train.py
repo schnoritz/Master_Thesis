@@ -7,6 +7,7 @@ from torch import optim
 import torch.nn as nn
 import argparse
 import utils
+from losses import RMSELoss
 import pickle
 import dataqueue
 from time import time
@@ -274,7 +275,7 @@ def setup_training(
     # subject_list = SubjectDataset(data_path, sampling_scheme="beam")
 
     my_UNET = Dose3DUNET().float()
-    criterion = utils.RMSELoss()
+    criterion = RMSELoss()
 
     if pretrained_model != "False":
         print(f"\nUsing pretrained Model: {pretrained_model}\n")

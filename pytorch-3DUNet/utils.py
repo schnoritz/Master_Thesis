@@ -31,15 +31,6 @@ def plot_patches(patches, target, idx):
     plt.close()
 
 
-class RMSELoss(nn.Module):
-    def __init__(self):
-        super().__init__()
-        self.mse = nn.MSELoss()
-
-    def forward(self, y_hat, y):
-        return torch.sqrt(self.mse(y_hat, y))
-
-
 def define_calculation_device(use_gpu):
 
     if use_gpu:

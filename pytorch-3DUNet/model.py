@@ -10,10 +10,27 @@ def upsample(x):
     return nnf.interpolate(input=x, scale_factor=2, mode="trilinear", align_corners=False)
 
 
+def downsample(x):
+    down = nn.MaxPool3d(kernel_size=2, stride=2)
+    return down(x)
+
+
+def add_skip_connection(x, skip):
+    connection = skip.pop()
+    if x.shape[2:] != connection.shape[2:]:
+        print(
+            f"Warning! Interpolation x: {x.shape}, skip connection: {connection.shape}")
+        x = nnf.interpolate(
+            input=x, size=connection.shape[2:], mode="trilinear", align_corners=False)
+
+    return torch.cat((connection, x), dim=1)
+
+
 class DoubleConv(nn.Module):
-    def __init__(self, in_channels, out_channels):
+    def __init__(self, in_channels, out_channels, sample=False):
 
         super(DoubleConv, self).__init__()
+        self.sample = sample
         self.conv = nn.Sequential(
             nn.Conv3d(in_channels, out_channels, kernel_size=3,
                       stride=1, padding=1, bias=False),
@@ -26,72 +43,125 @@ class DoubleConv(nn.Module):
         )
 
     def forward(self, x):
+
+        if self.sample == "upsample":
+            x = self.conv(x)
+            return upsample(x)
+
+        if self.sample == "downsample":
+            x = downsample(x)
+            return self.conv(x)
+
         return self.conv(x)
 
 
 class Dose3DUNET(nn.Module):
     def __init__(
-        self, in_channels=5, out_channels=1, features=[64, 128, 256]
+        self, in_channels=5, out_channels=1, features=[64, 128]
     ):
 
         super(Dose3DUNET, self).__init__()
         self.downs = nn.ModuleList()
         self.ups = nn.ModuleList()
         self.pool = nn.MaxPool3d(kernel_size=2, stride=2)
+        self.last_conv = nn.Sequential(
+            nn.Conv3d(
+                3*features[0],
+                features[0],
+                kernel_size=3,
+                stride=1,
+                padding=1,
+                bias=False
+            ),
+            nn.BatchNorm3d(features[0]),
+            nn.ReLU(inplace=True),
+            nn.Conv3d(
+                features[0],
+                features[0],
+                kernel_size=3,
+                stride=1,
+                padding=1,
+                bias=False
+            ),
+            nn.BatchNorm3d(features[0]),
+            nn.ReLU(inplace=True),
+            nn.Conv3d(
+                features[0],
+                out_channels,
+                kernel_size=1,
+                stride=1,
+                padding=0,
+                bias=False
+            ),
+            nn.BatchNorm3d(out_channels),
+            nn.ReLU(inplace=True)
+        )
+        self.first_conv = nn.Sequential(
+            nn.Conv3d(
+                in_channels,
+                features[0]//2,
+                kernel_size=3,
+                stride=1,
+                padding=1,
+                bias=False
+            ),
+            nn.BatchNorm3d(features[0]//2),
+            nn.ReLU(inplace=True),
+            nn.Conv3d(
+                features[0]//2,
+                features[0],
+                kernel_size=3,
+                stride=1,
+                padding=1,
+                bias=False
+            ),
+            nn.BatchNorm3d(features[0]),
+            nn.ReLU(inplace=True)
+        )
 
-        # DOWN
-        for feature in features:
-            self.downs.append(DoubleConv(in_channels, feature))
-            in_channels = feature
+        # DOWNSAMPLING
+        self.DOWN = []
+        for size in features:
+            self.DOWN.append(DoubleConv(size, 2*size, sample="downsample"))
 
-        # UP
-        for num in range(len(features)-1, 0, -1):
-            self.ups.append(DoubleConv(3*features[num], features[num]))
-        self.ups.append(nn.Conv3d(3*features[0], out_channels, kernel_size=1))
+        # UPSAMPLING
+        self.UP = []
+        features = features[::-1]
+        for size in features:
+            self.UP.append(DoubleConv(6*size, 2*size, sample="upsample"))
 
-        self.bottleneck = nn.Sequential(nn.MaxPool3d(kernel_size=2, stride=2), DoubleConv(
-            features[-1], features[-1]*2))
-        #self.final_conv = nn.Conv3d(3*features[0], out_channels, kernel_size=1)
+        # BOTTLENECK
+        self.BOTTLENECK = DoubleConv(2*features[0], 4*features[0])
 
     def forward(self, x):
 
-        print(x.shape)
-        skip_connections = []
-        for down in self.downs:
-            x = down(x)
-            skip_connections.append(x)
-            x = self.pool(x)
+        skip = []
+        x = self.first_conv(x)
+        skip.append(x)
 
-        x = self.bottleneck(x)
+        for down in self.DOWN:
+            x = down(x)
+            skip.append(x)
+
+        x = downsample(x)
+        x = self.BOTTLENECK(x)
         x = upsample(x)
 
-        skip_connections = skip_connections[::-1]
+        for up in self.UP:
 
-        for num, up in enumerate(self.ups):
-
-            skip_connection = skip_connections[num]
-            x = upsample(x)
-
-            # check if shapes match
-            if x.shape[2:] != skip_connection.shape[2:]:
-                x = nnf.interpolate(
-                    input=x, size=skip_connection.shape[2:], mode="trilinear", align_corners=False)
-                print(
-                    "Warning! Interpolation due to not matching shape.")
-
-            # add skip connection to upsampled tensor
-            x = torch.cat((skip_connection, x), dim=1)
+            x = add_skip_connection(x, skip)
             x = up(x)
 
+        x = add_skip_connection(x, skip)
+        x = self.last_conv(x)
         return x
 
 
 def test():
     # mit x = torch.randn((batch_size, in_channels, W, H, D))
-    x = torch.randn((2, 5, 64, 64, 64))
+    x = torch.randn((2, 5, 32, 32, 33))
 
-    model = Dose3DUNET(in_channels=5, out_channels=1,
-                       features=[64, 128, 256])
+    model = Dose3DUNET()
     # print(model)
     preds = model(x)
     print(f"Inputsize is: {x.shape}")

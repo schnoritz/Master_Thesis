@@ -175,6 +175,7 @@ def train(train_state, num_patches, train_queue, validation_queue, criterion, de
             torch.cuda.empty_cache()
 
             loss = criterion(dose_pred, target_batch)
+
             train_loss += loss.item()
 
             optimizer.zero_grad()
