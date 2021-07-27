@@ -21,6 +21,10 @@ class ResidualInner(nn.Module):
         return x
 
 
+def upsample(x):
+    return nnf.interpolate(input=x, scale_factor=2, mode="trilinear", align_corners=False)
+
+
 def makeReversibleSequence(channels):
     innerChannels = channels // 2
     groups = 64 // 2
@@ -76,13 +80,14 @@ class NoNewReversible(nn.Module):
         self.features = features
 
         self.firstConv = nn.Conv3d(
-            in_channels, self.features[0], 3, padding=1, bias=False)
-        self.lastConv = DecoderModule(features[0], out_channels, depth)
+            in_channels, self.features[0], kernel_size=3, padding=1, bias=False)
+        self.lastConv = nn.Conv3d(
+            3*self.features[0], out_channels, kernel_size=1)
 
         # create encoder levels
         encoderModules = []
         in_channels = features[0]
-        for feature in features:
+        for feature in features[1:]:
             encoderModules.append(EncoderModule(in_channels, feature, depth))
             in_channels = feature
 
@@ -93,46 +98,66 @@ class NoNewReversible(nn.Module):
 
         # create decoder levels
         decoderModules = []
+        features = features[1:]
         for feature in reversed(features):
-            decoderModules.append(DecoderModule(2*feature, feature, depth))
+            decoderModules.append(DecoderModule(3*feature, feature, depth))
+        decoderModules.append(self.lastConv)
 
         self.decoders = nn.ModuleList(decoderModules)
 
     def forward(self, x):
-        x = self.firstConv(x)
+        print("-"*50)
+        print("DOWN:")
 
         inputStack = []
-        for i in range(len(self.features)):
-            x = self.encoders[i](x)
+        print(x.shape)
+        x = self.firstConv(x)
+        inputStack.append(x)
+        print(x.shape)
+        for encoder in self.encoders:
+            x = encoder(x)
+            print(x.shape)
             inputStack.append(x)
-
+        print("-"*50)
+        print("BOTTLENECK:")
         x = self.bottleneck(x)
+        print(x.shape)
+        print("-"*50)
+        print("UP:")
 
-        for i in range(len(self.features)):
-            x = self.decoders[i](x)
-            x = x + inputStack.pop()
+        x = upsample(x)
+        print(x.shape)
 
-        x = self.lastConv(x)
-        x = torch.sigmoid(x)
+        for decoder in self.decoders:
+            x = torch.cat((inputStack.pop(), x), dim=1)
+            print(x.shape)
+            x = decoder(x)
+            print(x.shape)
+
+        print("-"*50)
+        print("OUT:")
+
+        print(x.shape)
+        print("-"*50)
         return x
 
 
 def test():
     # mit x = torch.randn((batch_size, in_channels, W, H, D))
-    x = torch.randn((10, 5, 32, 32, 32))
-    y = torch.randn((10, 1, 32, 32, 32))
+    x = torch.randn((3, 5, 32, 32, 32))
+    y = torch.randn((3, 1, 32, 32, 32))
     criterion = torch.nn.MSELoss()
     model = NoNewReversible()
     optimizer = torch.optim.Adam(model.parameters(), lr=1E-4)
     # print(model)
-    for epoch in range(100):
-        print(epoch)
+    for epoch in range(1):
+        # print(epoch)
         preds = model(x)
-        optimizer.zero_grad()
-        loss = criterion(preds, y)
-        loss.backward()
-        optimizer.step()
-        print(loss.item())
+        # optimizer.zero_grad()
+        # loss = criterion(preds, y)
+        # loss.backward()
+        # optimizer.step()
+        # print(loss.item())
 
 
 if __name__ == "__main__":

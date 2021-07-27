@@ -6,6 +6,10 @@ import torchvision.transforms.functional as tf
 # implementation of this architecture: https://lmb.informatik.uni-freiburg.de/people/ronneber/u-net/u-net-architecture.png
 
 
+def upsample(x):
+    return nnf.interpolate(input=x, scale_factor=2, mode="trilinear", align_corners=False)
+
+
 class DoubleConv(nn.Module):
     def __init__(self, in_channels, out_channels, p=0.2):
 
@@ -33,8 +37,9 @@ class DoubleConv(nn.Module):
 
 class Dose3DUNET(nn.Module):
     def __init__(
-        self, in_channels=5, out_channels=1, features=[64, 128, 256], p=0.2
+        self, in_channels=5, out_channels=1, features=[64, 128, 256]
     ):
+
         super(Dose3DUNET, self).__init__()
         self.downs = nn.ModuleList()
         self.ups = nn.ModuleList()
@@ -42,19 +47,17 @@ class Dose3DUNET(nn.Module):
 
         # DOWN
         for feature in features:
-            self.downs.append(DoubleConv(in_channels, feature, p=p))
+            self.downs.append(DoubleConv(in_channels, feature))
             in_channels = feature
 
         # UP
-        for feature in reversed(features):
-            self.ups.append(
-                nn.ConvTranspose3d(feature*2, feature,
-                                   kernel_size=2, stride=2)
-            )
-            self.ups.append(DoubleConv(feature*2, feature, p=p))
+        for num in range(len(features)-1, 0, -1):
+            self.ups.append(DoubleConv(3*features[num], features[num]))
+        self.ups.append(nn.Conv3d(3*features[0], out_channels, kernel_size=1))
 
-        self.bottleneck = DoubleConv(features[-1], features[-1]*2, p=p)
-        self.final_conv = nn.Conv3d(features[0], out_channels, kernel_size=1)
+        self.bottleneck = nn.Sequential(nn.MaxPool3d(kernel_size=2, stride=2), DoubleConv(
+            features[-1], features[-1]*2))
+        #self.final_conv = nn.Conv3d(3*features[0], out_channels, kernel_size=1)
 
     def forward(self, x):
 
@@ -65,22 +68,27 @@ class Dose3DUNET(nn.Module):
             x = self.pool(x)
 
         x = self.bottleneck(x)
+        x = upsample(x)
+
         skip_connections = skip_connections[::-1]
 
-        for idx in range(0, len(self.ups), 2):
-            x = self.ups[idx](x)
-            skip_connection = skip_connections[idx//2]
+        for num, up in enumerate(self.ups):
 
-            # implementation of resizing of skip connection
-            # warining hinzufügen wenn das ausgeführt wird, evtl. mit padding arbeiten
-            if x.shape != skip_connection.shape:
+            skip_connection = skip_connections[num]
+            x = upsample(x)
+
+            # check if shapes match
+            if x.shape[2:] != skip_connection.shape[2:]:
+                print(
+                    f"Warning! Interpolation due to not matching shape. x: {x.shape}, skip connection: {skip_connection.shape}")
                 x = nnf.interpolate(
-                    input=x, size=skip_connection.shape[2:], mode='nearest')
+                    input=x, size=skip_connection.shape[2:], mode="trilinear", align_corners=False)
 
-            concat_skip = torch.cat((skip_connection, x), dim=1)
-            x = self.ups[idx+1](concat_skip)
+            # add skip connection to upsampled tensor
+            x = torch.cat((skip_connection, x), dim=1)
+            x = up(x)
 
-        return self.final_conv(x)
+        return x
 
     def get_uncertainty(self, x, T):
 
@@ -119,19 +127,20 @@ class Dose3DUNET(nn.Module):
                     layer.eval()
 
         for part in self.ups:
-            if isinstance(part, nn.ConvTranspose3d):
-                continue
-            for layer in part.conv:
-                if isinstance(layer, nn.Dropout3d):
-                    layer.train()
-                else:
-                    layer.eval()
+            if isinstance(part, DoubleConv):
+                for layer in part.conv:
+                    if isinstance(layer, nn.Dropout3d):
+                        layer.train()
+                    else:
+                        layer.eval()
 
-        for layer in self.bottleneck.conv:
-            if isinstance(layer, nn.Dropout3d):
-                layer.train()
-            else:
-                layer.eval()
+        for part in self.bottleneck:
+            if isinstance(part, DoubleConv):
+                for layer in part.conv:
+                    if isinstance(layer, nn.Dropout3d):
+                        layer.train()
+                    else:
+                        layer.eval()
 
     def non_UQ(self):
 
@@ -145,32 +154,33 @@ class Dose3DUNET(nn.Module):
                     layer.train()
 
         for part in self.ups:
-            if isinstance(part, nn.ConvTranspose3d):
-                continue
-            for layer in part.conv:
-                if isinstance(layer, nn.Dropout3d):
-                    layer.eval()
-                else:
-                    layer.train()
+            if isinstance(part, DoubleConv):
+                for layer in part.conv:
+                    if isinstance(layer, nn.Dropout3d):
+                        layer.eval()
+                    else:
+                        layer.train()
 
-        for layer in self.bottleneck.conv:
-            if isinstance(layer, nn.Dropout3d):
-                layer.eval()
-            else:
-                layer.train()
+        for part in self.bottleneck:
+            if isinstance(part, DoubleConv):
+                for layer in part.conv:
+                    if isinstance(layer, nn.Dropout3d):
+                        layer.eval()
+                    else:
+                        layer.train()
 
 
 def test():
     # mit x = torch.randn((batch_size, in_channels, W, H, D))
-    x = torch.randn((10, 5, 64, 64, 65))
+    x = torch.randn((2, 5, 32, 32, 32))
 
     model = Dose3DUNET(in_channels=5, out_channels=1)
-    model.UQ()
-    model.non_UQ()
-    # preds = model(x)
-    # print(f"Inputsize is: {x.shape}")
-    # print(f"Outputsize is: {preds.shape}")
-    # assert preds.shape[2:] == x.shape[2:]
+    uncertainty = model.get_uncertainty(x, T=10)
+    print(uncertainty[0].shape, uncertainty[1].shape, uncertainty[2].shape)
+    preds = model(x)
+    print(f"Inputsize is: {x.shape}")
+    print(f"Outputsize is: {preds.shape}")
+    assert preds.shape[2:] == x.shape[2:]
 
 
 if __name__ == "__main__":

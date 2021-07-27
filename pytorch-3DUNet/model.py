@@ -6,6 +6,10 @@ import torchvision.transforms.functional as tf
 # implementation of this architecture: https://lmb.informatik.uni-freiburg.de/people/ronneber/u-net/u-net-architecture.png
 
 
+def upsample(x):
+    return nnf.interpolate(input=x, scale_factor=2, mode="trilinear", align_corners=False)
+
+
 class DoubleConv(nn.Module):
     def __init__(self, in_channels, out_channels):
 
@@ -29,6 +33,7 @@ class Dose3DUNET(nn.Module):
     def __init__(
         self, in_channels=5, out_channels=1, features=[64, 128, 256]
     ):
+
         super(Dose3DUNET, self).__init__()
         self.downs = nn.ModuleList()
         self.ups = nn.ModuleList()
@@ -40,18 +45,17 @@ class Dose3DUNET(nn.Module):
             in_channels = feature
 
         # UP
-        for feature in reversed(features):
-            self.ups.append(
-                nn.ConvTranspose3d(feature*2, feature,
-                                   kernel_size=2, stride=2)
-            )
-            self.ups.append(DoubleConv(feature*2, feature))
+        for num in range(len(features)-1, 0, -1):
+            self.ups.append(DoubleConv(3*features[num], features[num]))
+        self.ups.append(nn.Conv3d(3*features[0], out_channels, kernel_size=1))
 
-        self.bottleneck = DoubleConv(features[-1], features[-1]*2)
-        self.final_conv = nn.Conv3d(features[0], out_channels, kernel_size=1)
+        self.bottleneck = nn.Sequential(nn.MaxPool3d(kernel_size=2, stride=2), DoubleConv(
+            features[-1], features[-1]*2))
+        #self.final_conv = nn.Conv3d(3*features[0], out_channels, kernel_size=1)
 
     def forward(self, x):
 
+        print(x.shape)
         skip_connections = []
         for down in self.downs:
             x = down(x)
@@ -59,29 +63,35 @@ class Dose3DUNET(nn.Module):
             x = self.pool(x)
 
         x = self.bottleneck(x)
+        x = upsample(x)
+
         skip_connections = skip_connections[::-1]
 
-        for idx in range(0, len(self.ups), 2):
-            x = self.ups[idx](x)
-            skip_connection = skip_connections[idx//2]
+        for num, up in enumerate(self.ups):
 
-            # implementation of resizing of skip connection
-            # warining hinzufügen wenn das ausgeführt wird, evtl. mit padding arbeiten
-            if x.shape != skip_connection.shape:
+            skip_connection = skip_connections[num]
+            x = upsample(x)
+
+            # check if shapes match
+            if x.shape[2:] != skip_connection.shape[2:]:
                 x = nnf.interpolate(
-                    input=x, size=skip_connection.shape[2:], mode='nearest')
+                    input=x, size=skip_connection.shape[2:], mode="trilinear", align_corners=False)
+                print(
+                    "Warning! Interpolation due to not matching shape.")
 
-            concat_skip = torch.cat((skip_connection, x), dim=1)
-            x = self.ups[idx+1](concat_skip)
+            # add skip connection to upsampled tensor
+            x = torch.cat((skip_connection, x), dim=1)
+            x = up(x)
 
-        return self.final_conv(x)
+        return x
 
 
 def test():
     # mit x = torch.randn((batch_size, in_channels, W, H, D))
-    x = torch.randn((10, 5, 64, 64, 65))
+    x = torch.randn((2, 5, 64, 64, 64))
 
-    model = Dose3DUNET(in_channels=5, out_channels=1)
+    model = Dose3DUNET(in_channels=5, out_channels=1,
+                       features=[64, 128, 256])
     # print(model)
     preds = model(x)
     print(f"Inputsize is: {x.shape}")
