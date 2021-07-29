@@ -116,21 +116,14 @@ def calc_field_area(iso_rotated, px_sp, beam):
 def scaling_factor(px_sp, SID, rotated_dim, rotated_iso_loc):
 
     # hier verwendung von Strahlensatz mit voxelgröße und SID
-    # fac = [
-    #     (px_sp[0] * (SID + i * px_sp[0])) / (2 * SID) / (px_sp[0] / 2)
-    #     for i in range(0 - rotated_iso_loc, rotated_dim[0] - rotated_iso_loc)
-    # ]
-    # percentual_increase = [fac[i] / fac[0] for i in range(1, len(fac))]
-    # percentual_increase.insert(0, 1)
-
-    fac = [
-        ((SID+i)*px_sp[0]*px_sp[0])/(SID*px_sp[0])
-        for i in range(0 - rotated_iso_loc, rotated_dim[0] - rotated_iso_loc)
+    scale_factor = [
+        ((SID/px_sp[0])+i)/(SID/px_sp[0]) for i in range(0 - rotated_iso_loc, rotated_dim[0] - rotated_iso_loc)
     ]
-    fac = np.array(fac)/1.171875
-    percentual_increase = [fac[i] / fac[0] for i in range(len(fac))]
 
-    return percentual_increase, fac[0]
+    percentual_increase = [scale_factor[i] / scale_factor[0]
+                           for i in range(len(scale_factor))]
+
+    return percentual_increase, scale_factor[0]
 
 
 def get_leaf_positions(config_path):
@@ -145,8 +138,7 @@ def get_leaf_positions(config_path):
                     .ControlPointSequence[0]
                     .BeamLimitingDevicePositionSequence[1][0x300A, 0x011C][:],
                     float,
-                )
-                / 10
+                ) / 10
             )
             jaws = np.array(
                 dcm.BeamSequence[0]
@@ -244,52 +236,53 @@ def paddedzoom(img, zoomfactor):
     return cv2.warpAffine(img, M, img.shape[::-1])
 
 
-# if __name__ == "__main__":
+if __name__ == "__main__":
 
-#     segments = [x for x in os.listdir(
-#         "/home/baumgartner/sgutwein84/container/training_prostate") if not x.startswith(".")]
-#     segments = random.sample(segments, 10)
+    root_dir = "/mnt/qb/baumgartner/sgutwein84/output"
+    save_dir = "/home/baumgartner/sgutwein84/container/test"
+    segments = [x for x in os.listdir(
+        root_dir) if not x.startswith(".")]
+    segments = random.sample(segments, 5)
 
-#     for segment in segments:
+    for segment in segments:
 
-#         pat = segment.split("_")[0]
+        pat = segment.split("_")[0]
 
-#         path = f"/home/baumgartner/sgutwein84/container/output_prostate/{segment}/"
-#         ct_path = f"/home/baumgartner/sgutwein84/container/output_prostate/ct/{pat}/"
-#         beam_config = path + f"beam_config_{segment}.txt"
-#         dose_path = path + f"{segment}_1E07.3ddose"
-#         egsinp = path + f"{segment}.egsinp"
+        path = f"{root_dir}/{segment}/"
+        ct_path = f"{root_dir}/ct/{pat}/"
+        beam_config = path + f"beam_config_{segment}.txt"
+        dose_path = path + f"{segment}_1E07.3ddose"
+        egsinp = path + f"{segment}.egsinp"
 
-#         dose = dose_to_pt(dose_path, ct_path)
+        dose = dose_to_pt(dose_path, ct_path)
+        dose = dose / dose.max()
 
-#         binary = create_binary_mask(
-#             egsinp, ct_path, beam_config, target_size=dose.shape)
+        binary = create_binary_mask(
+            egsinp, ct_path, beam_config, target_size=dose.shape)
 
-#         dose = dose/dose.max()
+        # fig, ax = plt.subplots(1, 2, figsize=(20, 10))
 
-#         # fig, ax = plt.subplots(1, 2, figsize=(20, 10))
+        # ax[0].imshow(binary[256, :, :], cmap="bone")
+        # ax[0].imshow(dose[256, :, :], alpha=0.5, cmap="jet")
 
-#         # ax[0].imshow(binary[256, :, :], cmap="bone")
-#         # ax[0].imshow(dose[256, :, :], alpha=0.5, cmap="jet")
+        # ax[1].imshow(binary[:, 256, :], cmap="bone")
+        # ax[1].imshow(dose[:, 256, :], alpha=0.5, cmap="jet")
 
-#         # ax[1].imshow(binary[:, 256, :], cmap="bone")
-#         # ax[1].imshow(dose[:, 256, :], alpha=0.5, cmap="jet")
+        # plt.savefig(
+        #     f"/home/baumgartner/sgutwein84/container/test/{segment}.png")
 
-#         # plt.savefig(
-#         #     f"/home/baumgartner/sgutwein84/container/test/{segment}.png")
+        # plt.close()
 
-#         # plt.close()
+        img = nib.Nifti1Image(np.array(dose), np.eye(4))
 
-#         img = nib.Nifti1Image(np.array(dose), np.eye(4))
+        img.header.get_xyzt_units()
+        img.to_filename(
+            f"{save_dir}/dose_{segment}.nii.gz")
 
-#         img.header.get_xyzt_units()
-#         img.to_filename(
-#             f"/home/baumgartner/sgutwein84/container/predictions/dose_{segment}.nii.gz")
+        img = nib.Nifti1Image(np.array(binary), np.eye(4))
 
-#         img = nib.Nifti1Image(np.array(binary), np.eye(4))
+        img.header.get_xyzt_units()
+        img.to_filename(
+            f"{save_dir}/binary_{segment}.nii.gz")
 
-#         img.header.get_xyzt_units()
-#         img.to_filename(
-#             f"/home/baumgartner/sgutwein84/container/predictions/binary_{segment}.nii.gz")
-
-#         print(f"{segment} done")
+        print(f"{segment} done")

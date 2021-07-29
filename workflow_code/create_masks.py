@@ -1,29 +1,37 @@
 # imports
 import argparse
 import os
-import torch
-import numpy as np
 import glob
-import paramiko
-import matplotlib.pyplot as plt
-
-from pprint import pprint
 
 
-def server_login():
-    """logs into the ML-Cloud
+def parse():
 
-    Returns:
-        client: returns paramiko client
-    """
-    hostname = "134.2.168.52"
-    username = "sgutwein84"
-    password = "Derzauberkoenig1!"
-    client = paramiko.SSHClient()
-    client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-    client.connect(hostname=hostname, username=username, password=password)
+    parser = argparse.ArgumentParser(description="Clean dosxyznrc folder.")
 
-    return client
+    parser.add_argument(
+        "-dir",
+        action='store',
+        required=True,
+        dest='input_dir'
+    )
+
+    parser.add_argument(
+        "-p",
+        nargs='+',
+        action='store',
+        dest='patients_list'
+    )
+
+    parser.add_argument(
+        "-s",
+        nargs='+',
+        action='store',
+        dest='segments_list'
+    )
+
+    args = parser.parse_args()
+
+    return args
 
 
 def get_segments(dir):
@@ -34,28 +42,28 @@ def get_segments(dir):
     ]
 
 
-def create_mask_files(dir, segments=False):
+def create_mask_files(input_dir, segments=None):
 
-    if dir[-1] != "/":
-        dir += "/"
+    if input_dir[-1] != "/":
+        input_dir += "/"
 
-    if segments == False:
-        segments = get_segments(dir)
+    if not segments:
+        segments = get_segments(input_dir)
 
-    with server_login() as client:
-        for num, segment in enumerate(segments):
+    for segment in segments:
 
-            patient = segment.split("_")[0]
-            output_folder = dir.split("/")[-2].split("_")[-1]
-            egsinp_file = f"{dir}{segment}/{segment}.egsinp"
-            beam_config_file = f"{dir}{segment}/beam_config_{segment}.txt"
-            dose_file = glob.glob(f"{dir}{segment}/{patient}*.3ddose")[0]
+        patient = segment.split("_")[0]
+        output_folder = input_dir.split("/")[-2].split("_")[-1]
+        egsinp_file = f"{input_dir}{segment}/{segment}.egsinp"
+        beam_config_file = f"{input_dir}{segment}/beam_config_{segment}.txt"
+        dose_file = glob.glob(f"{input_dir}{segment}/{patient}*.3ddose")[0]
 
-            create_segment_job_file(
-                egsinp_file, beam_config_file, dose_file, segment, output_folder
-            )
+        create_segment_job_file(
+            egsinp_file, beam_config_file, dose_file, segment, output_folder
+        )
 
-            execute_job_file(segment, client)
+        job_id = execute_job_file()
+        print(f"JOB-ID for {segment}: {job_id}")
 
 
 def create_segment_job_file(
@@ -84,33 +92,32 @@ def create_segment_job_file(
         fout.writelines(lines)
 
 
-def execute_job_file(segment, client):
+def execute_job_file():
 
-    _, stdout, _ = client.exec_command(
-        f"cd container; sbatch job.sh"
-    )
+    stream = os.popen(
+        "cd /home/baumgartner/sgutwein84/container;sbatch job.sh")
+    out = stream.read()
 
-    for line in stdout:
-        if line:
-            job_id = line.split()[-1]
-
-    print(f"JOB-ID: {job_id} for segment: {segment}")
+    return out.split()[-1]
 
 
 if __name__ == "__main__":
 
-    dir = "/home/baumgartner/sgutwein84/container/output_prostate"
+    args = parse()
 
-    patients = None
+    if args.patients_list:
 
-    if patients:
         segments = []
-        for patient in patients:
+        for patient in args.patients_list:
+            if patient[-1] != "_":
+                patient += "_"
             segments.extend([x for x in os.listdir(
-                dir) if not "ct" in x and not "egsphant" in x and not x.startswith(".") and patient in x])
+                args.input_dir) if not "ct" in x and not "egsphant" in x and not x.startswith(".") and patient in x])
 
-        pprint(segments)
+    elif args.segments_list:
+        segments = args.segments_list
+
     else:
-        segments = False
+        segments = None
 
-    create_mask_files(dir, segments)
+    create_mask_files(args.input_dir, segments)

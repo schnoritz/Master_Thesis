@@ -26,13 +26,6 @@ def parse():
         help="",
     )
 
-    # parser.add_argument(
-    #     "egsphant_file",
-    #     type=str,
-    #     metavar="",
-    #     help="",
-    # )
-
     parser.add_argument(
         "beam_config_file",
         type=str,
@@ -77,18 +70,18 @@ def create_mask_files(
     set_zero = True
     normalize = True
     patient = segment.split("_")[0]
-    ct_path = f"/home/baumgartner/sgutwein84/container/output_{output_folder}/ct/{patient}"
+    ct_path = f"/mnt/qb/baumgartner/sgutwein84/output_{output_folder}/ct/{patient}"
 
-    if not os.path.isdir(f'/home/baumgartner/sgutwein84/container/training_{output_folder}'):
+    if not os.path.isdir(f'/mnt/qb/baumgartner/sgutwein84/training_{output_folder}'):
 
         subprocess.run(
             ['mkdir',
-             f'/home/baumgartner/sgutwein84/container/training_{output_folder}']
+             f'/mnt/qb/baumgartner/sgutwein84/training_{output_folder}']
         )
 
     subprocess.run(
         ['mkdir',
-            f'/home/baumgartner/sgutwein84/container/training_{output_folder}/{segment}']
+            f'/mnt/qb/baumgartner/sgutwein84/training_{output_folder}/{segment}']
     )
 
     dose_mask = dose_to_pt(dose_file, ct_path, tensor=True)
@@ -161,11 +154,11 @@ def create_mask_files(
     dose_mask = dose_mask.float()
 
     torch.save(
-        stack, f"/home/baumgartner/sgutwein84/container/training_{output_folder}/{segment}/training_data.pt"
+        stack, f"/mnt/qb/baumgartner/sgutwein84/training_{output_folder}/{segment}/training_data.pt"
     )
 
     torch.save(
-        dose_mask, f"/home/baumgartner/sgutwein84/container/training_{output_folder}/{segment}/target_data.pt"
+        dose_mask, f"/mnt/qb/baumgartner/sgutwein84/training_{output_folder}/{segment}/target_data.pt"
     )
 
 
@@ -179,9 +172,9 @@ if __name__ == "__main__":
                       args.output_folder)
 
     # debug
-    # egsinp_file = "/home/baumgartner/sgutwein84/container/output_prostate/p0_0/p0_0.egsinp"
-    # beam_config_file = "/home/baumgartner/sgutwein84/container/output_prostate/p0_0/beam_config_p0_0.txt"
-    # dose_file = "/home/baumgartner/sgutwein84/container/output_prostate/p0_0/p0_0_1E07.3ddose"
+    # egsinp_file = "/mnt/qb/baumgartner/sgutwein84/output_prostate/p0_0/p0_0.egsinp"
+    # beam_config_file = "/mnt/qb/baumgartner/sgutwein84/output_prostate/p0_0/beam_config_p0_0.txt"
+    # dose_file = "/mnt/qb/baumgartner/sgutwein84/output_prostate/p0_0/p0_0_1E07.3ddose"
     # segment = "p0_0"
     # output_folder = "prostate"
 
@@ -203,4 +196,4 @@ if __name__ == "__main__":
     #     ax[4].imshow(stack[4, :, :, i])
     #     ax[5].imshow(dose_mask[:, :, i])
     #     plt.savefig(
-    #         f"/home/baumgartner/sgutwein84/container/test/new_{i}.png")
+    #         f"/mnt/qb/baumgartner/sgutwein84/test/new_{i}.png")
