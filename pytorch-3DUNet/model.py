@@ -61,10 +61,9 @@ class Dose3DUNET(nn.Module):
     ):
 
         super(Dose3DUNET, self).__init__()
-        self.downs = nn.ModuleList()
-        self.ups = nn.ModuleList()
-        self.pool = nn.MaxPool3d(kernel_size=2, stride=2)
-        self.last_conv = nn.Sequential(
+        self.DOWN = nn.ModuleList()
+        self.UP = nn.ModuleList()
+        self.LAST_CONV = nn.Sequential(
             nn.Conv3d(
                 3*features[0],
                 features[0],
@@ -96,7 +95,7 @@ class Dose3DUNET(nn.Module):
             nn.BatchNorm3d(out_channels),
             nn.ReLU(inplace=True)
         )
-        self.first_conv = nn.Sequential(
+        self.FIRST_CONV = nn.Sequential(
             nn.Conv3d(
                 in_channels,
                 features[0]//2,
@@ -120,12 +119,10 @@ class Dose3DUNET(nn.Module):
         )
 
         # DOWNSAMPLING
-        self.DOWN = []
         for size in features:
             self.DOWN.append(DoubleConv(size, 2*size, sample="downsample"))
 
         # UPSAMPLING
-        self.UP = []
         features = features[::-1]
         for size in features:
             self.UP.append(DoubleConv(6*size, 2*size, sample="upsample"))
@@ -136,7 +133,7 @@ class Dose3DUNET(nn.Module):
     def forward(self, x):
 
         skip = []
-        x = self.first_conv(x)
+        x = self.FIRST_CONV(x)
         skip.append(x)
 
         for down in self.DOWN:
@@ -153,15 +150,17 @@ class Dose3DUNET(nn.Module):
             x = up(x)
 
         x = add_skip_connection(x, skip)
-        x = self.last_conv(x)
+        x = self.LAST_CONV(x)
         return x
 
 
 def test():
     # mit x = torch.randn((batch_size, in_channels, W, H, D))
-    x = torch.randn((2, 5, 32, 32, 33))
+    x = torch.randn((2, 5, 32, 32, 32))
+    # x.to("cuda")
 
     model = Dose3DUNET()
+    # model.to("cuda")
     # print(model)
     preds = model(x)
     print(f"Inputsize is: {x.shape}")

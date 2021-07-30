@@ -44,7 +44,7 @@ if __name__ == "__main__":
             print(seg, "missing data!")
             continue
 
-        fig, ax = plt.subplots(1, 2, figsize=(20, 10))
+        fig, ax = plt.subplots(1, 2, figsize=(2, 1))
 
         ax[0].imshow(masks[0, 256, :, :], cmap="bone")
         ax[0].imshow(target[0, 256, :, :], alpha=0.4, cmap="jet")
