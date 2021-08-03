@@ -5,10 +5,22 @@ from pt_ct import convert_ct_array
 import numpy as np
 from pymedphys import gamma
 import os
-import paramiko
 
 
 if __name__ == "__main__":
+
+    dir = "/mnt/qb/baumgartner/sgutwein84/training_prostate/"
+    files = [dir + x for x in os.listdir(dir) if not x.startswith(".")]
+    files = [f"{dir}p{i}_0/" for i in range(41)]
+    print(files)
+    files.remove("/mnt/qb/baumgartner/sgutwein84/training_prostate/p6_0/")
+
+    for file in files:
+        print(file)
+        masks = torch.load(f"{file}/training_data.pt")
+        print(masks.shape)
+        # target = torch.load(f"{files}/target_data.pt")
+        # print(target.shape)
 
     # hostname = "134.2.168.52"
     # username = "sgutwein84"
@@ -47,37 +59,37 @@ if __name__ == "__main__":
 
     # plt.savefig("/home/baumgartner/sgutwein84/container/test/patients.png")
 
-    files = ["/home/baumgartner/sgutwein84/p0_0_1E07_new.3ddose",
-             "/home/baumgartner/sgutwein84/p0_0_1E07_old.3ddose"]
-    ct_path = "/home/baumgartner/sgutwein84/container/output_prostate/ct/p0"
+    # files = ["/home/baumgartner/sgutwein84/p0_0_1E07_new.3ddose",
+    #          "/home/baumgartner/sgutwein84/p0_0_1E07_old.3ddose"]
+    # ct_path = "/home/baumgartner/sgutwein84/container/output_prostate/ct/p0"
 
-    dose = []
-    for dose_path in files:
-        dose.append(dose_to_pt(dose_path, ct_path))
+    # dose = []
+    # for dose_path in files:
+    #     dose.append(dose_to_pt(dose_path, ct_path))
 
-    gamma_options = {
-        'dose_percent_threshold': 1,
-        'distance_mm_threshold': 1,
-        'lower_percent_dose_cutoff': 1,
-        'interp_fraction': 5,  # Should be 10 or more for more accurate results
-        'max_gamma': 1.01,
-        'ram_available': 2**37,
-        'quiet': False,
-        'local_gamma': False,
-        'random_subset': 100000
-    }
+    # gamma_options = {
+    #     'dose_percent_threshold': 1,
+    #     'distance_mm_threshold': 1,
+    #     'lower_percent_dose_cutoff': 1,
+    #     'interp_fraction': 5,  # Should be 10 or more for more accurate results
+    #     'max_gamma': 1.01,
+    #     'ram_available': 2**37,
+    #     'quiet': False,
+    #     'local_gamma': False,
+    #     'random_subset': 100000
+    # }
 
-    coords = (np.arange(0, 1.17*dose[0].shape[0], 1.17), np.arange(
-        0, 1.17*dose[0].shape[1], 1.17), np.arange(0, 3*dose[0].shape[2], 3))
+    # coords = (np.arange(0, 1.17*dose[0].shape[0], 1.17), np.arange(
+    #     0, 1.17*dose[0].shape[1], 1.17), np.arange(0, 3*dose[0].shape[2], 3))
 
-    gamma_val = gamma(
-        coords, np.array(dose[0]),
-        coords, np.array(dose[1]),
-        **gamma_options)
+    # gamma_val = gamma(
+    #     coords, np.array(dose[0]),
+    #     coords, np.array(dose[1]),
+    #     **gamma_options)
 
-    dat = ~np.isnan(gamma_val)
-    dat2 = ~np.isnan(gamma_val[gamma_val <= 1])
-    all = np.count_nonzero(dat)
-    true = np.count_nonzero(dat2)
+    # dat = ~np.isnan(gamma_val)
+    # dat2 = ~np.isnan(gamma_val[gamma_val <= 1])
+    # all = np.count_nonzero(dat)
+    # true = np.count_nonzero(dat2)
 
-    print(np.round((true/all)*100, 4))
+    # print(np.round((true/all)*100, 4))

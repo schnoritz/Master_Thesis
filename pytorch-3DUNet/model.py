@@ -1,27 +1,15 @@
 import torch
 import torch.nn as nn
 import torch.nn.functional as nnf
-import torchvision.transforms.functional as tf
 
 # implementation of this architecture: https://lmb.informatik.uni-freiburg.de/people/ronneber/u-net/u-net-architecture.png
 
 
-def upsample(x):
-    return nnf.interpolate(input=x, scale_factor=2, mode="trilinear", align_corners=False)
-
-
-def downsample(x):
-    down = nn.MaxPool3d(kernel_size=2, stride=2)
-    return down(x)
-
-
-def add_skip_connection(x, skip):
-    connection = skip.pop()
+def add_skip_connection(x, skip_connections):
+    connection = skip_connections.pop()
     if x.shape[2:] != connection.shape[2:]:
-        print(
-            f"Warning! Interpolation x: {x.shape}, skip connection: {connection.shape}")
-        x = nnf.interpolate(
-            input=x, size=connection.shape[2:], mode="trilinear", align_corners=False)
+        print(f"Warning! Interpolation x: {x.shape}, skip connection: {connection.shape}")
+        x = nnf.interpolate(input=x, size=connection.shape[2:], mode="trilinear", align_corners=False)
 
     return torch.cat((connection, x), dim=1)
 
@@ -32,27 +20,35 @@ class DoubleConv(nn.Module):
         super(DoubleConv, self).__init__()
         self.sample = sample
         self.conv = nn.Sequential(
-            nn.Conv3d(in_channels, out_channels, kernel_size=3,
-                      stride=1, padding=1, bias=False),
+            nn.Conv3d(in_channels, out_channels, kernel_size=3, stride=1, padding=1, bias=False),
             nn.BatchNorm3d(out_channels),
             nn.ReLU(inplace=True),
-            nn.Conv3d(out_channels, out_channels, kernel_size=3,
-                      stride=1, padding=1, bias=False),
+            nn.Conv3d(out_channels, out_channels, kernel_size=3, stride=1, padding=1, bias=False),
             nn.BatchNorm3d(out_channels),
-            nn.ReLU(inplace=True)
-        )
+            nn.ReLU(inplace=True))
 
-    def forward(self, x):
+        if sample == "upsample":
+            self.upsample = nn.ConvTranspose3d(
+                in_channels=int((2/3)*in_channels), out_channels=int((2/3)*in_channels), kernel_size=2, stride=2)
 
-        if self.sample == "upsample":
-            x = self.conv(x)
-            return upsample(x)
+        if sample == "downsample":
+            self.downsample = nn.MaxPool3d(kernel_size=2, stride=2)
+
+    def forward(self, x, skip_connection=None):
 
         if self.sample == "downsample":
-            x = downsample(x)
+            skip = self.conv(x)
+            x = self.downsample(skip)
+
+            return x, skip
+
+        elif self.sample == "upsample":
+            x = self.upsample(x)
+            x = add_skip_connection(x, skip_connection)
             return self.conv(x)
 
-        return self.conv(x)
+        else:
+            return self.conv(x)
 
 
 class Dose3DUNET(nn.Module):
@@ -115,8 +111,14 @@ class Dose3DUNET(nn.Module):
                 bias=False
             ),
             nn.BatchNorm3d(features[0]),
-            nn.ReLU(inplace=True)
+            nn.ReLU(inplace=True),
         )
+        self.LAST_DECONV = nn.ConvTranspose3d(
+            in_channels=2*features[0],
+            out_channels=2*features[0],
+            kernel_size=2, stride=2)
+
+        self.FIRST_POOL = nn.MaxPool3d(kernel_size=2, stride=2)
 
         # DOWNSAMPLING
         for size in features:
@@ -132,31 +134,31 @@ class Dose3DUNET(nn.Module):
 
     def forward(self, x):
 
-        skip = []
+        skip_connections = []
+
         x = self.FIRST_CONV(x)
-        skip.append(x)
+        skip_connections.append(x)
+        x = self.FIRST_POOL(x)
 
         for down in self.DOWN:
-            x = down(x)
-            skip.append(x)
+            x, skip = down(x)
+            skip_connections.append(skip)
 
-        x = downsample(x)
         x = self.BOTTLENECK(x)
-        x = upsample(x)
 
         for up in self.UP:
+            x = up(x, skip_connections)
 
-            x = add_skip_connection(x, skip)
-            x = up(x)
-
-        x = add_skip_connection(x, skip)
+        x = self.LAST_DECONV(x)
+        x = add_skip_connection(x, skip_connections)
         x = self.LAST_CONV(x)
+
         return x
 
 
 def test():
     # mit x = torch.randn((batch_size, in_channels, W, H, D))
-    x = torch.randn((2, 5, 32, 32, 32))
+    x = torch.randn((2, 5, 16, 16, 16))
     # x.to("cuda")
 
     model = Dose3DUNET()

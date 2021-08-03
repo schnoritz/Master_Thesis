@@ -86,11 +86,15 @@ def create_mask_files(
 
     dose_mask = dose_to_pt(dose_file, ct_path, tensor=True)
 
+    print("Dose Mask Created!")
+
     ct_mask = convert_ct_array(
         ct_path=ct_path,
         target_size=dose_mask.shape,
         tensor=True
     )
+
+    print("CT Mask Created!")
 
     if set_zero:
         # treshhold muss noch genau bestimmt werden -> Daniela meinte 150 wird bei bestrahlungsplanung gemacht
@@ -120,7 +124,7 @@ def create_mask_files(
     )
 
     binary_mask = create_binary_mask(
-        egsinp_file, ct_path, beam_config_file, target_size=np.array(ct_mask).shape, px_sp=np.array([1.171875, 1.171875, 3]), SID=1435, tensor=True
+        egsinp_file, ct_path, beam_config_file, target_size=np.array(ct_mask).shape, SID=1435, tensor=True
     )
 
     # creates stack of size (5, 512  512, num_slices)
@@ -143,8 +147,8 @@ def create_mask_files(
         stack[0] = stack[0]
         stack[1] = stack[1]/1800  # CT Mask
         stack[2] = stack[2]/1800  # Radio Depth Mask
-        stack[3] = stack[3]/(1.171875)  # scale by pixel spacing
-        stack[4] = stack[4]/(1435/1.171875)  # scale by SID and pixel spacing
+        stack[3] = stack[3]/10  # scale to cm
+        stack[4] = stack[4]/10  # scale to cm
         dose_mask = dose_mask / 1E-17
 
         print(f"Dose Max-Value is: {np.round(dose_mask.max(),2)}")
@@ -172,16 +176,17 @@ if __name__ == "__main__":
                       args.output_folder)
 
     # debug
-    # egsinp_file = "/mnt/qb/baumgartner/sgutwein84/output_prostate/p0_0/p0_0.egsinp"
-    # beam_config_file = "/mnt/qb/baumgartner/sgutwein84/output_prostate/p0_0/beam_config_p0_0.txt"
-    # dose_file = "/mnt/qb/baumgartner/sgutwein84/output_prostate/p0_0/p0_0_1E07.3ddose"
-    # segment = "p0_0"
+    # dir = "/Users/simongutwein/mnt/qb/baumgartner/sgutwein84/output_prostate/p0_10"
+    # seg = dir.split("/")[-1]
+    # egsinp_file = f"{dir}/{seg}.egsinp"
+    # beam_config_file = f"{dir}/beam_config_{seg}.txt"
+    # dose_file = f"{dir}/{seg}_1E07.3ddose"
     # output_folder = "prostate"
 
     # stack, dose_mask = create_mask_files(egsinp_file,
     #                                      beam_config_file,
     #                                      dose_file,
-    #                                      segment,
+    #                                      seg,
     #                                      output_folder)
 
     # fig, ax = plt.subplots(1, 6, figsize=(24, 4))

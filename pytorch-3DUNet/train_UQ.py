@@ -1,14 +1,15 @@
 import os
 import matplotlib.pyplot as plt
 from numpy.core.fromnumeric import mean
-from model import Dose3DUNET
+from model_UQ import Dose3DUNET
 import torch
 from torch import optim
 import torch.nn as nn
 import argparse
 import utils
+from losses import HeteroscedasticAleatoricLoss
 import pickle
-import dataqueue
+import dataqueue_threading
 from time import time
 import sys
 from gamma_sample import gamma_sample
@@ -17,51 +18,115 @@ import numpy as np
 
 from torch.utils.tensorboard import SummaryWriter
 
+global TOP_K
+TOP_K = 5
+
+global SPQ_TRAIN
+global PPS_TRAIN
+global DATA_DIRECTORY
+global LOGGER
+global LOGGER_DIR
+global LOGGER_SEGMENTS_LIST
+global LOGGER_SEGMENTS
+global LOSS_FUNCTION
+
+LOGGER_DIR = "/mnt/qb/baumgartner/sgutwein84/logger/"
+LOGGER_SEGMENTS_LIST = ["p0_0", "p8_55"]
+
+LOSS_FUNCTION = HeteroscedasticAleatoricLoss()
+
 
 def parse():
 
     parser = argparse.ArgumentParser(description='Train Model')
-    parser.add_argument('-num_patches', type=int, metavar='',
-                        help='Number of patches')
-
-    parser.add_argument('-batch_size', type=int, metavar='',
-                        help='Number of samples for one batch')
-
-    parser.add_argument('-patch_size', type=int, metavar='',
-                        help='Size of one 3D-Patch: [patchsize, patchsize, patchsize]')
-
-    parser.add_argument('-experiment_name', type=str,
-                        metavar='', help='name for the experiment')
-
-    parser.add_argument('-validation_segments', nargs='+',
-                        help='set segments used for validation')
+    parser.add_argument(
+        "-num_patches",
+        type=int,
+        action='store',
+        required=True,
+        dest='num_patches'
+    )
 
     parser.add_argument(
-        '--root_dir', type=str, default="/home/baumgartner/sgutwein84/container/prostate_training_data/")
+        "-bs",
+        type=int,
+        action='store',
+        required=True,
+        dest='batch_size'
+    )
 
     parser.add_argument(
-        '--save_dir', type=str, default="")
+        "-ps",
+        type=int,
+        action='store',
+        required=True,
+        dest='patch_size'
+    )
+    parser.add_argument(
+        "-lr",
+        type=float,
+        action='store',
+        required=True,
+        dest='learning_rate'
+    )
 
     parser.add_argument(
-        '--use_gpu', type=bool, metavar='', default=True, help='Number of samples for one batch')
+        "-exp_name",
+        action='store',
+        required=True,
+        dest='experiment_name'
+    )
 
     parser.add_argument(
-        '--pretrained_model', type=str, metavar='', default="False", help='specify path to pretrained model')
+        "-val_seg",
+        required=True,
+        nargs='+',
+        action='store',
+        dest='validation_segments'
+    )
 
     parser.add_argument(
-        '--learning_rate', type=float, metavar='', default=0.00001, help='specify the learning rate')
+        "-dir",
+        required=True,
+        action='store',
+        dest='root_dir'
+    )
 
     parser.add_argument(
-        '--writer', type=str, metavar='', default="None", help='specify the writer')
+        "-save_dir",
+        required=True,
+        action='store',
+        dest='save_dir'
+    )
+
+    parser.add_argument(
+        "-gpu",
+        default=True,
+        action='store',
+        dest='use_gpu'
+    )
+
+    parser.add_argument(
+        "-pre_model",
+        action='store',
+        dest='pretrained_model'
+    )
+
+    parser.add_argument(
+        "-logger",
+        action='store',
+        dest='logger'
+    )
 
     args = parser.parse_args()
 
     return args
 
 
-def validate(unet, criterion, validation_queue, device):
+def validate(model, criterion, validation_queue, device):
 
-    unet.eval()
+    torch.cuda.empty_cache()
+    model.eval()
     curr = 0
     with torch.no_grad():
 
@@ -73,10 +138,10 @@ def validate(unet, criterion, validation_queue, device):
             input_batch, target_batch = utils.get_training_data(
                 input_batch, target_batch, device)
 
-            pred = unet(input_batch)
-            loss += criterion(pred, target_batch).item()
+            pred, uncertainty = model(input_batch)
+            loss += criterion(pred, target_batch, uncertainty).item()
 
-    unet.non_UQ()
+    model.train()
     del input_batch
     del target_batch
     del pred
@@ -84,49 +149,54 @@ def validate(unet, criterion, validation_queue, device):
     return loss / num
 
 
-def get_volume_prediction(net, device, curr_patches):
+def get_volume_prediction(model, device, curr_patches, thickness=16):
 
     torch.cuda.empty_cache()
 
     with torch.no_grad():
-        net.eval()
+        model.eval()
 
-        for seg in test_segments:
+        for seg in LOGGER_SEGMENTS:
 
             masks = torch.load(f"{seg}/training_data.pt")
-            masks = masks[:, 128:128+256, 128:128+256, 25:25+16]
+            masks = masks[:, 128:128+256, 128:128+256, 32:32+thickness]
             masks = torch.unsqueeze(masks, 0)
             masks.to(device)
 
             dose = torch.load(f"{seg}/target_data.pt")
 
-            pred = net(masks)
+            pred, uncertrainty = model(masks)
 
             pred = pred.cpu().detach().numpy()
             pred = pred.squeeze()
+
+            #uncertrainty = torch.exp(uncertrainty)
+            uncertrainty = uncertrainty.cpu().detach().numpy()
+            uncertrainty = uncertrainty.squeeze()
 
             masks = masks.cpu().detach().numpy()
             masks = masks.squeeze()
 
             dose = dose.squeeze()
-            dose = dose[128:128+256, 128:128+256, 25:25+16]
+            dose = dose[128:128+256, 128:128+256, 32:32+thickness]
 
-            fig, ax = plt.subplots(1, 4, figsize=(16, 4))
-            ax[0].imshow(masks[0, :, :, 8])
-            ax[1].imshow(dose[:, :, 8])
-            ax[2].imshow(pred[:, :, 8])
-            ax[3].imshow(dose[:, :, 8]-pred[:, :, 8])
+            fig, ax = plt.subplots(1, 5, figsize=(thickness, 4))
+            ax[0].imshow(masks[0, :, :, thickness//2])
+            ax[1].imshow(dose[:, :, thickness//2])
+            ax[2].imshow(pred[:, :, thickness//2])
+            ax[3].imshow(dose[:, :, thickness//2]-pred[:, :, thickness//2])
+            ax[4].imshow(uncertrainty[:, :, thickness//2])
 
             del masks
             torch.cuda.empty_cache()
 
-            writer.add_figure(f'{seg}/prediction',
+            LOGGER.add_figure(f'{seg}/prediction',
                               fig, global_step=curr_patches)
-            writer.flush()
+            LOGGER.flush()
 
             plt.close(fig)
 
-    net.non_UQ()
+    model.train()
 
 
 def progressBar(current, total, description, barLength=50):
@@ -140,10 +210,19 @@ def progressBar(current, total, description, barLength=50):
     sys.stdout.flush()
 
 
-def train(train_state, num_patches, train_queue, validation_queue, criterion, device, save_dir, batch_size, patch_size):
+def train(
+    train_state,
+    num_patches,
+    train_queue,
+    validation_queue,
+    criterion,
+    device,
+    save_dir,
+    training_parameter
+):
 
-    unet = train_state['UNET']
-    unet = unet.to(device)
+    model = train_state['UNET']
+    model.to(device)
     optimizer = train_state['optimizer']
     utils.optimizer_to_device(optimizer, device)
     epochs = train_state['epochs']
@@ -171,11 +250,10 @@ def train(train_state, num_patches, train_queue, validation_queue, criterion, de
                 device
             )
 
-            dose_pred = unet(train_batch)
+            dose_pred, uncertrainty = model(train_batch)
             torch.cuda.empty_cache()
 
-            loss = criterion(dose_pred, target_batch)
-
+            loss = criterion(dose_pred, target_batch, uncertrainty)
             train_loss += loss.item()
 
             optimizer.zero_grad()
@@ -190,34 +268,24 @@ def train(train_state, num_patches, train_queue, validation_queue, criterion, de
         print("\n")
         train_loss /= num
 
-        validation_loss = validate(unet, criterion, validation_queue, device)
+        validation_loss = validate(model, criterion, validation_queue, device)
+
         gamma_values = []
         for seg in ["p9_35", "p9_11", "p7_34", "p7_1", "p8_9", "p8_20", "p5_42", "p5_11"]:
             gamma_values.append(gamma_sample(
-                unet, device, seg, segment_dir=data_directory))
+                model, device, seg, segment_dir=DATA_DIRECTORY, UQ=True))
 
         gammas = np.array(gamma_values)
         mean_gamma = np.round(gammas.mean(), 2)
         std_gamma = np.round(gammas.std(), 2)
 
-        writer.add_scalar("Gamma/Mean", mean_gamma, curr_patches)
-        writer.add_scalar("Gamma/STD", std_gamma, curr_patches)
+        update_logger(mean_gamma, curr_patches, std_gamma,
+                      train_loss, validation_loss)
 
-        print("\n")
-        print(f"Current Generation      : {generation}")
-        print(f"Current Patches         : {curr_patches}")
-        print(f"Current Training Loss   : {train_loss}")
-        print(f"Current Validation Loss : {validation_loss}")
-        print(f"Current Gamma Val       : {mean_gamma} ± {std_gamma}")
-        print("\n")
+        print_training_status(generation, curr_patches,
+                              train_loss, validation_loss, mean_gamma, std_gamma)
 
-        writer.add_scalar("Loss / Training Loss", train_loss, curr_patches)
-        writer.add_scalar("Loss / Validation Loss",
-                          validation_loss, curr_patches)
-
-        sys.stdout.flush()
-
-        get_volume_prediction(unet, device, curr_patches)
+        get_volume_prediction(model, device, curr_patches)
 
         epochs.append({
             "num_patches": curr_patches,
@@ -226,16 +294,13 @@ def train(train_state, num_patches, train_queue, validation_queue, criterion, de
             "model_generation": train_state['model_generation'] + generation
         })
 
-        # if len(epochs) >= 36:
-        #     if all([i > epochs[-36]['validation_loss'] for i in [x['validation_loss'] for x in epochs[-35:]]]):
-        #         early_stopping = True
-        #         break
+        # evlt noch automated stopping nutzen und LR scheduler
 
-        save = utils.check_improvement(epochs, top_k=top_k)
+        save = utils.check_improvement(epochs, top_k=TOP_K)
 
         if save:
             utils.save_model(
-                model=unet,
+                model=model,
                 optimizer=optimizer,
                 train_loss=train_loss,
                 validation_loss=validation_loss,
@@ -244,12 +309,93 @@ def train(train_state, num_patches, train_queue, validation_queue, criterion, de
                 save=save,
                 epochs=epochs,
                 generation=generation,
-                gammas=[mean_gamma, std_gamma]
+                gammas=[mean_gamma, std_gamma],
+                training_parameter=training_parameter
             )
 
     sys.stdout.flush()
 
     return epochs
+
+
+def update_logger(mean_gamma, curr_patches, std_gamma, train_loss, validation_loss):
+
+    LOGGER.add_scalar("Gamma/Mean", mean_gamma, curr_patches)
+    LOGGER.add_scalar("Gamma/STD", std_gamma, curr_patches)
+    LOGGER.add_scalar("Loss / Training Loss", train_loss, curr_patches)
+    LOGGER.add_scalar("Loss / Validation Loss",
+                      validation_loss, curr_patches)
+
+
+def print_training_status(generation, curr_patches, train_loss, validation_loss, mean_gamma, std_gamma):
+
+    print("\n")
+    print(f"Current Generation      : {generation}")
+    print(f"Current Patches         : {curr_patches}")
+    print(f"Current Training Loss   : {train_loss}")
+    print(f"Current Validation Loss : {validation_loss}")
+    print(f"Current Gamma Val       : {mean_gamma} ± {std_gamma}")
+    print("\n")
+    sys.stdout.flush()
+
+
+def load_pretrained_model(model_path, device, lr):
+    print(f"\nUsing pretrained Model: {model_path}\n")
+
+    my_UNET = Dose3DUNET()
+    state = torch.load(model_path, map_location=device)
+
+    my_UNET.load_state_dict(state['model_state_dict'])
+
+    optimizer = optim.Adam(my_UNET.parameters(),
+                           lr, (0.9, 0.99), 10E-8)
+    optimizer.load_state_dict(state['optimizer_state_dict'])
+
+    if device.type == "cuda":
+        if torch.cuda.device_count() > 1:
+            my_UNET = nn.DataParallel(my_UNET)
+            print(f"Using {torch.cuda.device_count()} GPU's")
+
+    train_state = {
+        'UNET': my_UNET,
+        'optimizer': optimizer,
+        'start_patch_num': state['patches'],
+        'epochs': state['epochs'],
+        'model_generation': state['model_generation']
+    }
+
+    return train_state
+
+
+def no_pretrained_model(device, lr):
+
+    my_UNET = Dose3DUNET()
+
+    if device.type == "cuda":
+        if torch.cuda.device_count() > 1:
+            my_UNET = nn.DataParallel(my_UNET)
+            print(f"Using {torch.cuda.device_count()} GPU's")
+
+    optimizer = optim.Adam(my_UNET.parameters(),
+                           lr, (0.9, 0.99), 10E-8)
+    train_state = {
+        'UNET': my_UNET,
+        'optimizer': optimizer,
+        'start_patch_num': 0,
+        'epochs': [],
+        'model_generation': 0
+    }
+
+    return train_state
+
+
+def get_validation_segments(data_path, validation_segments):
+    print("Validation Segments used: ", validation_segments)
+    return [data_path + x for x in validation_segments]
+
+
+def get_training_segments(data_path, validation_segments):
+    return[data_path + x for x in os.listdir(data_path) if not x.startswith(".") and not data_path + x in validation_segments]
 
 
 def setup_training(
@@ -264,73 +410,31 @@ def setup_training(
     learning_rate
 ):
 
-    if data_path[-1] != "/":
-        data_path += "/"
-
-    global test_segments
-    test_segments = [data_path + 'p0_0', data_path + 'p10_20']
-
     device = utils.define_calculation_device(use_gpu)
+    criterion = LOSS_FUNCTION
 
-    # subject_list = SubjectDataset(data_path, sampling_scheme="beam")
-
-    my_UNET = Dose3DUNET().float()
-    criterion = utils.RMSELoss()
-
-    if pretrained_model != "False":
-        print(f"\nUsing pretrained Model: {pretrained_model}\n")
-        state = torch.load(pretrained_model, map_location=device)
-        my_UNET.load_state_dict(state['model_state_dict'])
-        optimizer = optim.Adam(my_UNET.parameters(),
-                               learning_rate, (0.9, 0.99), 10E-8)
-        optimizer.load_state_dict(state['optimizer_state_dict'])
-
-        if torch.cuda.device_count() > 1:
-            my_UNET = nn.DataParallel(my_UNET)
-            print(f"Using {torch.cuda.device_count()} GPU's")
-
-        train_state = {
-            'UNET': my_UNET,
-            'optimizer': optimizer,
-            'start_patch_num': state['patches'],
-            'epochs': state['epochs'],
-            'model_generation': state['model_generation']
-        }
+    if pretrained_model:
+        train_state = load_pretrained_model(
+            pretrained_model, device, learning_rate)
 
     else:
+        train_state = no_pretrained_model(device, learning_rate)
 
-        if torch.cuda.device_count() > 1:
-            my_UNET = nn.DataParallel(my_UNET)
-            print(f"Using {torch.cuda.device_count()} GPU's")
-
-        optimizer = optim.Adam(my_UNET.parameters(),
-                               learning_rate, (0.9, 0.99), 10E-8)
-        train_state = {
-            'UNET': my_UNET,
-            'optimizer': optimizer,
-            'start_patch_num': 0,
-            'epochs': [],
-            'model_generation': 0
-        }
-
-    print("Validation Segments used: ", validation_segments)
-
-    validation_segments = [data_path + x for x in validation_segments]
-
-    subject_list = [data_path +
-                    x for x in os.listdir(data_path) if not x.startswith(".") and not data_path + x in validation_segments]
-    print(len(subject_list), len(validation_segments))
+    validation_segments = get_validation_segments(
+        data_path, validation_segments)
+    training_segments = get_training_segments(data_path, validation_segments)
 
     # hier segments_per_queue und patches_per_segment hochscruaben / runterschrauben
-    train_queue = dataqueue.DataQueue(
-        segment_list=subject_list,
+    train_queue = dataqueue_threading.DataQueue(
+        segment_list=training_segments,
         batch_size=batch_size,
-        segments_per_queue=spq_train,
+        segments_per_queue=SPQ_TRAIN,
         patch_size=patch_size,
-        patches_per_segment=pps_train
+        patches_per_segment=PPS_TRAIN,
+        num_worker=8
     )
 
-    validation_queue = dataqueue.ValidationQueue(
+    validation_queue = dataqueue_threading.ValidationQueue(
         segments=validation_segments,
         batch_size=16
     )
@@ -338,7 +442,14 @@ def setup_training(
     print(
         f"Training-Data shape: [{batch_size} ,5 , {patch_size}, {patch_size}, {patch_size}]\n")
     print(f"Learning Rate: {learning_rate}")
+
     sys.stdout.flush()
+
+    training_params = {
+        "batch_size": batch_size,
+        "patch_size": patch_size,
+        "lr": learning_rate
+    }
 
     losses = train(
         train_state=train_state,
@@ -348,8 +459,7 @@ def setup_training(
         save_dir=save_dir,
         criterion=criterion,
         device=device,
-        batch_size=batch_size,
-        patch_size=patch_size
+        training_parameter=training_params
     )
 
     fout = open(save_dir + "epochs_losses.pkl", "wb")
@@ -357,31 +467,42 @@ def setup_training(
     fout.close()
 
 
+def tb_logger(logger, exp_name):
+
+    if logger:
+        NAME = logger
+        print("Model information for Tensorboard saved under", NAME)
+        logger = SummaryWriter(NAME)
+
+    else:
+        NAME = f"{LOGGER_DIR}model_{exp_name}_{time()}"
+        print("Model information for Tensorboard saved under", NAME)
+        logger = SummaryWriter(NAME)
+
+    return logger
+
+
 if __name__ == "__main__":
 
     args = parse()
 
-    global top_k
-    top_k = 5
+    if args.root_dir[-1] != "/":
+        args.root_dir += "/"
 
-    # loads spq_train * pps_train patches into queue
-    global spq_train
-    global pps_train
-    spq_train = 50
-    pps_train = int(args.batch_size * 20)
+    DATA_DIRECTORY = args.root_dir
 
-    global data_directory
-    data_directory = args.root_dir
+    LOGGER_SEGMENTS = [args.root_dir + LOGGER_SEGMENTS_LIST[0],
+                       args.root_dir + LOGGER_SEGMENTS_LIST[1]]
 
-    global writer
-    if args.writer == "None":
-        NAME = f"/home/baumgartner/sgutwein84/container/pytorch-3DUNet/experiments/runs/model_{args.experiment_name}_{time()}"
-        print("Model information for Tensorboard saved under", NAME)
-        writer = SummaryWriter(NAME)
-    else:
-        NAME = args.writer
-        print("Model information for Tensorboard saved under", NAME)
-        writer = SummaryWriter(NAME)
+    # 50 SEGMENTS PER QUEUE AND 20*BATCH_SIZE PATCHES PER SEGMENT
+    # debug
+    #SPQ_TRAIN = int(args.batch_size*2)
+    #PPS_TRAIN = 50
+
+    SPQ_TRAIN = int(args.batch_size*2)
+    PPS_TRAIN = 500
+
+    LOGGER = tb_logger(args.logger, args.experiment_name)
 
     setup_training(
         num_patches=args.num_patches,
@@ -395,4 +516,4 @@ if __name__ == "__main__":
         learning_rate=args.learning_rate
     )
 
-    writer.close()
+    LOGGER.close()

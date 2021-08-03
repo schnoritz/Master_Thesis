@@ -50,7 +50,9 @@ def define_calculation_device(use_gpu):
     return device
 
 
-def save_model(model, optimizer, train_loss, validation_loss, save_dir, patches, save, epochs, generation, gammas):
+def save_model(
+        model, optimizer, train_loss, validation_loss, save_dir, patches, save, epochs, generation, gammas,
+        training_parameter):
 
     torch.save({
         'patches': patches,
@@ -60,7 +62,9 @@ def save_model(model, optimizer, train_loss, validation_loss, save_dir, patches,
         'validation_loss': validation_loss,
         'epochs': epochs,
         'model_generation': generation,
-        'mean_gamma': f"{gammas[0]} ± {gammas[1]}"
+        'mean_gamma': f"{gammas[0]} ± {gammas[1]}",
+        'training_parameter': training_parameter
+
     }, save_dir + f"UNET_{generation}.pt")
 
     if type(save) == int:

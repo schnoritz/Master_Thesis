@@ -4,16 +4,37 @@ import numpy as np
 import random
 from numpy.random import randint
 from time import time
-import sys
+import threading
+import queue
+from multiprocessing import Process
 
 import matplotlib.pyplot as plt
+
+
+class Worker(threading.Thread):
+    def __init__(self, q, data_list, *args, **kwargs):
+        self.q = q
+        self.data_list = data_list
+        super().__init__(*args, **kwargs)
+
+    def run(self):
+        while True:
+            try:
+                seg = self.q.get_nowait()
+                self.data_list.append(
+                    (torch.load(f"{seg}/training_data.pt"), torch.load(f"{seg}/target_data.pt"))
+                )
+            except queue.Empty:
+                return
+
+            self.q.task_done()
 
 
 class DataQueue():
 
     def __init__(
             self, segment_list, batch_size, segments_per_queue, patch_size, patches_per_segment,
-            sampling_scheme="equal"):
+            sampling_scheme="equal", num_worker=1):
         self.segment_list = segment_list
         self.batch_size = batch_size
         self.patch_size = patch_size
@@ -21,6 +42,15 @@ class DataQueue():
         self.patches_per_segment = patches_per_segment
         self.sampling_scheme = sampling_scheme
         self.available_segments = self.segment_list.copy()
+        self.num_worker = num_worker
+
+    def split_segments(self, segments):
+        for i in range(0, len(segments), np.ceil(len(segments)/self.num_worker).astype(int)):
+            yield segments[i:i + np.ceil(len(segments)/self.num_worker).astype(int)]
+
+    def load_segment(self, segments, data):
+        for segment in segments:
+            data.append((torch.load(f"{segment}/training_data.pt"), torch.load(f"{segment}/target_data.pt")))
 
     def reset_queue(self):
         self.available_segments = self.segment_list.copy()
@@ -40,11 +70,39 @@ class DataQueue():
 
     def create_queue(self, segs):
 
-        data = []
+        start = time()
 
+        data = []
+        q = queue.Queue()
         for seg in segs:
-            data.append(
-                (torch.load(f"{seg}/training_data.pt"), torch.load(f"{seg}/target_data.pt")))
+            q.put_nowait(seg)
+
+        for _ in range(self.num_worker):
+            Worker(q, data).start()
+
+        q.join()
+
+        print(f"Loading of {len(segs)} segments took {np.round(time()-start,2)} seconds with {self.num_worker} workers.")
+
+        sizes = np.array([x[0].shape[-1] for x in data])
+        if np.any(self.patch_size > sizes):
+
+            resized_data = []
+            for i,  (mask, target) in enumerate(data):
+                sz = mask.shape
+                if sz[-1] < self.patch_size:
+                    zeros = torch.zeros(5, sz[1], sz[2], self.patch_size-sz[-1])
+                    mask = torch.cat((mask, zeros), dim=3)
+                    zeros = torch.zeros(1, sz[1], sz[2], self.patch_size-sz[-1])
+                    target = torch.cat((target, zeros), dim=3)
+                    resized_data.append((mask, target))
+                else:
+                    resized_data.append((mask, target))
+
+            data = resized_data
+
+        for i in data:
+            print(i[0].shape, i[1].shape)
 
         train_patches = []
         target_patches = []
@@ -52,18 +110,10 @@ class DataQueue():
         for masks, target in data:
 
             idxs = self.get_sample_idx(masks)
-            if self.patch_size >= masks.shape[-1]:
-                for i in idxs:
-                    train_patches.append(
-                        masks[:, int(i[0]-hp):int(i[0]+hp), int(i[1]-hp):int(i[1]+hp), :])
-                    target_patches.append(
-                        target[:, int(i[0]-hp):int(i[0]+hp), int(i[1]-hp):int(i[1]+hp), :])
-            else:
-                for i in idxs:
-                    train_patches.append(
-                        masks[:, int(i[0]-hp):int(i[0]+hp), int(i[1]-hp):int(i[1]+hp), int(i[2]-hp):int(i[2]+hp)])
-                    target_patches.append(
-                        target[:, int(i[0]-hp):int(i[0]+hp), int(i[1]-hp):int(i[1]+hp), int(i[2]-hp):int(i[2]+hp)])
+
+            for i in idxs:
+                train_patches.append(masks[:, int(i[0]-hp):int(i[0]+hp), int(i[1]-hp):int(i[1]+hp), int(i[2]-hp):int(i[2]+hp)])
+                target_patches.append(target[:, int(i[0]-hp):int(i[0]+hp), int(i[1]-hp):int(i[1]+hp), int(i[2]-hp):int(i[2]+hp)])
 
         all = list(zip(train_patches, target_patches))
         random.shuffle(all)
@@ -77,8 +127,8 @@ class DataQueue():
         curr = 0
         for i in range(int(np.ceil(train_patches.shape[0]/self.batch_size))):
             curr += self.batch_size
-            train.append(train_patches[curr-self.batch_size:curr, :, :, :])
-            target.append(target_patches[curr-self.batch_size:curr, :, :, :])
+            train.append(train_patches[curr-self.batch_size:curr])
+            target.append(target_patches[curr-self.batch_size:curr])
 
         return train, target
 
@@ -111,13 +161,18 @@ class DataQueue():
                 idxs = np.argwhere(binary >= num)
 
         elif self.sampling_scheme == "equal":
-
             idxs = []
-            for _ in range(self.patches_per_segment):
-                idxs.append(np.array([
-                    randint(binary.shape[0])+hp,
-                    randint(binary.shape[1])+hp,
-                    randint(binary.shape[2])+hp]))
+            if hp == int(masks.shape[3]/2):
+                for _ in range(self.patches_per_segment):
+                    idxs.append(np.array([
+                        randint(binary.shape[0])+hp,
+                        randint(binary.shape[1])+hp, hp]))
+            else:
+                for _ in range(self.patches_per_segment):
+                    idxs.append(np.array([
+                        randint(binary.shape[0])+hp,
+                        randint(binary.shape[1])+hp,
+                        randint(binary.shape[2])+hp]))
 
         np.random.shuffle(idxs)
 
@@ -196,7 +251,7 @@ class ValidationQueue():
 if __name__ == "__main__":
 
     subject_list = ["/Users/simongutwein/Studium/Masterarbeit/test_data/" + x for x in os.listdir(
-        "/Users/simongutwein/Studium/Masterarbeit/test_data") if not x.startswith(".")]
+        "/Users/simongutwein/Studium/Masterarbeit/test_data/") if not x.startswith(".")]
 
     # q = ValidationQueue(segments=subject_list, batch_size=16)
     # for batch in q:
@@ -207,19 +262,23 @@ if __name__ == "__main__":
     #                 torch.squeeze(batch[int(i*4) + j, 0, :, :, 16]))
     #     plt.show()
 
-    train_q = ValidationQueue(subject_list, 16)
+    num = 10
 
-    segments_num = 0
-    for i, j in train_q:
-        segments_num += i.shape[0]
-        print(i.shape, j.shape)
+    train_q = DataQueue(subject_list, num, num, 128, 20, num_worker=4)
 
-    print(segments_num)
-    # total = 0
-    # while total < number_needed:
-    #     print(total)
-    #     train_q.load_queue()
-    #     for train, test in train_q:
-    #         total += 16
+    start = time()
+    train_q.load_queue()
+    for i, ii in train_q:
+        print(i.shape)
 
-    # print(total)
+    #train_q = DataQueue(subject_list, 16, num//2, 32, 500, num_worker=8)
+
+    # start = time()
+
+    # print(f"Loading with 8 Worker took {np.round(time()-start,2)} seconds.")
+
+    # train_q = DataQueue(subject_list, 16, num//4, 32, 50, num_worker=8)
+
+    # start = time()
+    # train_q.load_queue()
+    # print(f"Loading with 2 Worker took {np.round(time()-start,2)} seconds.")

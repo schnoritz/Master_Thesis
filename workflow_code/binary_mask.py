@@ -15,10 +15,10 @@ import random
 
 
 def create_binary_mask(
-    egsinp, ct_path, beam_config, target_size, px_sp=np.array([1.171875, 1.171875, 3]), SID=1435, tensor=False
+    egsinp, ct_path, beam_config, target_size, SID=1435, tensor=False
 ):
 
-    angle, shift, rotated_dim, rotated_iso_loc = setup_binary(
+    angle, shift, rotated_dim, rotated_iso_loc, px_sp = setup_binary(
         egsinp, ct_path, np.array(target_size)
     )
 
@@ -59,14 +59,14 @@ def create_binary_mask(
 def setup_binary(egsinp, ct_path, target_size,):
 
     egsinp_lines = open(egsinp).readlines()
-    iso_center = define_iso_center(egsinp_lines[5], ct_path)
+    iso_center, px_sp = define_iso_center(egsinp_lines[5], ct_path)
     angle = get_angle(egsinp_lines[5], radians=False)
     shift = iso_center - target_size // 2
     rotated_dim = np.array(
         [800, 800, target_size[2] + 2 * abs(shift[2])], dtype=int)
     rotated_iso_loc = iso_center[0] + (rotated_dim[0] - target_size[0]) // 2
 
-    return angle, shift, rotated_dim, rotated_iso_loc
+    return angle, shift, rotated_dim, rotated_iso_loc, px_sp
 
 
 def rotate_crop(angle, output_dim, shift, beam):
@@ -88,7 +88,6 @@ def rotate_crop(angle, output_dim, shift, beam):
     )
 
     shifted_window = center_window - shift
-    shifted_window -= 1
 
     second_shift = np.array(
         [-np.cos(np.radians(angle))*shift[0], np.sin(np.radians(angle))*shift[0], 0])
@@ -128,39 +127,16 @@ def scaling_factor(px_sp, SID, rotated_dim, rotated_iso_loc):
 
 def get_leaf_positions(config_path):
 
-    if config_path.endswith(".dcm"):
+    with open(config_path, "r") as fin:
+        lines = fin.readlines()
 
-        with dcmread(config_path) as dcm:
+    positions = []
+    for line in lines:
+        positions.append(np.array(line.split(",")[:2], dtype=float))
 
-            leafes = (
-                np.array(
-                    dcm.BeamSequence[0]
-                    .ControlPointSequence[0]
-                    .BeamLimitingDevicePositionSequence[1][0x300A, 0x011C][:],
-                    float,
-                ) / 10
-            )
-            jaws = np.array(
-                dcm.BeamSequence[0]
-                .ControlPointSequence[0]
-                .BeamLimitingDevicePositionSequence[0][0x300A, 0x011C][:],
-                float,
-            )
+    jaws = np.array(positions[-1]) * 10
 
-            leafes = np.array([leafes[:80], leafes[80:]]).T
-
-    else:
-
-        with open(config_path, "r") as fin:
-            lines = fin.readlines()
-
-        positions = []
-        for line in lines:
-            positions.append(np.array(line.split(",")[:2], dtype=float))
-
-        jaws = np.array(positions[-1]) * 10
-
-        leafes = positions[:-1]
+    leafes = positions[:-1]
 
     return leafes, jaws
 
@@ -178,19 +154,11 @@ def get_entry_plane(leafes, jaws, entry_plane_fac, size, dim):
     fl = resize(fl, (576*2, 440),
                 interpolation=cv2.INTER_LINEAR)
 
-    # print("Pre Jaws")
-    # plt.imshow(fl)
-    # plt.show()
-
     l_jaw_idx = fl.shape[1]//2 + int(np.round(jaws[0]*2))
     r_jaw_idx = fl.shape[1]//2+1 + int(np.round(jaws[1]*2))
 
     fl[:, :l_jaw_idx] = 0
     fl[:, r_jaw_idx:] = 0
-
-    # print("Post Jaws")
-    # plt.imshow(fl)
-    # plt.show()
 
     fl = resize(fl, (np.round(size[1]*entry_plane_fac).astype(int), np.round(size[0]*entry_plane_fac).astype(int)),
                 interpolation=cv2.INTER_LINEAR)
@@ -209,10 +177,6 @@ def get_entry_plane(leafes, jaws, entry_plane_fac, size, dim):
 
     fl = np.pad(
         fl, ((t_padding[0], t_padding[1]), (s_padding[0], s_padding[1])), "constant", constant_values=0)
-
-    # print("Post Pad")
-    # plt.imshow(fl)
-    # plt.show()
 
     return fl
 
@@ -238,10 +202,10 @@ def paddedzoom(img, zoomfactor):
 
 if __name__ == "__main__":
 
-    root_dir = "/mnt/qb/baumgartner/sgutwein84/output"
-    save_dir = "/home/baumgartner/sgutwein84/container/test"
+    root_dir = "/Users/simongutwein/Studium/Masterarbeit/m0/"
+    save_dir = "/mnt/qb/baumgartner/sgutwein84/test"
     segments = [x for x in os.listdir(
-        root_dir) if not x.startswith(".")]
+        root_dir) if not x.startswith(".") and not "ct" in x]
     segments = random.sample(segments, 5)
 
     for segment in segments:
@@ -249,7 +213,7 @@ if __name__ == "__main__":
         pat = segment.split("_")[0]
 
         path = f"{root_dir}/{segment}/"
-        ct_path = f"{root_dir}/ct/{pat}/"
+        ct_path = f"{root_dir}ct/{pat}/"
         beam_config = path + f"beam_config_{segment}.txt"
         dose_path = path + f"{segment}_1E07.3ddose"
         egsinp = path + f"{segment}.egsinp"
@@ -260,18 +224,19 @@ if __name__ == "__main__":
         binary = create_binary_mask(
             egsinp, ct_path, beam_config, target_size=dose.shape)
 
-        # fig, ax = plt.subplots(1, 2, figsize=(20, 10))
+        # for i in range(0,dose.shape[2], 3):
+        #     fig, ax = plt.subplots(1, 2, figsize=(10, 5))
 
-        # ax[0].imshow(binary[256, :, :], cmap="bone")
-        # ax[0].imshow(dose[256, :, :], alpha=0.5, cmap="jet")
+        #     ax[0].imshow(binary[:, :, i], cmap="bone")
+        #     ax[0].imshow(dose[:, :, i], alpha=0.5, cmap="jet")
 
-        # ax[1].imshow(binary[:, 256, :], cmap="bone")
-        # ax[1].imshow(dose[:, 256, :], alpha=0.5, cmap="jet")
+        #     ax[1].imshow(binary[:, :, i], cmap="bone")
+        #     ax[1].imshow(dose[:, :, i], alpha=0.5, cmap="jet")
 
-        # plt.savefig(
-        #     f"/home/baumgartner/sgutwein84/container/test/{segment}.png")
-
-        # plt.close()
+        #     # plt.savefig(
+        #     #     f"/home/baumgartner/sgutwein84/container/test/{segment}.png")
+        #     plt.show(fig)
+        #     plt.close()
 
         img = nib.Nifti1Image(np.array(dose), np.eye(4))
 

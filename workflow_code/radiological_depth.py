@@ -10,8 +10,9 @@ def radiological_depth(ct, egsinp, ct_path, mask=False, tensor=False):
 
     egsinp_lines = open(egsinp).readlines()
 
-    iso_center = define_iso_center(egsinp_lines[5], ct_path)
-    origin_position = define_origin_position(egsinp_lines[5], iso_center)
+    iso_center, px_sp = define_iso_center(egsinp_lines[5], ct_path)
+    px_sp = px_sp.astype(float)
+    origin_position = define_origin_position(egsinp_lines[5], iso_center, px_sp)
 
     if type(ct) == str:
         ct_volume = np.load(ct).astype(np.float)
@@ -22,7 +23,7 @@ def radiological_depth(ct, egsinp, ct_path, mask=False, tensor=False):
     elif isinstance(ct, torch.Tensor):
         ct_volume = np.array(ct).astype(float)
 
-    depth = calc_depth(ct_volume, origin_position, mask)
+    depth = calc_depth(ct_volume, origin_position, mask, px_sp)
 
     if tensor:
         return torch.tensor(depth, dtype=torch.float32)
@@ -30,7 +31,7 @@ def radiological_depth(ct, egsinp, ct_path, mask=False, tensor=False):
         return depth.astype(np.float32)
 
 
-def calc_depth(ct_volume, origin_position, mask):
+def calc_depth(ct_volume, origin_position, mask, px_sp):
 
     depth_volume = np.zeros_like(ct_volume, dtype=float)
 
@@ -39,7 +40,7 @@ def calc_depth(ct_volume, origin_position, mask):
             for y in range(ct_volume.shape[1]):
                 for z in range(ct_volume.shape[2]):
                     vox = np.array([x, y, z], dtype=float)
-                    ray = Ray(origin_position, vox, ct_volume)
+                    ray = Ray(origin_position, vox, ct_volume, px_sp)
                     depth_volume[x, y, z] = ray.radiological_depth
 
     elif isinstance(mask, np.ndarray):
@@ -49,7 +50,7 @@ def calc_depth(ct_volume, origin_position, mask):
 
                     if mask[x, y, z] != 0:
                         vox = np.array([x, y, z], dtype=float)
-                        ray = Ray(origin_position, vox, ct_volume)
+                        ray = Ray(origin_position, vox, ct_volume, px_sp)
                         depth_volume[x, y, z] = ray.radiological_depth
 
                     else:

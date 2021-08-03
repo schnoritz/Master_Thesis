@@ -1,7 +1,7 @@
 import os
 import matplotlib.pyplot as plt
 from numpy.core.fromnumeric import mean
-from model import Dose3DUNET
+from model_rev import RevDose3DUNET
 import torch
 from torch import optim
 import torch.nn as nn
@@ -337,13 +337,13 @@ def print_training_status(generation, curr_patches, train_loss, validation_loss,
 def load_pretrained_model(model_path, device, lr):
     print(f"\nUsing pretrained Model: {model_path}\n")
 
-    my_UNET = Dose3DUNET()
+    my_UNET = RevDose3DUNET()
     state = torch.load(model_path, map_location=device)
 
     my_UNET.load_state_dict(state['model_state_dict'])
 
-    optimizer = optim.Adam(my_UNET.parameters(),
-                           lr, (0.9, 0.99), 10E-8)
+    optimizer = optim.SGD(my_UNET.parameters(),
+                          lr, momentum=0.9)
     optimizer.load_state_dict(state['optimizer_state_dict'])
 
     if device.type == "cuda":
@@ -364,15 +364,15 @@ def load_pretrained_model(model_path, device, lr):
 
 def no_pretrained_model(device, lr):
 
-    my_UNET = Dose3DUNET()
+    my_UNET = RevDose3DUNET()
 
     if device.type == "cuda":
         if torch.cuda.device_count() > 1:
             my_UNET = nn.DataParallel(my_UNET)
             print(f"Using {torch.cuda.device_count()} GPU's")
 
-    optimizer = optim.Adam(my_UNET.parameters(),
-                           lr, (0.9, 0.99), 10E-8)
+    optimizer = optim.SGD(my_UNET.parameters(),
+                          lr, momentum=0.9)
     train_state = {
         'UNET': my_UNET,
         'optimizer': optimizer,
@@ -490,7 +490,7 @@ if __name__ == "__main__":
 
     # 50 SEGMENTS PER QUEUE AND 20*BATCH_SIZE PATCHES PER SEGMENT
     SPQ_TRAIN = int(args.batch_size*2)
-    PPS_TRAIN = 500
+    PPS_TRAIN = 50
 
     LOGGER = tb_logger(args.logger, args.experiment_name)
 

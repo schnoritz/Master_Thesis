@@ -4,9 +4,10 @@ import numba
 
 
 class Ray:
-    def __init__(self, origin_position, voxel_position, target_volume):
+    def __init__(self, origin_position, voxel_position, target_volume, px_sp):
 
         self.origin_pos = np.array(origin_position).astype(np.float64)
+        self.px_sp = px_sp
         # np.round(np.array(origin_position), 4)
         self.voxel_pos = np.array(voxel_position)
         self.target_volume = target_volume
@@ -26,7 +27,7 @@ class Ray:
         )
 
         a = calc_alpha(self.origin_pos, self.voxel_pos, outer_inter, a_min, a_max)
-        depth = calc_depth(self.origin_pos, self.ray_vector, a, self.target_volume)
+        depth = calc_depth(self.origin_pos, self.ray_vector, a, self.target_volume, self.px_sp)
 
         return depth
 
@@ -116,7 +117,7 @@ def calc_alpha(origin, voxel, min_max, a_min, a_max):
 
 
 @njit
-def calc_depth(origin, ray_vector, a, target_volume):
+def calc_depth(origin, ray_vector, a, target_volume, px_sp):
 
     intersections = np.empty((len(a), 3))
     diff = np.empty((intersections.shape[0] - 1, intersections.shape[1]))
@@ -136,7 +137,7 @@ def calc_depth(origin, ray_vector, a, target_volume):
 
     for i in prange(len(diff)):
         lengths[i] = np.sqrt(
-            np.square(diff[i][0]) + np.square(diff[i][1]) + np.square(diff[i][2])
+            np.square(diff[i][0]*px_sp[0]) + np.square(diff[i][1]*px_sp[1]) + np.square(diff[i][2]*px_sp[2])
         )
 
     for i in prange(len(lengths)):

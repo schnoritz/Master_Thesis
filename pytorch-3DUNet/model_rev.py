@@ -23,15 +23,6 @@ class ResidualInner(nn.Module):
         return x
 
 
-def upsample(x):
-    return nnf.interpolate(input=x, scale_factor=2, mode="trilinear", align_corners=False)
-
-
-def downsample(x):
-    down = nn.MaxPool3d(kernel_size=2, stride=2)
-    return down(x)
-
-
 def add_skip_connection(x, skip):
     connection = skip.pop()
     if x.shape[2:] != connection.shape[2:]:
@@ -80,12 +71,16 @@ class DecoderModule(nn.Module):
         self.upsample = upsample
         self.conv = nn.Conv3d(inChannels, outChannels, 1)
 
+        if upsample:
+            self.upsampling = nn.ConvTranspose3d(
+                in_channels=outChannels, out_channels=outChannels, kernel_size=2, stride=2)
+
     def forward(self, x):
         x = self.reversibleBlocks(x)
         x = self.conv(x)
         if self.upsample:
-            x = F.interpolate(x, scale_factor=2,
-                              mode="trilinear", align_corners=False)
+            x = self.upsampling(x)
+
         return x
 
 
@@ -103,14 +98,24 @@ class RevDose3DUNET(nn.Module):
         self.last_conv = nn.Sequential(DecoderModule(
             3*features[0], 1, self.depth+1, upsample=False))
 
+        self.LAST_POOL = nn.MaxPool3d(kernel_size=2, stride=2)
+
+        self.FIRST_DECONV = nn.ConvTranspose3d(
+            in_channels=4*features[-1],
+            out_channels=4*features[-1],
+            kernel_size=2, stride=2)
+
         DOWN = []
         for size in features:
             DOWN.append(EncoderModule(
                 size, 2*size, self.depth, downsample=True))
         self.encoders = nn.ModuleList(DOWN)
 
-        self.bottleneck = EncoderModule(
-            2*features[-1], 4*features[-1], depth, downsample=False)
+        self.bottleneck = nn.Sequential(
+            nn.MaxPool3d(kernel_size=2, stride=2),
+            EncoderModule(2*features[-1], 4*features[-1], depth, downsample=False),
+            nn.ConvTranspose3d(in_channels=4*features[-1], out_channels=4*features[-1], kernel_size=2, stride=2)
+        )
 
         features = features[::-1]
         UP = []
@@ -128,9 +133,7 @@ class RevDose3DUNET(nn.Module):
             x = down(x)
             skips.append(x)
 
-        x = downsample(x)
         x = self.bottleneck(x)
-        x = upsample(x)
 
         for up in self.decoders:
             x = add_skip_connection(x, skips)
@@ -144,7 +147,7 @@ class RevDose3DUNET(nn.Module):
 
 def test():
     # mit x = torch.randn((batch_size, in_channels, W, H, D))
-    x = torch.randn((2, 5, 512, 512, 32))
+    x = torch.randn((2, 5, 32, 32, 32))
     model = RevDose3DUNET()
     preds = model(x)
     print(preds.shape)

@@ -7,10 +7,8 @@ import paramiko
 import random
 import numpy as np
 from pydicom import dcmread, uid
-from glob import glob
 from natsort import natsorted
 import math
-import matplotlib.pyplot as plt
 
 
 def server_login():
@@ -394,18 +392,18 @@ def calculate_new_mlc(leafes, radius=41.5, ssd=143.5, cil=35.77-0.09):
         for i in range(80):
             if j == 0:
                 if leafes[j, i] <= 0:
-                    MLC_egsinp[j, i] = (((cil + math.sqrt(pow(radius, 2)-pow(math.cos(abs(leafes[j, i]*10)*0.1/ssd)*radius, 2)))*abs(
-                        leafes[j, i]*10)*0.1/ssd + math.cos(abs(leafes[j, i]*10)*0.1/ssd)*radius)*(-1))
+                    MLC_egsinp[j, i] = (((cil + math.sqrt(pow(radius, 2)-pow(math.cos(abs(leafes[j, i]*10)*0.1/ssd)*radius, 2)))
+                                        * abs(leafes[j, i]*10)*0.1/ssd + math.cos(abs(leafes[j, i]*10)*0.1/ssd)*radius)*(-1))
                 if leafes[j, i]*10 > 0:
-                    MLC_egsinp[j, i] = ((-(cil - math.sqrt(pow(radius, 2)-pow(math.cos(abs(leafes[j, i]*10)*0.1/ssd)*radius, 2)))*abs(
-                        leafes[j, i]*10)*0.1/ssd + math.cos(abs(leafes[j, i]*10)*0.1/ssd)*radius)*(-1))
+                    MLC_egsinp[j, i] = ((-(cil - math.sqrt(pow(radius, 2)-pow(math.cos(abs(leafes[j, i]*10)*0.1/ssd)*radius, 2)))
+                                        * abs(leafes[j, i]*10)*0.1/ssd + math.cos(abs(leafes[j, i]*10)*0.1/ssd)*radius)*(-1))
             else:
                 if leafes[j, i]*10 >= 0:
-                    MLC_egsinp[j, i] = ((cil + math.sqrt(pow(radius, 2)-pow(math.cos(abs(leafes[j, i]*10)*0.1/ssd)*radius, 2)))*abs(
-                        leafes[j, i]*10)*0.1/ssd + math.cos(abs(leafes[j, i]*10)*0.1/ssd)*radius)
+                    MLC_egsinp[j, i] = ((cil + math.sqrt(pow(radius, 2)-pow(math.cos(abs(leafes[j, i]*10)*0.1/ssd)*radius, 2)))
+                                        * abs(leafes[j, i]*10)*0.1/ssd + math.cos(abs(leafes[j, i]*10)*0.1/ssd)*radius)
                 if leafes[j, i]*10 < 0:
-                    MLC_egsinp[j, i] = (-(cil - math.sqrt(pow(radius, 2)-pow(math.cos(abs(leafes[j, i]*10)*0.1/ssd)*radius, 2)))*abs(
-                        leafes[j, i]*10)*0.1/ssd + math.cos(abs(leafes[j, i]*10)*0.1/ssd)*radius)
+                    MLC_egsinp[j, i] = (-(cil - math.sqrt(pow(radius, 2)-pow(math.cos(abs(leafes[j, i]*10)*0.1/ssd)*radius, 2)))
+                                        * abs(leafes[j, i]*10)*0.1/ssd + math.cos(abs(leafes[j, i]*10)*0.1/ssd)*radius)
 
     return MLC_egsinp
 
@@ -503,7 +501,7 @@ def setup_plan_calculation(patient, plan_file):
 if __name__ == "__main__":
 
     plan = True
-    patient = "p0"
+    patient = "l0"
     num_hist = 10000000
     pj = int(num_hist/2000000)
     if pj <= 1:

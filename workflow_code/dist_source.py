@@ -8,50 +8,53 @@ import sys
 import matplotlib.pyplot as plt
 
 
-def distance_source(egsinp_path, egsphant_path, target_size, tensor=False):
+def distance_source(egsinp_path, ct_path, target_size, tensor=False):
 
     egsinp_lines = open(egsinp_path).readlines()
-    origin_position = define_origin_position(
-        egsinp_lines[5], define_iso_center(egsinp_lines[5], egsphant_path))
+    iso_center, px_sp = define_iso_center(egsinp_lines[5], ct_path)
+    origin_position = define_origin_position(egsinp_lines[5], iso_center, px_sp)
 
     if tensor:
-        return torch.tensor(calculate_distance(origin_position=origin_position, target_size=target_size), dtype=torch.float16)
+        return torch.tensor(calculate_distance(origin_position=origin_position, target_size=target_size, px_sp=px_sp), dtype=torch.float32)
     else:
-        return calculate_distance(origin_position=origin_position, target_size=target_size)
+        return calculate_distance(origin_position=origin_position, target_size=target_size, px_sp=px_sp)
 
 
-def calculate_distance(origin_position, target_size):
+def calculate_distance(origin_position, target_size, px_sp):
 
     distance_vol = np.zeros(target_size)
 
-    for x in tqdm(range(target_size[0]), miniters=50, file=sys.stdout, postfix="\n"):
+    for x in tqdm(range(target_size[0]), miniters=20, file=sys.stdout, postfix="\n"):
         for y in range(target_size[1]):
             for z in range(target_size[2]):
-                distance_vol[x, y, z] = distance(x, y, z, origin_position)
+                distance_vol[x, y, z] = distance(x, y, z, origin_position, px_sp)
 
     print("Source Mask created!")
     return distance_vol
 
 
 @njit
-def distance(x, y, z, origin_position):
+def distance(x, y, z, origin_position, px_sp):
 
     vox = np.array([x, y, z])
-    dist = np.abs(np.linalg.norm(origin_position - vox))
+    vox_origin = np.array([
+        (vox[0] - origin_position[0])*px_sp[0],
+        (vox[1] - origin_position[1])*px_sp[1],
+        (vox[2] - origin_position[2])*px_sp[2],
+    ])
+    dist = np.abs(np.linalg.norm(vox_origin))
 
     return dist
 
 
-# if __name__ == "__main__":
+if __name__ == "__main__":
 
-#     path = "/home/baumgartner/sgutwein84/container/output/p_0_2x2/p_0_2x2.egsinp"
-#     phant = "/home/baumgartner/sgutwein84/container/output/p.egsphant"
+    egsinp = "/Users/simongutwein/Studium/Masterarbeit/m0/m5_14/beam_config_m5_14.egsinp"
+    ct_path = "/Users/simongutwein/Studium/Masterarbeit/m0/ct/m5"
+    distance_array = distance_source(egsinp, ct_path, target_size=(512, 512, 108))
 
-#     distance_array = distance_source
-# (path, phant, target_size=(512, 512, 110))
-#     print(distance_array.target_size)
+    print(distance_array.max())
 
-#     for i in range(distance_array.target_size[2]):
-#         plt.imshow(distance_array[:,:,i])
-#         plt.show()
-#         plt.close()
+    for i in range(distance_array.shape[2]):
+        plt.imshow(distance_array[:, :, i])
+        plt.show()

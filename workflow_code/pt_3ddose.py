@@ -10,7 +10,7 @@ import matplotlib
 from pt_ct import convert_ct_array
 
 
-def dose_to_pt(dose_path, ct_path, tensor=False, px_sp=np.array([1.171875, 1.171875, 3])):
+def dose_to_pt(dose_path, ct_path, tensor=False):
     """creates a 3D PyTorch Tensor of shape (512, 512, num_slices)
 
     Args:
@@ -26,7 +26,7 @@ def dose_to_pt(dose_path, ct_path, tensor=False, px_sp=np.array([1.171875, 1.171
            if not x.startswith(".") and "dcm" in x.lower()]
 
     dose, dose_limits = read_dose(dose_path)
-    ct_limits = read_ct(cts, px_sp)
+    ct_limits = read_ct(cts)
 
     diff = ct_limits-dose_limits
     dose = upscale(dose, target_size=(
@@ -38,9 +38,14 @@ def dose_to_pt(dose_path, ct_path, tensor=False, px_sp=np.array([1.171875, 1.171
         return dose
 
 
-def read_ct(path, px_sp):
+def read_ct(path):
 
     with dcmread(sorted(path)[0], force=True) as fin:
+
+        slice_spacing = int(fin.SliceThickness)
+        pixel_spacing = fin.PixelSpacing
+
+        px_sp = np.array([pixel_spacing[0], pixel_spacing[1], slice_spacing]).astype(float)
 
         start = np.array(fin.ImagePositionPatient).astype(float)
         end = np.array(fin.ImagePositionPatient).astype(float)+px_sp[0]*512
@@ -103,7 +108,7 @@ def upscale(dose, target_size, limits):
     dose = np.concatenate((left, dose, right), axis=1)
 
     final_dose = resize(
-        dose, target_size, interpolation=cv2.INTER_NEAREST)
+        dose, target_size, interpolation=cv2.INTER_LINEAR_EXACT)
 
     return final_dose
 
@@ -136,8 +141,7 @@ if __name__ == "__main__":
 
         dose = dose_to_pt(
             f"/home/baumgartner/sgutwein84/container/output_prostate/{segment['segment']}/{segment['segment']}_1E07.3ddose",
-            f"/home/baumgartner/sgutwein84/container/output_prostate/ct/{segment['patient']}"
-        )
+            f"/home/baumgartner/sgutwein84/container/output_prostate/ct/{segment['patient']}")
 
         plt.imshow(dose[:, :, 37])
         plt.imshow(ct[:, :, 37], alpha=0.5)

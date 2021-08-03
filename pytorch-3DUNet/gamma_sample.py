@@ -5,7 +5,7 @@ from pynvml import *
 from model import Dose3DUNET
 
 
-def gamma_sample(unet, device, segment, segment_dir, lower_cutoff=20, partial_sample=20000, gamma_percentage=3, gamma_distance=3):
+def gamma_sample(unet, device, segment, segment_dir, lower_cutoff=20, partial_sample=20000, gamma_percentage=3, gamma_distance=3, UQ=False):
 
     target_dose = torch.load(
         f"{segment_dir}{segment}/target_data.pt")
@@ -31,7 +31,10 @@ def gamma_sample(unet, device, segment, segment_dir, lower_cutoff=20, partial_sa
             mask = mask.unsqueeze(0)
             mask = mask.to(device)
 
-            pred = unet(mask)
+            if UQ:
+                pred, _ = unet(mask)
+            else:
+                pred = unet(mask)
             torch.cuda.empty_cache()
 
             preds.append(pred.cpu().detach().squeeze())

@@ -9,7 +9,9 @@ def define_iso_center(egsinp, ct_path, px_sp=np.array([1.171875, 1.171875, 3])):
 
     iso_center = np.array(egsinp.split(",")[2:5], dtype=float)
 
-    zero_point = extract_phantom_data(ct_path)
+    zero_point, slice_spacing, pixel_spacing = extract_phantom_data(ct_path, pixel_spacing=True)
+
+    px_sp = np.array([pixel_spacing[0], pixel_spacing[1], slice_spacing]).astype(float)
 
     iso_slice = np.zeros((3,))
     for i in range(3):
@@ -22,14 +24,14 @@ def define_iso_center(egsinp, ct_path, px_sp=np.array([1.171875, 1.171875, 3])):
 
     iso_slice[0], iso_slice[1] = iso_slice[1], iso_slice[0]
 
-    return iso_slice
+    return iso_slice, px_sp
 
 
-def define_origin_position(egsinp, iso_center, px_sp=1.171875, SID=1435):
+def define_origin_position(egsinp, iso_center, px_sp, SID=1435):
 
     angle = np.radians(float(egsinp.split(",")[6]) - 270)
 
-    pixel_SID = int(SID / px_sp)
+    pixel_SID = int(SID / px_sp[0])
     origin = np.array(
         [
             iso_center[0] - np.cos(angle) * pixel_SID,
@@ -49,7 +51,7 @@ def get_angle(egsinp, radians=False):
         return np.radians(float(egsinp.split(",")[6]) - 270)
 
 
-def extract_phantom_data(ct_path):
+def extract_phantom_data(ct_path, pixel_spacing=False):
 
     if ct_path[-1] != "/":
         ct_path += "/"
@@ -67,6 +69,15 @@ def extract_phantom_data(ct_path):
     ct_dict.sort(key=lambda t: t["slice_location"])
     first_file = dcmread(ct_path + ct_dict[0]["filename"], force=True)
     zero_point = np.array(first_file.ImagePositionPatient).astype(float)
+
+    if pixel_spacing:
+        with dcmread(ct_path + file, force=True) as dcmin:
+            slice_spacing = int(dcmin.SliceThickness)
+            pixel_spacing = dcmin.PixelSpacing
+
+    if pixel_spacing:
+        return zero_point/10, slice_spacing, pixel_spacing
+
     return zero_point/10
 
 
