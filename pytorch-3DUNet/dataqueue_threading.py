@@ -44,24 +44,17 @@ class DataQueue():
         self.available_segments = self.segment_list.copy()
         self.num_worker = num_worker
 
-    def split_segments(self, segments):
-        for i in range(0, len(segments), np.ceil(len(segments)/self.num_worker).astype(int)):
-            yield segments[i:i + np.ceil(len(segments)/self.num_worker).astype(int)]
-
-    def load_segment(self, segments, data):
-        for segment in segments:
-            data.append((torch.load(f"{segment}/training_data.pt"), torch.load(f"{segment}/target_data.pt")))
-
     def reset_queue(self):
         self.available_segments = self.segment_list.copy()
 
     def load_queue(self):
 
+        print(f"{len(self.available_segments)} available Segments in Queue")
+
         if self.segments_per_queue > len(self.available_segments):
             self.reset_queue()
 
-        curr_segments = random.sample(
-            self.available_segments, self.segments_per_queue)
+        curr_segments = random.sample(self.available_segments, self.segments_per_queue)
 
         for seg in curr_segments:
             self.available_segments.remove(seg)
@@ -100,9 +93,6 @@ class DataQueue():
                     resized_data.append((mask, target))
 
             data = resized_data
-
-        for i in data:
-            print(i[0].shape, i[1].shape)
 
         train_patches = []
         target_patches = []
@@ -223,7 +213,7 @@ class ValidationQueue():
 
         for seg in self.segments:
 
-            self.z_idxs = np.linspace(32, 224-32, 11, endpoint=True)
+            self.z_idxs = np.linspace(32, 224-32, 6, endpoint=True)
             mask = torch.load(seg + "/training_data.pt")
             target = torch.load(seg + "/target_data.pt")
             self.z_idxs = self.z_idxs[self.z_idxs <= (mask.shape[-1]-16)]

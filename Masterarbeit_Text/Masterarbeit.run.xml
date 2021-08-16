@@ -79,7 +79,7 @@
       <file>Masterarbeit.bcf</file>
     </requires>
     <requires type="editable">
-      <file>/Users/simongutwein/Documents/GitHub/Master_Thesis/Masterarbeit_Text/BibTex/bibliography.bib</file>
+      <file>/Users/simongutwein/Documents/GitHub/Master_Thesis/Masterarbeit_Text/BibTex/Masterarbeit.bib</file>
     </requires>
   </external>
 </requests>

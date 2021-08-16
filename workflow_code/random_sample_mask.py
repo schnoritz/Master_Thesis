@@ -19,10 +19,15 @@ if __name__ == "__main__":
     )
 
     parser.add_argument(
-        "num",
-        type=int,
-        metavar="",
-        help="",
+        "-segs",
+        nargs='+',
+        action='store',
+        dest='segment_list'
+    )
+
+    parser.add_argument(
+        "-num",
+        type=int
     )
 
     args = parser.parse_args()
@@ -30,9 +35,12 @@ if __name__ == "__main__":
     if args.dir[-1] != "/":
         args.dir += "/"
 
-    segments = [x for x in os.listdir(args.dir) if not x.startswith(".")]
+    if args.num:
+        segments = [x for x in os.listdir(args.dir) if not x.startswith(".")]
 
-    segments = random.sample(segments, args.num)
+        segments = random.sample(segments, args.num)
+    else:
+        segments = args.segment_list
 
     for seg in segments:
         print(f"{args.dir}{seg}/training_data.pt")
@@ -44,7 +52,7 @@ if __name__ == "__main__":
             print(seg, "missing data!")
             continue
 
-        fig, ax = plt.subplots(1, 2, figsize=(2, 1))
+        fig, ax = plt.subplots(1, 2, figsize=(6, 3))
 
         ax[0].imshow(masks[0, 256, :, :], cmap="bone")
         ax[0].imshow(target[0, 256, :, :], alpha=0.4, cmap="jet")

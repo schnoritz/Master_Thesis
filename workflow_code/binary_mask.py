@@ -202,11 +202,11 @@ def paddedzoom(img, zoomfactor):
 
 if __name__ == "__main__":
 
-    root_dir = "/Users/simongutwein/Studium/Masterarbeit/m0/"
+    root_dir = "/Users/simongutwein/Studium/Masterarbeit/p13/"
     save_dir = "/mnt/qb/baumgartner/sgutwein84/test"
     segments = [x for x in os.listdir(
         root_dir) if not x.startswith(".") and not "ct" in x]
-    segments = random.sample(segments, 5)
+    #segments = random.sample(segments, 5)
 
     for segment in segments:
 
@@ -237,6 +237,10 @@ if __name__ == "__main__":
         #     #     f"/home/baumgartner/sgutwein84/container/test/{segment}.png")
         #     plt.show(fig)
         #     plt.close()
+
+        plt.imshow(binary[256, :, :])
+        plt.imshow(dose[256, :, :], alpha=0.5)
+        plt.show()
 
         img = nib.Nifti1Image(np.array(dose), np.eye(4))
 

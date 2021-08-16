@@ -275,7 +275,7 @@ def execute_job_file(client, filename):
     for string in stdout:
         if string.strip():
             job_id = string.strip()
-    print(f"Job-ID: {job_id} for segment {filename}")
+            print(f"Job-ID: {job_id} for segment {filename}")
 
 
 def create_entire_job(n, gantry, par_jobs, ppn, nodes, beam_config, patient, iso_center=None):
@@ -372,8 +372,7 @@ def extract_plan_infos(plan_file):
                 leafes.append(
                     seq.BeamLimitingDevicePositionSequence[1].LeafJawPositions)
 
-        assert len(leafes) == len(jaws) == len(isocenters) == len(
-            angles), "Number of Leafes, Jaws , Isocenters or Angles not correct."
+        assert len(leafes) == len(jaws) == len(isocenters) == len(angles), "Number of Leafes, Jaws , Isocenters or Angles not correct."
 
     jaws = np.array(jaws)
     leafes = np.array(leafes)
@@ -501,7 +500,7 @@ def setup_plan_calculation(patient, plan_file):
 if __name__ == "__main__":
 
     plan = True
-    patient = "l0"
+    patient = "k5"
     num_hist = 10000000
     pj = int(num_hist/2000000)
     if pj <= 1:

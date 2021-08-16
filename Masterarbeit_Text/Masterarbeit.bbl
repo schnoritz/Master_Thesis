@@ -18,169 +18,1582 @@
 
 
 \refsection{0}
-  \datalist[entry]{nty/global//global/global}
-    \entry{davis_glioblastoma_2016}{article}{}
-      \name{author}{1}{}{%
-        {{hash=5f4f310b62be76da412198be9a9dcc25}{%
-           family={Davis},
-           familyi={D\bibinitperiod},
-           given={Mary},
+  \datalist[entry]{none/global//global/global}
+    \entry{geinitz_3d_2005}{article}{}
+      \name{author}{6}{}{%
+        {{hash=9fe8dc7d93387d3cfdd92d98e6c40c37}{%
+           family={Geinitz},
+           familyi={G\bibinitperiod},
+           given={Hans},
+           giveni={H\bibinitperiod}}}%
+        {{hash=fd616aaf582ddf4bba85b2d3a09df389}{%
+           family={Zimmermann},
+           familyi={Z\bibinitperiod},
+           given={Frank\bibnamedelima B.},
+           giveni={F\bibinitperiod\bibinitdelim B\bibinitperiod}}}%
+        {{hash=1495dcecedb90ad5dbb3ae5d9cda1f8c}{%
+           family={Thamm},
+           familyi={T\bibinitperiod},
+           given={Reinhard},
+           giveni={R\bibinitperiod}}}%
+        {{hash=4d80852d80b05d7f3f1a88ef4ec55910}{%
+           family={Schumertl},
+           familyi={S\bibinitperiod},
+           given={Andreas},
+           giveni={A\bibinitperiod}}}%
+        {{hash=41f21649782c6ff5b86becd178a045cf}{%
+           family={Busch},
+           familyi={B\bibinitperiod},
+           given={Raymonde},
+           giveni={R\bibinitperiod}}}%
+        {{hash=5dcc8df03403fd89848d262f4456c7ef}{%
+           family={Molls},
+           familyi={M\bibinitperiod},
+           given={Michael},
            giveni={M\bibinitperiod}}}%
       }
-      \strng{namehash}{5f4f310b62be76da412198be9a9dcc25}
-      \strng{fullhash}{5f4f310b62be76da412198be9a9dcc25}
-      \strng{bibnamehash}{5f4f310b62be76da412198be9a9dcc25}
-      \strng{authorbibnamehash}{5f4f310b62be76da412198be9a9dcc25}
-      \strng{authornamehash}{5f4f310b62be76da412198be9a9dcc25}
-      \strng{authorfullhash}{5f4f310b62be76da412198be9a9dcc25}
-      \field{sortinit}{D}
-      \field{sortinithash}{c438b3d5d027251ba63f5ed538d98af5}
-      \field{labelnamesource}{author}
-      \field{labeltitlesource}{shorttitle}
-      \field{day}{1}
-      \field{issn}{1092-1095, 1538-067X}
-      \field{journaltitle}{Clinical Journal of Oncology Nursing}
-      \field{month}{10}
-      \field{number}{5}
-      \field{shortjournal}{{CJON}}
-      \field{shorttitle}{Glioblastoma}
-      \field{title}{Glioblastoma: Overview of Disease and Treatment}
-      \field{urlday}{18}
-      \field{urlmonth}{3}
-      \field{urlyear}{2021}
-      \field{volume}{20}
-      \field{year}{2016}
-      \field{dateera}{ce}
-      \field{urldateera}{ce}
-      \field{pages}{S2\bibrangedash S8}
-      \range{pages}{-1}
-      \verb{doi}
-      \verb 10.1188/16.CJON.S1.2-8
-      \endverb
-      \verb{file}
-      \verb Akzeptierte Version:/Users/simongutwein/Zotero/storage/Y5ERY9DP/Davis - 2016 - Glioblastoma Overview of Disease and Treatment.pdf:application/pdf
-      \endverb
-      \verb{urlraw}
-      \verb http://cjon.ons.org/cjon/20/5/supplement/glioblastoma-overview-disease-and-treatment
-      \endverb
-      \verb{url}
-      \verb http://cjon.ons.org/cjon/20/5/supplement/glioblastoma-overview-disease-and-treatment
-      \endverb
-    \endentry
-    \entry{neph_deepmc_2021}{article}{}
-      \name{author}{5}{}{%
-        {{hash=7fc33ce32d4760562b2a4cf2cf87c928}{%
-           family={Neph},
-           familyi={N\bibinitperiod},
-           given={Ryan},
-           giveni={R\bibinitperiod}}}%
-        {{hash=28f3626db27efb68f0962a1e3ea83958}{%
-           family={Lyu},
-           familyi={L\bibinitperiod},
-           given={Qihui},
-           giveni={Q\bibinitperiod}}}%
-        {{hash=b09665f2d86b894e561d30d65478cb84}{%
-           family={Huang},
-           familyi={H\bibinitperiod},
-           given={Yangsibo},
-           giveni={Y\bibinitperiod}}}%
-        {{hash=6538d270bf0ced1e2e1d85f1e1483186}{%
-           family={Yang},
-           familyi={Y\bibinitperiod},
-           given={You\bibnamedelima Ming},
-           giveni={Y\bibinitperiod\bibinitdelim M\bibinitperiod}}}%
-        {{hash=e631bb82c3de82c208edc55258ff03d8}{%
-           family={Sheng},
-           familyi={S\bibinitperiod},
-           given={Ke},
-           giveni={K\bibinitperiod}}}%
-      }
-      \strng{namehash}{1b13c108c366c2445cdf8f5dd74163d2}
-      \strng{fullhash}{4d9d03d5559c4c7652afe17cbfce3aea}
-      \strng{bibnamehash}{1b13c108c366c2445cdf8f5dd74163d2}
-      \strng{authorbibnamehash}{1b13c108c366c2445cdf8f5dd74163d2}
-      \strng{authornamehash}{1b13c108c366c2445cdf8f5dd74163d2}
-      \strng{authorfullhash}{4d9d03d5559c4c7652afe17cbfce3aea}
-      \field{sortinit}{N}
-      \field{sortinithash}{98cf339a479c0454fe09153a08675a15}
-      \field{labelnamesource}{author}
-      \field{labeltitlesource}{shorttitle}
-      \field{day}{7}
-      \field{issn}{0031-9155, 1361-6560}
-      \field{journaltitle}{Physics in Medicine \& Biology}
-      \field{month}{2}
-      \field{number}{3}
-      \field{shortjournal}{Phys. Med. Biol.}
-      \field{shorttitle}{{DeepMC}}
-      \field{title}{{DeepMC}: a deep learning method for efficient Monte Carlo beamlet dose calculation by predictive denoising in magnetic resonance-guided radiotherapy}
-      \field{urlday}{16}
-      \field{urlmonth}{3}
-      \field{urlyear}{2021}
-      \field{volume}{66}
-      \field{year}{2021}
-      \field{dateera}{ce}
-      \field{urldateera}{ce}
-      \field{pages}{035022}
-      \range{pages}{1}
-      \verb{doi}
-      \verb 10.1088/1361-6560/abca01
-      \endverb
-      \verb{urlraw}
-      \verb https://iopscience.iop.org/article/10.1088/1361-6560/abca01
-      \endverb
-      \verb{url}
-      \verb https://iopscience.iop.org/article/10.1088/1361-6560/abca01
-      \endverb
-    \endentry
-    \entry{thorwarth_technical_2021}{article}{}
-      \name{author}{2}{}{%
-        {{hash=c0f782abcedf29ebfffb8a37587b7e3a}{%
-           family={Thorwarth},
-           familyi={T\bibinitperiod},
-           given={Daniela},
-           giveni={D\bibinitperiod}}}%
-        {{hash=acf0cad0360d6a2e994312cff7dc4ba5}{%
-           family={Low},
-           familyi={L\bibinitperiod},
-           given={Daniel\bibnamedelima A.},
-           giveni={D\bibinitperiod\bibinitdelim A\bibinitperiod}}}%
-      }
-      \strng{namehash}{df7cbf1ae8b655c47b8df29e34c336ec}
-      \strng{fullhash}{df7cbf1ae8b655c47b8df29e34c336ec}
-      \strng{bibnamehash}{df7cbf1ae8b655c47b8df29e34c336ec}
-      \strng{authorbibnamehash}{df7cbf1ae8b655c47b8df29e34c336ec}
-      \strng{authornamehash}{df7cbf1ae8b655c47b8df29e34c336ec}
-      \strng{authorfullhash}{df7cbf1ae8b655c47b8df29e34c336ec}
-      \field{sortinit}{T}
-      \field{sortinithash}{51f9faf24c60c62ca764a77f78cf5666}
+      \strng{namehash}{d8fc6c40b83b6f2b8ca478c551fabfce}
+      \strng{fullhash}{a9cf8dfef74d877e02e27b016cbc84b2}
+      \strng{bibnamehash}{d8fc6c40b83b6f2b8ca478c551fabfce}
+      \strng{authorbibnamehash}{d8fc6c40b83b6f2b8ca478c551fabfce}
+      \strng{authornamehash}{d8fc6c40b83b6f2b8ca478c551fabfce}
+      \strng{authorfullhash}{a9cf8dfef74d877e02e27b016cbc84b2}
+      \field{sortinit}{1}
+      \field{sortinithash}{50c6687d7fc80f50136d75228e3c59ba}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
-      \field{abstract}{In the past few years, radiotherapy ({RT}) has experienced a major technological innovation with the development of hybrid machines combining magnetic resonance ({MR}) imaging and linear accelerators. This new technology for {MR}-guided cancer treatment has the potential to revolutionize the field of adaptive {RT} due to the opportunity to provide high-resolution, real-time {MR} imaging before and during treatment application. However, from a technical point of view, several challenges remain which need to be tackled to ensure safe and robust real-time adaptive {MR}-guided {RT} delivery. In this manuscript, several technical challenges to {MR}-guided {RT} are discussed. Starting with magnetic field strength tradeoffs, the potential and limitations for purely {MR}-based {RT} workflows are discussed. Furthermore, the current status of real-time 3D {MR} imaging and its potential for real-time {RT} are summarized. Finally, the potential of quantitative {MR} imaging for future biological {RT} adaptation is highlighted.}
-      \field{issn}{2234-943X}
-      \field{journaltitle}{Frontiers in Oncology}
-      \field{note}{Publisher: Frontiers}
-      \field{shortjournal}{Front. Oncol.}
-      \field{title}{Technical Challenges of Real-Time Adaptive {MR}-Guided Radiotherapy}
-      \field{urlday}{21}
-      \field{urlmonth}{3}
+      \field{issn}{01678140}
+      \field{journaltitle}{Radiotherapy and Oncology}
+      \field{langid}{english}
+      \field{month}{7}
+      \field{number}{1}
+      \field{shortjournal}{Radiotherapy and Oncology}
+      \field{title}{3D conformal radiation therapy for prostate cancer in elderly patients}
+      \field{urlday}{16}
+      \field{urlmonth}{8}
       \field{urlyear}{2021}
-      \field{volume}{11}
-      \field{year}{2021}
+      \field{volume}{76}
+      \field{year}{2005}
       \field{dateera}{ce}
       \field{urldateera}{ce}
+      \field{pages}{27\bibrangedash 34}
+      \range{pages}{8}
       \verb{doi}
-      \verb 10.3389/fonc.2021.634507
+      \verb 10.1016/j.radonc.2005.06.001
       \endverb
       \verb{file}
-      \verb Full Text PDF:/Users/simongutwein/Zotero/storage/ANMWKGAX/Thorwarth und Low - 2021 - Technical Challenges of Real-Time Adaptive MR-Guid.pdf:application/pdf
+      \verb Geinitz et al. - 2005 - 3D conformal radiation therapy for prostate cancer.pdf:/Users/simongutwein/Zotero/storage/EATUX3AV/Geinitz et al. - 2005 - 3D conformal radiation therapy for prostate cancer.pdf:application/pdf
       \endverb
       \verb{urlraw}
-      \verb https://www.frontiersin.org/articles/10.3389/fonc.2021.634507/full
+      \verb https://linkinghub.elsevier.com/retrieve/pii/S0167814005002082
       \endverb
       \verb{url}
-      \verb https://www.frontiersin.org/articles/10.3389/fonc.2021.634507/full
+      \verb https://linkinghub.elsevier.com/retrieve/pii/S0167814005002082
       \endverb
-      \keyw{Biologically adaptive radiotherapy,{MR}-guided radiation therapy ({MRgRT}),{MR}-linac,{MR}-only radiotherapy,Online adaptive radiotherapy,Real-time adaptive radiotherapy}
+    \endentry
+    \entry{nguyen_curative_2005}{article}{}
+      \name{author}{16}{}{%
+        {{hash=84c01fd3c65ff8ca0689fcc7fc53b657}{%
+           family={Nguyen},
+           familyi={N\bibinitperiod},
+           given={Tan\bibnamedelima Dat},
+           giveni={T\bibinitperiod\bibinitdelim D\bibinitperiod}}}%
+        {{hash=7946186dab49e48f3810cea4219fd299}{%
+           family={Poortmans},
+           familyi={P\bibinitperiod},
+           given={Philip\bibnamedelima M.P.},
+           giveni={P\bibinitperiod\bibinitdelim M\bibinitperiod}}}%
+        {{hash=12da053b7ddaa39585a11f659a83cbee}{%
+           family={Hulst},
+           familyi={H\bibinitperiod},
+           given={Marleen\bibnamedelimb van\bibnamedelima der},
+           giveni={M\bibinitperiod\bibinitdelim v\bibinitperiod\bibinitdelim d\bibinitperiod}}}%
+        {{hash=79d98bb44d62dbbdd5bbdbe229c8d92c}{%
+           family={Studer},
+           familyi={S\bibinitperiod},
+           given={Gabriela},
+           giveni={G\bibinitperiod}}}%
+        {{hash=6a2ac15cf516ffdd627259496bf40b60}{%
+           family={Pigois},
+           familyi={P\bibinitperiod},
+           given={Eva},
+           giveni={E\bibinitperiod}}}%
+        {{hash=15021198e4a32ec066ce5decd0846645}{%
+           family={Collen},
+           familyi={C\bibinitperiod},
+           given={Timothy\bibnamedelima D.},
+           giveni={T\bibinitperiod\bibinitdelim D\bibinitperiod}}}%
+        {{hash=75b7da6b2f8fe589d686f1d90858ab20}{%
+           family={Belkacemi},
+           familyi={B\bibinitperiod},
+           given={Yazid},
+           giveni={Y\bibinitperiod}}}%
+        {{hash=e373c34d55e16def6a7ae67ea2038c3e}{%
+           family={Beckendorf},
+           familyi={B\bibinitperiod},
+           given={Véronique},
+           giveni={V\bibinitperiod}}}%
+        {{hash=c7f9f85946b572f5c0cf3b36d73d1bf3}{%
+           family={Miralbell},
+           familyi={M\bibinitperiod},
+           given={Raymond},
+           giveni={R\bibinitperiod}}}%
+        {{hash=554bc07e3ea94df9d740a7dc6ed71b87}{%
+           family={Scandolaro},
+           familyi={S\bibinitperiod},
+           given={Luciano},
+           giveni={L\bibinitperiod}}}%
+        {{hash=776d0dfd8d8d728721574672be87c9d5}{%
+           family={Soete},
+           familyi={S\bibinitperiod},
+           given={Guy},
+           giveni={G\bibinitperiod}}}%
+        {{hash=89ba7d4e0a5063f995ea9c3bc9f38de8}{%
+           family={Villa},
+           familyi={V\bibinitperiod},
+           given={Salvador},
+           giveni={S\bibinitperiod}}}%
+        {{hash=932e9f0bea6cff28ac0eba9c0502936d}{%
+           family={Gez},
+           familyi={G\bibinitperiod},
+           given={Eliahu},
+           giveni={E\bibinitperiod}}}%
+        {{hash=2c9c63fbd972192f2090267690e2b16c}{%
+           family={Thomas},
+           familyi={T\bibinitperiod},
+           given={Olivier},
+           giveni={O\bibinitperiod}}}%
+        {{hash=c6c42824e6d4bf9e622513f88e78ff9c}{%
+           family={Krengli},
+           familyi={K\bibinitperiod},
+           given={Marco},
+           giveni={M\bibinitperiod}}}%
+        {{hash=cfb1ac7b369dec0c57bf8deecf4e91d0}{%
+           family={Jovenin},
+           familyi={J\bibinitperiod},
+           given={Nicolas},
+           giveni={N\bibinitperiod}}}%
+      }
+      \strng{namehash}{21da552e96111d0ae219e6dde360c5d4}
+      \strng{fullhash}{62cc033d683490669bc927f16780ef0a}
+      \strng{bibnamehash}{21da552e96111d0ae219e6dde360c5d4}
+      \strng{authorbibnamehash}{21da552e96111d0ae219e6dde360c5d4}
+      \strng{authornamehash}{21da552e96111d0ae219e6dde360c5d4}
+      \strng{authorfullhash}{62cc033d683490669bc927f16780ef0a}
+      \field{sortinit}{1}
+      \field{sortinithash}{50c6687d7fc80f50136d75228e3c59ba}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{shorttitle}
+      \field{issn}{01678140}
+      \field{journaltitle}{Radiotherapy and Oncology}
+      \field{langid}{english}
+      \field{month}{12}
+      \field{number}{3}
+      \field{shortjournal}{Radiotherapy and Oncology}
+      \field{shorttitle}{The curative role of radiotherapy in adenocarcinoma of the prostate in patients under 55 years of age}
+      \field{title}{The curative role of radiotherapy in adenocarcinoma of the prostate in patients under 55 years of age: A rare cancer network retrospective study}
+      \field{urlday}{16}
+      \field{urlmonth}{8}
+      \field{urlyear}{2021}
+      \field{volume}{77}
+      \field{year}{2005}
+      \field{dateera}{ce}
+      \field{urldateera}{ce}
+      \field{pages}{286\bibrangedash 289}
+      \range{pages}{4}
+      \verb{doi}
+      \verb 10.1016/j.radonc.2005.10.015
+      \endverb
+      \verb{file}
+      \verb Nguyen et al. - 2005 - The curative role of radiotherapy in adenocarcinom.pdf:/Users/simongutwein/Zotero/storage/FSIAQBBV/Nguyen et al. - 2005 - The curative role of radiotherapy in adenocarcinom.pdf:application/pdf
+      \endverb
+      \verb{urlraw}
+      \verb https://linkinghub.elsevier.com/retrieve/pii/S0167814005004779
+      \endverb
+      \verb{url}
+      \verb https://linkinghub.elsevier.com/retrieve/pii/S0167814005004779
+      \endverb
+    \endentry
+    \entry{budiharto_external_nodate}{article}{}
+      \name{author}{3}{}{%
+        {{hash=7ba7353c996755660e4b7357230c9ec6}{%
+           family={Budiharto},
+           familyi={B\bibinitperiod},
+           given={Tom},
+           giveni={T\bibinitperiod}}}%
+        {{hash=b0b831277650f85ce7f3dc327efb9f38}{%
+           family={Haustermans},
+           familyi={H\bibinitperiod},
+           given={Karin},
+           giveni={K\bibinitperiod}}}%
+        {{hash=71511861aafde1c5b6d21e688dc27c68}{%
+           family={Kovacs},
+           familyi={K\bibinitperiod},
+           given={Gyoergy},
+           giveni={G\bibinitperiod}}}%
+      }
+      \strng{namehash}{97819f05ab6f016b180d814877c7516c}
+      \strng{fullhash}{97819f05ab6f016b180d814877c7516c}
+      \strng{bibnamehash}{97819f05ab6f016b180d814877c7516c}
+      \strng{authorbibnamehash}{97819f05ab6f016b180d814877c7516c}
+      \strng{authornamehash}{97819f05ab6f016b180d814877c7516c}
+      \strng{authorfullhash}{97819f05ab6f016b180d814877c7516c}
+      \field{sortinit}{1}
+      \field{sortinithash}{50c6687d7fc80f50136d75228e3c59ba}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{External beam radiotherapy ({EBRT}) constitutes an important management option for prostate cancer ({PCa}). Radiation doses !74 Gy are warranted. Dose escalation of {EBRT} using three-dimensional-conformal radiotherapy ({RT}) or intensity-modulated {RT} improves the therapeutic index by minimizing normal tissue complication probability and increasing tumor control probability. Although higher doses are associated with better biochemical disease-free survival, no impact on local recurrence or overall survival has been demonstrated. Hypofractionation for {PCa} may be an attractive therapeutic option, but toxicity data need to be conﬁrmed in randomized phase {III} trials. Advances in {RT} technology, such as volumetric modulated arc therapy and imageguided {RT}, could facilitate the introduction of dose escalation and hypofractionation into clinical practice. Particle beam irradiation and more speciﬁc carbon ion {RT} are also very promising new techniques that are under investigation. Ultimately, these techniques may lead to focal dose escalation by selective boosting of dominant intraprostatic lesions, which is currently under investigation as a solution to overcome increased toxicity of homogenous dose escalation. This review will give a comprehensive overview of all the recent advances in these new radiation therapy techniques.}
+      \field{journaltitle}{Journal of Endourology}
+      \field{langid}{english}
+      \field{title}{External Beam Radiotherapy for Prostate Cancer}
+      \field{pages}{10}
+      \range{pages}{1}
+      \verb{file}
+      \verb Budiharto et al. - External Beam Radiotherapy for Prostate Cancer.pdf:/Users/simongutwein/Zotero/storage/H2UUQXY6/Budiharto et al. - External Beam Radiotherapy for Prostate Cancer.pdf:application/pdf
+      \endverb
+    \endentry
+    \entry{ragaz_adjuvant_1997}{article}{}
+      \name{author}{12}{}{%
+        {{hash=dc4287f8454c7e474f99eb0da433d530}{%
+           family={Ragaz},
+           familyi={R\bibinitperiod},
+           given={Joseph},
+           giveni={J\bibinitperiod}}}%
+        {{hash=83d6824d4fdf9158a014c50664778290}{%
+           family={Jackson},
+           familyi={J\bibinitperiod},
+           given={Stewart\bibnamedelima M},
+           giveni={S\bibinitperiod\bibinitdelim M\bibinitperiod}}}%
+        {{hash=c980ab78183689e64e9fe382d2069207}{%
+           family={Le},
+           familyi={L\bibinitperiod},
+           given={Nhu},
+           giveni={N\bibinitperiod}}}%
+        {{hash=b24b5e879a5467b55f41654304934a3c}{%
+           family={Plenderleith},
+           familyi={P\bibinitperiod},
+           given={Ian\bibnamedelima H},
+           giveni={I\bibinitperiod\bibinitdelim H\bibinitperiod}}}%
+        {{hash=0824b93707165128859db0782b6d9435}{%
+           family={Spinelli},
+           familyi={S\bibinitperiod},
+           given={John\bibnamedelima J},
+           giveni={J\bibinitperiod\bibinitdelim J\bibinitperiod}}}%
+        {{hash=6832603cf3d1adc1be55d08d46881ea7}{%
+           family={Basco},
+           familyi={B\bibinitperiod},
+           given={Vivian\bibnamedelima E},
+           giveni={V\bibinitperiod\bibinitdelim E\bibinitperiod}}}%
+        {{hash=995c5e49e243775b1e32dd10d8e933a8}{%
+           family={Wilson},
+           familyi={W\bibinitperiod},
+           given={Kenneth\bibnamedelima S},
+           giveni={K\bibinitperiod\bibinitdelim S\bibinitperiod}}}%
+        {{hash=ce0801169e878aed53e7ed03571aec07}{%
+           family={Knowling},
+           familyi={K\bibinitperiod},
+           given={Margaret\bibnamedelima A},
+           giveni={M\bibinitperiod\bibinitdelim A\bibinitperiod}}}%
+        {{hash=c68dc48cb04e2de1d6da0e65ce26e23b}{%
+           family={Coppin},
+           familyi={C\bibinitperiod},
+           given={Christopher\bibnamedelimb M\bibnamedelima L},
+           giveni={C\bibinitperiod\bibinitdelim M\bibinitperiod\bibinitdelim L\bibinitperiod}}}%
+        {{hash=d6b511afb886e4b45cf3323b7fa3fa91}{%
+           family={Paradis},
+           familyi={P\bibinitperiod},
+           given={Marilyn},
+           giveni={M\bibinitperiod}}}%
+        {{hash=d6a72a7cfc85b4ba23b02c6beaec1199}{%
+           family={Coldman},
+           familyi={C\bibinitperiod},
+           given={Andrew\bibnamedelima J},
+           giveni={A\bibinitperiod\bibinitdelim J\bibinitperiod}}}%
+        {{hash=b6314555a26869bb014fb6eafcb7d99a}{%
+           family={Olivotto},
+           familyi={O\bibinitperiod},
+           given={Ivo\bibnamedelima A},
+           giveni={I\bibinitperiod\bibinitdelim A\bibinitperiod}}}%
+      }
+      \strng{namehash}{7a004057466373b9827d3864892163fb}
+      \strng{fullhash}{55a51daf996fb27c8ab706be24d3f95e}
+      \strng{bibnamehash}{7a004057466373b9827d3864892163fb}
+      \strng{authorbibnamehash}{7a004057466373b9827d3864892163fb}
+      \strng{authornamehash}{7a004057466373b9827d3864892163fb}
+      \strng{authorfullhash}{55a51daf996fb27c8ab706be24d3f95e}
+      \field{sortinit}{2}
+      \field{sortinithash}{ed39bb39cf854d5250e95b1c1f94f4ed}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{Background Radiotherapy after mastectomy to treat early breast cancer has been known since the 1940s to reduce rates of local relapse. However, the routine use of postoperative radiotherapy began to decline in the 1980s because it failed to improve overall survival. We prospectively tested the efficacy of combining radiotherapy with chemotherapy. Methods From 1978 through 1986, 318 premenopausal women with node-positive breast cancer were randomly assigned, after modified radical mastectomy, to receive chemotherapy plus radiotherapy or chemotherapy alone. Radiotherapy was given to the chest wall and locoregional lymph nodes between the fourth and fifth cycles of cyclophosphamide, methotrexate, and fluorouracil. Results After 15 years of follow-up, the women assigned to chemotherapy plus radiotherapy had a 33 percent reduction in the rate of recurrence (relative risk, 0.67; 95 percent confidence interval, 0.50 to 0.90) and a 29 percent reduction in mortality from breast cancer (relative risk, 0.71; 95 percent confidence interval, 0.51 to 0.99), as compared with the women treated with chemotherapy alone. Conclusions Radiotherapy combined with chemotherapy after modified radical mastectomy decreases rates of locoregional and systemic relapse and reduces mortality from breast cancer. (N Engl J Med 1997;337:956-62.)}
+      \field{journaltitle}{The New England Journal of Medicine}
+      \field{langid}{english}
+      \field{title}{Adjuvant Radiotherapy and Chemotherapy in Node-Positive Premenopausal Women with Breast Cancer}
+      \field{year}{1997}
+      \field{dateera}{ce}
+      \field{pages}{7}
+      \range{pages}{1}
+      \verb{file}
+      \verb Ragaz et al. - 1997 - Adjuvant Radiotherapy and Chemotherapy in Node-Pos.pdf:/Users/simongutwein/Zotero/storage/F954YSCY/Ragaz et al. - 1997 - Adjuvant Radiotherapy and Chemotherapy in Node-Pos.pdf:application/pdf
+      \endverb
+    \endentry
+    \entry{lena_combined_nodate}{article}{}
+      \name{author}{5}{}{%
+        {{hash=ba5a0a15287115feab38904e39f9cdcc}{%
+           family={Lena},
+           familyi={L\bibinitperiod},
+           given={Mario\bibnamedelima De},
+           giveni={M\bibinitperiod\bibinitdelim D\bibinitperiod}}}%
+        {{hash=e6ea16d67ea9b9bad0ccf2ca48bef764}{%
+           family={Zucali},
+           familyi={Z\bibinitperiod},
+           given={Roberto},
+           giveni={R\bibinitperiod}}}%
+        {{hash=7def9a2ebb2cd18b8cdbb72d4c37f674}{%
+           family={Viganotti},
+           familyi={V\bibinitperiod},
+           given={Giovanni},
+           giveni={G\bibinitperiod}}}%
+        {{hash=9205235e24bcfd976ef1f04c145738ff}{%
+           family={Valagussa},
+           familyi={V\bibinitperiod},
+           given={Pinuccia},
+           giveni={P\bibinitperiod}}}%
+        {{hash=3147a50acf24f6ac95ede7f424c5f2a3}{%
+           family={Bonadonna},
+           familyi={B\bibinitperiod},
+           given={Gianni},
+           giveni={G\bibinitperiod}}}%
+      }
+      \strng{namehash}{c861dd379ae48b033bbac5eb34de481d}
+      \strng{fullhash}{15e6392ba13bb0e190edbe003f80b435}
+      \strng{bibnamehash}{c861dd379ae48b033bbac5eb34de481d}
+      \strng{authorbibnamehash}{c861dd379ae48b033bbac5eb34de481d}
+      \strng{authornamehash}{c861dd379ae48b033bbac5eb34de481d}
+      \strng{authorfullhash}{15e6392ba13bb0e190edbe003f80b435}
+      \field{sortinit}{2}
+      \field{sortinithash}{ed39bb39cf854d5250e95b1c1f94f4ed}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{Combined treatment modality was applied in 110 consecutive women with primary inoperable (T3b-T4) breast cancer. Treatment was started with four cycles of adriamycin plus vincristine (.4V). This wasfollowed in responders by high-energy radiotherapy ({RT}). At the end of combined therapy, patients in complete remission ({CR}) were randomized to either no further treatment or six more cycles of chemotherapy. A V induced objective response in 89\% of patients (complete 15.5\%, partial 54.5\%, improvement 19\%). At the end of R T, 81 of 98 (82.7\%) patients responding to A V were classified in {CR}. The median duration of {CR} was 15 months. The median free interval was statistically prolonged by additional chemotherapy. The three-year survival was 52.8\%. Altogether, present findings indicate that combined treatment modality has improved the three-year survival compared to the previous series treated with radiotherapy alone. However, to achieve a satisfactory control of T3b--T4 breast cancer a more aggressive and prolonged treatment is required.}
+      \field{langid}{english}
+      \field{title}{Combined Chemotherapy-Radlotherapy Approach in Locally Advanced (T3b-T4)Breast Cancer}
+      \field{pages}{7}
+      \range{pages}{1}
+      \verb{file}
+      \verb Lena et al. - Combined Chemotherapy-Radlotherapy Approach in Loc.pdf:/Users/simongutwein/Zotero/storage/C6J4NFLW/Lena et al. - Combined Chemotherapy-Radlotherapy Approach in Loc.pdf:application/pdf
+      \endverb
+    \endentry
+    \entry{taylor_estimating_2017}{article}{}
+      \name{author}{18}{}{%
+        {{hash=d77d704cab565c0ca23fe980e4e2d31a}{%
+           family={Taylor},
+           familyi={T\bibinitperiod},
+           given={Carolyn},
+           giveni={C\bibinitperiod}}}%
+        {{hash=9c561b7b59cf1662046d86a54a620fe5}{%
+           family={Correa},
+           familyi={C\bibinitperiod},
+           given={Candace},
+           giveni={C\bibinitperiod}}}%
+        {{hash=855011a66d5ccfc06ff2c84e9bb57fde}{%
+           family={Duane},
+           familyi={D\bibinitperiod},
+           given={Frances\bibnamedelima K.},
+           giveni={F\bibinitperiod\bibinitdelim K\bibinitperiod}}}%
+        {{hash=adf08ad2b2239f22d23e8b32b4cd64a6}{%
+           family={Aznar},
+           familyi={A\bibinitperiod},
+           given={Marianne\bibnamedelima C.},
+           giveni={M\bibinitperiod\bibinitdelim C\bibinitperiod}}}%
+        {{hash=1599bdb55f722a4b603cdf681f4e68d6}{%
+           family={Anderson},
+           familyi={A\bibinitperiod},
+           given={Stewart\bibnamedelima J.},
+           giveni={S\bibinitperiod\bibinitdelim J\bibinitperiod}}}%
+        {{hash=0b7319d8a40a87e8cfcb0f59c1a2fcd9}{%
+           family={Bergh},
+           familyi={B\bibinitperiod},
+           given={Jonas},
+           giveni={J\bibinitperiod}}}%
+        {{hash=44f80c5c4f048b11431aa740f4c24f43}{%
+           family={Dodwell},
+           familyi={D\bibinitperiod},
+           given={David},
+           giveni={D\bibinitperiod}}}%
+        {{hash=b9ffac3a4c0e95d7aacdc3bc8b4d3a4d}{%
+           family={Ewertz},
+           familyi={E\bibinitperiod},
+           given={Marianne},
+           giveni={M\bibinitperiod}}}%
+        {{hash=0b518adbb5f4ace9edd7d9ee029745d8}{%
+           family={Gray},
+           familyi={G\bibinitperiod},
+           given={Richard},
+           giveni={R\bibinitperiod}}}%
+        {{hash=3d5a428bec5ae2c0748dc64a742e0516}{%
+           family={Jagsi},
+           familyi={J\bibinitperiod},
+           given={Reshma},
+           giveni={R\bibinitperiod}}}%
+        {{hash=4b55dcbaf55d2e28d9f0dc727d9e1846}{%
+           family={Pierce},
+           familyi={P\bibinitperiod},
+           given={Lori},
+           giveni={L\bibinitperiod}}}%
+        {{hash=873293af4079d647ef3735df95681c7c}{%
+           family={Pritchard},
+           familyi={P\bibinitperiod},
+           given={Kathleen\bibnamedelima I.},
+           giveni={K\bibinitperiod\bibinitdelim I\bibinitperiod}}}%
+        {{hash=d38543ac5afd1b5736a27f4e65ad6529}{%
+           family={Swain},
+           familyi={S\bibinitperiod},
+           given={Sandra},
+           giveni={S\bibinitperiod}}}%
+        {{hash=edcb27361de88ed2a8ec1c9dca30dd7a}{%
+           family={Wang},
+           familyi={W\bibinitperiod},
+           given={Zhe},
+           giveni={Z\bibinitperiod}}}%
+        {{hash=0dcecbdbbd79ae4dd611093388b662d1}{%
+           family={Wang},
+           familyi={W\bibinitperiod},
+           given={Yaochen},
+           giveni={Y\bibinitperiod}}}%
+        {{hash=7bc9a95f01d55a6aec56294c7512007d}{%
+           family={Whelan},
+           familyi={W\bibinitperiod},
+           given={Tim},
+           giveni={T\bibinitperiod}}}%
+        {{hash=aa52820960b313248561ce7ad28e5a0b}{%
+           family={Peto},
+           familyi={P\bibinitperiod},
+           given={Richard},
+           giveni={R\bibinitperiod}}}%
+        {{hash=25dbd23d8ad0d63b57543402f63b8ff0}{%
+           family={{McGale}},
+           familyi={M\bibinitperiod},
+           given={Paul},
+           giveni={P\bibinitperiod}}}%
+      }
+      \strng{namehash}{f30111d6c0b8a7d36612163923f3272e}
+      \strng{fullhash}{6d9736b932936787d3c24ee03e1d0c24}
+      \strng{bibnamehash}{f30111d6c0b8a7d36612163923f3272e}
+      \strng{authorbibnamehash}{f30111d6c0b8a7d36612163923f3272e}
+      \strng{authornamehash}{f30111d6c0b8a7d36612163923f3272e}
+      \strng{authorfullhash}{6d9736b932936787d3c24ee03e1d0c24}
+      \field{sortinit}{2}
+      \field{sortinithash}{ed39bb39cf854d5250e95b1c1f94f4ed}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{shorttitle}
+      \field{abstract}{Purpose Radiotherapy reduces the absolute risk of breast cancer mortality by a few percentage points in suitable women but can cause a second cancer or heart disease decades later. We estimated the absolute long-term risks of modern breast cancer radiotherapy. Methods First, a systematic literature review was performed of lung and heart doses in breast cancer regimens published during 2010 to 2015. Second, individual patient data meta-analyses of 40,781 women randomly assigned to breast cancer radiotherapy versus no radiotherapy in 75 trials yielded rate ratios ({RRs}) for second primary cancers and cause-specific mortality and excess {RRs} ({ERRs}) per Gy for incident lung cancer and cardiac mortality. Smoking status was unavailable. Third, the lung or heart {ERRs} per Gy in the trials and the 2010 to 2015 doses were combined and applied to current smoker and nonsmoker lung cancer and cardiac mortality rates in population-based data. Results Average doses from 647 regimens published during 2010 to 2015 were 5.7 Gy for whole lung and 4.4 Gy for whole heart. The median year of irradiation was 2010 (interquartile range [{IQR}], 2008 to 2011). Meta-analyses yielded lung cancer incidence ≥ 10 years after radiotherapy {RR} of 2.10 (95\% {CI}, 1.48 to 2.98; P < .001) on the basis of 134 cancers, indicating 0.11 (95\% {CI}, 0.05 to 0.20) {ERR} per Gy whole-lung dose. For cardiac mortality, {RR} was 1.30 (95\% {CI}, 1.15 to 1.46; P < .001) on the basis of 1,253 cardiac deaths. Detailed analyses indicated 0.04 (95\% {CI}, 0.02 to 0.06) {ERR} per Gy whole-heart dose. Estimated absolute risks from modern radiotherapy were as follows: lung cancer, approximately 4\% for long-term continuing smokers and 0.3\% for nonsmokers; and cardiac mortality, approximately 1\% for smokers and 0.3\% for nonsmokers. Conclusion For long-term smokers, the absolute risks of modern radiotherapy may outweigh the benefits, yet for most nonsmokers (and ex-smokers), the benefits of radiotherapy far outweigh the risks. Hence, smoking can determine the net effect of radiotherapy on mortality, but smoking cessation substantially reduces radiotherapy risk.}
+      \field{day}{20}
+      \field{issn}{0732-183X}
+      \field{journaltitle}{Journal of Clinical Oncology}
+      \field{month}{5}
+      \field{number}{15}
+      \field{shortjournal}{J Clin Oncol}
+      \field{shorttitle}{Estimating the Risks of Breast Cancer Radiotherapy}
+      \field{title}{Estimating the Risks of Breast Cancer Radiotherapy: Evidence From Modern Radiation Doses to the Lungs and Heart and From Previous Randomized Trials}
+      \field{urlday}{16}
+      \field{urlmonth}{8}
+      \field{urlyear}{2021}
+      \field{volume}{35}
+      \field{year}{2017}
+      \field{dateera}{ce}
+      \field{urldateera}{ce}
+      \field{pages}{1641\bibrangedash 1649}
+      \range{pages}{9}
+      \verb{doi}
+      \verb 10.1200/JCO.2016.72.0722
+      \endverb
+      \verb{file}
+      \verb PubMed Central Full Text PDF:/Users/simongutwein/Zotero/storage/AEWJVJTA/Taylor et al. - 2017 - Estimating the Risks of Breast Cancer Radiotherapy.pdf:application/pdf
+      \endverb
+      \verb{urlraw}
+      \verb https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5548226/
+      \endverb
+      \verb{url}
+      \verb https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5548226/
+      \endverb
+    \endentry
+    \entry{datta_head_1990}{article}{}
+      \name{author}{4}{}{%
+        {{hash=bd2c6b84b7d14fc8cff640ac76902478}{%
+           family={Datta},
+           familyi={D\bibinitperiod},
+           given={N.\bibnamedelimi R.},
+           giveni={N\bibinitperiod\bibinitdelim R\bibinitperiod}}}%
+        {{hash=7858b3d54c18c9211daae7fff9d4e285}{%
+           family={Bose},
+           familyi={B\bibinitperiod},
+           given={A.\bibnamedelimi K.},
+           giveni={A\bibinitperiod\bibinitdelim K\bibinitperiod}}}%
+        {{hash=c6f1f2ff0de32ba7a7531ad491c3e73b}{%
+           family={Kapoor},
+           familyi={K\bibinitperiod},
+           given={H.\bibnamedelimi K.},
+           giveni={H\bibinitperiod\bibinitdelim K\bibinitperiod}}}%
+        {{hash=1774a1f1ad14dc83fbedb7ce144b2603}{%
+           family={Gupta},
+           familyi={G\bibinitperiod},
+           given={S.},
+           giveni={S\bibinitperiod}}}%
+      }
+      \strng{namehash}{c2310806795c1b1312a945b1e6b02bce}
+      \strng{fullhash}{182fdd3b39f9abedeb21b1918df53976}
+      \strng{bibnamehash}{c2310806795c1b1312a945b1e6b02bce}
+      \strng{authorbibnamehash}{c2310806795c1b1312a945b1e6b02bce}
+      \strng{authornamehash}{c2310806795c1b1312a945b1e6b02bce}
+      \strng{authorfullhash}{182fdd3b39f9abedeb21b1918df53976}
+      \field{sortinit}{3}
+      \field{sortinithash}{a37a8ef248a93c322189792c34fc68c9}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{shorttitle}
+      \field{issn}{0265-6736, 1464-5157}
+      \field{journaltitle}{International Journal of Hyperthermia}
+      \field{langid}{english}
+      \field{month}{1}
+      \field{number}{3}
+      \field{shortjournal}{International Journal of Hyperthermia}
+      \field{shorttitle}{Head and neck cancers}
+      \field{title}{Head and neck cancers: Results of thermoradiotherapy versus radiotherapy}
+      \field{urlday}{16}
+      \field{urlmonth}{8}
+      \field{urlyear}{2021}
+      \field{volume}{6}
+      \field{year}{1990}
+      \field{dateera}{ce}
+      \field{urldateera}{ce}
+      \field{pages}{479\bibrangedash 486}
+      \range{pages}{8}
+      \verb{doi}
+      \verb 10.3109/02656739009140944
+      \endverb
+      \verb{file}
+      \verb Datta et al. - 1990 - Head and neck cancers Results of thermoradiothera.pdf:/Users/simongutwein/Zotero/storage/NG8X6UK8/Datta et al. - 1990 - Head and neck cancers Results of thermoradiothera.pdf:application/pdf
+      \endverb
+      \verb{urlraw}
+      \verb http://www.tandfonline.com/doi/full/10.3109/02656739009140944
+      \endverb
+      \verb{url}
+      \verb http://www.tandfonline.com/doi/full/10.3109/02656739009140944
+      \endverb
+    \endentry
+    \entry{bhide_advances_2010}{article}{}
+      \name{author}{2}{}{%
+        {{hash=04da99cb30e76c44a69449348d465c85}{%
+           family={Bhide},
+           familyi={B\bibinitperiod},
+           given={S.A.},
+           giveni={S\bibinitperiod}}}%
+        {{hash=6a693b9406bcefe1a268488d94cf2dde}{%
+           family={Nutting},
+           familyi={N\bibinitperiod},
+           given={C.M.},
+           giveni={C\bibinitperiod}}}%
+      }
+      \strng{namehash}{917e00867e308f036e0102acbba3da6c}
+      \strng{fullhash}{917e00867e308f036e0102acbba3da6c}
+      \strng{bibnamehash}{917e00867e308f036e0102acbba3da6c}
+      \strng{authorbibnamehash}{917e00867e308f036e0102acbba3da6c}
+      \strng{authornamehash}{917e00867e308f036e0102acbba3da6c}
+      \strng{authorfullhash}{917e00867e308f036e0102acbba3da6c}
+      \field{sortinit}{3}
+      \field{sortinithash}{a37a8ef248a93c322189792c34fc68c9}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{Radiotherapy and surgery are the principal curative modalities in treatment of head and neck cancer. Conventional (two dimensional, 2D and three-dimensional conformal radiotherapy, 3DCRT) result in signiﬁcant side-effects and altered quality of life. Intensity modulated radiotherapy ({IMRT}) can spare the normal tissues, while delivering a curative dose to the tumour bearing tissues. Technical advances like volumetric intensity modulated arc therapy ({VMAT}) have helped optimise {IMRT} further. Image guided radiotherapy ({IGRT}) can be used to aid target delineation and also help reduce the {PTV} margins to further enhance the therapeutic ratio. Particle therapy using protons provides signiﬁcant advantage in terms of normal tissue sparing and is recommended for small cranial tumours and in radiotherapy for paediatric patients.}
+      \field{issn}{13688375}
+      \field{journaltitle}{Oral Oncology}
+      \field{langid}{english}
+      \field{month}{6}
+      \field{number}{6}
+      \field{shortjournal}{Oral Oncology}
+      \field{title}{Advances in radiotherapy for head and neck cancer}
+      \field{urlday}{16}
+      \field{urlmonth}{8}
+      \field{urlyear}{2021}
+      \field{volume}{46}
+      \field{year}{2010}
+      \field{dateera}{ce}
+      \field{urldateera}{ce}
+      \field{pages}{439\bibrangedash 441}
+      \range{pages}{3}
+      \verb{doi}
+      \verb 10.1016/j.oraloncology.2010.03.005
+      \endverb
+      \verb{file}
+      \verb Bhide und Nutting - 2010 - Advances in radiotherapy for head and neck cancer.pdf:/Users/simongutwein/Zotero/storage/5ELN2FFF/Bhide und Nutting - 2010 - Advances in radiotherapy for head and neck cancer.pdf:application/pdf
+      \endverb
+      \verb{urlraw}
+      \verb https://linkinghub.elsevier.com/retrieve/pii/S1368837510000941
+      \endverb
+      \verb{url}
+      \verb https://linkinghub.elsevier.com/retrieve/pii/S1368837510000941
+      \endverb
+    \endentry
+    \entry{castadot_adaptive_2010}{article}{}
+      \name{author}{4}{}{%
+        {{hash=fc18b2569754b9bcf282ced761763504}{%
+           family={Castadot},
+           familyi={C\bibinitperiod},
+           given={Pierre},
+           giveni={P\bibinitperiod}}}%
+        {{hash=1013aa8f8d2b7651ab1e33c67b3b6291}{%
+           family={Lee},
+           familyi={L\bibinitperiod},
+           given={John\bibnamedelima A.},
+           giveni={J\bibinitperiod\bibinitdelim A\bibinitperiod}}}%
+        {{hash=6ed017df1f0fea8c635103cacdddddca}{%
+           family={Geets},
+           familyi={G\bibinitperiod},
+           given={Xavier},
+           giveni={X\bibinitperiod}}}%
+        {{hash=c713095b3b3cc3f4966b68677792924c}{%
+           family={Grégoire},
+           familyi={G\bibinitperiod},
+           given={Vincent},
+           giveni={V\bibinitperiod}}}%
+      }
+      \strng{namehash}{21918ebead15861e32fe301c3587bfee}
+      \strng{fullhash}{b89d3b93871cc8de41237e6ce735911b}
+      \strng{bibnamehash}{21918ebead15861e32fe301c3587bfee}
+      \strng{authorbibnamehash}{21918ebead15861e32fe301c3587bfee}
+      \strng{authornamehash}{21918ebead15861e32fe301c3587bfee}
+      \strng{authorfullhash}{b89d3b93871cc8de41237e6ce735911b}
+      \field{sortinit}{3}
+      \field{sortinithash}{a37a8ef248a93c322189792c34fc68c9}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{issn}{10534296}
+      \field{journaltitle}{Seminars in Radiation Oncology}
+      \field{langid}{english}
+      \field{month}{4}
+      \field{number}{2}
+      \field{shortjournal}{Seminars in Radiation Oncology}
+      \field{title}{Adaptive Radiotherapy of Head and Neck Cancer}
+      \field{urlday}{16}
+      \field{urlmonth}{8}
+      \field{urlyear}{2021}
+      \field{volume}{20}
+      \field{year}{2010}
+      \field{dateera}{ce}
+      \field{urldateera}{ce}
+      \field{pages}{84\bibrangedash 93}
+      \range{pages}{10}
+      \verb{doi}
+      \verb 10.1016/j.semradonc.2009.11.002
+      \endverb
+      \verb{file}
+      \verb Castadot et al. - 2010 - Adaptive Radiotherapy of Head and Neck Cancer.pdf:/Users/simongutwein/Zotero/storage/JJVLKERV/Castadot et al. - 2010 - Adaptive Radiotherapy of Head and Neck Cancer.pdf:application/pdf
+      \endverb
+      \verb{urlraw}
+      \verb https://linkinghub.elsevier.com/retrieve/pii/S1053429609000769
+      \endverb
+      \verb{url}
+      \verb https://linkinghub.elsevier.com/retrieve/pii/S1053429609000769
+      \endverb
+    \endentry
+    \entry{morgan_adaptive_2020}{article}{}
+      \name{author}{2}{}{%
+        {{hash=269182f63a39363f21e5e9904a70e5d5}{%
+           family={Morgan},
+           familyi={M\bibinitperiod},
+           given={Howard\bibnamedelima E.},
+           giveni={H\bibinitperiod\bibinitdelim E\bibinitperiod}}}%
+        {{hash=1ac870229dc9b5e5a1074267a971efa0}{%
+           family={Sher},
+           familyi={S\bibinitperiod},
+           given={David\bibnamedelima J.},
+           giveni={D\bibinitperiod\bibinitdelim J\bibinitperiod}}}%
+      }
+      \strng{namehash}{564a6aae35d862a312a0a49281c74fd7}
+      \strng{fullhash}{564a6aae35d862a312a0a49281c74fd7}
+      \strng{bibnamehash}{564a6aae35d862a312a0a49281c74fd7}
+      \strng{authorbibnamehash}{564a6aae35d862a312a0a49281c74fd7}
+      \strng{authornamehash}{564a6aae35d862a312a0a49281c74fd7}
+      \strng{authorfullhash}{564a6aae35d862a312a0a49281c74fd7}
+      \field{sortinit}{3}
+      \field{sortinithash}{a37a8ef248a93c322189792c34fc68c9}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{Background: Although there have been dramatic improvements in radiotherapy for head and neck squamous cell carcinoma ({HNSCC}), including robust intensity modulation and daily image guidance, these advances are not able to account for inherent structural and spatial changes that may occur during treatment. Many sources have reported volume reductions in the primary target, nodal volumes, and parotid glands over treatment, which may result in unintended dosimetric changes affecting the side effect profile and even efficacy of the treatment. Adaptive radiotherapy ({ART}) is an exciting treatment paradigm that has been developed to directly adjust for these changes. Main body: Adaptive radiotherapy may be divided into two categories: anatomy-adapted (A-{ART}) and responseadapted {ART} (R-{ART}). Anatomy-adapted {ART} is the process of re-planning patients based on structural and spatial changes occurring over treatment, with the intent of reducing overdosage of sensitive structures such as the parotids, improving dose homogeneity, and preserving coverage of the target. In contrast, response-adapted {ART} is the process of re-planning patients based on response to treatment, such that the target and/or dose changes as a function of interim imaging during treatment, with the intent of dose escalating persistent disease and/or deescalating surrounding normal tissue. The impact of R-{ART} on local control and toxicity outcomes is actively being investigated in several currently accruing trials. Conclusions: Anatomy-adapted {ART} is a promising modality to improve rates of xerostomia and coverage in individuals who experience significant volumetric changes during radiation, while R-{ART} is currently being studied to assess its utility in either dose escalation of radioresistant disease, or de-intensification of surrounding normal tissue following treatment response. In this paper, we will review the existing literature and recent advances regarding A-{ART} and R-{ART}.}
+      \field{issn}{2059-7347}
+      \field{journaltitle}{Cancers of the Head \& Neck}
+      \field{langid}{english}
+      \field{month}{12}
+      \field{number}{1}
+      \field{shortjournal}{Cancers Head Neck}
+      \field{title}{Adaptive radiotherapy for head and neck cancer}
+      \field{urlday}{16}
+      \field{urlmonth}{8}
+      \field{urlyear}{2021}
+      \field{volume}{5}
+      \field{year}{2020}
+      \field{dateera}{ce}
+      \field{urldateera}{ce}
+      \field{pages}{1}
+      \range{pages}{1}
+      \verb{doi}
+      \verb 10.1186/s41199-019-0046-z
+      \endverb
+      \verb{file}
+      \verb Morgan und Sher - 2020 - Adaptive radiotherapy for head and neck cancer.pdf:/Users/simongutwein/Zotero/storage/9XT6Y2HM/Morgan und Sher - 2020 - Adaptive radiotherapy for head and neck cancer.pdf:application/pdf
+      \endverb
+      \verb{urlraw}
+      \verb https://cancersheadneck.biomedcentral.com/articles/10.1186/s41199-019-0046-z
+      \endverb
+      \verb{url}
+      \verb https://cancersheadneck.biomedcentral.com/articles/10.1186/s41199-019-0046-z
+      \endverb
+    \endentry
+    \entry{hoyer_radiotherapy_2012}{article}{}
+      \name{author}{9}{}{%
+        {{hash=b7d67d943a8fdcbc57effc0e2e6c72a7}{%
+           family={Høyer},
+           familyi={H\bibinitperiod},
+           given={Morten},
+           giveni={M\bibinitperiod}}}%
+        {{hash=0451dce52d114e6ba8f80e8cc27fef1d}{%
+           family={Swaminath},
+           familyi={S\bibinitperiod},
+           given={Anand},
+           giveni={A\bibinitperiod}}}%
+        {{hash=3d49278dfc2be58b46ed7fdfed54a792}{%
+           family={Bydder},
+           familyi={B\bibinitperiod},
+           given={Sean},
+           giveni={S\bibinitperiod}}}%
+        {{hash=a7177731dea3820a00ece24e0c486f76}{%
+           family={Lock},
+           familyi={L\bibinitperiod},
+           given={Michael},
+           giveni={M\bibinitperiod}}}%
+        {{hash=1f679e0bb8074125a35dad96b11a1462}{%
+           family={Méndez\bibnamedelima Romero},
+           familyi={M\bibinitperiod\bibinitdelim R\bibinitperiod},
+           given={Alejandra},
+           giveni={A\bibinitperiod}}}%
+        {{hash=09d08fb4f6300e3f9e66caa72b9961fc}{%
+           family={Kavanagh},
+           familyi={K\bibinitperiod},
+           given={Brian},
+           giveni={B\bibinitperiod}}}%
+        {{hash=e33ad2ef34d008c9081fd7c061485dfc}{%
+           family={Goodman},
+           familyi={G\bibinitperiod},
+           given={Karyn\bibnamedelima A.},
+           giveni={K\bibinitperiod\bibinitdelim A\bibinitperiod}}}%
+        {{hash=e5a7c1883338f8eccb3fa38ae2fb7fbb}{%
+           family={Okunieff},
+           familyi={O\bibinitperiod},
+           given={Paul},
+           giveni={P\bibinitperiod}}}%
+        {{hash=9ab59a86acb7d4efc3d9cd2b97b33bb7}{%
+           family={Dawson},
+           familyi={D\bibinitperiod},
+           given={Laura\bibnamedelima A.},
+           giveni={L\bibinitperiod\bibinitdelim A\bibinitperiod}}}%
+      }
+      \strng{namehash}{46666113f098c9e02f13bb1335151cb8}
+      \strng{fullhash}{bd4a6dd27ee5cb20fa4a35d53123d910}
+      \strng{bibnamehash}{46666113f098c9e02f13bb1335151cb8}
+      \strng{authorbibnamehash}{46666113f098c9e02f13bb1335151cb8}
+      \strng{authornamehash}{46666113f098c9e02f13bb1335151cb8}
+      \strng{authorfullhash}{bd4a6dd27ee5cb20fa4a35d53123d910}
+      \field{sortinit}{4}
+      \field{sortinithash}{e071e0bcb44634fab398d68ad04e69f4}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{shorttitle}
+      \field{abstract}{Over the past decade, there has been an increasing use of radiotherapy ({RT}) for the treatment of liver metastases. Most often, ablative doses are delivered to focal liver metastases with the goal of local control and ultimately improving survival. In contrast, low-dose whole-liver {RT} may be used for the palliation of symptomatic diffuse metastases. This review examines the available clinical data for both approaches. The review found that {RT} is effective both for local ablation of focal liver metastases and for palliation of patients with symptomatic liver metastases. However, there is a lack of a high level of evidence from randomized clinical trials.}
+      \field{day}{1}
+      \field{issn}{0360-3016}
+      \field{journaltitle}{International Journal of Radiation Oncology*Biology*Physics}
+      \field{langid}{english}
+      \field{month}{3}
+      \field{number}{3}
+      \field{shortjournal}{International Journal of Radiation Oncology*Biology*Physics}
+      \field{shorttitle}{Radiotherapy for Liver Metastases}
+      \field{title}{Radiotherapy for Liver Metastases: A Review of Evidence}
+      \field{urlday}{16}
+      \field{urlmonth}{8}
+      \field{urlyear}{2021}
+      \field{volume}{82}
+      \field{year}{2012}
+      \field{dateera}{ce}
+      \field{urldateera}{ce}
+      \field{pages}{1047\bibrangedash 1057}
+      \range{pages}{11}
+      \verb{doi}
+      \verb 10.1016/j.ijrobp.2011.07.020
+      \endverb
+      \verb{file}
+      \verb ScienceDirect Full Text PDF:/Users/simongutwein/Zotero/storage/ENDZ57QH/Høyer et al. - 2012 - Radiotherapy for Liver Metastases A Review of Evi.pdf:application/pdf;ScienceDirect Snapshot:/Users/simongutwein/Zotero/storage/GANWYVM9/S0360301611030902.html:text/html
+      \endverb
+      \verb{urlraw}
+      \verb https://www.sciencedirect.com/science/article/pii/S0360301611030902
+      \endverb
+      \verb{url}
+      \verb https://www.sciencedirect.com/science/article/pii/S0360301611030902
+      \endverb
+      \keyw{Brachytherapy,Conformal radiotherapy,Liver metastases,Selective internal radiotherapy,Stereotactic body radiation therapy,Whole liver radiotherapy}
+    \endentry
+    \entry{wulf_stereotactic_2001}{article}{}
+      \name{author}{6}{}{%
+        {{hash=c89abdc082ff15d0efd5de0ff8b74939}{%
+           family={Wulf},
+           familyi={W\bibinitperiod},
+           given={Jörn},
+           giveni={J\bibinitperiod}}}%
+        {{hash=844b8020e3a536a5d8573d963d8bc9b1}{%
+           family={Hädinger},
+           familyi={H\bibinitperiod},
+           given={Ulrich},
+           giveni={U\bibinitperiod}}}%
+        {{hash=4aa2d19c850957f389e25b4e159dce54}{%
+           family={Oppitz},
+           familyi={O\bibinitperiod},
+           given={Ulrich},
+           giveni={U\bibinitperiod}}}%
+        {{hash=9e91259e022698be85790bf051e24d87}{%
+           family={Thiele},
+           familyi={T\bibinitperiod},
+           given={Wibke},
+           giveni={W\bibinitperiod}}}%
+        {{hash=29b48077efdf173b6e17d47ad2784b90}{%
+           family={Ness-Dourdoumas},
+           familyi={N\bibinithyphendelim D\bibinitperiod},
+           given={Rea},
+           giveni={R\bibinitperiod}}}%
+        {{hash=3d67b78333baa87cee15232db85cda46}{%
+           family={Flentje},
+           familyi={F\bibinitperiod},
+           given={Michael},
+           giveni={M\bibinitperiod}}}%
+      }
+      \strng{namehash}{3e589282e0c5a51cc5174e16d447d33d}
+      \strng{fullhash}{6a1faa6b07b59295030bcfb207cc0cab}
+      \strng{bibnamehash}{3e589282e0c5a51cc5174e16d447d33d}
+      \strng{authorbibnamehash}{3e589282e0c5a51cc5174e16d447d33d}
+      \strng{authornamehash}{3e589282e0c5a51cc5174e16d447d33d}
+      \strng{authorfullhash}{6a1faa6b07b59295030bcfb207cc0cab}
+      \field{extraname}{1}
+      \field{sortinit}{4}
+      \field{sortinithash}{e071e0bcb44634fab398d68ad04e69f4}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{shorttitle}
+      \field{abstract}{Background: Stereotactic irradiation of extracranial targets offers a non-invasive treatment modality for patients with localized tumors, which are not amenable for surgery or other invasive approaches because of age or impaired medical condition. The purpose of the study was the evaluation of the method to achieve local control of irradiated targets in relation to treatment toxicity. Patients and Methods: Irradiation was performed as hypofractionated treatment in three fractions of 10 Gy each, normalized to the {PTV} enclosing 65\% isodose with patient fixation in a stereotactic body frame. The isocenter was localized by stereotactic coordinates. Targets were circumscribed tumors in the lung (n = 27) and liver (n = 24) not amenable for other treatment modalities: primary lung cancer (n = 12), local recurrences of lung cancer (n = 4), lung metastases (n = 11), liver metastases (n = 23) and one cholangiocellular carcinoma. Median {CTV}/{PTV} for targets in the lung was 57/113 cm3 (min/max 5–277 cm3/17–343 cm3) and for targets in the liver 50/102 cm3 (min/max 9–516 cm3/42–772 cm3). Median follow-up for targets in the lung was 8 months (2–33) and 9 months (2–28) for liver targets. Local control was defined as complete or partial remission and stable disease, measured by repeated {CT} scans after 6 weeks and in 3 months intervals. Treatment toxicity was evaluated according to the {WHO} score. Results: Crude local control was 85\% for pulmonary targets and 83\% for hepatic targets. Actuarial local control after 1 and 2 years was 76\% and 76\% for lung tumors and 76\% and 61\% for liver tumors. Actuarial overall patient survival was 48\% after 1 year and 21\% after 2 years for targets in the lung and 71\% and 43\% for targets in the liver. No acute grade 3–5 side effects were observed. Serious late toxicity occurred in two patients: a chronic ulceration of the esophagus at a target close to the mediastinum after 3 months (grade 3) and fatal bleeding from the pulmonary artery after 9 months (grade 5) in a previously irradiated patient. It remained unclear, whether the bleeding was a side effect of irradiation or due to tumor infiltration. Conclusion: Hypofractionated stereotactic irradiation of targets in the lung and liver is a locally effective treatment with actuarial local control rates of 76\% after 1 year and 61–76\% after 2 years without relevant acute toxicity. Severe late toxicity did not occur, if targets close to the mediastinum were avoided.}
+      \field{issn}{0179-7158}
+      \field{journaltitle}{Strahlentherapie und Onkologie}
+      \field{langid}{english}
+      \field{month}{12}
+      \field{number}{12}
+      \field{shortjournal}{Strahlenther Onkol}
+      \field{shorttitle}{Stereotactic Radiotherapy of Targets in the Lung and Liver}
+      \field{title}{Stereotactic Radiotherapy of Targets in the Lung and Liver:}
+      \field{urlday}{16}
+      \field{urlmonth}{8}
+      \field{urlyear}{2021}
+      \field{volume}{177}
+      \field{year}{2001}
+      \field{dateera}{ce}
+      \field{urldateera}{ce}
+      \field{pages}{645\bibrangedash 655}
+      \range{pages}{11}
+      \verb{doi}
+      \verb 10.1007/PL00002379
+      \endverb
+      \verb{file}
+      \verb Wulf et al. - 2001 - Stereotactic Radiotherapy of Targets in the Lung a.pdf:/Users/simongutwein/Zotero/storage/J52DHD6V/Wulf et al. - 2001 - Stereotactic Radiotherapy of Targets in the Lung a.pdf:application/pdf
+      \endverb
+      \verb{urlraw}
+      \verb http://link.springer.com/10.1007/PL00002379
+      \endverb
+      \verb{url}
+      \verb http://link.springer.com/10.1007/PL00002379
+      \endverb
+    \endentry
+    \entry{wulf_stereotactic_2006}{article}{}
+      \name{author}{7}{}{%
+        {{hash=8f33dbe840020c7b2c76503a07b03073}{%
+           family={Wulf},
+           familyi={W\bibinitperiod},
+           given={Joern},
+           giveni={J\bibinitperiod}}}%
+        {{hash=76f4cb72c279bb06d77cb9f8e4fe977c}{%
+           family={Guckenberger},
+           familyi={G\bibinitperiod},
+           given={Matthias},
+           giveni={M\bibinitperiod}}}%
+        {{hash=3b43670b7635b82a01323b5f9dcd86fa}{%
+           family={Haedinger},
+           familyi={H\bibinitperiod},
+           given={Ulrich},
+           giveni={U\bibinitperiod}}}%
+        {{hash=4aa2d19c850957f389e25b4e159dce54}{%
+           family={Oppitz},
+           familyi={O\bibinitperiod},
+           given={Ulrich},
+           giveni={U\bibinitperiod}}}%
+        {{hash=27b963ca0da8908a2e0ffe9db2fbbaec}{%
+           family={Mueller},
+           familyi={M\bibinitperiod},
+           given={Gerd},
+           giveni={G\bibinitperiod}}}%
+        {{hash=a551b77fd210283dc4ca1ad8ef4eea48}{%
+           family={Baier},
+           familyi={B\bibinitperiod},
+           given={Kurt},
+           giveni={K\bibinitperiod}}}%
+        {{hash=3d67b78333baa87cee15232db85cda46}{%
+           family={Flentje},
+           familyi={F\bibinitperiod},
+           given={Michael},
+           giveni={M\bibinitperiod}}}%
+      }
+      \strng{namehash}{75823d620d8687786a5df067f84dece7}
+      \strng{fullhash}{92ab7387c406a56d155d4ec3f784389e}
+      \strng{bibnamehash}{75823d620d8687786a5df067f84dece7}
+      \strng{authorbibnamehash}{75823d620d8687786a5df067f84dece7}
+      \strng{authornamehash}{75823d620d8687786a5df067f84dece7}
+      \strng{authorfullhash}{92ab7387c406a56d155d4ec3f784389e}
+      \field{extraname}{2}
+      \field{sortinit}{4}
+      \field{sortinithash}{e071e0bcb44634fab398d68ad04e69f4}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{The purpose was to evaluate the clinical results of stereotactic radiotherapy in primary liver tumors and hepatic metastases. Five patients with primary liver cancer and 39 patients with 51 hepatic metastases were treated by stereotactic radiotherapy since 1997. Twenty-eight targets were treated in a ‘‘low-dose’’-group with 3 )/10 Gy (n 0/27) or 4 )/7 Gy (n 0/1) prescribed to the {PTV}-encl. 65\%-isodose. In a ‘‘high-dose’’-group patients were treated with 3 )/12 (/12.5 Gy (n 0/19; same dose prescription) or 1 )/26 Gy/{PTV}-enclosing 80\%-isodose (n 0/9). Median follow-up was 15 months (2 Á48 months) for primary liver cancer and 15 months (2 Á85 months) for hepatic metastases. While all primary liver cancers were controlled, nine local failures (3 Á19 months) of 51 metastases were observed resulting in an actuarial local control rate of 92\% after 12 months and 66\% after 24 months and later. A borderline significant correlation between dose and local control was observed (p 0/0.077): the actuarial local control rate after 12 and 24 months was 86\% and 58\% in the low-dose-group versus 100\% and 82\% in the high-dose-group. In multivariate analysis high versus low-dose was the only significant factor predicting local control (p0/0.0089). Overall survival after 1 and 2 years was 72\% and 32\% for all patients and was impaired due to systemic progression of disease. No severe acute or late toxicity exceeding {RTOG}/{EORTC}-score 2 were observed. Stereotactic irradiation of primary liver cancer and hepatic metastases offers a locally effective treatment without significant complications in patients, who are not amenable for surgery. Patient selection is important, because those with low risk for systemic progression are more likely to benefit from this approach.}
+      \field{issn}{0284-186X, 1651-226X}
+      \field{journaltitle}{Acta Oncologica}
+      \field{langid}{english}
+      \field{month}{1}
+      \field{number}{7}
+      \field{shortjournal}{Acta Oncologica}
+      \field{title}{Stereotactic radiotherapy of primary liver cancer and hepatic metastases}
+      \field{urlday}{16}
+      \field{urlmonth}{8}
+      \field{urlyear}{2021}
+      \field{volume}{45}
+      \field{year}{2006}
+      \field{dateera}{ce}
+      \field{urldateera}{ce}
+      \field{pages}{838\bibrangedash 847}
+      \range{pages}{10}
+      \verb{doi}
+      \verb 10.1080/02841860600904821
+      \endverb
+      \verb{file}
+      \verb Wulf et al. - 2006 - Stereotactic radiotherapy of primary liver cancer .pdf:/Users/simongutwein/Zotero/storage/FB9JKR97/Wulf et al. - 2006 - Stereotactic radiotherapy of primary liver cancer .pdf:application/pdf
+      \endverb
+      \verb{urlraw}
+      \verb http://www.tandfonline.com/doi/full/10.1080/02841860600904821
+      \endverb
+      \verb{url}
+      \verb http://www.tandfonline.com/doi/full/10.1080/02841860600904821
+      \endverb
+    \endentry
+    \entry{sterzing_stereotactic_2014}{article}{}
+      \name{author}{7}{}{%
+        {{hash=11da65a9488ae50070952483d47bbab0}{%
+           family={Sterzing},
+           familyi={S\bibinitperiod},
+           given={Florian},
+           giveni={F\bibinitperiod}}}%
+        {{hash=cf52d21602cc2403ff48ebcfca90532f}{%
+           family={Brunner},
+           familyi={B\bibinitperiod},
+           given={Thomas\bibnamedelima B.},
+           giveni={T\bibinitperiod\bibinitdelim B\bibinitperiod}}}%
+        {{hash=b176135f4b9b943e7f4041e7cd831506}{%
+           family={Ernst},
+           familyi={E\bibinitperiod},
+           given={Iris},
+           giveni={I\bibinitperiod}}}%
+        {{hash=59353fdfa81fdff975e297d2ece09b5c}{%
+           family={Baus},
+           familyi={B\bibinitperiod},
+           given={Wolfgang\bibnamedelima W.},
+           giveni={W\bibinitperiod\bibinitdelim W\bibinitperiod}}}%
+        {{hash=83fde29f9144e1d80ae063a1d2f8052d}{%
+           family={Greve},
+           familyi={G\bibinitperiod},
+           given={Burkhard},
+           giveni={B\bibinitperiod}}}%
+        {{hash=b1818d1cdc3903c0532d70cc429c021b}{%
+           family={Herfarth},
+           familyi={H\bibinitperiod},
+           given={Klaus},
+           giveni={K\bibinitperiod}}}%
+        {{hash=76f4cb72c279bb06d77cb9f8e4fe977c}{%
+           family={Guckenberger},
+           familyi={G\bibinitperiod},
+           given={Matthias},
+           giveni={M\bibinitperiod}}}%
+      }
+      \strng{namehash}{e366e747f63b06485cbf8393238d9472}
+      \strng{fullhash}{d267da1770286f7ece3f67932ff8947e}
+      \strng{bibnamehash}{e366e747f63b06485cbf8393238d9472}
+      \strng{authorbibnamehash}{e366e747f63b06485cbf8393238d9472}
+      \strng{authornamehash}{e366e747f63b06485cbf8393238d9472}
+      \strng{authorfullhash}{d267da1770286f7ece3f67932ff8947e}
+      \field{sortinit}{4}
+      \field{sortinithash}{e071e0bcb44634fab398d68ad04e69f4}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{shorttitle}
+      \field{issn}{0179-7158, 1439-099X}
+      \field{journaltitle}{Strahlentherapie und Onkologie}
+      \field{langid}{english}
+      \field{month}{10}
+      \field{number}{10}
+      \field{shortjournal}{Strahlenther Onkol}
+      \field{shorttitle}{Stereotactic body radiotherapy for liver tumors}
+      \field{title}{Stereotactic body radiotherapy for liver tumors: Principles and practical guidelines of the {DEGRO} Working Group on Stereotactic Radiotherapy}
+      \field{urlday}{16}
+      \field{urlmonth}{8}
+      \field{urlyear}{2021}
+      \field{volume}{190}
+      \field{year}{2014}
+      \field{dateera}{ce}
+      \field{urldateera}{ce}
+      \field{pages}{872\bibrangedash 881}
+      \range{pages}{10}
+      \verb{doi}
+      \verb 10.1007/s00066-014-0714-1
+      \endverb
+      \verb{file}
+      \verb sterzing2014.pdf:/Users/simongutwein/Zotero/storage/F9KYRU7W/sterzing2014.pdf:application/pdf
+      \endverb
+      \verb{urlraw}
+      \verb http://link.springer.com/10.1007/s00066-014-0714-1
+      \endverb
+      \verb{url}
+      \verb http://link.springer.com/10.1007/s00066-014-0714-1
+      \endverb
+    \endentry
+    \entry{witt_mri-guided_2020}{article}{}
+      \name{author}{3}{}{%
+        {{hash=a0602943293aaf92071206bb73c281c2}{%
+           family={Witt},
+           familyi={W\bibinitperiod},
+           given={Jacob\bibnamedelima S},
+           giveni={J\bibinitperiod\bibinitdelim S\bibinitperiod}}}%
+        {{hash=0f28e0a29b0451c5816ecf7d94301b04}{%
+           family={Rosenberg},
+           familyi={R\bibinitperiod},
+           given={Stephen\bibnamedelima A},
+           giveni={S\bibinitperiod\bibinitdelim A\bibinitperiod}}}%
+        {{hash=dffb2fa56b1c7ed3e3a098b7eb5cd307}{%
+           family={Bassetti},
+           familyi={B\bibinitperiod},
+           given={Michael\bibnamedelima F},
+           giveni={M\bibinitperiod\bibinitdelim F\bibinitperiod}}}%
+      }
+      \strng{namehash}{77784b44bd34a725509f1ee73eecdc32}
+      \strng{fullhash}{77784b44bd34a725509f1ee73eecdc32}
+      \strng{bibnamehash}{77784b44bd34a725509f1ee73eecdc32}
+      \strng{authorbibnamehash}{77784b44bd34a725509f1ee73eecdc32}
+      \strng{authornamehash}{77784b44bd34a725509f1ee73eecdc32}
+      \strng{authorfullhash}{77784b44bd34a725509f1ee73eecdc32}
+      \field{sortinit}{4}
+      \field{sortinithash}{e071e0bcb44634fab398d68ad04e69f4}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{shorttitle}
+      \field{abstract}{{MRI}-guided radiotherapy is a novel and rapidly evolving technology that might enhance the risk–benefit ratio. Through direct visualisation of the tumour and the nearby healthy tissues, the radiation oncologist can deliver highly accurate treatment even to mobile targets. Each individual treatment can be customised to changing anatomy, potentially reducing the risk of radiation-related toxicities while simultaneously increasing the dose delivered to the tumour. {MRI}-guided radiotherapy offers a new tool for the radiation oncologist, and creates an opportunity to achieve durable local control of liver tumours that might not otherwise be possible. Future work will allow us to expand the population eligible for curative-intent radiotherapy, optimise and customise radiation doses to specific tumours, and hopefully create opportunities for improving outcomes through machine learning and radiomics-based approaches. This Review outlines the current and future applications for {MRI}-guided radiotherapy with respect to metastatic and primary liver cancers.}
+      \field{day}{1}
+      \field{issn}{1470-2045}
+      \field{journaltitle}{The Lancet Oncology}
+      \field{langid}{english}
+      \field{month}{2}
+      \field{number}{2}
+      \field{shortjournal}{The Lancet Oncology}
+      \field{shorttitle}{{MRI}-guided adaptive radiotherapy for liver tumours}
+      \field{title}{{MRI}-guided adaptive radiotherapy for liver tumours: visualising the future}
+      \field{urlday}{16}
+      \field{urlmonth}{8}
+      \field{urlyear}{2021}
+      \field{volume}{21}
+      \field{year}{2020}
+      \field{dateera}{ce}
+      \field{urldateera}{ce}
+      \field{pages}{e74\bibrangedash e82}
+      \range{pages}{-1}
+      \verb{doi}
+      \verb 10.1016/S1470-2045(20)30034-6
+      \endverb
+      \verb{file}
+      \verb ScienceDirect Snapshot:/Users/simongutwein/Zotero/storage/XES6B5KH/S1470204520300346.html:text/html;Witt et al. - 2020 - MRI-guided adaptive radiotherapy for liver tumours.pdf:/Users/simongutwein/Zotero/storage/ZDV6FYKD/Witt et al. - 2020 - MRI-guided adaptive radiotherapy for liver tumours.pdf:application/pdf
+      \endverb
+      \verb{urlraw}
+      \verb https://www.sciencedirect.com/science/article/pii/S1470204520300346
+      \endverb
+      \verb{url}
+      \verb https://www.sciencedirect.com/science/article/pii/S1470204520300346
+      \endverb
+    \endentry
+    \entry{degro_degro_2014}{article}{}
+      \name{author}{15}{}{%
+        {{hash=099428d45646976506ff99885403ad0f}{%
+           family={({DEGRO})},
+           familyi={(\bibinitperiod},
+           given={Breast\bibnamedelimb Cancer\bibnamedelimb Expert\bibnamedelimb Panel\bibnamedelimb of\bibnamedelimb the\bibnamedelimb German\bibnamedelimb Society\bibnamedelimb of\bibnamedelimb Radiation\bibnamedelima Oncology},
+           giveni={B\bibinitperiod\bibinitdelim C\bibinitperiod\bibinitdelim E\bibinitperiod\bibinitdelim P\bibinitperiod\bibinitdelim o\bibinitperiod\bibinitdelim t\bibinitperiod\bibinitdelim G\bibinitperiod\bibinitdelim S\bibinitperiod\bibinitdelim o\bibinitperiod\bibinitdelim R\bibinitperiod\bibinitdelim O\bibinitperiod}}}%
+        {{hash=6d547847534cdccdc6b5837fdbd8ad95}{%
+           family={Wenz},
+           familyi={W\bibinitperiod},
+           given={Frederik},
+           giveni={F\bibinitperiod}}}%
+        {{hash=c7e515dd169ac04c666a1b6f19d0bbe0}{%
+           family={Sperk},
+           familyi={S\bibinitperiod},
+           given={Elena},
+           giveni={E\bibinitperiod}}}%
+        {{hash=5dba2bf9cddc085f5819904aac239e7a}{%
+           family={Budach},
+           familyi={B\bibinitperiod},
+           given={Wilfried},
+           giveni={W\bibinitperiod}}}%
+        {{hash=7f6b6d47338084fcc4f490ee1aead30e}{%
+           family={Dunst},
+           familyi={D\bibinitperiod},
+           given={Jürgen},
+           giveni={J\bibinitperiod}}}%
+        {{hash=8a67ba33b0fbf4ac4c81b05279a3c333}{%
+           family={Feyer},
+           familyi={F\bibinitperiod},
+           given={Petra},
+           giveni={P\bibinitperiod}}}%
+        {{hash=c27921235e9a215a3bb4d789f1463039}{%
+           family={Fietkau},
+           familyi={F\bibinitperiod},
+           given={Rainer},
+           giveni={R\bibinitperiod}}}%
+        {{hash=afef5877d8e1a400d92570d584972130}{%
+           family={Haase},
+           familyi={H\bibinitperiod},
+           given={Wulf},
+           giveni={W\bibinitperiod}}}%
+        {{hash=764254c2531b45d22e32c6fe35fe817d}{%
+           family={Harms},
+           familyi={H\bibinitperiod},
+           given={Wolfgang},
+           giveni={W\bibinitperiod}}}%
+        {{hash=626626057b58979499a3762e256c420e}{%
+           family={Piroth},
+           familyi={P\bibinitperiod},
+           given={Marc\bibnamedelima D.},
+           giveni={M\bibinitperiod\bibinitdelim D\bibinitperiod}}}%
+        {{hash=ac1c28456501573cb9f5b1a70be6e969}{%
+           family={Sautter-Bihl},
+           familyi={S\bibinithyphendelim B\bibinitperiod},
+           given={Marie-Luise},
+           giveni={M\bibinithyphendelim L\bibinitperiod}}}%
+        {{hash=bbd7f7cba9f5748ad7fb5c7276c2a28c}{%
+           family={Sedlmayer},
+           familyi={S\bibinitperiod},
+           given={Felix},
+           giveni={F\bibinitperiod}}}%
+        {{hash=603dee7658cd07575bbfbc7c6b7dff4e}{%
+           family={Souchon},
+           familyi={S\bibinitperiod},
+           given={Rainer},
+           giveni={R\bibinitperiod}}}%
+        {{hash=2076ffc5443142a4299cff8444b7c032}{%
+           family={Fussl},
+           familyi={F\bibinitperiod},
+           given={Christoph},
+           giveni={C\bibinitperiod}}}%
+        {{hash=33cd7b776ab9c37925b255a030a6715c}{%
+           family={Sauer},
+           familyi={S\bibinitperiod},
+           given={Rolf},
+           giveni={R\bibinitperiod}}}%
+      }
+      \strng{namehash}{d6dcd7e74cc9f9c8678f6e88a8aff125}
+      \strng{fullhash}{617b82311adf93bcab42d0b793dc0955}
+      \strng{bibnamehash}{d6dcd7e74cc9f9c8678f6e88a8aff125}
+      \strng{authorbibnamehash}{d6dcd7e74cc9f9c8678f6e88a8aff125}
+      \strng{authornamehash}{d6dcd7e74cc9f9c8678f6e88a8aff125}
+      \strng{authorfullhash}{617b82311adf93bcab42d0b793dc0955}
+      \field{sortinit}{5}
+      \field{sortinithash}{5dd416adbafacc8226114bc0202d5fdd}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{shorttitle}
+      \field{issn}{0179-7158, 1439-099X}
+      \field{journaltitle}{Strahlentherapie und Onkologie}
+      \field{langid}{english}
+      \field{month}{8}
+      \field{number}{8}
+      \field{shortjournal}{Strahlenther Onkol}
+      \field{shorttitle}{{DEGRO} practical guidelines for radiotherapy of breast cancer {IV}}
+      \field{title}{{DEGRO} practical guidelines for radiotherapy of breast cancer {IV}: Radiotherapy following mastectomy for invasive breast cancer}
+      \field{urlday}{16}
+      \field{urlmonth}{8}
+      \field{urlyear}{2021}
+      \field{volume}{190}
+      \field{year}{2014}
+      \field{dateera}{ce}
+      \field{urldateera}{ce}
+      \field{pages}{705\bibrangedash 714}
+      \range{pages}{10}
+      \verb{doi}
+      \verb 10.1007/s00066-014-0687-0
+      \endverb
+      \verb{file}
+      \verb Breast Cancer Expert Panel of the German Society of Radiation Oncology (DEGRO) et al. - 2014 - DEGRO practical guidelines for radiotherapy of bre.pdf:/Users/simongutwein/Zotero/storage/HREYXZXZ/Breast Cancer Expert Panel of the German Society of Radiation Oncology (DEGRO) et al. - 2014 - DEGRO practical guidelines for radiotherapy of bre.pdf:application/pdf
+      \endverb
+      \verb{urlraw}
+      \verb http://link.springer.com/10.1007/s00066-014-0687-0
+      \endverb
+      \verb{url}
+      \verb http://link.springer.com/10.1007/s00066-014-0687-0
+      \endverb
+    \endentry
+    \entry{matsushita_stereotactic_2018}{article}{}
+      \name{author}{8}{}{%
+        {{hash=b241f0d7225c4af23085fbbd2fe43bf7}{%
+           family={Matsushita},
+           familyi={M\bibinitperiod},
+           given={Haruo},
+           giveni={H\bibinitperiod}}}%
+        {{hash=be668107bbff943553daf12527a36161}{%
+           family={Jingu},
+           familyi={J\bibinitperiod},
+           given={Keiichi},
+           giveni={K\bibinitperiod}}}%
+        {{hash=337125073419a2643e1b566b31f14a75}{%
+           family={Umezawa},
+           familyi={U\bibinitperiod},
+           given={Rei},
+           giveni={R\bibinitperiod}}}%
+        {{hash=ed29e74b539aa7c446efb75f1ba60802}{%
+           family={Yamamoto},
+           familyi={Y\bibinitperiod},
+           given={Takaya},
+           giveni={T\bibinitperiod}}}%
+        {{hash=29972c8e33257a7d244edd2be08ef01a}{%
+           family={Ishikawa},
+           familyi={I\bibinitperiod},
+           given={Yojiro},
+           giveni={Y\bibinitperiod}}}%
+        {{hash=c56ad3aff8c9bf08496d080eede3d351}{%
+           family={Takahashi},
+           familyi={T\bibinitperiod},
+           given={Noriyoshi},
+           giveni={N\bibinitperiod}}}%
+        {{hash=527355b8fddf9cc39392f22c886a1949}{%
+           family={Katagiri},
+           familyi={K\bibinitperiod},
+           given={Yu},
+           giveni={Y\bibinitperiod}}}%
+        {{hash=23e8a70b449bc09f6ec61951c6eb4367}{%
+           family={Kadoya},
+           familyi={K\bibinitperiod},
+           given={Noriyuki},
+           giveni={N\bibinitperiod}}}%
+      }
+      \strng{namehash}{13f4d9ec65edb8ec6e7abc609e4f5080}
+      \strng{fullhash}{ecc4f01802b3f88479684ffcb4a7072e}
+      \strng{bibnamehash}{13f4d9ec65edb8ec6e7abc609e4f5080}
+      \strng{authorbibnamehash}{13f4d9ec65edb8ec6e7abc609e4f5080}
+      \strng{authornamehash}{13f4d9ec65edb8ec6e7abc609e4f5080}
+      \strng{authorfullhash}{ecc4f01802b3f88479684ffcb4a7072e}
+      \field{sortinit}{5}
+      \field{sortinithash}{5dd416adbafacc8226114bc0202d5fdd}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{In recent years, the concept of oligometastases has become accepted and reports on stereotactic body radiotherapy as a treatment method have been published. Lesions in the brain, lung, and liver have been reported as target lesions. However, lymph node oligometastases could be a good candidate for stereotactic body radiotherapy as well. In this study, the usability of stereotactic body radiotherapy for oligometastases to lymph nodes is assessed by researching for each primary site. As a result, we could consider that stereotactic body radiotherapy could be almost well applied for lymph node oligometastases from the breast, gynecological organs, and prostate. However, doubts remain concerning the usefulness of stereotactic body radiotherapy for cervical node metastases from head and neck cancer or for mediastinal node metastases from lung or esophageal cancer since late toxicities have occurred with a large radiation dose at hypofractionation to major vessels or the central respiratory tract, especially in patients with irradiation histories. In addition, high-dose irradiation is required to control lymph node metastases from colorectal cancer due to its radioresistance, and severe late adverse events would therefore occur in adjacent organs such as the gastrointestinal tract. In cases of lymph node oligometastases with a primary tumor in the stomach or esophagus, stereotactic body radiotherapy should be used limitedly at present because this patient population is not so large and these metastases are often located close to organs at risk. Because of the varied status of recurrence and varied conditions of patients, it is difficult to determine the optimal dose for tumor control. It might be reasonable to determine the treatment dose individually based on dose constraints of adjacent organs. The oligometastatic state is becoming more frequently identified with more sensitive methods of detecting such oligometastases. In addition, there seems to be another type of oligometastases, so-called induced oligometastases, following successful systemic treatment. To determine the optimal indication of stereotactic body radiotherapy for lymph node oligometastases, further investigation about the mechanisms of oligometastases and further clinical studies including a phase {III} study are needed.}
+      \field{issn}{1533-0346, 1533-0338}
+      \field{journaltitle}{Technology in Cancer Research \& Treatment}
+      \field{langid}{english}
+      \field{month}{1}
+      \field{shortjournal}{Technol Cancer Res Treat}
+      \field{title}{Stereotactic Radiotherapy for Oligometastases in Lymph Nodes—A Review}
+      \field{urlday}{16}
+      \field{urlmonth}{8}
+      \field{urlyear}{2021}
+      \field{volume}{17}
+      \field{year}{2018}
+      \field{dateera}{ce}
+      \field{urldateera}{ce}
+      \field{pages}{153303381880359}
+      \range{pages}{1}
+      \verb{doi}
+      \verb 10.1177/1533033818803597
+      \endverb
+      \verb{file}
+      \verb Matsushita et al. - 2018 - Stereotactic Radiotherapy for Oligometastases in L.pdf:/Users/simongutwein/Zotero/storage/VN6L9ERT/Matsushita et al. - 2018 - Stereotactic Radiotherapy for Oligometastases in L.pdf:application/pdf
+      \endverb
+      \verb{urlraw}
+      \verb http://journals.sagepub.com/doi/10.1177/1533033818803597
+      \endverb
+      \verb{url}
+      \verb http://journals.sagepub.com/doi/10.1177/1533033818803597
+      \endverb
+    \endentry
+    \entry{mikell_postoperative_2015}{article}{}
+      \name{author}{15}{}{%
+        {{hash=9141812ac93f931d6d359a3a44e6aee4}{%
+           family={Mikell},
+           familyi={M\bibinitperiod},
+           given={John\bibnamedelima L.},
+           giveni={J\bibinitperiod\bibinitdelim L\bibinitperiod}}}%
+        {{hash=32c8e33bf191257cbfed85ce539dbb00}{%
+           family={Gillespie},
+           familyi={G\bibinitperiod},
+           given={Theresa\bibnamedelima W.},
+           giveni={T\bibinitperiod\bibinitdelim W\bibinitperiod}}}%
+        {{hash=ea5a1683ca6f487d2e12640b19bb13e5}{%
+           family={Hall},
+           familyi={H\bibinitperiod},
+           given={William\bibnamedelima A.},
+           giveni={W\bibinitperiod\bibinitdelim A\bibinitperiod}}}%
+        {{hash=3a74c20ddd861a8fa0c6655d1bafefdb}{%
+           family={Nickleach},
+           familyi={N\bibinitperiod},
+           given={Dana\bibnamedelima C.},
+           giveni={D\bibinitperiod\bibinitdelim C\bibinitperiod}}}%
+        {{hash=8e34231ba9b9318aa75b42a62d10fba4}{%
+           family={Liu},
+           familyi={L\bibinitperiod},
+           given={Yuan},
+           giveni={Y\bibinitperiod}}}%
+        {{hash=7fc1efea45eb933cc292c38b36cbc0a7}{%
+           family={Lipscomb},
+           familyi={L\bibinitperiod},
+           given={Joseph},
+           giveni={J\bibinitperiod}}}%
+        {{hash=52b504213819260476f12991f49fbb53}{%
+           family={Ramalingam},
+           familyi={R\bibinitperiod},
+           given={Suresh\bibnamedelima S.},
+           giveni={S\bibinitperiod\bibinitdelim S\bibinitperiod}}}%
+        {{hash=34421da4a8138577c4addbf986905e8f}{%
+           family={Rajpara},
+           familyi={R\bibinitperiod},
+           given={Raj\bibnamedelima S.},
+           giveni={R\bibinitperiod\bibinitdelim S\bibinitperiod}}}%
+        {{hash=4aee48c9c69bcc3348d49cf377934b95}{%
+           family={Force},
+           familyi={F\bibinitperiod},
+           given={Seth\bibnamedelima D.},
+           giveni={S\bibinitperiod\bibinitdelim D\bibinitperiod}}}%
+        {{hash=37efde5790b1619254294a0502d6af54}{%
+           family={Fernandez},
+           familyi={F\bibinitperiod},
+           given={Felix\bibnamedelima G.},
+           giveni={F\bibinitperiod\bibinitdelim G\bibinitperiod}}}%
+        {{hash=6ded9d8b38c388cc5b30a9984fe0c9bf}{%
+           family={Owonikoko},
+           familyi={O\bibinitperiod},
+           given={Taofeek\bibnamedelima K.},
+           giveni={T\bibinitperiod\bibinitdelim K\bibinitperiod}}}%
+        {{hash=c5a7978b1f0f05127b740be5303c36ef}{%
+           family={Pillai},
+           familyi={P\bibinitperiod},
+           given={Rathi\bibnamedelima N.},
+           giveni={R\bibinitperiod\bibinitdelim N\bibinitperiod}}}%
+        {{hash=95ad4c2997c31239d239922a97cc0be2}{%
+           family={Khuri},
+           familyi={K\bibinitperiod},
+           given={Fadlo\bibnamedelima R.},
+           giveni={F\bibinitperiod\bibinitdelim R\bibinitperiod}}}%
+        {{hash=6024b11a57501322973d1da556ff10a5}{%
+           family={Curran},
+           familyi={C\bibinitperiod},
+           given={Walter\bibnamedelima J.},
+           giveni={W\bibinitperiod\bibinitdelim J\bibinitperiod}}}%
+        {{hash=29bdda52b530c4db058c98f4052c2d8c}{%
+           family={Higgins},
+           familyi={H\bibinitperiod},
+           given={Kristin\bibnamedelima A.},
+           giveni={K\bibinitperiod\bibinitdelim A\bibinitperiod}}}%
+      }
+      \strng{namehash}{aa875f3291451893130b2d4a77e3bcca}
+      \strng{fullhash}{ecf6ca28013b9f0583dd25b47e339399}
+      \strng{bibnamehash}{aa875f3291451893130b2d4a77e3bcca}
+      \strng{authorbibnamehash}{aa875f3291451893130b2d4a77e3bcca}
+      \strng{authornamehash}{aa875f3291451893130b2d4a77e3bcca}
+      \strng{authorfullhash}{ecf6ca28013b9f0583dd25b47e339399}
+      \field{sortinit}{5}
+      \field{sortinithash}{5dd416adbafacc8226114bc0202d5fdd}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{shorttitle}
+      \field{abstract}{Introduction: Use of postoperative radiotherapy ({PORT}) in non–small-cell lung cancer remains controversial. Limited data indicate that {PORT} may benefit patients with involved N2 nodes. This study evaluates this hypothesis in a large retrospective cohort treated with chemotherapy and contemporary radiation techniques. Methods: The National Cancer Data Base was queried for patients diagnosed 2004–2006 with resected non–small-cell lung cancer and pathologically involved N2 ({pN}2) nodes also treated with chemotherapy. Multivariable Cox proportional hazards model was used to assess factors associated with overall survival ({OS}). Inverse probability of treatment weighting ({IPTW}) using the propensity score was used to reduce selection bias. {OS} was compared between patients treated with versus without {PORT} using the adjusted Kaplan–Meier estimator and weighted log-rank test based on {IPTW}. Results: Two thousand and one hundred and fifteen patients were eligible for analysis. 918 (43.4\%) received {PORT}, 1197 (56.6\%) did not. {PORT} was associated with better {OS} (median survival time 42 months with {PORT} versus 38 months without, p = 0.048). This effect was significant in multivariable and {IPTW} Cox models (hazard ratio: 0.87, 95\% confidence interval: 0.78–0.98, p = 0.026, and hazard ratio: 0.89, 95\% confidence interval: 0.79–1.00, p = 0.046, respectively). No interaction was seen between the effects of {PORT} and number of involved lymph nodes (p = 0.615). Conclusions: {PORT} was associated with better survival for patients with {pN}2 nodes also treated with chemotherapy. No interaction was seen between benefit of {PORT} and number of involved nodes. These findings reinforce the benefit of {PORT} for N2 disease in modern practice using the largest, most recent cohort of chemotherapytreated {pN}2 patients to date.}
+      \field{issn}{15560864}
+      \field{journaltitle}{Journal of Thoracic Oncology}
+      \field{langid}{english}
+      \field{month}{3}
+      \field{number}{3}
+      \field{shortjournal}{Journal of Thoracic Oncology}
+      \field{shorttitle}{Postoperative Radiotherapy is Associated with Better Survival in Non–Small Cell Lung Cancer with Involved N2 Lymph Nodes}
+      \field{title}{Postoperative Radiotherapy is Associated with Better Survival in Non–Small Cell Lung Cancer with Involved N2 Lymph Nodes: Results of an Analysis of the National Cancer Data Base}
+      \field{urlday}{16}
+      \field{urlmonth}{8}
+      \field{urlyear}{2021}
+      \field{volume}{10}
+      \field{year}{2015}
+      \field{dateera}{ce}
+      \field{urldateera}{ce}
+      \field{pages}{462\bibrangedash 471}
+      \range{pages}{10}
+      \verb{doi}
+      \verb 10.1097/JTO.0000000000000411
+      \endverb
+      \verb{file}
+      \verb Mikell et al. - 2015 - Postoperative Radiotherapy is Associated with Bett.pdf:/Users/simongutwein/Zotero/storage/UWB4AXVD/Mikell et al. - 2015 - Postoperative Radiotherapy is Associated with Bett.pdf:application/pdf
+      \endverb
+      \verb{urlraw}
+      \verb https://linkinghub.elsevier.com/retrieve/pii/S1556086415316543
+      \endverb
+      \verb{url}
+      \verb https://linkinghub.elsevier.com/retrieve/pii/S1556086415316543
+      \endverb
+    \endentry
+    \entry{lundstedt_long-term_2012}{article}{}
+      \name{author}{9}{}{%
+        {{hash=5572108ebb872d461d9ace8b214b6b72}{%
+           family={Lundstedt},
+           familyi={L\bibinitperiod},
+           given={Dan},
+           giveni={D\bibinitperiod}}}%
+        {{hash=f6eeb10a22c7971b7f5d828d8a14b554}{%
+           family={Gustafsson},
+           familyi={G\bibinitperiod},
+           given={Magnus},
+           giveni={M\bibinitperiod}}}%
+        {{hash=3b220597b12ebe5628ad857e57369d80}{%
+           family={Steineck},
+           familyi={S\bibinitperiod},
+           given={Gunnar},
+           giveni={G\bibinitperiod}}}%
+        {{hash=8c6019b7086dc3203306f38045a4808e}{%
+           family={Alsadius},
+           familyi={A\bibinitperiod},
+           given={David},
+           giveni={D\bibinitperiod}}}%
+        {{hash=f5d28d4bf5eebdbe46020a35ff4174a5}{%
+           family={Sundberg},
+           familyi={S\bibinitperiod},
+           given={Agnetha},
+           giveni={A\bibinitperiod}}}%
+        {{hash=219ac88fd3b8d5a921fb0807477cdbe1}{%
+           family={Wilderäng},
+           familyi={W\bibinitperiod},
+           given={Ulrica},
+           giveni={U\bibinitperiod}}}%
+        {{hash=1c863ccd6d20cab37c5bf301bea34669}{%
+           family={Holmberg},
+           familyi={H\bibinitperiod},
+           given={Erik},
+           giveni={E\bibinitperiod}}}%
+        {{hash=3878a8e905733285c53d67d5f520bc69}{%
+           family={Johansson},
+           familyi={J\bibinitperiod},
+           given={Karl-Axel},
+           giveni={K\bibinithyphendelim A\bibinitperiod}}}%
+        {{hash=4fc79103ed8ea5357fd8f4bac620286d}{%
+           family={Karlsson},
+           familyi={K\bibinitperiod},
+           given={Per},
+           giveni={P\bibinitperiod}}}%
+      }
+      \strng{namehash}{15686ed3b04a8c02e79e509a3af2ac79}
+      \strng{fullhash}{f6dba3ed565bd3fdd5e936f24fa8ca5b}
+      \strng{bibnamehash}{15686ed3b04a8c02e79e509a3af2ac79}
+      \strng{authorbibnamehash}{15686ed3b04a8c02e79e509a3af2ac79}
+      \strng{authornamehash}{15686ed3b04a8c02e79e509a3af2ac79}
+      \strng{authorfullhash}{f6dba3ed565bd3fdd5e936f24fa8ca5b}
+      \field{sortinit}{5}
+      \field{sortinithash}{5dd416adbafacc8226114bc0202d5fdd}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{Background and purpose: Irradiation of the supraclavicular lymph nodes has historically increased the risk of brachial plexopathy. We report long-term symptoms after modern radiotherapy (based on 3D dose planning) in breast cancer patients with or without irradiation of the supraclavicular lymph nodes. Material and methods: We collected information from 814 women consecutively treated with adjuvant radiotherapy for breast cancer. The women had breast surgery with axillary dissection ({AD}) or sentinel node biopsy ({SNB}). The breast area was treated to 50 Gy in 2.0 Gy fractions. Women with >three lymph node metastases had regional radiotherapy ({RRT}) to the supraclavicular lymph nodes. Three to eight years after radiotherapy, they received a questionnaire asking about paraesthesia, oedema, pain, and strength in the upper limb. Results: Paraesthesia was reported by 38/192 (20\%) after {AD} with {RRT} compared to 68/505 (13\%) after {AD} without {RRT} (relative risk [{RR}] 1.47; 95\% conﬁdence interval [{CI}] 1.02–2.11) and by 9/112 (8\%) after {SNB} without {RRT} ({RR} 2.46; 95\% {CI} 1.24–4.90). Corresponding risks adjusted for oedema ({RR} 1.28; 95\% {CI} 0.93–1.76) and ({RR} 1.75; 95\% {CI} 0.90–3.39). In women 649 years with {AD} and {RRT}, 27\% reported paraesthesia. No signiﬁcant pain or decreased strength was reported after {RRT}. Conclusion: Radiotherapy to the supraclavicular lymph nodes after axillary dissection increases the occurrence of paraesthesia, mainly among younger women. When adjusted for oedema the contribution from radiotherapy is no longer formally statistically signiﬁcant indicating that there is also an indirect effect mediated by the oedema.}
+      \field{issn}{01678140}
+      \field{journaltitle}{Radiotherapy and Oncology}
+      \field{langid}{english}
+      \field{month}{5}
+      \field{number}{2}
+      \field{shortjournal}{Radiotherapy and Oncology}
+      \field{title}{Long-term symptoms after radiotherapy of supraclavicular lymph nodes in breast cancer patients}
+      \field{urlday}{16}
+      \field{urlmonth}{8}
+      \field{urlyear}{2021}
+      \field{volume}{103}
+      \field{year}{2012}
+      \field{dateera}{ce}
+      \field{urldateera}{ce}
+      \field{pages}{155\bibrangedash 160}
+      \range{pages}{6}
+      \verb{doi}
+      \verb 10.1016/j.radonc.2011.12.017
+      \endverb
+      \verb{file}
+      \verb Lundstedt et al. - 2012 - Long-term symptoms after radiotherapy of supraclav.pdf:/Users/simongutwein/Zotero/storage/QC93SZPQ/Lundstedt et al. - 2012 - Long-term symptoms after radiotherapy of supraclav.pdf:application/pdf
+      \endverb
+      \verb{urlraw}
+      \verb https://linkinghub.elsevier.com/retrieve/pii/S0167814011007572
+      \endverb
+      \verb{url}
+      \verb https://linkinghub.elsevier.com/retrieve/pii/S0167814011007572
+      \endverb
+    \endentry
+    \entry{jereczek-fossa_is_2015}{article}{}
+      \name{author}{3}{}{%
+        {{hash=8835f25ddd05456cb95543c71961dced}{%
+           family={Jereczek-Fossa},
+           familyi={J\bibinithyphendelim F\bibinitperiod},
+           given={Barbara\bibnamedelima Alicja},
+           giveni={B\bibinitperiod\bibinitdelim A\bibinitperiod}}}%
+        {{hash=96c7c7724f01e998e8d91a6941a61c27}{%
+           family={Ronchi},
+           familyi={R\bibinitperiod},
+           given={Sara},
+           giveni={S\bibinitperiod}}}%
+        {{hash=d9a28f99c291f0ec3cafa28cc77de7fb}{%
+           family={Orecchia},
+           familyi={O\bibinitperiod},
+           given={Roberto},
+           giveni={R\bibinitperiod}}}%
+      }
+      \strng{namehash}{8d7065d28bdd4f819be17d9f7e8eef09}
+      \strng{fullhash}{8d7065d28bdd4f819be17d9f7e8eef09}
+      \strng{bibnamehash}{8d7065d28bdd4f819be17d9f7e8eef09}
+      \strng{authorbibnamehash}{8d7065d28bdd4f819be17d9f7e8eef09}
+      \strng{authornamehash}{8d7065d28bdd4f819be17d9f7e8eef09}
+      \strng{authorfullhash}{8d7065d28bdd4f819be17d9f7e8eef09}
+      \field{sortinit}{5}
+      \field{sortinithash}{5dd416adbafacc8226114bc0202d5fdd}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{Objectives To review the available data about stereotactic body-radiotherapy ({SBRT}) for oligometastatic lymph node cancer recurrence. Methods The inclusion criteria for this study were as follows: Medline search for the (1) English language (2) full paper (abstracts were excluded) on (3) adult oligometastatic solid cancer recurrence limited to lymph node that underwent {SBRT} (4) outcome data available and (5) published up to the 30th April 2014. Results 38 papers fulfilling the inclusion criteria have been found: 7 review articles and 31 patient series (20 and 11 retrospective and prospective studies, respectively) including between 1 and 69 patients (636 lymph nodes). Twelve articles reported only lymph node {SBRT} while in 19 – all types of {SBRT} including lymph node {SBRT} were presented. Two-year local control, 4-year progression free survival and overall survival was of up to 100\%, 30\% and 50\%, respectively. The progression was mainly out-field (10–30\% of patients had a recurrence in another lymph node/nodes). The toxicity was low with mainly mild acute events and single grade 3–4 late events. When compared to {SBRT} for any oligometastatic cancer, {SBRT} for lymph node recurrence carried better prognosis and showed lower toxicity. Conclusions {SBRT} is a feasible approach for oligometastatic lymph node recurrence, offering excellent in-field tumor control with low toxicity profile. The potential abscopal effect has been hypothesized as a basis of these findings. Future studies are warranted to identify the patients that benefit most from this treatment. The optimal combination with systemic treatment should also be defined.}
+      \field{issn}{1507-1367}
+      \field{journaltitle}{Reports of Practical Oncology and Radiotherapy}
+      \field{number}{6}
+      \field{shortjournal}{Rep Pract Oncol Radiother}
+      \field{title}{Is Stereotactic Body Radiotherapy ({SBRT}) in lymph node oligometastatic patients feasible and effective?}
+      \field{urlday}{16}
+      \field{urlmonth}{8}
+      \field{urlyear}{2021}
+      \field{volume}{20}
+      \field{year}{2015}
+      \field{dateera}{ce}
+      \field{urldateera}{ce}
+      \field{pages}{472\bibrangedash 483}
+      \range{pages}{12}
+      \verb{doi}
+      \verb 10.1016/j.rpor.2014.10.004
+      \endverb
+      \verb{file}
+      \verb PubMed Central Full Text PDF:/Users/simongutwein/Zotero/storage/36DZI2T6/Jereczek-Fossa et al. - 2015 - Is Stereotactic Body Radiotherapy (SBRT) in lymph .pdf:application/pdf
+      \endverb
+      \verb{urlraw}
+      \verb https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4661354/
+      \endverb
+      \verb{url}
+      \verb https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4661354/
+      \endverb
     \endentry
   \enddatalist
 \endrefsection

@@ -45,27 +45,38 @@ def define_calculation_device(use_gpu):
         device = torch.device('cpu')
 
     if device.type == 'cuda':
-        print(f"Device: {torch.cuda.get_device_name(0)}\n")
+        print(f"Device: {torch.cuda.get_device_name(0)}")
 
     return device
 
 
-def save_model(
-        model, optimizer, train_loss, validation_loss, save_dir, patches, save, epochs, generation, gammas,
-        training_parameter):
+def save_model(model, optimizer, train_loss, validation_loss, save_dir, patches, save, epochs, generation, training_parameter):
 
-    torch.save({
-        'patches': patches,
-        'model_state_dict': model.module.state_dict(),
-        'optimizer_state_dict': optimizer.state_dict(),
-        'train_loss': train_loss,
-        'validation_loss': validation_loss,
-        'epochs': epochs,
-        'model_generation': generation,
-        'mean_gamma': f"{gammas[0]} ± {gammas[1]}",
-        'training_parameter': training_parameter
+    if torch.cuda.device_count() > 1:
+        torch.save({
+            'patches': patches,
+            'model_state_dict': model.module.state_dict(),
+            'optimizer_state_dict': optimizer.state_dict(),
+            'train_loss': train_loss,
+            'validation_loss': validation_loss,
+            'epochs': epochs,
+            'model_generation': generation,
+            'training_parameter': training_parameter
 
-    }, save_dir + f"UNET_{generation}.pt")
+        }, save_dir + f"UNET_{generation}.pt")
+
+    else:
+        torch.save({
+            'patches': patches,
+            'model_state_dict': model.state_dict(),
+            'optimizer_state_dict': optimizer.state_dict(),
+            'train_loss': train_loss,
+            'validation_loss': validation_loss,
+            'epochs': epochs,
+            'model_generation': generation,
+            'training_parameter': training_parameter
+
+        }, save_dir + f"UNET_{generation}.pt")
 
     if type(save) == int:
         if os.path.isfile(save_dir + f"UNET_{save}.pt"):

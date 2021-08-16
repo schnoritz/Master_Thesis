@@ -2,6 +2,7 @@
 import argparse
 import os
 import glob
+import time
 
 
 def parse():
@@ -64,6 +65,9 @@ def create_mask_files(input_dir, segments=None):
 
         job_id = execute_job_file()
         print(f"JOB-ID for {segment}: {job_id}")
+
+        with open("/home/baumgartner/sgutwein84/container/job_overview.txt", "a") as fout:
+            print(f"JOB-ID for {segment}: {job_id}", file=fout)
 
 
 def create_segment_job_file(

@@ -16,15 +16,17 @@ class HeteroscedasticAleatoricLoss(nn.Module):
         super(HeteroscedasticAleatoricLoss, self).__init__()
 
     def forward(self, y_hat, y, log_sigma):
-        return torch.sum(0.5 * (torch.exp(log_sigma) *
-                                torch.square(torch.norm(y_hat-y)) + torch.square(log_sigma)))
+
+        return torch.div(torch.sum(0.5*torch.exp(-log_sigma)*torch.pow(torch.abs(y-y_hat), 2) + 0.5*log_sigma), torch.numel(y))
 
 
 if __name__ == "__main__":
 
-    y_hat = torch.randn(32, 10, 32, 32, 32)
-    y = torch.randn(32, 10, 32, 32, 32)
-    log_sigma = torch.randn(32, 10, 32, 32, 32)
+    y_hat = torch.randn(2, 10, 32, 32, 32)
+    y = torch.randn(2, 10, 32, 32, 32)
+    log_sigma = torch.randn(2, 10, 32, 32, 32)
 
+    print(torch.numel(y))
     criterion = HeteroscedasticAleatoricLoss()
     loss = criterion(y_hat, y, log_sigma)
+    print(loss)

@@ -163,7 +163,7 @@
     </bcf:option>
     <bcf:option type="singlevalued">
       <bcf:key>sortingtemplatename</bcf:key>
-      <bcf:value>nty</bcf:value>
+      <bcf:value>none</bcf:value>
     </bcf:option>
     <bcf:option type="singlevalued">
       <bcf:key>sortsets</bcf:key>
@@ -2179,47 +2179,41 @@
   <!-- CITATION DATA -->
   <!-- SECTION 0 -->
   <bcf:bibdata section="0">
-    <bcf:datasource type="file" datatype="bibtex">/Users/simongutwein/Documents/GitHub/Master_Thesis/Masterarbeit_Text/BibTex/bibliography.bib</bcf:datasource>
+    <bcf:datasource type="file" datatype="bibtex">/Users/simongutwein/Documents/GitHub/Master_Thesis/Masterarbeit_Text/BibTex/Masterarbeit.bib</bcf:datasource>
   </bcf:bibdata>
   <bcf:section number="0">
-    <bcf:citekey order="1">thorwarth_technical_2021</bcf:citekey>
-    <bcf:citekey order="2">davis_glioblastoma_2016</bcf:citekey>
-    <bcf:citekey order="2">neph_deepmc_2021</bcf:citekey>
+    <bcf:citekey order="1">geinitz_3d_2005</bcf:citekey>
+    <bcf:citekey order="1">nguyen_curative_2005</bcf:citekey>
+    <bcf:citekey order="1">budiharto_external_nodate</bcf:citekey>
+    <bcf:citekey order="2">ragaz_adjuvant_1997</bcf:citekey>
+    <bcf:citekey order="2">lena_combined_nodate</bcf:citekey>
+    <bcf:citekey order="2">taylor_estimating_2017</bcf:citekey>
+    <bcf:citekey order="3">datta_head_1990</bcf:citekey>
+    <bcf:citekey order="3">bhide_advances_2010</bcf:citekey>
+    <bcf:citekey order="3">castadot_adaptive_2010</bcf:citekey>
+    <bcf:citekey order="3">morgan_adaptive_2020</bcf:citekey>
+    <bcf:citekey order="4">hoyer_radiotherapy_2012</bcf:citekey>
+    <bcf:citekey order="4">wulf_stereotactic_2001</bcf:citekey>
+    <bcf:citekey order="4">wulf_stereotactic_2006</bcf:citekey>
+    <bcf:citekey order="4">sterzing_stereotactic_2014</bcf:citekey>
+    <bcf:citekey order="4">witt_mri-guided_2020</bcf:citekey>
+    <bcf:citekey order="5">degro_degro_2014</bcf:citekey>
+    <bcf:citekey order="5">matsushita_stereotactic_2018</bcf:citekey>
+    <bcf:citekey order="5">mikell_postoperative_2015</bcf:citekey>
+    <bcf:citekey order="5">lundstedt_long-term_2012</bcf:citekey>
+    <bcf:citekey order="5">jereczek-fossa_is_2015</bcf:citekey>
   </bcf:section>
   <!-- SORTING TEMPLATES -->
-  <bcf:sortingtemplate name="nty">
+  <bcf:sortingtemplate name="none">
     <bcf:sort order="1">
-      <bcf:sortitem order="1">presort</bcf:sortitem>
-    </bcf:sort>
-    <bcf:sort order="2" final="1">
-      <bcf:sortitem order="1">sortkey</bcf:sortitem>
-    </bcf:sort>
-    <bcf:sort order="3">
-      <bcf:sortitem order="1">sortname</bcf:sortitem>
-      <bcf:sortitem order="2">author</bcf:sortitem>
-      <bcf:sortitem order="3">editor</bcf:sortitem>
-      <bcf:sortitem order="4">translator</bcf:sortitem>
-      <bcf:sortitem order="5">sorttitle</bcf:sortitem>
-      <bcf:sortitem order="6">title</bcf:sortitem>
-    </bcf:sort>
-    <bcf:sort order="4">
-      <bcf:sortitem order="1">sorttitle</bcf:sortitem>
-      <bcf:sortitem order="2">title</bcf:sortitem>
-    </bcf:sort>
-    <bcf:sort order="5">
-      <bcf:sortitem order="1">sortyear</bcf:sortitem>
-      <bcf:sortitem order="2">year</bcf:sortitem>
-    </bcf:sort>
-    <bcf:sort order="6">
-      <bcf:sortitem order="1">volume</bcf:sortitem>
-      <bcf:sortitem literal="1" order="2">0</bcf:sortitem>
+      <bcf:sortitem order="1">citeorder</bcf:sortitem>
     </bcf:sort>
   </bcf:sortingtemplate>
   <!-- DATALISTS -->
   <bcf:datalist section="0"
-                name="nty/global//global/global"
+                name="none/global//global/global"
                 type="entry"
-                sortingtemplatename="nty"
+                sortingtemplatename="none"
                 sortingnamekeytemplatename="global"
                 labelprefix=""
                 uniquenametemplatename="global"

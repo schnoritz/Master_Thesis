@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 from pprint import pprint
 
 
-def define_iso_center(egsinp, ct_path, px_sp=np.array([1.171875, 1.171875, 3])):
+def define_iso_center(egsinp, ct_path):
 
     iso_center = np.array(egsinp.split(",")[2:5], dtype=float)
 
@@ -13,6 +13,9 @@ def define_iso_center(egsinp, ct_path, px_sp=np.array([1.171875, 1.171875, 3])):
 
     px_sp = np.array([pixel_spacing[0], pixel_spacing[1], slice_spacing]).astype(float)
 
+    # wird hier geändert, da mein Koordinatensystem immer 3mm slice spacing hat
+    # und das Isocentrum auf diesem Koordinatensystem berechnet wird
+    px_sp[2] = 3
     iso_slice = np.zeros((3,))
     for i in range(3):
         iso_slice[i] = (iso_center[i] - zero_point[i]) / (px_sp[i]/10)

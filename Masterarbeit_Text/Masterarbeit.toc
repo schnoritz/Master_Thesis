@@ -1,23 +1,19 @@
 \boolfalse {citerequest}\boolfalse {citetracker}\boolfalse {pagetracker}\boolfalse {backtracker}\relax 
 \defcounter {refsection}{0}\relax 
-\contentsline {chapter}{\numberline {1}Abstract}{1}%
+\contentsline {chapter}{\numberline {1}Aufbau}{1}%
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {1.1}BlaBla}{1}%
+\contentsline {chapter}{\numberline {2}Dedication}{2}%
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {1.2}BlaBla}{1}%
+\contentsline {chapter}{\numberline {3}Declaration}{3}%
 \defcounter {refsection}{0}\relax 
-\contentsline {chapter}{\numberline {2}Dedication}{4}%
+\contentsline {chapter}{\numberline {4}Introduction}{7}%
 \defcounter {refsection}{0}\relax 
-\contentsline {chapter}{\numberline {3}Declaration}{5}%
+\contentsline {chapter}{\numberline {5}Material \& Methods}{8}%
 \defcounter {refsection}{0}\relax 
-\contentsline {chapter}{\numberline {4}Introduction}{9}%
+\contentsline {chapter}{\numberline {6}Results}{9}%
 \defcounter {refsection}{0}\relax 
-\contentsline {chapter}{\numberline {5}Material \& Methods}{10}%
+\contentsline {chapter}{\numberline {7}Discussion}{10}%
 \defcounter {refsection}{0}\relax 
-\contentsline {chapter}{\numberline {6}Results}{11}%
-\defcounter {refsection}{0}\relax 
-\contentsline {chapter}{\numberline {7}Discussion}{12}%
-\defcounter {refsection}{0}\relax 
-\contentsline {chapter}{\numberline {8}Conclusion}{13}%
+\contentsline {chapter}{\numberline {8}Conclusion}{11}%
 \defcounter {refsection}{0}\relax 
 \contentsline {chapter}{\numberline {A}Appendix Title}{15}%

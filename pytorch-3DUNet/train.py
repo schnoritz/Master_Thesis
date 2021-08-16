@@ -1,19 +1,19 @@
 import os
 import matplotlib.pyplot as plt
 from numpy.core.fromnumeric import mean
-from model import Dose3DUNET
 import torch
 from torch import optim
 import torch.nn as nn
 import argparse
 import utils
-from losses import RMSELoss
+from losses import HeteroscedasticAleatoricLoss, RMSELoss
 import pickle
-import dataqueue
+import dataqueue_threading
 from time import time
 import sys
 from gamma_sample import gamma_sample
 import numpy as np
+from model import Dose3DUNET
 
 
 from torch.utils.tensorboard import SummaryWriter
@@ -21,8 +21,8 @@ from torch.utils.tensorboard import SummaryWriter
 global TOP_K
 TOP_K = 5
 
-global SPQ_TRAIN
-global PPS_TRAIN
+global SPQ
+global PPS
 global DATA_DIRECTORY
 global LOGGER
 global LOGGER_DIR
@@ -31,9 +31,7 @@ global LOGGER_SEGMENTS
 global LOSS_FUNCTION
 
 LOGGER_DIR = "/mnt/qb/baumgartner/sgutwein84/logger/"
-LOGGER_SEGMENTS_LIST = ["p0_0", "p8_55"]
-
-LOSS_FUNCTION = RMSELoss()
+LOGGER_SEGMENTS_LIST = ["p0_0", "p2_21"]
 
 
 def parse():
@@ -100,6 +98,13 @@ def parse():
     )
 
     parser.add_argument(
+        "-uq",
+        required=True,
+        action='store',
+        dest='uq'
+    )
+
+    parser.add_argument(
         "-gpu",
         default=True,
         action='store',
@@ -123,7 +128,7 @@ def parse():
     return args
 
 
-def validate(model, criterion, validation_queue, device):
+def validate(model, criterion, validation_queue, device, uq):
 
     torch.cuda.empty_cache()
     model.eval()
@@ -135,11 +140,15 @@ def validate(model, criterion, validation_queue, device):
             curr += input_batch.shape[0]
             progressBar(curr, len(validation_queue), "Validation Step")
             sys.stdout.flush()
-            input_batch, target_batch = utils.get_training_data(
-                input_batch, target_batch, device)
 
-            pred = model(input_batch)
-            loss += criterion(pred, target_batch).item()
+            input_batch, target_batch = utils.get_training_data(input_batch, target_batch, device)
+
+            if uq:
+                pred, uncertainty = model(input_batch)
+                loss += criterion(pred, target_batch, uncertainty).item()
+            else:
+                pred = model(input_batch)
+                loss += criterion(pred, target_batch).item()
 
     model.train()
     del input_batch
@@ -149,7 +158,7 @@ def validate(model, criterion, validation_queue, device):
     return loss / num
 
 
-def get_volume_prediction(model, device, curr_patches, thickness=16):
+def get_volume_prediction(model, device, curr_patches, uq, thickness=16):
 
     torch.cuda.empty_cache()
 
@@ -161,11 +170,20 @@ def get_volume_prediction(model, device, curr_patches, thickness=16):
             masks = torch.load(f"{seg}/training_data.pt")
             masks = masks[:, 128:128+256, 128:128+256, 32:32+thickness]
             masks = torch.unsqueeze(masks, 0)
-            masks.to(device)
+            masks = masks.to(device)
 
             dose = torch.load(f"{seg}/target_data.pt")
 
-            pred = model(masks)
+            if uq:
+                pred, uncertrainty = model(masks)
+                uncertrainty = torch.exp(uncertrainty)
+                uncertrainty = uncertrainty.cpu().detach().numpy()
+                uncertrainty = uncertrainty.squeeze()
+                cols = 5
+
+            else:
+                pred = model(masks)
+                cols = 4
 
             pred = pred.cpu().detach().numpy()
             pred = pred.squeeze()
@@ -176,11 +194,13 @@ def get_volume_prediction(model, device, curr_patches, thickness=16):
             dose = dose.squeeze()
             dose = dose[128:128+256, 128:128+256, 32:32+thickness]
 
-            fig, ax = plt.subplots(1, 4, figsize=(thickness, 4))
+            fig, ax = plt.subplots(1, cols, figsize=(cols*4, 4))
             ax[0].imshow(masks[0, :, :, thickness//2])
             ax[1].imshow(dose[:, :, thickness//2])
             ax[2].imshow(pred[:, :, thickness//2])
             ax[3].imshow(dose[:, :, thickness//2]-pred[:, :, thickness//2])
+            if uq:
+                ax[4].imshow(uncertrainty[:, :, thickness//2])
 
             del masks
             torch.cuda.empty_cache()
@@ -213,7 +233,8 @@ def train(
     criterion,
     device,
     save_dir,
-    training_parameter
+    training_parameter,
+    uq
 ):
 
     model = train_state['UNET']
@@ -245,10 +266,15 @@ def train(
                 device
             )
 
-            dose_pred = model(train_batch)
-            torch.cuda.empty_cache()
+            if uq:
+                dose_pred, uncertrainty = model(train_batch)
+                torch.cuda.empty_cache()
+                loss = criterion(dose_pred, target_batch, uncertrainty)
+            else:
+                dose_pred = model(train_batch)
+                torch.cuda.empty_cache()
+                loss = criterion(dose_pred, target_batch)
 
-            loss = criterion(dose_pred, target_batch)
             train_loss += loss.item()
 
             optimizer.zero_grad()
@@ -263,24 +289,7 @@ def train(
         print("\n")
         train_loss /= num
 
-        validation_loss = validate(model, criterion, validation_queue, device)
-
-        gamma_values = []
-        for seg in ["p9_35", "p9_11", "p7_34", "p7_1", "p8_9", "p8_20", "p5_42", "p5_11"]:
-            gamma_values.append(gamma_sample(
-                model, device, seg, segment_dir=DATA_DIRECTORY))
-
-        gammas = np.array(gamma_values)
-        mean_gamma = np.round(gammas.mean(), 2)
-        std_gamma = np.round(gammas.std(), 2)
-
-        update_logger(mean_gamma, curr_patches, std_gamma,
-                      train_loss, validation_loss)
-
-        print_training_status(generation, curr_patches,
-                              train_loss, validation_loss, mean_gamma, std_gamma)
-
-        get_volume_prediction(model, device, curr_patches)
+        validation_loss = validate(model, criterion, validation_queue, device, uq)
 
         epochs.append({
             "num_patches": curr_patches,
@@ -288,8 +297,6 @@ def train(
             "validation_loss": validation_loss,
             "model_generation": train_state['model_generation'] + generation
         })
-
-        # evlt noch automated stopping nutzen und LR scheduler
 
         save = utils.check_improvement(epochs, top_k=TOP_K)
 
@@ -304,40 +311,83 @@ def train(
                 save=save,
                 epochs=epochs,
                 generation=generation,
-                gammas=[mean_gamma, std_gamma],
                 training_parameter=training_parameter
             )
+
+        mean_gamma = None
+        std_gamma = None
+
+        update_logger(curr_patches, train_loss, validation_loss)
+
+        if (generation-1) % 5 == 0:
+
+            start = time()
+            gamma_values = []
+            for seg in ["p9_35", "p9_11", "p7_34", "p7_1", "p8_9", "p8_20", "p5_42", "p5_11"]:
+                gamma_values.append(gamma_sample(model, device, seg, DATA_DIRECTORY, uq))
+
+            gammas = np.array(gamma_values)
+            mean_gamma = np.round(gammas.mean(), 2)
+            std_gamma = np.round(gammas.std(), 2)
+            print("\n")
+            print(f"Gamma Analysis took {np.round(time()-start,2)} seconds.")
+            sys.stdout.flush()
+
+            if mean_gamma > 95 and save == False:
+                save = True
+                utils.save_model(
+                    model=model,
+                    optimizer=optimizer,
+                    train_loss=train_loss,
+                    validation_loss=validation_loss,
+                    save_dir=save_dir,
+                    patches=curr_patches,
+                    save=save,
+                    epochs=epochs,
+                    generation=generation,
+                    training_parameter=training_parameter
+                )
+
+            update_logger(curr_patches, train_loss, validation_loss, mean_gamma=mean_gamma, std_gamma=std_gamma)
+
+            start = time()
+            get_volume_prediction(model=model, device=device, curr_patches=curr_patches, uq=uq)
+            print(f"Volume Prediction took {np.round(time()-start,2)} seconds.")
+            sys.stdout.flush()
+
+        print_training_status(generation, curr_patches, train_loss, validation_loss, mean_gamma=mean_gamma, std_gamma=std_gamma)
 
     sys.stdout.flush()
 
     return epochs
 
 
-def update_logger(mean_gamma, curr_patches, std_gamma, train_loss, validation_loss):
+def update_logger(curr_patches, train_loss, validation_loss, mean_gamma=None, std_gamma=None):
 
-    LOGGER.add_scalar("Gamma/Mean", mean_gamma, curr_patches)
-    LOGGER.add_scalar("Gamma/STD", std_gamma, curr_patches)
+    if mean_gamma:
+        LOGGER.add_scalar("Gamma/Mean", mean_gamma, curr_patches)
+        LOGGER.add_scalar("Gamma/STD", std_gamma, curr_patches)
     LOGGER.add_scalar("Loss / Training Loss", train_loss, curr_patches)
-    LOGGER.add_scalar("Loss / Validation Loss",
-                      validation_loss, curr_patches)
+    LOGGER.add_scalar("Loss / Validation Loss", validation_loss, curr_patches)
 
 
-def print_training_status(generation, curr_patches, train_loss, validation_loss, mean_gamma, std_gamma):
+def print_training_status(generation, curr_patches, train_loss, validation_loss, mean_gamma=None, std_gamma=None):
 
     print("\n")
     print(f"Current Generation      : {generation}")
     print(f"Current Patches         : {curr_patches}")
     print(f"Current Training Loss   : {train_loss}")
     print(f"Current Validation Loss : {validation_loss}")
-    print(f"Current Gamma Val       : {mean_gamma} ± {std_gamma}")
+    if mean_gamma:
+        print(f"Current Gamma Val       : {mean_gamma} ± {std_gamma}")
     print("\n")
     sys.stdout.flush()
 
 
-def load_pretrained_model(model_path, device, lr):
+def load_pretrained_model(model_path, device, lr, uq):
     print(f"\nUsing pretrained Model: {model_path}\n")
 
-    my_UNET = Dose3DUNET()
+    my_UNET = Dose3DUNET(UQ=uq)
     state = torch.load(model_path, map_location=device)
 
     my_UNET.load_state_dict(state['model_state_dict'])
@@ -349,7 +399,9 @@ def load_pretrained_model(model_path, device, lr):
     if device.type == "cuda":
         if torch.cuda.device_count() > 1:
             my_UNET = nn.DataParallel(my_UNET)
-            print(f"Using {torch.cuda.device_count()} GPU's")
+            print(f"Using {torch.cuda.device_count()} GPU's\n")
+        else:
+            print("\n")
 
     train_state = {
         'UNET': my_UNET,
@@ -362,14 +414,16 @@ def load_pretrained_model(model_path, device, lr):
     return train_state
 
 
-def no_pretrained_model(device, lr):
+def no_pretrained_model(device, lr, uq):
 
-    my_UNET = Dose3DUNET()
+    my_UNET = Dose3DUNET(UQ=uq)
 
     if device.type == "cuda":
         if torch.cuda.device_count() > 1:
             my_UNET = nn.DataParallel(my_UNET)
-            print(f"Using {torch.cuda.device_count()} GPU's")
+            print(f"Using {torch.cuda.device_count()} GPU's\n")
+        else:
+            print("\n")
 
     optimizer = optim.Adam(my_UNET.parameters(),
                            lr, (0.9, 0.99), 10E-8)
@@ -402,7 +456,8 @@ def setup_training(
     data_path,
     use_gpu,
     pretrained_model,
-    learning_rate
+    learning_rate,
+    uq
 ):
 
     device = utils.define_calculation_device(use_gpu)
@@ -410,25 +465,26 @@ def setup_training(
 
     if pretrained_model:
         train_state = load_pretrained_model(
-            pretrained_model, device, learning_rate)
+            pretrained_model, device, learning_rate, uq)
 
     else:
-        train_state = no_pretrained_model(device, learning_rate)
+        train_state = no_pretrained_model(device, learning_rate, uq)
 
     validation_segments = get_validation_segments(
         data_path, validation_segments)
     training_segments = get_training_segments(data_path, validation_segments)
 
     # hier segments_per_queue und patches_per_segment hochscruaben / runterschrauben
-    train_queue = dataqueue.DataQueue(
+    train_queue = dataqueue_threading.DataQueue(
         segment_list=training_segments,
         batch_size=batch_size,
-        segments_per_queue=SPQ_TRAIN,
+        segments_per_queue=SPQ,
         patch_size=patch_size,
-        patches_per_segment=PPS_TRAIN
+        patches_per_segment=PPS,
+        num_worker=8
     )
 
-    validation_queue = dataqueue.ValidationQueue(
+    validation_queue = dataqueue_threading.ValidationQueue(
         segments=validation_segments,
         batch_size=16
     )
@@ -453,7 +509,8 @@ def setup_training(
         save_dir=save_dir,
         criterion=criterion,
         device=device,
-        training_parameter=training_params
+        training_parameter=training_params,
+        uq=uq
     )
 
     fout = open(save_dir + "epochs_losses.pkl", "wb")
@@ -480,6 +537,17 @@ if __name__ == "__main__":
 
     args = parse()
 
+    if str(args.uq).lower() == "true":
+        uq = True
+        print("Model uses uncertainty quantification")
+        LOSS_FUNCTION = HeteroscedasticAleatoricLoss()
+    else:
+        uq = False
+        print("Model does not use uncertainty quantification")
+        LOSS_FUNCTION = RMSELoss()
+
+    sys.stdout.flush()
+
     if args.root_dir[-1] != "/":
         args.root_dir += "/"
 
@@ -489,9 +557,14 @@ if __name__ == "__main__":
                        args.root_dir + LOGGER_SEGMENTS_LIST[1]]
 
     # 50 SEGMENTS PER QUEUE AND 20*BATCH_SIZE PATCHES PER SEGMENT
-    SPQ_TRAIN = int(args.batch_size*2)
-    PPS_TRAIN = 500
+    # debug
+    # SPQ = int(args.batch_size//2)
+    # PPS = 50
 
+    SPQ = int(args.batch_size*2)
+    PPS = 200
+
+    print("Model saved under", args.save_dir)
     LOGGER = tb_logger(args.logger, args.experiment_name)
 
     setup_training(
@@ -503,7 +576,8 @@ if __name__ == "__main__":
         save_dir=args.save_dir,
         use_gpu=args.use_gpu,
         pretrained_model=args.pretrained_model,
-        learning_rate=args.learning_rate
+        learning_rate=args.learning_rate,
+        uq=uq
     )
 
     LOGGER.close()

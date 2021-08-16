@@ -2,10 +2,13 @@ import torch
 import numpy as np
 import pymedphys
 from pynvml import *
+import nibabel as nib
 from model import Dose3DUNET
+from entire_volume_prediction import predict_volume
+import random
 
 
-def gamma_sample(unet, device, segment, segment_dir, lower_cutoff=20, partial_sample=20000, gamma_percentage=3, gamma_distance=3, UQ=False):
+def gamma_sample(unet, device, segment, segment_dir, uq, lower_cutoff=10, local_gamma=False, partial_sample=2000, gamma_percentage=3, gamma_distance=3, volume_return=False):
 
     target_dose = torch.load(
         f"{segment_dir}{segment}/target_data.pt")
@@ -13,72 +16,94 @@ def gamma_sample(unet, device, segment, segment_dir, lower_cutoff=20, partial_sa
 
     masks = torch.load(
         f"{segment_dir}{segment}/training_data.pt")
-    masks = torch.unsqueeze(masks, 0)
 
     torch.cuda.empty_cache()
 
-    with torch.no_grad():
-        unet.eval()
-        preds = []
-        ps = 16
-        for i in range(0, masks.shape[4], ps):
-            mask = masks[0, :, :, :, i:i+ps]
-            if mask.shape[3] < ps:
-                num = int(ps-mask.shape[3])
-                added = torch.zeros(
-                    mask.shape[0], mask.shape[1], mask.shape[2], ps-mask.shape[3])
-                mask = torch.cat((mask, added), 3)
-            mask = mask.unsqueeze(0)
-            mask = mask.to(device)
+    predicted_dose = predict_volume(masks, unet, device, uq)
 
-            if UQ:
-                pred, _ = unet(mask)
-            else:
-                pred = unet(mask)
-            torch.cuda.empty_cache()
+    print(predicted_dose.shape, target_dose.shape)
 
-            preds.append(pred.cpu().detach().squeeze())
+    gamma_options = {
+        'dose_percent_threshold': gamma_percentage,
+        'distance_mm_threshold': gamma_distance,
+        'lower_percent_dose_cutoff': lower_cutoff,
+        'interp_fraction': 5,  # Should be 10 or more for more accurate results
+        'max_gamma': 1.1,
+        'quiet': True,
+        'local_gamma': local_gamma,
+        'random_subset': partial_sample
+    }
 
-        end = torch.cat(preds, 2)
-        end = end[:, :, :(-num)]
+    coords = (np.arange(0, 1.17*target_dose.shape[0], 1.17), np.arange(
+        0, 1.17*target_dose.shape[1], 1.17), np.arange(0, 3*target_dose.shape[2], 3))
 
-        gamma_options = {
-            'dose_percent_threshold': gamma_percentage,
-            'distance_mm_threshold': gamma_distance,
-            'lower_percent_dose_cutoff': lower_cutoff,
-            'interp_fraction': 5,  # Should be 10 or more for more accurate results
-            'max_gamma': 1.1,
-            'ram_available': 2**37,
-            'quiet': True,
-            'local_gamma': False,
-            'random_subset': partial_sample
-        }
+    gamma_val = pymedphys.gamma(
+        coords, np.array(target_dose),
+        coords, np.array(predicted_dose),
+        **gamma_options)
 
-        coords = (np.arange(0, 1.17*target_dose.shape[0], 1.17), np.arange(
-            0, 1.17*target_dose.shape[1], 1.17), np.arange(0, 3*target_dose.shape[2], 3))
+    dat = ~np.isnan(gamma_val)
+    dat2 = ~np.isnan(gamma_val[gamma_val <= 1])
+    all = np.count_nonzero(dat)
+    true = np.count_nonzero(dat2)
 
-        gamma_val = pymedphys.gamma(
-            coords, np.array(target_dose),
-            coords, np.array(end),
-            **gamma_options)
+    unet.train()
 
-        dat = ~np.isnan(gamma_val)
-        dat2 = ~np.isnan(gamma_val[gamma_val <= 1])
-        all = np.count_nonzero(dat)
-        true = np.count_nonzero(dat2)
-
-        return np.round((true/all)*100, 2)
+    if volume_return:
+        return np.round((true/all)*100, 2), predicted_dose, target_dose
+    return np.round((true/all)*100, 2)
 
 
 if __name__ == "__main__":
 
-    segment = "p0_0"
-    device = torch.device(
-        "cuda") if torch.cuda.is_available else torch.device("cpu")
-    model_checkpoint = torch.load(
-        "/home/baumgartner/sgutwein84/container/pytorch-3DUNet/experiments/bs16_ps32/UNET_88.pt", map_location="cpu")
-    model = Dose3DUNET()
-    model = torch.nn.DataParallel(model)
-    model.to(device)
-    model.load_state_dict(model_checkpoint['model_state_dict'])
-    gamma_sample(model, device, segment)
+    uq = False
+
+    dir = "/mnt/qb/baumgartner/sgutwein84/training_nodes/"
+    model_path = "/mnt/qb/baumgartner/sgutwein84/save/bs32_ps32_5/UNET_896.pt"
+    save_path = "/home/baumgartner/sgutwein84/container/test"
+
+    segments = [x for x in os.listdir(dir) if not x.startswith(".")]
+    segments = random.sample(segments, 10)
+    #segments = ["p5_21", "p5_29", "p5_44", "p5_10", "p5_16", "p7_29", "p7_39", "p7_53", "p7_10", "p7_21", "p8_31", "p8_41", "p8_51", "p8_4", "p8_16", "p9_22", "p9_27", "p9_34", "p9_38", "p9_13"]
+    gammas = []
+
+    print(segments)
+
+    for segment in segments:
+
+        if os.path.isfile(f"{dir}{segment}/training_data.pt"):
+            mask = torch.load(f"{dir}{segment}/training_data.pt")
+            binary = mask[0]
+
+            device = torch.device("cuda") if torch.cuda.is_available else torch.device("cpu")
+            model_checkpoint = torch.load(model_path, map_location=device)
+            model = Dose3DUNET(UQ=uq)
+            model.load_state_dict(model_checkpoint['model_state_dict'])
+            if torch.cuda.device_count() > 1:
+                model = torch.nn.DataParallel(model)
+            model.to(device)
+            gamma, pred, target = gamma_sample(model, device, segment, dir, uq=uq, volume_return=True, gamma_distance=3, gamma_percentage=3, lower_cutoff=10)
+            gammas.append(gamma)
+            print(f"Gamma-Passrate for segment {segment}: {gamma}%")
+
+            dat = nib.Nifti1Image(np.array(pred), np.eye(4))
+            dat.header.get_xyzt_units()
+            dat.to_filename(f"{save_path}/{segment}_pred.nii.gz")
+            dat = nib.Nifti1Image(np.array(target), np.eye(4))
+            dat.header.get_xyzt_units()
+            dat.to_filename(f"{save_path}/{segment}_target.nii.gz")
+            dat = nib.Nifti1Image(np.array(target)-np.array(pred), np.eye(4))
+            dat.header.get_xyzt_units()
+            dat.to_filename(f"{save_path}/{segment}_diff.nii.gz")
+            dat = nib.Nifti1Image(np.array(binary), np.eye(4))
+            dat.header.get_xyzt_units()
+            dat.to_filename(f"{save_path}/{segment}_binary.nii.gz")
+
+        else:
+            print("Missing Data for ", segment)
+
+    gammas = np.array(gammas)
+    mean_gammas = gammas.mean()
+    std_gammas = gammas.std()
+
+    print(mean_gammas, std_gammas)

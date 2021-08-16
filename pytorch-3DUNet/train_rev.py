@@ -15,7 +15,6 @@ import sys
 from gamma_sample import gamma_sample
 import numpy as np
 
-
 from torch.utils.tensorboard import SummaryWriter
 
 global TOP_K
@@ -265,22 +264,7 @@ def train(
 
         validation_loss = validate(model, criterion, validation_queue, device)
 
-        gamma_values = []
-        for seg in ["p9_35", "p9_11", "p7_34", "p7_1", "p8_9", "p8_20", "p5_42", "p5_11"]:
-            gamma_values.append(gamma_sample(
-                model, device, seg, segment_dir=DATA_DIRECTORY))
-
-        gammas = np.array(gamma_values)
-        mean_gamma = np.round(gammas.mean(), 2)
-        std_gamma = np.round(gammas.std(), 2)
-
-        update_logger(mean_gamma, curr_patches, std_gamma,
-                      train_loss, validation_loss)
-
-        print_training_status(generation, curr_patches,
-                              train_loss, validation_loss, mean_gamma, std_gamma)
-
-        get_volume_prediction(model, device, curr_patches)
+        print_training_status(generation, curr_patches, train_loss, validation_loss)
 
         epochs.append({
             "num_patches": curr_patches,
@@ -288,8 +272,6 @@ def train(
             "validation_loss": validation_loss,
             "model_generation": train_state['model_generation'] + generation
         })
-
-        # evlt noch automated stopping nutzen und LR scheduler
 
         save = utils.check_improvement(epochs, top_k=TOP_K)
 
@@ -304,9 +286,27 @@ def train(
                 save=save,
                 epochs=epochs,
                 generation=generation,
-                gammas=[mean_gamma, std_gamma],
                 training_parameter=training_parameter
             )
+
+        if generation-1 % 4 == 0:
+
+            gamma_values = []
+            for seg in ["p9_35", "p9_11", "p7_34", "p7_1", "p8_9", "p8_20", "p5_42", "p5_11"]:
+                gamma_values.append(gamma_sample(
+                    model, device, seg, segment_dir=DATA_DIRECTORY))
+
+            gammas = np.array(gamma_values)
+            mean_gamma = np.round(gammas.mean(), 2)
+            std_gamma = np.round(gammas.std(), 2)
+
+            update_logger(mean_gamma, curr_patches, std_gamma,
+                          train_loss, validation_loss)
+
+            print_training_status(generation, curr_patches,
+                                  train_loss, validation_loss, mean_gamma, std_gamma)
+
+            get_volume_prediction(model, device, curr_patches)
 
     sys.stdout.flush()
 
