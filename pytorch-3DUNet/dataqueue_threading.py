@@ -203,7 +203,7 @@ class ValidationQueue():
     def __init__(self, segments, batch_size):
         self.segments = segments
         self.batch_size = batch_size
-        self.idxs = np.linspace(64, 512-64, 7, endpoint=True)
+        self.idxs = np.linspace(16, 512-16, 11, endpoint=True)
 
         self.mask_patches, self.target_patches = self.get_batches()
 
@@ -222,9 +222,9 @@ class ValidationQueue():
                 for y in self.idxs:
                     for z in self.z_idxs:
                         mask_patches.append(
-                            mask[:, int(x)-32:int(x)+32, int(y)-32:int(y)+32, int(z)-16:int(z)+16])
+                            mask[:, int(x)-16:int(x)+16, int(y)-16:int(y)+16, int(z)-16:int(z)+16])
                         target_patches.append(
-                            target[:, int(x)-32:int(x)+32, int(y)-32:int(y)+32, int(z)-16:int(z)+16])
+                            target[:, int(x)-16:int(x)+16, int(y)-16:int(y)+16, int(z)-16:int(z)+16])
 
         return mask_patches, target_patches
 

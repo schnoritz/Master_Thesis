@@ -202,15 +202,19 @@ def paddedzoom(img, zoomfactor):
 
 if __name__ == "__main__":
 
-    root_dir = "/Users/simongutwein/Studium/Masterarbeit/p13/"
-    save_dir = "/mnt/qb/baumgartner/sgutwein84/test"
-    segments = [x for x in os.listdir(
-        root_dir) if not x.startswith(".") and not "ct" in x]
+    segments = ["h0_0"]
+    entity = "head"
+
+    root_dir = f"/mnt/qb/baumgartner/sgutwein84/output_{entity}/"
+    save_dir = "/home/baumgartner/sgutwein84/container/test"
+    # segments = [x for x in os.listdir(
+    #     root_dir) if not x.startswith(".") and not "ct" in x]
     #segments = random.sample(segments, 5)
 
     for segment in segments:
 
         pat = segment.split("_")[0]
+        print(pat)
 
         path = f"{root_dir}/{segment}/"
         ct_path = f"{root_dir}ct/{pat}/"

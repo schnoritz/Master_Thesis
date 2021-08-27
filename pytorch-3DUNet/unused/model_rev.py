@@ -147,8 +147,11 @@ class RevDose3DUNET(nn.Module):
 
 def test():
     # mit x = torch.randn((batch_size, in_channels, W, H, D))
-    x = torch.randn((2, 5, 32, 32, 32))
+    x = torch.randn((1, 5, 150, 150, 100))
+    device = torch.device("cuda")
+    x = x.to(device)
     model = RevDose3DUNET()
+    model = model.to(device)
     preds = model(x)
     print(preds.shape)
 

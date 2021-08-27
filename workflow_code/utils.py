@@ -84,6 +84,66 @@ def extract_phantom_data(ct_path, pixel_spacing=False):
     return zero_point/10
 
 
+def get_angles(data_dir):
+    angles = []
+
+    segments = [x for x in os.listdir(data_dir) if "_" in x and not x.startswith(".")]
+
+    for seg in segments:
+        path = os.path.join(data_dir, seg, f"{seg}.egsinp")
+
+        with open(path) as fin:
+            lines = fin.readlines()
+        angles.append(float(lines[5].split(",")[6])-270)
+
+    return angles
+
+
+def get_density_angles(angles):
+
+    angles = np.array(angles)
+    bins = np.array(np.linspace(0, 360, 720, endpoint=False))
+    occ = np.zeros_like(bins)
+
+    for num, _bin in enumerate(bins):
+        occ[num] = ((_bin <= angles) & (angles < (_bin+(1/2)))).sum()
+
+    return occ, bins
+
+
+def create_polar_plot(angles):
+
+    occ, bins = get_density_angles(angles)
+    occ = occ/occ.sum()
+
+    fig, ax = plt.subplots(subplot_kw={'projection': 'polar'})
+    ax.plot(bins, occ)
+    ax.set_theta_zero_location("N")
+    ax.set_rgrids(np.round(np.linspace(0.5*occ.max(), occ.max(), 5), 2), angle=45)
+
+
+def check_field_sizes(data_dir):
+
+    sizes = []
+
+    segments = [x for x in os.listdir(data_dir) if "_" in x and not x.startswith(".")]
+
+    for seg in segments:
+        path = os.path.join(data_dir, seg, f"beam_config_{seg}.txt")
+
+        with open(path) as fin:
+            lines = fin.readlines()
+
+        size = 0
+        for leaf_pair in lines:
+            leaf_pair = leaf_pair.split(",")
+            size += abs(float(leaf_pair[0]) - float(leaf_pair[1]))
+
+        sizes.append(size)
+
+    return np.array(sizes)
+
+
 if __name__ == "__main__":
 
     path = "/Users/simongutwein/Studium/Masterarbeit/test/p0"

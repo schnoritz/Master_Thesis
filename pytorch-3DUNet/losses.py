@@ -22,11 +22,10 @@ class HeteroscedasticAleatoricLoss(nn.Module):
 
 if __name__ == "__main__":
 
-    y_hat = torch.randn(2, 10, 32, 32, 32)
-    y = torch.randn(2, 10, 32, 32, 32)
-    log_sigma = torch.randn(2, 10, 32, 32, 32)
+    y_hat = torch.randn(2, 5, 32, 32, 32)
+    y = torch.randn(2, 5, 32, 32, 32)
 
-    print(torch.numel(y))
-    criterion = HeteroscedasticAleatoricLoss()
-    loss = criterion(y_hat, y, log_sigma)
+    criterion = RMSELoss()
+    loss = criterion(y_hat, y)
+
     print(loss)

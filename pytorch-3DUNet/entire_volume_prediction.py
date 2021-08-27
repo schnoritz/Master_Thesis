@@ -14,14 +14,15 @@ def chunks(end, max_size):
         current += chunk_size
 
 
-def predict_volume(inp, model, device, UQ=False):
+def predict_volume(inp, model, device, shift=16):
 
+    start = time()
     torch.cuda.empty_cache()
 
     num_devices = torch.cuda.device_count()
     slices = 16
     half_slice = slices // 2
-    slices = [x for x in range(half_slice, inp.shape[-1]-half_slice+1, 10)]
+    slices = [x for x in range(half_slice, inp.shape[-1]-half_slice+1, shift)]
     slices.append(inp.shape[-1]-half_slice)
     slices = list(dict.fromkeys(slices))
 
@@ -31,11 +32,9 @@ def predict_volume(inp, model, device, UQ=False):
     inputs = torch.stack(inputs)
 
     curr = 0
-    print("Start Prediction")
-    start = time()
     for chunk in chunks(len(inputs), num_devices):
+        pred = predict(model, inputs[curr:chunk], device)
 
-        pred = predict(model, inputs[curr:chunk], device, UQ)
         for num, _slice in enumerate(slices[curr:chunk]):
             if num_devices == 1:
                 prediction[0, :, :, _slice-half_slice:_slice+half_slice] = np.add(prediction[0, :, :, _slice-half_slice:_slice+half_slice], pred)
@@ -51,30 +50,22 @@ def predict_volume(inp, model, device, UQ=False):
     prediction[0] /= prediction[1]
 
     model.train()
-    print("Prediction took: ", np.round(time()-start, 2), "seconds")
     torch.cuda.empty_cache()
+    print("Prediction time: ", np.round(time()-start, 2))
     return torch.from_numpy(prediction[0])
 
 
-def predict(model, inp, device, UQ):
+def predict(model, inp, device):
 
+    torch.cuda.empty_cache()
     model.eval()
     with torch.no_grad():
 
         inp = inp.to(device)
-        if UQ:
-            pred, _ = model(inp)
-            uncertainty = model.get_uncertainty(inp, 10)
-            uncertainty = uncertainty.cpu().detach().numpy().squeeze()
-        else:
-            pred = model(inp)
-
+        pred = model(inp)
         pred = pred.cpu().detach().numpy().squeeze()
 
-        if UQ:
-            return pred, uncertainty
-        else:
-            return pred
+        return pred
 
 
 if __name__ == "__main__":

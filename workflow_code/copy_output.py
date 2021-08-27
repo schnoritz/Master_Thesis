@@ -1,6 +1,5 @@
 import os
 
-
 if __name__ == "__main__":
 
     output_path = "/work/ws/nemo/tu_zxoys08-EGS-0/egs_home/dosxyznrc/output"

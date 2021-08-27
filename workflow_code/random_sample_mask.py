@@ -12,10 +12,8 @@ if __name__ == "__main__":
         description="Choose your directory with patient data")
 
     parser.add_argument(
-        "dir",
+        "-dir",
         type=str,
-        metavar="",
-        help="",
     )
 
     parser.add_argument(

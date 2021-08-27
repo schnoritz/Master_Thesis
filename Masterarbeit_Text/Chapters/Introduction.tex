@@ -1,1 +1,31 @@
 Show why Radiotherapy is so important: search for sources of application of radiotherapy for different entities. Prostate: \cite{geinitz_3d_2005, nguyen_curative_2005, budiharto_external_nodate} Mamma: \cite{ragaz_adjuvant_1997, lena_combined_nodate, taylor_estimating_2017} Head \& Neck: \cite{datta_head_1990, bhide_advances_2010, castadot_adaptive_2010, morgan_adaptive_2020} Liver: \cite{hoyer_radiotherapy_2012, wulf_stereotactic_2001, wulf_stereotactic_2006, sterzing_stereotactic_2014, witt_mri-guided_2020} Lymph Nodes: \cite{degro_degro_2014, matsushita_stereotactic_2018, mikell_postoperative_2015, lundstedt_long-term_2012, jereczek-fossa_is_2015}
+
+Was ich noch brauche: Infos über MR-Linac, was ist die Vision hinter dem MR Linac (online adaption) 
+
+The use of Magnet Resonace Imaging (MRI) during radiotherapy has opened a variety of new opportunities for treatment optimization. MRI provides a better contrast in soft tissue areas of the body, compared to conventional computed tomograpy (CT), and can be used to assess functional image data from the patient in real time. The enhanched contrast leads to better organs at risk (OAR) and tumor volume delineation. (doi:10.1016/S0360-3016(03)01446-9). Recent research efforts are exploring the capabilities of the hybrid MRI linear accelerator (MRI-Linac) (doi:10.1007/s00066-018-1386-z, doi:10.1016/j.radonc.2007.10.034,  doi:10.1002/acm2.12233). The introduction of the MRI-Linac has transformed the clinical workflow for radiotherapy as well as treatment planning. Patients are required to receive one CT for initial treatment planning. For radiation in each fraction, the inital plan is registrated on the current MRI and optionally adapted to shift or size variation of the tumor volume (doi:10.1016/j.ctro.2019.04.001). Goal is to reach an MRI-only-workflow where image acquisition, treatment planning and radiotherapy only involve the MRI-Linac. To achieve this goal multiple steps in the clinical workflow need to be adapted
+
+behind MRI Linac is an radiotreatment adaption in an onine manner, meaning that a shift of the tumor volume and changes to the patients anatomy due to movement can be considered to adapt the treatmentplan. This results in smaller safety margins (doi:10.1102/1470-7330.2004.0054) for tumor volumes and ultimately result in a lower delivered dose to organs at risk. To achieve this ultimate goal, multiple steps, such as anatomy segmentation, treatmentplan adaption and dose deposition simulations need to be able to be performed in real-time. 
+
+Welche besonderheiten gibt es bei einem MR-Linac im Vergleich zu einem normalem Bestrahler (Stichworte: ERE, Electron Deposition Shift)
+Wie funktioniert normale Dosisberechung (Monte Carlo doi:10.1118/1.598917), warum ist der Nutzen davon limitiert wenn man in die online Adaption möchte. 
+
+However, since MC simulation is a stochastic process, the resulting dose map contains inherent quantum noise whose variance is inversely proportional to the number of the simulation histories and, accordingly, to the simulation time. Typically, achieving clinically acceptable precision requires hours of CPU computation time. Graphics processing unit (GPU)-based parallel computation frameworks can accelerate MC simulation to a few minutes for a typical IMRT/VMAT plan (doi:10.1088/0031-9155/55/11/006)
+
+However, several areas in the clinical workflow require real-time dose calculation, such as inverse optimization of the treatment planning process for IMRT and VMAT (doi:10.1088/2632-2153/abdbfe)
+especially online radiotherapy and online plan adaption are limited by the time needed to recalculate dose distributions of beam settings and patient anatomies due to moving organs (doi:10.1016/j.clon.2018.08.001)
+
+
+Machine Learning Teil: Wie wird Machine Learning in verschiedenen bereichen der bestrahlungsplanung bezüglich MRI genutzt:
+Eine Implementierung und Nutzung dieser könnte zum Erreichen einer Online-Bestrahlnugsadaption führen
+
+1. Autosegmentation (\cite{kazemifar_segmentation_2018, liang_deep-learning-based_2019}) aswell as uncertrainty (\cite{shen_medical_2019})
+
+2. Radio Treatment Plan optimization (\cite{fan_automatic_2019, liu_deep_2019})
+
+3. Dose Estimation (\cite{kontaxis_deepdose_2020, bai_deep_2021} active denoising of lower history MC Simulations (doi:10.1002/mp.13856 ))
+
+4. Pseudo CT (\cite{han_mr-based_2017, wolterink_deep_2017, dinkla_mr-only_2018})
+
+
+
+

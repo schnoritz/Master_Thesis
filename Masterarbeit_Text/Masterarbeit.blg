@@ -1,17 +1,19 @@
 [0] Config.pm:304> INFO - This is Biber 2.14
 [0] Config.pm:307> INFO - Logfile is 'Masterarbeit.blg'
-[92] biber-darwin:322> INFO - === Mon Aug 16, 2021, 09:59:18
-[111] Biber.pm:415> INFO - Reading 'Masterarbeit.bcf'
-[231] Biber.pm:943> INFO - Found 20 citekeys in bib section 0
-[246] Biber.pm:4256> INFO - Processing section 0
-[246] Utils.pm:75> INFO - Globbing data source '/Users/simongutwein/Documents/GitHub/Master_Thesis/Masterarbeit_Text/BibTex/Masterarbeit.bib'
-[247] Utils.pm:91> INFO - Globbed data source '/Users/simongutwein/Documents/GitHub/Master_Thesis/Masterarbeit_Text/BibTex/Masterarbeit.bib' to /Users/simongutwein/Documents/GitHub/Master_Thesis/Masterarbeit_Text/BibTex/Masterarbeit.bib
-[258] Biber.pm:4455> INFO - Looking for bibtex format file '/Users/simongutwein/Documents/GitHub/Master_Thesis/Masterarbeit_Text/BibTex/Masterarbeit.bib' for section 0
-[270] bibtex.pm:1653> INFO - LaTeX decoding ...
-[559] bibtex.pm:1471> INFO - Found BibTeX data source '/Users/simongutwein/Documents/GitHub/Master_Thesis/Masterarbeit_Text/BibTex/Masterarbeit.bib'
-[878] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'variable = shifted' with 'variable = non-ignorable'
-[878] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'normalization = NFD' with 'normalization = prenormalized'
-[878] Biber.pm:4084> INFO - Sorting list 'none/global//global/global' of type 'entry' with template 'none' and locale 'en-US'
-[878] Biber.pm:4090> INFO - No sort tailoring available for locale 'en-US'
-[902] bbl.pm:652> INFO - Writing 'Masterarbeit.bbl' with encoding 'UTF-8'
-[940] bbl.pm:755> INFO - Output to Masterarbeit.bbl
+[89] biber-darwin:322> INFO - === Wed Aug 25, 2021, 10:30:41
+[107] Biber.pm:415> INFO - Reading 'Masterarbeit.bcf'
+[214] Biber.pm:943> INFO - Found 33 citekeys in bib section 0
+[228] Biber.pm:4256> INFO - Processing section 0
+[228] Utils.pm:75> INFO - Globbing data source '/Users/simongutwein/Documents/GitHub/Master_Thesis/Masterarbeit_Text/BibTex/Masterarbeit.bib'
+[229] Utils.pm:91> INFO - Globbed data source '/Users/simongutwein/Documents/GitHub/Master_Thesis/Masterarbeit_Text/BibTex/Masterarbeit.bib' to /Users/simongutwein/Documents/GitHub/Master_Thesis/Masterarbeit_Text/BibTex/Masterarbeit.bib
+[243] Biber.pm:4455> INFO - Looking for bibtex format file '/Users/simongutwein/Documents/GitHub/Master_Thesis/Masterarbeit_Text/BibTex/Masterarbeit.bib' for section 0
+[258] bibtex.pm:1653> INFO - LaTeX decoding ...
+[591] bibtex.pm:1471> INFO - Found BibTeX data source '/Users/simongutwein/Documents/GitHub/Master_Thesis/Masterarbeit_Text/BibTex/Masterarbeit.bib'
+[912] Utils.pm:304> WARN - ISBN '978-3-030-32244-1 978-3-030-32245-8' in entry 'shen_medical_2019' is invalid - run biber with '--validate_datamodel' for details.
+[1053] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'variable = shifted' with 'variable = non-ignorable'
+[1053] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'normalization = NFD' with 'normalization = prenormalized'
+[1053] Biber.pm:4084> INFO - Sorting list 'none/global//global/global' of type 'entry' with template 'none' and locale 'en-US'
+[1053] Biber.pm:4090> INFO - No sort tailoring available for locale 'en-US'
+[1086] bbl.pm:652> INFO - Writing 'Masterarbeit.bbl' with encoding 'UTF-8'
+[1139] bbl.pm:755> INFO - Output to Masterarbeit.bbl
+[1140] Biber.pm:128> INFO - WARNINGS: 1

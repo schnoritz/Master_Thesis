@@ -4,6 +4,7 @@ import nibabel as nib
 import numpy as np
 import os
 import random
+import matplotlib.pyplot as plt
 
 
 def parse():
@@ -33,6 +34,7 @@ def parse():
     parser.add_argument(
         "-save",
         action="store",
+        required=True,
         dest='save_path'
     )
 
@@ -50,6 +52,7 @@ def get_segment(segment_path, seg, save_path):
         mask_names = ["binary", "ct", "radio_depth", "center", "source"]
 
         for num, name in enumerate(mask_names):
+
             dat = nib.Nifti1Image(masks[num], np.eye(4))
             dat.header.get_xyzt_units()
             dat.to_filename(f"{save_path}/{seg}_{name}.nii.gz")

@@ -2202,6 +2202,20 @@
     <bcf:citekey order="5">mikell_postoperative_2015</bcf:citekey>
     <bcf:citekey order="5">lundstedt_long-term_2012</bcf:citekey>
     <bcf:citekey order="5">jereczek-fossa_is_2015</bcf:citekey>
+    <bcf:citekey order="6">kazemifar_segmentation_2018</bcf:citekey>
+    <bcf:citekey order="6">liang_deep-learning-based_2019</bcf:citekey>
+    <bcf:citekey order="7">shen_medical_2019</bcf:citekey>
+    <bcf:citekey order="8">fan_automatic_2019</bcf:citekey>
+    <bcf:citekey order="8">liu_deep_2019</bcf:citekey>
+    <bcf:citekey order="9">kontaxis_deepdose_2020</bcf:citekey>
+    <bcf:citekey order="9">bai_deep_2021</bcf:citekey>
+    <bcf:citekey order="10">han_mr-based_2017</bcf:citekey>
+    <bcf:citekey order="10">wolterink_deep_2017</bcf:citekey>
+    <bcf:citekey order="10">dinkla_mr-only_2018</bcf:citekey>
+    <bcf:citekey order="11">noauthor_nrc-cnrcegsnrc_2021</bcf:citekey>
+    <bcf:citekey order="12">kontaxis_deepdose_2020</bcf:citekey>
+    <bcf:citekey order="13">siddon_fast_1985</bcf:citekey>
+    <bcf:citekey order="14">perez-garcia_torchio_2021</bcf:citekey>
   </bcf:section>
   <!-- SORTING TEMPLATES -->
   <bcf:sortingtemplate name="none">

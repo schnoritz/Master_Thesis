@@ -115,8 +115,18 @@ if __name__ == "__main__":
         for patient in args.patients_list:
             if patient[-1] != "_":
                 patient += "_"
-            segments.extend([x for x in os.listdir(
-                args.input_dir) if not "ct" in x and not "egsphant" in x and not x.startswith(".") and patient in x])
+            patient_segments = [x for x in os.listdir(
+                args.input_dir) if not "ct" in x and not "egsphant" in x and not x.startswith(".") and patient in x]
+
+            if patient_segments:
+                segments.extend(patient_segments)
+            else:
+                print(f"No data for patient: {patient[:-1]}")
+
+        if segments:
+            print(f"Creating masks for following segments: {segments}")
+        else:
+            exit()
 
     elif args.segments_list:
         segments = args.segments_list

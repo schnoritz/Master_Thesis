@@ -3,39 +3,38 @@ import torch
 import pandas as pd
 from model import Dose3DUNET
 from time import time
+import matplotlib.pyplot as plt
+import matplotlib.gridspec as gridspec
+import glob
 
-model_path = "/mnt/qb/baumgartner/sgutwein84/save/bs32_ps32_5/UNET_896.pt"
+# masks = torch.load("/mnt/qb/baumgartner/sgutwein84/training_prostate/p11_47/training_data.pt")
 
-device = torch.device("cuda") if torch.cuda.is_available else torch.device("cpu")
-model_checkpoint = torch.load(model_path, map_location=device)
-model = Dose3DUNET(UQ=False)
-model.load_state_dict(model_checkpoint['model_state_dict'])
-if torch.cuda.device_count() > 1:
-    model = torch.nn.DataParallel(model)
+# for num, mask in enumerate(masks):
 
-model.to(device)
+#     plt.imshow(mask[:, :, 40], cmap="plasma")
+#     plt.axis("off")
+#     plt.savefig(f"/mnt/qb/baumgartner/sgutwein84/test/masks_{num}.png")
 
-input = torch.randn((1, 5, 150, 150, 110))
+save_dir = "/mnt/qb/baumgartner/sgutwein84/save/"
+model_dir = [os.path.join(save_dir, x) for x in glob.glob(save_dir + "*") if not "UQ" in x]
+model_dir = ["/mnt/qb/baumgartner/sgutwein84/save/bs128_ps32_lr4_2108231722"]
+print(model_dir)
 
-start = time()
-pred = model(input)
-print(time()-start)
+pd.set_option('display.max_colwidth', None)
 
-# model_dir = ["/mnt/qb/baumgartner/sgutwein84/save/bs32_ps32_5", "/mnt/qb/baumgartner/sgutwein84/save/bs32_ps32_4", "/mnt/qb/baumgartner/sgutwein84/save/bs32_ps32_6"]
+losses = []
+models = []
+for model_spec in model_dir:
+    for model in os.listdir(model_spec):
 
-# losses = []
-# models = []
-# for model_spec in model_dir:
-#     for model in os.listdir(model_spec):
+        model_path = os.path.join(model_spec, model)
+        curr_model = torch.load(model_path, map_location="cpu")
+        models.append(model_path)
+        losses.append(curr_model['validation_loss'])
 
-#         model_path = os.path.join(model_spec, model)
-#         curr_model = torch.load(model_path, map_location="cpu")
-#         models.append(model)
-#         losses.append(curr_model['validation_loss'])
+data = pd.DataFrame(
+    {'model': models,
+     'loss': losses})
 
-# data = pd.DataFrame(
-#     {'model': models,
-#      'loss': losses})
-
-# data = data.sort_values(by=['loss'])
-# print("Best Model :", data['model'].iloc[:5], data['loss'].iloc[:5])
+data = data.sort_values(by=['loss'])
+print("Best Model :\n", data['model'].iloc[:5], "\n", data['loss'].iloc[:5])

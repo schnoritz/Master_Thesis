@@ -66,11 +66,11 @@ def create_mask_files(
     segment,
     output_folder
 ):
-
+    ED = False
     set_zero = True
     normalize = True
     patient = segment.split("_")[0]
-    ct_path = f"/mnt/qb/baumgartner/sgutwein84/output_{output_folder}/ct/{patient}"
+    ct_path = f"/mnt/qb/baumgartner/sgutwein84/output/output_{output_folder}/ct/{patient}"
 
     if not os.path.isdir(f'/mnt/qb/baumgartner/sgutwein84/training_{output_folder}'):
 
@@ -91,14 +91,19 @@ def create_mask_files(
     ct_mask = convert_ct_array(
         ct_path=ct_path,
         target_size=dose_mask.shape,
-        tensor=True
+        tensor=True,
+        ED=ED
     )
 
     print("CT Mask Created!")
+    print(ct_mask.min(), ct_mask.max())
 
     if set_zero:
         # treshhold muss noch genau bestimmt werden -> Daniela meinte 150 wird bei bestrahlungsplanung gemacht
-        mask = np.array(ct_mask > 150).astype(bool)
+        if ED:
+            mask = np.array(ct_mask > 0.13).astype(bool)
+        else:
+            mask = np.array(ct_mask > 150).astype(bool)
         for i in range(mask.shape[2]):
             mask[:, :, i] = ndimage.binary_fill_holes(
                 mask[:, :, i]).astype(bool)
@@ -144,12 +149,18 @@ def create_mask_files(
     dose_mask = torch.unsqueeze(dose_mask, 0)
 
     if normalize:
-        stack[0] = stack[0]
-        stack[1] = stack[1]/1800  # CT Mask
-        stack[2] = stack[2]/1800  # Radio Depth Mask
-        stack[3] = stack[3]/10  # scale to cm
-        stack[4] = stack[4]/10  # scale to cm
-        dose_mask = dose_mask / 1E-17
+        if ED:
+            stack[0] = stack[0]
+            stack[3] = stack[3]/10  # scale to cm
+            stack[4] = stack[4]/10  # scale to cm
+            dose_mask = dose_mask / 1E-17
+        else:
+            stack[0] = stack[0]
+            stack[1] = stack[1]/1800
+            stack[2] = stack[2]/1800
+            stack[3] = stack[3]/10  # scale to cm
+            stack[4] = stack[4]/10  # scale to cm
+            dose_mask = dose_mask / 1E-17
 
         print(f"Dose Max-Value is: {np.round(dose_mask.max(),2)}")
         print(f"Binary Mask Max-Value is: {np.round(stack[0].max(),2)}\nCT Max-Value is: {np.round(stack[1].max(),2)}\nRadiological-Depth Max-Value is: {np.round(stack[2].max(),2)}\nCenter-Beamline-Distance Max-Value is: {np.round(stack[3].max(),2)}\nSource-Distance Max-Value is: {np.round(stack[4].max(),2)}")
@@ -176,7 +187,7 @@ if __name__ == "__main__":
                       args.output_folder)
 
     # debug
-    # dir = "/Users/simongutwein/mnt/qb/baumgartner/sgutwein84/output_prostate/p0_10"
+    # dir = "/Users/simongutwein/mnt/qb/baumgartner/sgutwein84/output/output_prostate/p0_10"
     # seg = dir.split("/")[-1]
     # egsinp_file = f"{dir}/{seg}.egsinp"
     # beam_config_file = f"{dir}/beam_config_{seg}.txt"

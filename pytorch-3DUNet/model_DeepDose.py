@@ -30,11 +30,10 @@ class DoubleConv(nn.Module):
 
         super(DoubleConv, self).__init__()
         self.sample = sample
-        self.conv = nn.Sequential(*block(in_channels, out_channels, 3, 1, 1, False), *block(out_channels, out_channels, 3, 1, 1, False))
+        self.conv = nn.Sequential(*block(in_channels, in_channels, 3, 1, 1, False), *block(in_channels, out_channels, 3, 1, 1, False))
 
         if sample == "upsample":
-            self.upsample = nn.ConvTranspose3d(
-                in_channels=int((2/3)*in_channels), out_channels=int((2/3)*in_channels), kernel_size=2, stride=2)
+            self.upsample = nn.ConvTranspose3d(in_channels=int((2/3)*in_channels), out_channels=int((2/3)*in_channels), kernel_size=2, stride=2)
 
         if sample == "downsample":
             self.downsample = nn.MaxPool3d(kernel_size=2, stride=2)
@@ -44,16 +43,17 @@ class DoubleConv(nn.Module):
         if self.sample == "downsample":
             skip = self.conv(x)
             x = self.downsample(skip)
-
             return x, skip
 
         elif self.sample == "upsample":
             x = self.upsample(x)
             x = add_skip_connection(x, skip_connection)
-            return self.conv(x)
+            x = self.conv(x)
+            return x
 
         else:
-            return self.conv(x)
+            x = self.conv(x)
+            return x
 
 
 class Dose3DUNET(nn.Module):
@@ -65,30 +65,28 @@ class Dose3DUNET(nn.Module):
         self.DOWN = nn.ModuleList()
         self.UP = nn.ModuleList()
 
-        self.LAST_CONV = nn.Sequential(
-            *block(3*features[0], features[0], kernel_size=3, stride=1, padding=1, bias=False),
-            *block(features[0], features[0], kernel_size=3, stride=1, padding=1, bias=False),
-            *block(features[0], out_channels, kernel_size=1, stride=1, padding=0, bias=False))
-
         self.FIRST_CONV = nn.Sequential(
             *block(in_channels, features[0]//2, kernel_size=3, stride=1, padding=1, bias=False),
             *block(features[0]//2, features[0], kernel_size=3, stride=1, padding=1, bias=False))
-
-        self.LAST_DECONV = nn.ConvTranspose3d(in_channels=2*features[0], out_channels=2*features[0], kernel_size=2, stride=2)
-
         self.FIRST_POOL = nn.MaxPool3d(kernel_size=2, stride=2)
 
         # DOWNSAMPLING
         for size in features:
             self.DOWN.append(DoubleConv(size, 2*size, sample="downsample"))
 
+        # BOTTLENECK
+        self.BOTTLENECK = DoubleConv(2*features[-1], 4*features[-1])
+
         # UPSAMPLING
-        features = features[::-1]
-        for size in features:
+        for size in reversed(features):
             self.UP.append(DoubleConv(6*size, 2*size, sample="upsample"))
 
-        # BOTTLENECK
-        self.BOTTLENECK = DoubleConv(2*features[0], 4*features[0])
+        self.LAST_DECONV = nn.ConvTranspose3d(2*features[0], 2*features[0], kernel_size=2, stride=2)
+
+        self.LAST_CONV = nn.Sequential(
+            *block(3*features[0], features[0], kernel_size=3, stride=1, padding=1, bias=False),
+            *block(features[0], features[0], kernel_size=3, stride=1, padding=1, bias=False),
+            *block(features[0], out_channels, kernel_size=1, stride=1, padding=0, bias=False))
 
     def forward(self, x):
 
@@ -117,24 +115,28 @@ class Dose3DUNET(nn.Module):
 if __name__ == "__main__":
 
     from time import time
-    print("start")
-    start = time()
-    input = torch.randn(32, 5, 32, 32, 32)
-    target = torch.randn(32, 1, 32, 32, 32)
-    device = torch.device("cuda")
-    target = target.to(device)
-    input = input.to(device)
-    model = Dose3DUNET()
-    loss = torch.nn.MSELoss()
-    optim = torch.optim.SGD(params=model.parameters(), lr=0.01, momentum=0.8)
-    model = model.to(device)
-    for _ in range(10):
+
+    for ps, bs in zip([32, 64], [64, 4]):
+
+        input = torch.randn(bs, 5, ps, ps, ps)
+        device = torch.device("cuda")
+        input = input.to(device)
+        model = Dose3DUNET(features=[64, 128])
+        model.to(device)
         pred = model(input)
-        loss_val = loss(pred, target)
-        optim.zero_grad()
-        loss_val.backward()
-        optim.step()
-        #print("pred start")
-        #pred = model(input)
-        print(pred.shape)
-    print(time()-start)
+
+        time_needed = 0
+        for i in range(10):
+
+            input = torch.randn(bs, 5, ps, ps, ps)
+            device = torch.device("cuda")
+            input = input.to(device)
+            model = Dose3DUNET(features=[64, 128])
+            model.to(device)
+            start = time()
+            pred = model(input)
+            time_needed += time()-start
+            torch.cuda.empty_cache()
+            #print("pred start")
+            #pred = model(input)
+        print(ps, time_needed/10)

@@ -54,30 +54,61 @@ if __name__ == "__main__":
     from model import Dose3DUNET
     import nibabel as nib
 
-    model_path = "/mnt/qb/baumgartner/sgutwein84/save/bs32_ps32_5/UNET_896.pt"
-    segment_dir = "/mnt/qb/baumgartner/sgutwein84/training_mamma/"
-    save_path = "/home/baumgartner/sgutwein84/container/test"
-    patient = "m0"
-    plan_path = f"/mnt/qb/baumgartner/sgutwein84/{patient}_plan.dcm"
+    patients = ["p0", "l0"]
+    entities = ["hlmp", "hlmp"]
+    for patient, entity in zip(patients, entities):
 
-    device = torch.device("cuda") if torch.cuda.is_available else torch.device("cpu")
-    model_checkpoint = torch.load(model_path, map_location=device)
-    model = Dose3DUNET(UQ=False)
-    model.load_state_dict(model_checkpoint['model_state_dict'])
-    if torch.cuda.device_count() > 1:
-        print(f"Using {torch.cuda.device_count()} GPUs for predicting.")
-        model = torch.nn.DataParallel(model)
+        model_path = "/mnt/qb/baumgartner/sgutwein84/save/bs128_ps32_lr4_2108231722/UNET_270.pt"
+        segment_dir = f"/mnt/qb/baumgartner/sgutwein84/training/training_{entity}/"
+        save_path = "/home/baumgartner/sgutwein84/container/test"
+        plan_path = f"/mnt/qb/baumgartner/sgutwein84/planfiles/{patient}_plan.dcm"
 
-    model.to(device)
+        device = torch.device("cuda") if torch.cuda.is_available else torch.device("cpu")
+        model_checkpoint = torch.load(model_path, map_location=device)
+        model = Dose3DUNET()
+        model.load_state_dict(model_checkpoint['model_state_dict'])
+        if torch.cuda.device_count() > 1:
+            print(f"Using {torch.cuda.device_count()} GPUs for predicting.")
+            model = torch.nn.DataParallel(model)
 
-    target_plan, predicted_plan = predict_plan(model, device, plan_path, patient, segment_dir)
+        model.to(device)
 
-    torch.save(predicted_plan, f"/home/baumgartner/sgutwein84/container/test/{patient}_prediction.pt")
-    torch.save(target_plan, f"/home/baumgartner/sgutwein84/container/test/{patient}_target.pt")
+        target_plan, predicted_plan = predict_plan(model, device, plan_path, patient, segment_dir)
 
-    dat = nib.Nifti1Image(np.array(target_plan), np.eye(4))
-    dat.header.get_xyzt_units()
-    dat.to_filename(f"{save_path}/{patient}_target_plan.nii.gz")
-    dat = nib.Nifti1Image(np.array(predicted_plan), np.eye(4))
-    dat.header.get_xyzt_units()
-    dat.to_filename(f"{save_path}/{patient}_predicted_plan.nii.gz")
+        gamma_options = {
+            'dose_percent_threshold': 3,
+            'distance_mm_threshold': 3,
+            'lower_percent_dose_cutoff': 10,
+            'interp_fraction': 10,  # Should be 10 or more for more accurate results
+            'max_gamma': 1.1,
+            'quiet': True,
+            'local_gamma': False,
+            'random_subset': 20000
+        }
+
+        import pymedphys
+
+        coords = (np.arange(0, 1.17*target_plan.shape[0], 1.17), np.arange(
+            0, 1.17*target_plan.shape[1], 1.17), np.arange(0, 3*target_plan.shape[2], 3))
+
+        gamma_val = pymedphys.gamma(
+            coords, np.array(target_plan),
+            coords, np.array(predicted_plan),
+            **gamma_options)
+
+        dat = ~np.isnan(gamma_val)
+        dat2 = ~np.isnan(gamma_val[gamma_val <= 1])
+        all = np.count_nonzero(dat)
+        true = np.count_nonzero(dat2)
+
+        print("Gamma pass rate:", np.round((true/all)*100, 2), "%")
+
+        torch.save(predicted_plan, f"/home/baumgartner/sgutwein84/container/test/{patient}_prediction.pt")
+        torch.save(target_plan, f"/home/baumgartner/sgutwein84/container/test/{patient}_target.pt")
+
+        dat = nib.Nifti1Image(np.array(target_plan), np.eye(4))
+        dat.header.get_xyzt_units()
+        dat.to_filename(f"{save_path}/{patient}_target_plan.nii.gz")
+        dat = nib.Nifti1Image(np.array(predicted_plan), np.eye(4))
+        dat.header.get_xyzt_units()
+        dat.to_filename(f"{save_path}/{patient}_predicted_plan.nii.gz")

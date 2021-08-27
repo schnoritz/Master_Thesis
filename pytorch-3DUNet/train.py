@@ -6,7 +6,7 @@ from torch import optim
 import torch.nn as nn
 import argparse
 import utils
-from losses import HeteroscedasticAleatoricLoss, RMSELoss
+from losses import RMSELoss
 import pickle
 import dataqueue_threading
 from time import time
@@ -14,6 +14,7 @@ import sys
 from gamma_sample import gamma_sample
 import numpy as np
 from model import Dose3DUNET
+from early_stopping import EarlyStopping
 
 
 from torch.utils.tensorboard import SummaryWriter
@@ -28,7 +29,9 @@ global LOGGER
 global LOGGER_DIR
 global LOGGER_SEGMENTS_LIST
 global LOGGER_SEGMENTS
-global LOSS_FUNCTION
+global PATIENTS
+
+PATIENTS = 40
 
 LOGGER_DIR = "/mnt/qb/baumgartner/sgutwein84/logger/"
 LOGGER_SEGMENTS_LIST = ["p0_0", "p2_21"]
@@ -98,13 +101,6 @@ def parse():
     )
 
     parser.add_argument(
-        "-uq",
-        required=True,
-        action='store',
-        dest='uq'
-    )
-
-    parser.add_argument(
         "-gpu",
         default=True,
         action='store',
@@ -128,7 +124,7 @@ def parse():
     return args
 
 
-def validate(model, criterion, validation_queue, device, uq):
+def validate(model, criterion, validation_queue, device):
 
     torch.cuda.empty_cache()
     model.eval()
@@ -143,12 +139,8 @@ def validate(model, criterion, validation_queue, device, uq):
 
             input_batch, target_batch = utils.get_training_data(input_batch, target_batch, device)
 
-            if uq:
-                pred, uncertainty = model(input_batch)
-                loss += criterion(pred, target_batch, uncertainty).item()
-            else:
-                pred = model(input_batch)
-                loss += criterion(pred, target_batch).item()
+            pred = model(input_batch)
+            loss += criterion(pred, target_batch).item()
 
     model.train()
     del input_batch
@@ -158,7 +150,7 @@ def validate(model, criterion, validation_queue, device, uq):
     return loss / num
 
 
-def get_volume_prediction(model, device, curr_patches, uq, thickness=16):
+def get_volume_prediction(model, device, curr_patches, thickness=16):
 
     torch.cuda.empty_cache()
 
@@ -174,17 +166,7 @@ def get_volume_prediction(model, device, curr_patches, uq, thickness=16):
 
             dose = torch.load(f"{seg}/target_data.pt")
 
-            if uq:
-                pred, uncertrainty = model(masks)
-                uncertrainty = torch.exp(uncertrainty)
-                uncertrainty = uncertrainty.cpu().detach().numpy()
-                uncertrainty = uncertrainty.squeeze()
-                cols = 5
-
-            else:
-                pred = model(masks)
-                cols = 4
-
+            pred = model(masks)
             pred = pred.cpu().detach().numpy()
             pred = pred.squeeze()
 
@@ -194,13 +176,11 @@ def get_volume_prediction(model, device, curr_patches, uq, thickness=16):
             dose = dose.squeeze()
             dose = dose[128:128+256, 128:128+256, 32:32+thickness]
 
-            fig, ax = plt.subplots(1, cols, figsize=(cols*4, 4))
+            fig, ax = plt.subplots(1, 4, figsize=(16, 4))
             ax[0].imshow(masks[0, :, :, thickness//2])
-            ax[1].imshow(dose[:, :, thickness//2])
-            ax[2].imshow(pred[:, :, thickness//2])
-            ax[3].imshow(dose[:, :, thickness//2]-pred[:, :, thickness//2])
-            if uq:
-                ax[4].imshow(uncertrainty[:, :, thickness//2])
+            ax[1].imshow(dose[:, :, thickness//2], vmin=0, vmax=10)
+            ax[2].imshow(pred[:, :, thickness//2], vmin=0, vmax=10)
+            ax[3].imshow(dose[:, :, thickness//2]-pred[:, :, thickness//2], vmin=-1, vmax=1, cmap='bwr')
 
             del masks
             torch.cuda.empty_cache()
@@ -234,8 +214,9 @@ def train(
     device,
     save_dir,
     training_parameter,
-    uq
 ):
+
+    stopping = EarlyStopping(patients=PATIENTS)
 
     model = train_state['UNET']
     model.to(device)
@@ -251,6 +232,9 @@ def train(
 
     while curr_patches < num_patches:
 
+        if stopping.stopping:
+            break
+
         generation += 1
         torch.cuda.empty_cache()
         train_queue.load_queue()
@@ -258,6 +242,7 @@ def train(
         generation_patches = 0
 
         print("Generation : ", generation)
+        start = time()
         for num, (train_batch, target_batch) in enumerate(train_queue):
 
             train_batch, target_batch = utils.get_training_data(
@@ -266,14 +251,9 @@ def train(
                 device
             )
 
-            if uq:
-                dose_pred, uncertrainty = model(train_batch)
-                torch.cuda.empty_cache()
-                loss = criterion(dose_pred, target_batch, uncertrainty)
-            else:
-                dose_pred = model(train_batch)
-                torch.cuda.empty_cache()
-                loss = criterion(dose_pred, target_batch)
+            dose_pred = model(train_batch)
+            torch.cuda.empty_cache()
+            loss = criterion(dose_pred, target_batch)
 
             train_loss += loss.item()
 
@@ -284,12 +264,16 @@ def train(
             curr_patches += train_batch.shape[0]
             generation_patches += train_batch.shape[0]
 
-            progressBar(generation_patches, len(train_queue), "Training Step")
+            if num % 3 == 0:
+                progressBar(generation_patches, len(train_queue), "Training Step")
 
-        print("\n")
+        progressBar(generation_patches, len(train_queue), "Training Step")
+        print(f"{time() - start}", "\n", )
+
         train_loss /= num
+        torch.cuda.empty_cache()
 
-        validation_loss = validate(model, criterion, validation_queue, device, uq)
+        validation_loss = validate(model, criterion, validation_queue, device)
 
         epochs.append({
             "num_patches": curr_patches,
@@ -323,17 +307,19 @@ def train(
 
             start = time()
             gamma_values = []
-            for seg in ["p9_35", "p9_11", "p7_34", "p7_1", "p8_9", "p8_20", "p5_42", "p5_11"]:
-                gamma_values.append(gamma_sample(model, device, seg, DATA_DIRECTORY, uq))
+            segs = ["p9_35", "p9_11", "p7_34", "p7_1", "p8_9", "p8_20", "p5_42", "p5_11"]
+            for seg in segs:
+                gamma_values.append(gamma_sample(model, device, seg, DATA_DIRECTORY))
 
             gammas = np.array(gamma_values)
             mean_gamma = np.round(gammas.mean(), 2)
             std_gamma = np.round(gammas.std(), 2)
             print("\n")
+            print("Calculated Gammas: ", list(zip(segs, gammas)))
             print(f"Gamma Analysis took {np.round(time()-start,2)} seconds.")
             sys.stdout.flush()
 
-            if mean_gamma > 95 and save == False:
+            if mean_gamma > 97 and save == False:
                 save = True
                 utils.save_model(
                     model=model,
@@ -351,7 +337,7 @@ def train(
             update_logger(curr_patches, train_loss, validation_loss, mean_gamma=mean_gamma, std_gamma=std_gamma)
 
             start = time()
-            get_volume_prediction(model=model, device=device, curr_patches=curr_patches, uq=uq)
+            get_volume_prediction(model=model, device=device, curr_patches=curr_patches)
             print(f"Volume Prediction took {np.round(time()-start,2)} seconds.")
             sys.stdout.flush()
 
@@ -359,7 +345,8 @@ def train(
 
     sys.stdout.flush()
 
-    return epochs
+    if stopping.stopping:
+        print(f"Trained stopped, due to early stopping. No improvement for {PATIENTS} epochs.")
 
 
 def update_logger(curr_patches, train_loss, validation_loss, mean_gamma=None, std_gamma=None):
@@ -384,10 +371,10 @@ def print_training_status(generation, curr_patches, train_loss, validation_loss,
     sys.stdout.flush()
 
 
-def load_pretrained_model(model_path, device, lr, uq):
+def load_pretrained_model(model_path, device, lr):
     print(f"\nUsing pretrained Model: {model_path}\n")
 
-    my_UNET = Dose3DUNET(UQ=uq)
+    my_UNET = Dose3DUNET()
     state = torch.load(model_path, map_location=device)
 
     my_UNET.load_state_dict(state['model_state_dict'])
@@ -414,9 +401,9 @@ def load_pretrained_model(model_path, device, lr, uq):
     return train_state
 
 
-def no_pretrained_model(device, lr, uq):
+def no_pretrained_model(device, lr):
 
-    my_UNET = Dose3DUNET(UQ=uq)
+    my_UNET = Dose3DUNET()
 
     if device.type == "cuda":
         if torch.cuda.device_count() > 1:
@@ -457,23 +444,22 @@ def setup_training(
     use_gpu,
     pretrained_model,
     learning_rate,
-    uq
 ):
 
     device = utils.define_calculation_device(use_gpu)
-    criterion = LOSS_FUNCTION
+    criterion = RMSELoss()
 
     if pretrained_model:
         train_state = load_pretrained_model(
-            pretrained_model, device, learning_rate, uq)
+            pretrained_model, device, learning_rate)
 
     else:
-        train_state = no_pretrained_model(device, learning_rate, uq)
+        train_state = no_pretrained_model(device, learning_rate)
 
     validation_segments = get_validation_segments(
         data_path, validation_segments)
     training_segments = get_training_segments(data_path, validation_segments)
-
+    sys.stdout.flush()
     # hier segments_per_queue und patches_per_segment hochscruaben / runterschrauben
     train_queue = dataqueue_threading.DataQueue(
         segment_list=training_segments,
@@ -486,11 +472,10 @@ def setup_training(
 
     validation_queue = dataqueue_threading.ValidationQueue(
         segments=validation_segments,
-        batch_size=16
+        batch_size=batch_size
     )
 
-    print(
-        f"Training-Data shape: [{batch_size} ,5 , {patch_size}, {patch_size}, {patch_size}]\n")
+    print(f"Training-Data shape: [{batch_size} ,5 , {patch_size}, {patch_size}, {patch_size}]\n")
     print(f"Learning Rate: {learning_rate}")
 
     sys.stdout.flush()
@@ -501,7 +486,7 @@ def setup_training(
         "lr": learning_rate
     }
 
-    losses = train(
+    train(
         train_state=train_state,
         num_patches=num_patches,
         train_queue=train_queue,
@@ -510,12 +495,7 @@ def setup_training(
         criterion=criterion,
         device=device,
         training_parameter=training_params,
-        uq=uq
     )
-
-    fout = open(save_dir + "epochs_losses.pkl", "wb")
-    pickle.dump(losses, fout)
-    fout.close()
 
 
 def tb_logger(logger, exp_name):
@@ -537,17 +517,6 @@ if __name__ == "__main__":
 
     args = parse()
 
-    if str(args.uq).lower() == "true":
-        uq = True
-        print("Model uses uncertainty quantification")
-        LOSS_FUNCTION = HeteroscedasticAleatoricLoss()
-    else:
-        uq = False
-        print("Model does not use uncertainty quantification")
-        LOSS_FUNCTION = RMSELoss()
-
-    sys.stdout.flush()
-
     if args.root_dir[-1] != "/":
         args.root_dir += "/"
 
@@ -556,13 +525,8 @@ if __name__ == "__main__":
     LOGGER_SEGMENTS = [args.root_dir + LOGGER_SEGMENTS_LIST[0],
                        args.root_dir + LOGGER_SEGMENTS_LIST[1]]
 
-    # 50 SEGMENTS PER QUEUE AND 20*BATCH_SIZE PATCHES PER SEGMENT
-    # debug
-    # SPQ = int(args.batch_size//2)
-    # PPS = 50
-
-    SPQ = int(args.batch_size*2)
-    PPS = 200
+    SPQ = 64
+    PPS = 400
 
     print("Model saved under", args.save_dir)
     LOGGER = tb_logger(args.logger, args.experiment_name)
@@ -577,7 +541,6 @@ if __name__ == "__main__":
         use_gpu=args.use_gpu,
         pretrained_model=args.pretrained_model,
         learning_rate=args.learning_rate,
-        uq=uq
     )
 
     LOGGER.close()

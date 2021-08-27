@@ -1,5 +1,15 @@
 \documentclass[12pt]{report}
 \usepackage[utf8]{inputenc}
+\setlength{\parindent}{0em}
+\setlength{\parskip}{1em}
+\usepackage[T1]{fontenc}
+
+%für text neben bild
+\usepackage{float}
+\usepackage{graphicx}
+
+
+
 \usepackage{graphicx}
 \graphicspath{{images/}}
 \usepackage[a4paper, width=150mm, top=30mm, bottom=30mm]{geometry}
@@ -22,6 +32,7 @@
 \usepackage{caption}
 \usepackage{subcaption}
 \usepackage{enumitem}
+\usepackage[colorlinks=false]{hyperref}
 
 \usepackage{titlesec}
 \titleformat{\chapter}[display]{\normalfont\bfseries}{}{0pt}{\Huge}
@@ -92,7 +103,6 @@
 \input{Chapters/Conclusion}
 
 \printbibliography
-
 \appendix
 \chapter{Appendix Title}
 \input{Chapters/Appendix}

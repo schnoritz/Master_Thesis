@@ -1,3 +1,4 @@
+from typing import final
 import torch
 import torch.nn as nn
 import torch.nn.functional as nnf
@@ -30,7 +31,8 @@ class DoubleConv(nn.Module):
 
         super(DoubleConv, self).__init__()
         self.sample = sample
-        self.conv = nn.Sequential(*block(in_channels, out_channels, 3, 1, 1, False), *block(out_channels, out_channels, 3, 1, 1, False))
+        self.first_conv = nn.Sequential(*block(in_channels, out_channels, 3, 1, 1, False))
+        self.second_conv = nn.Sequential(*block(out_channels, out_channels, 3, 1, 1, False), *block(out_channels, out_channels, 3, 1, 1, False))
 
         if sample == "upsample":
             self.upsample = nn.ConvTranspose3d(
@@ -42,33 +44,47 @@ class DoubleConv(nn.Module):
     def forward(self, x, skip_connection=None):
 
         if self.sample == "downsample":
-            skip = self.conv(x)
+
+            res_tensor = self.first_conv(x)
+            out = self.second_conv(res_tensor)
+            out = torch.add(out, res_tensor)
+            skip = out
             x = self.downsample(skip)
 
             return x, skip
 
         elif self.sample == "upsample":
+
             x = self.upsample(x)
             x = add_skip_connection(x, skip_connection)
-            return self.conv(x)
+
+            res_tensor = self.first_conv(x)
+            out = self.second_conv(res_tensor)
+            out = torch.add(out, res_tensor)
+
+            return out
 
         else:
-            return self.conv(x)
+
+            res_tensor = self.first_conv(x)
+            out = self.second_conv(res_tensor)
+            out = torch.add(out, res_tensor)
+
+            return out
 
 
-class Dose3DUNET(nn.Module):
+class ResDose3DUNET(nn.Module):
     def __init__(
         self, in_channels=5, out_channels=1, features=[64, 128]
     ):
 
-        super(Dose3DUNET, self).__init__()
+        super(ResDose3DUNET, self).__init__()
         self.DOWN = nn.ModuleList()
         self.UP = nn.ModuleList()
 
-        self.LAST_CONV = nn.Sequential(
-            *block(3*features[0], features[0], kernel_size=3, stride=1, padding=1, bias=False),
-            *block(features[0], features[0], kernel_size=3, stride=1, padding=1, bias=False),
-            *block(features[0], out_channels, kernel_size=1, stride=1, padding=0, bias=False))
+        self.first_conv = nn.Sequential(*block(3*features[0], features[0], kernel_size=3, stride=1, padding=1, bias=False))
+        self.second_conv = nn.Sequential(*block(features[0], features[0], kernel_size=3, stride=1, padding=1, bias=False))
+        self.final_conv = nn.Sequential(*block(features[0], out_channels, kernel_size=1, stride=1, padding=0, bias=False))
 
         self.FIRST_CONV = nn.Sequential(
             *block(in_channels, features[0]//2, kernel_size=3, stride=1, padding=1, bias=False),
@@ -109,32 +125,32 @@ class Dose3DUNET(nn.Module):
 
         x = self.LAST_DECONV(x)
         x = add_skip_connection(x, skip_connections)
-        x = self.LAST_CONV(x)
+        res_tensor = self.first_conv(x)
+        x = self.second_conv(res_tensor)
+        x = self.second_conv(x)
+        x = torch.add(res_tensor, x)
+        x = self.final_conv(x)
 
         return x
 
 
 if __name__ == "__main__":
 
-    from time import time
     print("start")
-    start = time()
-    input = torch.randn(32, 5, 32, 32, 32)
-    target = torch.randn(32, 1, 32, 32, 32)
-    device = torch.device("cuda")
-    target = target.to(device)
+    input = torch.randn(2, 5, 32, 32, 32)
+    target = torch.randn(2, 1, 32, 32, 32)
+
+    device = torch.device("cpu")
     input = input.to(device)
-    model = Dose3DUNET()
+    model = ResDose3DUNET()
     loss = torch.nn.MSELoss()
     optim = torch.optim.SGD(params=model.parameters(), lr=0.01, momentum=0.8)
-    model = model.to(device)
-    for _ in range(10):
-        pred = model(input)
-        loss_val = loss(pred, target)
-        optim.zero_grad()
-        loss_val.backward()
-        optim.step()
-        #print("pred start")
-        #pred = model(input)
-        print(pred.shape)
-    print(time()-start)
+    model.to(device)
+    pred = model(input)
+    loss_val = loss(pred, target)
+    optim.zero_grad()
+    loss_val.backward()
+    optim.step()
+    #print("pred start")
+    #pred = model(input)
+    print(pred.shape)
