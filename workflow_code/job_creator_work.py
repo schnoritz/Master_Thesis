@@ -500,7 +500,7 @@ def setup_plan_calculation(patient, plan_file):
 if __name__ == "__main__":
 
     plan = True
-    patient = "n9"
+    patient = "pt2"
     num_hist = 10000000
     pj = int(num_hist/2000000)
     if pj <= 1:

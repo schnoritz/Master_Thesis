@@ -16,7 +16,7 @@ def create_anonymized_data(path):
 
     # get paths for all files in folder
     all_files = [path + x for x in os.listdir(
-        path) if not x.startswith(".") and x.lower().endswith(".dcm") and not "Sets" in x]
+        path) if not x.startswith(".") and x.lower().endswith(".dcm")]
 
     # define fileds to anonymize
     fields_to_anonymize = [
@@ -86,14 +86,19 @@ def create_anonymized_data(path):
 
     # rename dose and plan file to fit naming convention
     dose_file = [anonymized_folder + x for x in os.listdir(
-        anonymized_folder) if not x.startswith(".") and "Dose" in x]
+        anonymized_folder) if not x.startswith(".") and "dose" in x.lower()]
     plan_file = [anonymized_folder + x for x in os.listdir(
-        anonymized_folder) if not x.startswith(".") and not "Dose" in x and not "image" in x]
+        anonymized_folder) if not x.startswith(".") and not "dose" in x.lower() and not "image" in x.lower() and not "sets" in x.lower()]
+    strctr_file = [anonymized_folder + x for x in os.listdir(
+        anonymized_folder) if not x.startswith(".") and "sets" in x.lower() and not "image" in x.lower()]
 
     os.rename(dose_file[0], "/".join(dose_file[0].split("/")
                                      [:-1]) + f"/{patient_name}_dose.dcm")
     os.rename(plan_file[0], "/".join(plan_file[0].split("/")
                                      [:-1]) + f"/{patient_name}_plan.dcm")
+    if strctr_file:
+        os.rename(strctr_file[0], "/".join(strctr_file[0].split("/")
+                                           [:-1]) + f"/{patient_name}_strctr.dcm")
 
 
 if __name__ == "__main__":

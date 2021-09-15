@@ -2,8 +2,6 @@ import torch
 import numpy as np
 import os
 from pydicom import dcmread, uid
-import matplotlib.pyplot as plt
-from scipy.interpolate import RegularGridInterpolator
 
 
 def read_in(ct_path):
@@ -21,7 +19,7 @@ def sort_ct_slices(files):
     return sorted(zip(locations, files))
 
 
-def stack_ct_images(sorted_ct):
+def stack_ct_images(sorted_ct, ED):
 
     stack = []
     for _, file in sorted_ct:
@@ -31,7 +29,8 @@ def stack_ct_images(sorted_ct):
 
     intercept = float(dcm.RescaleIntercept)
     stack = np.stack(stack, axis=0)
-    stack = stack + intercept
+    if ED:
+        stack = stack + intercept
 
     return stack
 
@@ -51,7 +50,7 @@ def convert_ct_array(ct_path, target_size=None, tensor=False, ED=False):
 
     slices = read_in(ct_path)
     sorted_slices = sort_ct_slices(slices)
-    stack = stack_ct_images(sorted_slices)
+    stack = stack_ct_images(sorted_slices, ED)
     stack = torch.tensor(np.transpose(
         stack, (1, 2, 0)).astype(np.float32))
 
@@ -64,11 +63,11 @@ def convert_ct_array(ct_path, target_size=None, tensor=False, ED=False):
     stack = stack.squeeze()
 
     if ED:
-        converted = convert_to_ED(stack)
+        stack = convert_to_ED(stack)
 
-    converted = convert_stack(converted, tensor=tensor)
+    stack = convert_stack(stack, tensor=tensor)
 
-    return converted
+    return stack
 
 
 def convert_to_ED(data):
@@ -101,15 +100,14 @@ def convert_to_ED(data):
     return torch.tensor(converted)
 
 
-if __name__ == "__main__":
+# if __name__ == "__main__":
 
-    converted = convert_ct_array(
-        "/Users/simongutwein/Studium/Masterarbeit/anonymized/h/h0", target_size=(512, 512, 150), tensor=True, ED=True)
-    print(converted.shape)
-    converted = np.array(converted)
-    converted[converted < 0.13] = np.nan
-    torch.save(converted, "/Users/simongutwein/Studium/Masterarbeit/test/conversion.pt")
-    for i in range(150):
-        print(converted[:, :, i].max(), converted[:, :, i].min())
-        plt.imshow(converted[:, :, i])
-        plt.show()
+    # converted = convert_ct_array("/Users/simongutwein/Studium/Masterarbeit/anonymized/test/pt0/cts", target_size=(512, 512, 125), tensor=True, ED=False)
+    # print(converted.shape)
+    # converted = np.array(converted)
+    # converted[converted < 0.13] = np.nan
+    # torch.save(converted, "/Users/simongutwein/Studium/Masterarbeit/test/conversion.pt")
+    # for i in range(150):
+    #     print(converted[:, :, i].max(), converted[:, :, i].min())
+    #     plt.imshow(converted[:, :, i])
+    #     plt.show()

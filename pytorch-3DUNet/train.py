@@ -219,6 +219,7 @@ def train(
     stopping = EarlyStopping(patients=PATIENTS)
 
     model = train_state['UNET']
+    torch.cuda.empty_cache()
     model.to(device)
     optimizer = train_state['optimizer']
     utils.optimizer_to_device(optimizer, device)
@@ -375,7 +376,7 @@ def load_pretrained_model(model_path, device, lr):
     print(f"\nUsing pretrained Model: {model_path}\n")
 
     my_UNET = Dose3DUNET()
-    state = torch.load(model_path, map_location=device)
+    state = torch.load(model_path, map_location='cpu')
 
     my_UNET.load_state_dict(state['model_state_dict'])
 
