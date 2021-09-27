@@ -499,45 +499,48 @@ def setup_plan_calculation(patient, plan_file):
 
 if __name__ == "__main__":
 
-    plan = True
-    patient = "pt2"
-    num_hist = 10000000
-    pj = int(num_hist/2000000)
-    if pj <= 1:
-        pj = 2
+    plan = False
+    patients = ["phantomP50T200", "phantomP100T200", "phantomP150T200", "phantomP200T200", "phantomP250T200", "phantomP300T200"]
+    for patient in patients:
 
-    if plan:
+        num_hist = 10000000
+        pj = int(num_hist/2000000)
+        if pj <= 1:
+            pj = 2
 
-        plan_file = f"/work/ws/nemo/tu_zxoys08-EGS-0/egs_home/dosxyznrc/planfiles/{patient}_plan.dcm"
-        dose_file = f"/work/ws/nemo/tu_zxoys08-EGS-0/egs_home/dosxyznrc/dosefiles/{patient}_dose.dcm"
-        angles, iso_centers, config_files = setup_plan_calculation(
-            patient, plan_file)
+        if plan:
 
-        print(f"Creating {len(angles)} Jobs for all Segments.")
+            plan_file = f"/work/ws/nemo/tu_zxoys08-EGS-0/egs_home/dosxyznrc/planfiles/{patient}_plan.dcm"
+            dose_file = f"/work/ws/nemo/tu_zxoys08-EGS-0/egs_home/dosxyznrc/dosefiles/{patient}_dose.dcm"
+            angles, iso_centers, config_files = setup_plan_calculation(
+                patient, plan_file)
 
-        for config in range(len(config_files)):
+            print(f"Creating {len(angles)} Jobs for all Segments.")
 
-            create_entire_job(n=num_hist,
-                              gantry=angles[config] + 270,
-                              par_jobs=pj,
-                              ppn=1,
-                              nodes=pj,
-                              beam_config=config_files[config],
-                              patient=patient,
-                              iso_center=iso_centers[config])
+            for config in range(len(config_files)):
 
-    else:
+                create_entire_job(n=num_hist,
+                                  gantry=angles[config] + 270,
+                                  par_jobs=pj,
+                                  ppn=1,
+                                  nodes=pj,
+                                  beam_config=config_files[config],
+                                  patient=patient,
+                                  iso_center=iso_centers[config])
 
-        beam = "beam_config_3x3"
+        else:
 
-        num_angles = 8
+            beam_configs = [f"beam_config_{patient}_10x10"]
+            iso_center = [30, 30, 30]
+            angle = 0
 
-        for angle in np.linspace(0, 360, num_angles, endpoint=False):
+            for beam in beam_configs:
 
-            create_entire_job(n=num_hist,
-                              gantry=angle + 270,
-                              par_jobs=pj,
-                              ppn=2,
-                              nodes=pj,
-                              beam_config=beam,
-                              patient=patient)
+                create_entire_job(n=num_hist,
+                                  gantry=angle + 270,
+                                  par_jobs=pj,
+                                  ppn=1,
+                                  nodes=pj,
+                                  beam_config=beam,
+                                  patient=patient,
+                                  iso_center=iso_center)

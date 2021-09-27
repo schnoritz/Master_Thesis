@@ -212,7 +212,6 @@ if __name__ == "__main__":
     #segments = random.sample(segments, 5)
 
     for segment in segments:
-
         pat = segment.split("_")[0]
         print(pat)
 

@@ -24,7 +24,8 @@ def parse():
         '-model_path',
         action='store',
         required=True,
-        dest='model_path'
+        nargs='+',
+        dest='model_paths'
     )
 
     parser.add_argument(
@@ -77,7 +78,7 @@ def save_data(save_dir, test_case, model_name, predicted_dose, target_dose):
     return case_model_save_path
 
 
-def analyse_gamma(target_dose, predicted_dose, px_sp, save_path, gamma_percentage=3, gamma_distance=3, lower_cutoff=40, local_gamma=False, partial_sample=100000, ):
+def analyse_gamma(target_dose, predicted_dose, px_sp, save_path, gamma_percentage=3, gamma_distance=3, lower_cutoff=40, local_gamma=False, partial_sample=100000):
 
     gamma_options = {
         'dose_percent_threshold': gamma_percentage,
@@ -106,7 +107,10 @@ def analyse_gamma(target_dose, predicted_dose, px_sp, save_path, gamma_percentag
     with open(f"{save_path}/gamma.txt", "w+") as fout:
         print(gamma_options, file=fout)
         print("\n\n", file=fout)
-        print(np.round((true/all)*100, 4), file=fout)
+        if all != 0:
+            print(np.round((true/all)*100, 4), file=fout)
+        else:
+            print(0, file=fout)
 
 
 def analyse_dvh(structure_file, ct_file, predicted_dose, target_dose, save_path):
@@ -126,48 +130,56 @@ def analyse_dvh(structure_file, ct_file, predicted_dose, target_dose, save_path)
 
 
 def main():
+
     args = parse()
 
-    model_path = args.model_path
-    if model_path[-1] != "/":
-        model_path += "/"
-    test_dir = args.test_dir
-    save_dir = args.save_dir
+    print(args.model_paths)
+    for model_path in args.model_paths:
 
-    if not os.path.isdir(save_dir):
-        os.mkdir(save_dir)
+        if model_path[-1] != "/":
+            model_path += "/"
+        test_dir = args.test_dir
+        save_dir = args.save_dir
 
-    model_origin = "_".join(model_path.split("/")[-3:-1])
-    print(model_origin)
+        if not os.path.isdir(save_dir):
+            os.mkdir(save_dir)
 
-    test_cases = [x for x in os.listdir(test_dir) if not x.startswith(".") and os.path.isdir(os.path.join(test_dir, x))]
+        model_origin = "_".join(model_path.split("/")[-3:-1])
+        print(model_origin)
 
-    model, device = load_model(model_path[:-1])
+        test_cases = [x for x in os.listdir(test_dir) if not x.startswith(".") and os.path.isdir(os.path.join(test_dir, x))]
 
-    for test_case in test_cases:
-        print(test_case)
-        sys.stdout.flush()
-        case_path = os.path.join(test_dir, test_case)
-        plan_file = os.path.join(test_dir, test_case, test_case + "_plan.dcm")
-        structure_file = os.path.join(test_dir, test_case, test_case + "_strctr.dcm")
-        ct_file = os.path.join(test_dir, test_case, "ct", "CT_image0.dcm")
+        model, device = load_model(model_path[:-1])
 
-        if os.path.isfile(plan_file) and os.path.isfile(structure_file) and os.path.isfile(ct_file):
+        for test_case in test_cases:
+            print(test_case)
+            sys.stdout.flush()
+            case_path = os.path.join(test_dir, test_case)
+            plan_file = os.path.join(test_dir, test_case, test_case + "_plan.dcm")
+            structure_file = os.path.join(test_dir, test_case, test_case + "_strctr.dcm")
+            ct_file = os.path.join(test_dir, test_case, "ct", "CT_image0.dcm")
 
-            print(case_path, plan_file, structure_file, ct_file)
-            target_dose, predicted_dose = predict_plan(model, device, plan_file, test_case, case_path, shift=16)
-            target_dose, predicted_dose = np.array(target_dose), np.array(predicted_dose)
-            print(target_dose.shape)
+            if os.path.isfile(plan_file) and os.path.isfile(structure_file) and os.path.isfile(ct_file):
 
-            # target_dose = np.array(torch.load("/mnt/qb/baumgartner/sgutwein84/test_cases/pt0/pt0_0/target_data.pt").squeeze())
-            # predicted_dose = np.array(torch.load("/mnt/qb/baumgartner/sgutwein84/test_cases/pt0/pt0_0/target_data.pt").squeeze())
+                print(case_path, plan_file, structure_file, ct_file)
+                if not os.path.isdir(os.path.join(save_dir, test_case, model_origin)):
+                    target_dose, predicted_dose = predict_plan(model, device, plan_file, test_case, case_path, shift=16)
+                    target_dose, predicted_dose = np.array(target_dose), np.array(predicted_dose)
+                    print(target_dose.shape)
 
-            save_path = save_data(save_dir, test_case, model_origin, predicted_dose, target_dose)
-            px_sp = analyse_dvh(structure_file, ct_file, predicted_dose, target_dose, save_path)
-            analyse_gamma(target_dose, predicted_dose, px_sp, save_path)
+                # target_dose = np.array(torch.load("/mnt/qb/baumgartner/sgutwein84/test_cases/pt0/pt0_0/target_data.pt").squeeze())
+                # predicted_dose = np.array(torch.load("/mnt/qb/baumgartner/sgutwein84/test_cases/pt0/pt0_0/target_data.pt").squeeze())
 
-        else:
-            print("Missing File for ", test_case)
+                    save_path = save_data(save_dir, test_case, model_origin, predicted_dose, target_dose)
+                    px_sp = analyse_dvh(structure_file, ct_file, predicted_dose, target_dose, save_path)
+                    analyse_gamma(target_dose, predicted_dose, px_sp, save_path)
+                    sys.stdout.flush()
+
+                else:
+                    print(f"Prediction for {test_case} with model {model_origin} already exists!")
+
+            else:
+                print("Missing File for ", test_case)
 
 
 if __name__ == "__main__":

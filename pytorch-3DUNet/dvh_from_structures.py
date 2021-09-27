@@ -189,7 +189,7 @@ def main():
     import torch
     import os
 
-    patients = ["pt2"]
+    patients = ["nt1"]
     for patient in patients:
         print(patient)
         root_dir = "/Users/simongutwein/Studium/Masterarbeit/plan_predictions_test/" + patient
