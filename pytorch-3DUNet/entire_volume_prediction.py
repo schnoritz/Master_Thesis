@@ -4,6 +4,8 @@ import matplotlib.pyplot as plt
 import nibabel as nib
 from model import Dose3DUNET
 from time import time
+from tqdm import tqdm
+import sys
 
 
 def chunks(end, max_size):
@@ -32,7 +34,7 @@ def predict_volume(inp, model, device, shift=16):
     inputs = torch.stack(inputs)
 
     curr = 0
-    for chunk in chunks(len(inputs), num_devices):
+    for chunk in tqdm(chunks(len(inputs), num_devices), file=sys.stdout):
         pred = predict(model, inputs[curr:chunk], device)
 
         for num, _slice in enumerate(slices[curr:chunk]):

@@ -77,7 +77,10 @@ def main():
 
     save_path = "/Users/simongutwein/Studium/Masterarbeit/phantoms"
 
-    positions = [50, 100, 150, 200, 250, 300]
+    if not os.path.isdir(save_path):
+        os.mkdir(save_path)
+
+    positions = [100, 200, 300]
     thickness = 200
     HU_value = 1024
     fieldsize = 10

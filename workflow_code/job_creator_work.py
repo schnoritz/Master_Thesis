@@ -499,8 +499,8 @@ def setup_plan_calculation(patient, plan_file):
 
 if __name__ == "__main__":
 
-    plan = False
-    patients = ["phantomP50T200", "phantomP100T200", "phantomP150T200", "phantomP200T200", "phantomP250T200", "phantomP300T200"]
+    plan = True
+    patients = ["mt2", "mt3", "mt4"]
     for patient in patients:
 
         num_hist = 10000000
@@ -515,7 +515,7 @@ if __name__ == "__main__":
             angles, iso_centers, config_files = setup_plan_calculation(
                 patient, plan_file)
 
-            print(f"Creating {len(angles)} Jobs for all Segments.")
+            print(f"Creating {len(angles)} Jobs for all Segments in Plan {patient}.")
 
             for config in range(len(config_files)):
 

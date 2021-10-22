@@ -10,11 +10,21 @@
 \defcounter {refsection}{0}\relax 
 \addvspace {10\p@ }
 \defcounter {refsection}{0}\relax 
-\contentsline {figure}{\numberline {5.1}{\ignorespaces 3D U-Net architecture\relax }}{11}{figure.caption.4}%
+\contentsline {figure}{\numberline {5.1}{\ignorespaces 3D U-Net architecture\relax }}{13}{figure.caption.4}%
 \defcounter {refsection}{0}\relax 
-\contentsline {figure}{\numberline {5.2}{\ignorespaces Input masks for training\relax }}{11}{figure.caption.5}%
+\contentsline {figure}{\numberline {5.2}{\ignorespaces Performance of the networks, trained on mixed and on prostate only patients anatomies and plan configurations. The underlying bar chart (left y axis) shows the occurneces of the fieldsizes listed on the x axis. The box plots (right y axis) shows the performance value of each discretized fieldsize range for both mixed and prostate only trained model. Outliers are depicted with a diamond shape\relax }}{13}{figure.caption.5}%
 \defcounter {refsection}{0}\relax 
-\contentsline {figure}{\numberline {5.3}{\ignorespaces Dataloading scheme\relax }}{12}{figure.caption.6}%
+\contentsline {figure}{\numberline {5.3}{\ignorespaces NONE\relax }}{14}{figure.caption.6}%
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {5.4}{\ignorespaces NONE\relax }}{14}{figure.caption.7}%
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {5.5}{\ignorespaces NONE\relax }}{15}{figure.caption.8}%
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {5.6}{\ignorespaces NONE\relax }}{15}{figure.caption.9}%
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {5.7}{\ignorespaces Sample from a slice of training data. From left to right: beam shape, CT with Houndsfield Units, radiological depth, center beamline distance, source distance\relax }}{16}{figure.caption.10}%
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {5.8}{\ignorespaces Dataloading scheme\relax }}{17}{figure.caption.11}%
 \defcounter {refsection}{0}\relax 
 \addvspace {10\p@ }
 \defcounter {refsection}{0}\relax 

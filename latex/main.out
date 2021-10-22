@@ -1,0 +1,14 @@
+\BOOKMARK [1][-]{Doc-Start}{Abbildungsverzeichnis}{}% 1
+\BOOKMARK [1][-]{Doc-Start}{Tabellenverzeichnis}{}% 2
+\BOOKMARK [1][-]{Doc-Start}{Abkürzungsverzeichnis}{}% 3
+\BOOKMARK [1][-]{section.1}{Introduction}{}% 4
+\BOOKMARK [1][-]{section.2}{Previous\040Work}{}% 5
+\BOOKMARK [1][-]{section.3}{Medical\040Knowledge}{}% 6
+\BOOKMARK [1][-]{section.4}{Material\040and\040Methods}{}% 7
+\BOOKMARK [2][-]{subsection.4.1}{Network\040Architecture}{section.4}% 8
+\BOOKMARK [2][-]{subsection.4.2}{Dataloading}{section.4}% 9
+\BOOKMARK [2][-]{subsection.4.3}{Network\040Input\040&\040Output}{section.4}% 10
+\BOOKMARK [3][-]{subsubsection.4.3.1}{Network\040Input}{subsection.4.3}% 11
+\BOOKMARK [3][-]{subsubsection.4.3.2}{Network\040Output}{subsection.4.3}% 12
+\BOOKMARK [2][-]{subsection.4.4}{Training\040Data\040Generation}{section.4}% 13
+\BOOKMARK [1][-]{subsection.4.4}{Apendix}{}% 14

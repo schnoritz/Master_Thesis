@@ -88,9 +88,9 @@ def create_anonymized_data(path):
     dose_file = [anonymized_folder + x for x in os.listdir(
         anonymized_folder) if not x.startswith(".") and "dose" in x.lower()]
     plan_file = [anonymized_folder + x for x in os.listdir(
-        anonymized_folder) if not x.startswith(".") and not "dose" in x.lower() and not "image" in x.lower() and not "sets" in x.lower()]
+        anonymized_folder) if not x.startswith(".") and not "dose" in x.lower() and not "image" in x.lower() and not "strctr" in x.lower() and not "sets" in x]
     strctr_file = [anonymized_folder + x for x in os.listdir(
-        anonymized_folder) if not x.startswith(".") and "sets" in x.lower() and not "image" in x.lower()]
+        anonymized_folder) if not x.startswith(".") and "strctr" in x.lower() and not "image" in x.lower()]
 
     os.rename(dose_file[0], "/".join(dose_file[0].split("/")
                                      [:-1]) + f"/{patient_name}_dose.dcm")

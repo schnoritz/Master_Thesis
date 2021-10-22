@@ -1,17 +1,43 @@
 import os
 import torch
 import matplotlib.pyplot as plt
+import matplotlib.pylab as pl
 
 
+def latex(func):
+    '''Decorator that reports the execution time.'''
+
+    def wrap(*args, **kwargs):
+
+        plt.rcParams["font.family"] = "serif"
+        plt.rcParams["font.size"] = 12
+        result = func(*args, **kwargs)
+
+        return result
+
+    return wrap
+
+
+def latex_plot(fig, width, height, path):
+
+    cm = 1/2.54
+    plt.rcParams["font.monospace"] = "Computer Modern"
+    plt.rcParams["font.size"] = 12
+    pl.figure(fig)
+    fig.set_size_inches(width*cm, height*cm, forward=True)
+    plt.savefig(path, dpi=300, bbox_inches='tight')
+
+
+@latex
 def main():
 
-    phantoms = ["phantomP50T200_10x10", "phantomP100T200_10x10", "phantomP150T200_10x10", "phantomP200T200_10x10", "phantomP250T200_10x10", "phantomP300T200_10x10"]
-    root_dir = "/Users/simongutwein/Studium/Masterarbeit/phantom_results"
+    phantoms = ["phantomP100T200_10x10", "phantomP200T200_10x10", "phantomP300T200_10x10"]
+    root_dir = "/mnt/qb/baumgartner/sgutwein84/phantom_results"
 
     for phantom in phantoms:
 
         phantom_dir = os.path.join(root_dir, phantom)
-        models = [x for x in os.listdir(phantom_dir) if not x.startswith(".")]
+        models = [x for x in os.listdir(phantom_dir) if not x.startswith(".") and not ".pdf" in x]
 
         phantom_info = phantom.split("_")[0].split("P")[1]
         slab_pos = int(phantom_info.split("T")[0])
@@ -23,8 +49,9 @@ def main():
         print(depth)
 
         predictions = []
+        infos = []
         for model in models:
-
+            infos.append(model.split("_")[0])
             model_dir = os.path.join(phantom_dir, model)
             target = torch.load(os.path.join(model_dir, "target.pt"))
             predictions.append(torch.load(os.path.join(model_dir, "prediction.pt")))
@@ -41,23 +68,34 @@ def main():
             predictions_y.append(prediction[:, 256, slice_])
             predictions_z.append(prediction[depth, 256, :])
 
-        fig, ax = plt.subplots()
-        for p_x in predictions_x:
-            ax.plot(range(len(p_x)), p_x)
-        ax.plot(range(len(target_x)), target_x)
-        plt.savefig(os.path.join(phantom_dir, "x.png"))
+        colors = ['maroon', 'lightsalmon']
 
-        fig, ax = plt.subplots()
-        for p_y in predictions_y:
-            ax.plot(range(len(p_y)), p_y)
-        ax.plot(range(len(target_y)), target_y)
-        plt.savefig(os.path.join(phantom_dir, "y.png"))
+        fig, ax = plt.subplots(figsize=(7, 5))
+        for num, p_x in enumerate(predictions_x):
+            ax.plot(range(len(p_x)), p_x, color=colors[num])
+        ax.plot(range(len(target_x)), target_x, color="black")
+        plt.legend([*infos, "target"])
+        ax.set_xlabel("pixels")
+        ax.set_ylabel("output value")
+        latex_plot(fig, 14, 7.875, os.path.join(phantom_dir, f"{phantom}_x.pdf"))
 
-        fig, ax = plt.subplots()
-        for p_z in predictions_z:
-            ax.plot(range(len(p_z)), p_z)
-        ax.plot(range(len(target_z)), target_z)
-        plt.savefig(os.path.join(phantom_dir, "z.png"))
+        fig, ax = plt.subplots(figsize=(7, 5))
+        for num, p_y in enumerate(predictions_y):
+            ax.plot(range(len(p_y)), p_y, color=colors[num])
+        ax.plot(range(len(target_y)), target_y, color="black")
+        plt.legend([*infos, "target"])
+        ax.set_xlabel("pixels")
+        ax.set_ylabel("output value")
+        latex_plot(fig, 14, 7.875, os.path.join(phantom_dir, f"{phantom}_y.pdf"))
+
+        fig, ax = plt.subplots(figsize=(7, 5))
+        for num, p_z in enumerate(predictions_z):
+            ax.plot(range(len(p_z)), p_z, color=colors[num])
+        ax.plot(range(len(target_z)), target_z, color="black")
+        plt.legend([*infos, "target"])
+        ax.set_xlabel("pixels")
+        ax.set_ylabel("output value")
+        latex_plot(fig, 14, 7.875, os.path.join(phantom_dir, f"{phantom}_z.pdf"))
 
 
 if __name__ == "__main__":

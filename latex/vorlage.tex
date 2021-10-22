@@ -1,0 +1,129 @@
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%   Zusaetzliche Pakete  %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage[english]{babel}
+\usepackage{acronym}
+\usepackage{enumerate}  
+\usepackage{a4wide}
+\usepackage{fancyhdr}
+\usepackage{graphicx}
+\graphicspath{{images/}}
+\usepackage{palatino}
+\usepackage{float}
+\usepackage{csquotes}
+\usepackage[bookmarks]{hyperref}
+\RequirePackage[ngerman=ngerman-x-latest]{hyphsubst}
+
+\usepackage[style=numeric-comp,sorting=none]{biblatex}
+\usepackage[format=hang, labelfont={small,bf}, font=small]{caption}
+\usepackage[a4paper, margin=0cm, left=3cm, top=2.5cm, right=2cm, bottom=3.5cm]{geometry} 
+\usepackage{etoolbox}
+\usepackage{acronym}
+\usepackage{titlesec}
+\usepackage[titles]{tocloft}
+\usepackage{fontspec}
+\usepackage{hang}
+
+\setlength\cftparskip{-2pt}
+\setlength\cftbeforesecskip{0pt}
+\setlength\cftaftertoctitleskip{0pt}
+
+\setlength\parindent{0pt}
+
+\setlength{\parskip}{6pt}
+\setlength{\headheight}{0.8cm}
+
+\linespread{1.25}
+
+\setlength{\cftbeforesecskip}{1.75pt}
+
+\renewcommand{\cftfigpresnum}{Figure }
+\renewcommand{\cfttabpresnum}{Table }
+
+\renewcommand{\cftfigaftersnum}{:}
+\renewcommand{\cfttabaftersnum}{:}
+
+\setlength{\cftfignumwidth}{2cm}
+\setlength{\cfttabnumwidth}{2cm}
+
+\setlength{\cftfigindent}{0cm}
+\setlength{\cfttabindent}{0cm}
+
+\renewcommand{\figurename}{Figure}
+\renewcommand{\tablename}{Table}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Definition der Kopfzeile %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\pagestyle{fancy}
+\renewcommand{\headrulewidth}{0.5pt} %Linie oben
+\renewcommand{\footrulewidth}{0.5pt} %Linie oben
+\renewcommand{\sectionmark}[1]{\markboth{#1}{}}
+\fancyhf{}
+\headsep = 1cm
+\fancyfoot[R]{\rule[+1.5ex]{0pt}{1ex}\thepage} %Kopfzeile rechts bzw. außen
+\fancyfoot[L]{\nouppercase{\leftmark}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%  Definition des Deckblattes und der Titelseite  %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\Titlepage}[9]{
+  \fancyhead[L]{\rule[-1.5ex]{0pt}{1ex} #2} %Kopfzeile links bzw. innen
+
+  \thispagestyle{empty}
+  
+  %\includegraphics[width=6.5in]{JMU.png}
+  
+  \begin{center}
+    \vspace*{\stretch{1}}
+    \Huge
+    #1\\
+    \vspace*{\stretch{0.25}}
+    \normalsize
+    #3
+  \end{center}
+
+  \vspace*{\stretch{2}}
+
+{\renewcommand{\arraystretch}{1.5}
+\begin{tabular}{l l} 
+    Eingereicht von:  & \hspace{4cm}#4\\ 
+    Studiengang:  & \hspace{4cm}#7\\ 
+    Matrikelnummer:  & \hspace{4cm}#9\\ 
+    Betreuer:  & \hspace{4cm}#8\\ 
+    Bearbeitungszeit:  & \hspace{4cm}von  #5\\ 
+                       & \hspace{4cm}bis  #6 \\
+\end{tabular}
+}
+
+\begin{center}
+    \vspace*{\stretch{1.5}}
+    %\includegraphics[width=1.75in]{siegel} \\
+    \vspace*{\stretch{2}}
+    Eberhard Karls Universität Tübingen \\
+    \vspace*{\stretch{0.5}}
+    Universitätsklinik für Radioonkologie // Sektion für Medizinische Physik \\
+    \vspace*{\stretch{0.5}}
+    Hoppe-Seyler-Straße 6, 72076 Tübingen\\
+  \end{center}
+
+\newpage
+
+  \cleardoublepage
+}
+
+\newcommand{\Abstract}{ 
+  \section*{Abstract}
+  \input{chapters/abstract.tex}
+  \newpage
+}
+
+\newcommand{\Kapitel}[2]{
+    \section{#1}\label{#1}
+    \input{#2}
+    \newpage
+}

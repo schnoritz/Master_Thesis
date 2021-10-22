@@ -1,0 +1,8 @@
+create binary masks:
+
+python3 create_masks.py -mask_image /Users/simongutwein/Documents/GitHub/Wien_Project/data/CellPoseOutput.tif -mask_dir /Users/simongutwein/Documents/GitHub/Wien_Project/data/masks
+
+Analyse Patch
+
+bash analyse_patch.sh IMAGE_PATH="/Users/simongutwein/Documents/GitHub/Wien_Project/data/OriginalImage.png" SAVE_DIR="/Users/simongutwein/Documents/GitHub/Wien_Project/data/CellClassification" MASKS_DIR="/Users/simongutwein/Documents/GitHub/Wien_Project/data/masks"
+

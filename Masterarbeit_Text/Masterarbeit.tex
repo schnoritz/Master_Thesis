@@ -1,5 +1,6 @@
 \documentclass[12pt]{report}
 \usepackage[utf8]{inputenc}
+\setlength{\textwidth}{14cm}
 \setlength{\parindent}{0em}
 \setlength{\parskip}{1em}
 \usepackage[T1]{fontenc}
@@ -8,7 +9,11 @@
 \usepackage{float}
 \usepackage{graphicx}
 
-
+\usepackage{pgfplots}
+\DeclareUnicodeCharacter{2212}{−}
+\usepgfplotslibrary{groupplots,dateplot}
+\usetikzlibrary{patterns,shapes.arrows}
+\pgfplotsset{compat=newest}
 
 \usepackage{graphicx}
 \graphicspath{{images/}}

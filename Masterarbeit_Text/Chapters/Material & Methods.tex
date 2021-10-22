@@ -16,43 +16,84 @@ Modified version of (doi:10.1007/978-3-319-24574-4\_28)
 
 \begin{figure}
 	\centering
-    \includegraphics[width=\textwidth]{unet}
+    \includegraphics[width=\textwidth]{UNET.pdf}
     \caption{3D U-Net architecture}
     \label{fig: unet}
+\end{figure}
+
+\begin{figure}
+	\centering
+    \includegraphics{test.pdf}
+    \caption{Performance of the networks, trained on mixed and on prostate only patients anatomies and plan configurations. The underlying bar chart (left y axis) shows the occurneces of the fieldsizes listed on the x axis. The box plots (right y axis) shows the performance value of each discretized fieldsize range for both mixed and prostate only trained model. Outliers are depicted with a diamond shape}
+    \label{fig: test}
+\end{figure}
+
+\begin{figure}
+	\centering
+    \includegraphics{phantomP100T200_10x10_x.pdf}
+    \caption{NONE}
+    \label{fig: test}
+\end{figure}
+\begin{figure}
+	\centering
+    \includegraphics{phantomP100T200_10x10_y.pdf}
+    \caption{NONE}
+    \label{fig: test}
+\end{figure}
+
+\begin{figure}
+	\centering
+    \includegraphics{phantomP100T200_10x10_z.pdf}
+    \caption{NONE}
+    \label{fig: test}
+\end{figure}
+
+\begin{figure}
+	\centering
+    \includegraphics{test_cases.pdf}
+    \caption{NONE}
+    \label{fig: test}
+\end{figure}
+
+\begin{figure}
+	\centering
+    \includegraphics[width=\textwidth]{masks.pdf}
+    \caption{Sample from a slice of training data. From left to right: beam shape, CT with Houndsfield Units, radiological depth, center beamline distance, source distance}
+    \label{fig: test}
 \end{figure}
 
 \textbf{\emph{Input Data}}
 
 The input of the network consists of 5 different masks containig spatial information about the given volume. (insert image with different masks and a little description of it) refer to deepdose paper by kontaxis \cite{kontaxis_deepdose_2020}
 
-\begin{figure}[H]
-    \vspace{1cm}
-    \minipage{0.32\textwidth}
-        \includegraphics[width=4cm]{binary}
-        \caption*{(a)}
-    \endminipage\hfill
-    \minipage{0.32\textwidth}
-        \captionsetup{format=hang}
-        \includegraphics[width=4cm]{ct.png}
-        \caption*{(b)}
-    \endminipage\hfill
-    \minipage{0.32\textwidth}%
-        \includegraphics[width=4cm]{radio.png}
-        \caption*{(c)}
-    \endminipage
-    \vspace{1cm}
-    \minipage{0.49\textwidth}
-        \centering
-        \includegraphics[width=4cm]{center}
-        \caption*{(d)}
-    \endminipage\hfill
-    \minipage{0.49\textwidth}
-        \centering
-        \includegraphics[width=4cm]{source}
-        \caption*{(e)}
-    \endminipage\hfill
-    \caption{Input masks for training}\label{fig: masks}
-\end{figure}
+% \begin{figure}[H]
+%     \vspace{1cm}
+%     \minipage{0.32\textwidth}
+%         \includegraphics[width=4cm]{binary}
+%         \caption*{(a)}
+%     \endminipage\hfill
+%     \minipage{0.32\textwidth}
+%         \captionsetup{format=hang}
+%         \includegraphics[width=4cm]{ct.png}
+%         \caption*{(b)}
+%     \endminipage\hfill
+%     \minipage{0.32\textwidth}%
+%         \includegraphics[width=4cm]{radio.png}
+%         \caption*{(c)}
+%     \endminipage
+%     \vspace{1cm}
+%     \minipage{0.49\textwidth}
+%         \centering
+%         \includegraphics[width=4cm]{center}
+%         \caption*{(d)}
+%     \endminipage\hfill
+%     \minipage{0.49\textwidth}
+%         \centering
+%         \includegraphics[width=4cm]{source}
+%         \caption*{(e)}
+%     \endminipage\hfill
+%     \caption{Input masks for training}\label{fig: masks}
+% \end{figure}
 
 in the image above the the different input masks can bee seen. the masks are the binary beam shape (a), ct image with (electron density oder HU values, mal schauen was besser performed) (b) radiologial depth (c) center beamline distance (d) and source distance (d) 
 the binary beam shape input is most importance, due to the fact that this input mask is the only one providing the network with information about the beam position and orientation concerning shape and limits
@@ -65,9 +106,15 @@ The entire network and training algorithm is programmed in PyTorch. The dataload
 
 \begin{figure}
     \centering
-    \includegraphics[width=.8\textwidth]{dataloading}
+    \includegraphics[width=\textwidth]{dataloading.pdf}
     \caption{Dataloading scheme}\label{fig: dataloading}
 \end{figure}
+
+% \begin{figure}
+%     \centering
+%     \input{/Users/simongutwein/Documents/GitHub/Master_Thesis/Masterarbeit_Text/Images/test.tex}
+%     \caption{Dataloading scheme}\label{fig:test}
+% \end{figure}
 
 (referenz auf bild was dataloading verdeutlicht) shows the schematic process of preloading a data queue from which random patches are taken for each batch presented the network for training. when the queue gets filled with patches a by the user specified number of segments gets randomly selected from the pool. then another by the user specified number of random patch positions per segment are extracted from the entire volume. then the entire queue gets shuffled and is then emptied during the training process. after the dataqueue is empty it is refilled with new patches from not previously used segments.
 after all segments have been used for patch extraction, the list of available segments is reset.

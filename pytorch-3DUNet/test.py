@@ -5,7 +5,7 @@ from test_model import load_model, analyse_gamma, save_data
 import os
 
 model_paths = ["/mnt/qb/baumgartner/sgutwein84/save/mixed_trained/UNET_1183.pt", "/mnt/qb/baumgartner/sgutwein84/save/prostate_trained/UNET_2234.pt"]
-phantoms = ["phantomP50T200_10x10", "phantomP100T200_10x10", "phantomP150T200_10x10", "phantomP200T200_10x10", "phantomP250T200_10x10", "phantomP300T200_10x10"]
+phantoms = ["phantomP100T200_10x10", "phantomP200T200_10x10", "phantomP300T200_10x10"]
 
 for phantom in phantoms:
     for model_path in model_paths:
@@ -22,7 +22,7 @@ for phantom in phantoms:
         target = torch.squeeze(torch.load(os.path.join(data_dir, "target_data.pt")))
 
         model, device = load_model(model_path)
-        prediction = predict_volume(input, model, device, shift=4)
+        prediction = predict_volume(input, model, device, shift=1)
 
         print(prediction.shape, target.shape)
         px_sp = (1.17185, 1.17185, 3)

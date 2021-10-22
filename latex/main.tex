@@ -1,0 +1,119 @@
+\documentclass[12pt, oneside]{article}
+
+\input{vorlage.tex}
+\usepackage{blindtext}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%  Bibtex File einbinden %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\addbibresource{bib.bib}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%  Beginn des Dokuments  %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+
+\titlespacing{\section}{0pt}{0pt}{0pt}
+\titlespacing{\subsection}{0pt}{6pt}{0pt}
+\titlespacing{\subsubsection}{0pt}{6pt}{0pt}
+
+\Titlepage
+    {Deep Learning for Radiation Dose Estimation}   % Titel der Arbeit
+    {Deep Learning for Dose Estimation}             % Muss in die Kopfzeile passen
+    {Masterarbeit}                                  % Art der Arbeit
+    {Gutwein, Simon}                                % Vor- und Nachname des Autors
+    {16.09.2021}                                    % Tag der Anemeldung 
+    {16.03.2022}                                    % Tag der Abgabe
+    {Medizinische Strahlenwissenschaften}           % Studiengang
+    {Prof. Dr. Daniela Thorwarth}                   % Name des Betreuers -- Hier sollte *immer* Prof. Winkelmann stehen
+    {5419474}                                       % Matrikelnummer 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%  Kurzzusammenfassung / Abstract  %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newpage
+\pagenumbering{roman}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\Abstract
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%  Inhaltsverzeichnis  %%
+%  wirt automatisch erstellt  %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\tableofcontents
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%  Abbildungsverzeichnis %%
+%%  wirt automatisch erstellt  %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newpage
+
+\listoffigures
+\addcontentsline{toc}{section}{Abbildungsverzeichnis}%
+\markboth{Abbildungsverzeichnis}{Abbildungsverzeichnis}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%  Tabellenverzeichnis   %%
+%%  wirt automatisch erstellt  %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newpage
+
+\addcontentsline{toc}{section}{Tabellenverzeichnis}%
+\markboth{Tabellenverzeichnis}{Tabellenverzeichnis}
+\listoftables
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%  Abkürzungsverzeichnis %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newpage
+
+\section*{Abkürzungsverzeichnis}
+\addcontentsline{toc}{section}{Abkürzungsverzeichnis}%
+\markboth{Abkürzungsverzeichnis}{Abkürzungsverzeichnis}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%  Abkürzungen %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newpage
+\pagenumbering{arabic}
+\setcounter{page}{1}
+  
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%  Hauptteil  %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\Kapitel{Introduction}{chapters/introduction.tex}
+\Kapitel{Previous Work}{chapters/previouswork.tex}
+\Kapitel{Medical Knowledge}{chapters/medicalknowledge.tex}
+\Kapitel{Material and Methods}{chapters/materialmethods.tex}
+
+\newpage
+\DeclareDelimFormat[bib,biblist]{nametitledelim}{\addcolon\space}
+\DeclareFieldFormat
+  [article,inbook,incollection,inproceedings,patent,thesis,unpublished]
+  {title}{\mkbibemph{#1}\isdot}
+\DeclareFieldFormat
+  [article,inbook,incollection,inproceedings,patent,thesis,unpublished]
+  {journaltitle}{#1\isdot}
+\DeclareFieldFormat{pages}{#1}
+\DeclareFieldFormat
+  [article,inbook,incollection,inproceedings,patent,thesis,unpublished]
+  {authortitle}{#1\isdot}
+
+\printbibliography[title= Literature]
+
+\newpage
+\section*{Apendix} \label{Apendix}
+\addcontentsline{toc}{section}{Apendix}%
+\markboth{Apendix}{Apendix}
+
+\end{document}
