@@ -138,31 +138,29 @@ def main():
 
         if model_path[-1] != "/":
             model_path += "/"
-        test_dir = args.test_dir
-        save_dir = args.save_dir
 
-        if not os.path.isdir(save_dir):
-            os.mkdir(save_dir)
+        if not os.path.isdir(args.save_dir):
+            os.mkdir(args.save_dir)
 
         model_origin = "_".join(model_path.split("/")[-3:-1])
         print(model_origin)
 
-        test_cases = [x for x in os.listdir(test_dir) if not x.startswith(".") and os.path.isdir(os.path.join(test_dir, x))]
+        test_cases = [x for x in os.listdir(args.test_dir) if not x.startswith(".") and os.path.isdir(os.path.join(args.test_dir, x))]
 
         model, device = load_model(model_path[:-1])
 
         for test_case in test_cases:
             print(test_case)
             sys.stdout.flush()
-            case_path = os.path.join(test_dir, test_case)
-            plan_file = os.path.join(test_dir, test_case, test_case + "_plan.dcm")
-            structure_file = os.path.join(test_dir, test_case, test_case + "_strctr.dcm")
-            ct_file = os.path.join(test_dir, test_case, "ct", "CT_image0.dcm")
+            case_path = os.path.join(args.test_dir, test_case)
+            plan_file = os.path.join(args.test_dir, test_case, test_case + "_plan.dcm")
+            structure_file = os.path.join(args.test_dir, test_case, test_case + "_strctr.dcm")
+            ct_file = os.path.join(args.test_dir, test_case, "ct", "CT_image0.dcm")
 
             if os.path.isfile(plan_file) and os.path.isfile(structure_file) and os.path.isfile(ct_file):
 
                 print(case_path, plan_file, structure_file, ct_file)
-                if not os.path.isdir(os.path.join(save_dir, test_case, model_origin)):
+                if not os.path.isdir(os.path.join(args.save_dir, test_case, model_origin)):
                     target_dose, predicted_dose = predict_plan(model, device, plan_file, test_case, case_path, shift=16)
                     target_dose, predicted_dose = np.array(target_dose), np.array(predicted_dose)
                     print(target_dose.shape)
@@ -170,7 +168,7 @@ def main():
                 # target_dose = np.array(torch.load("/mnt/qb/baumgartner/sgutwein84/test_cases/pt0/pt0_0/target_data.pt").squeeze())
                 # predicted_dose = np.array(torch.load("/mnt/qb/baumgartner/sgutwein84/test_cases/pt0/pt0_0/target_data.pt").squeeze())
 
-                    save_path = save_data(save_dir, test_case, model_origin, predicted_dose, target_dose)
+                    save_path = save_data(args.save_dir, test_case, model_origin, predicted_dose, target_dose)
                     px_sp = analyse_dvh(structure_file, ct_file, predicted_dose, target_dose, save_path)
                     analyse_gamma(target_dose, predicted_dose, px_sp, save_path)
                     sys.stdout.flush()

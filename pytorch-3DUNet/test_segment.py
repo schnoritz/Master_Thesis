@@ -85,11 +85,6 @@ def main():
         segments = [x for x in os.listdir(path) if not x.startswith(".") and not "ct" in x and not "dcm" in x]
 
         for segment in segments:
-            segment_path = os.path.join(path, segment)
-            target_data = torch.load(os.path.join(segment_path, "target_data.pt"))
-            target_data = target_data.squeeze()
-            training_data = torch.load(os.path.join(segment_path, "training_data.pt"))
-            field_size = training_data[0].max()
 
             for model_path in models:
 
@@ -100,6 +95,12 @@ def main():
                 if os.path.isdir(save):
                     print(save, " already exists")
                     continue
+
+                segment_path = os.path.join(path, segment)
+                target_data = torch.load(os.path.join(segment_path, "target_data.pt"))
+                target_data = target_data.squeeze()
+                training_data = torch.load(os.path.join(segment_path, "training_data.pt"))
+                field_size = training_data[0].max()
 
                 model, device = load_model(model_path)
                 prediction = predict_volume(training_data, model, device, shift=2)

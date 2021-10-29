@@ -167,6 +167,8 @@ INPUT /usr/local/texlive/2020/texmf-dist/tex/latex/fontspec/fontspec.cfg
 INPUT /usr/local/texlive/2020/texmf-dist/tex/latex/fontspec/fontspec.cfg
 INPUT /usr/local/texlive/2020/texmf-dist/tex/latex/hang/hang.sty
 INPUT /usr/local/texlive/2020/texmf-dist/tex/latex/hang/hang.sty
+INPUT /usr/local/texlive/2020/texmf-dist/tex/latex/multirow/multirow.sty
+INPUT /usr/local/texlive/2020/texmf-dist/tex/latex/multirow/multirow.sty
 INPUT /usr/local/texlive/2020/texmf-dist/tex/latex/blindtext/blindtext.sty
 INPUT /usr/local/texlive/2020/texmf-dist/tex/latex/blindtext/blindtext.sty
 INPUT /usr/local/texlive/2020/texmf-dist/tex/latex/tools/xspace.sty

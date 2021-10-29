@@ -14,9 +14,13 @@
 
 \begin{document}
 
-\titlespacing{\section}{0pt}{0pt}{0pt}
-\titlespacing{\subsection}{0pt}{6pt}{0pt}
-\titlespacing{\subsubsection}{0pt}{6pt}{0pt}
+\renewcommand{\tableautorefname}{tab.}
+\renewcommand{\figureautorefname}{fig.}
+\renewcommand{\equationautorefname}{eq.}
+
+\titlespacing{\section}{0pt}{6pt}{12pt}
+\titlespacing{\subsection}{0pt}{6pt}{6pt}
+\titlespacing{\subsubsection}{0pt}{6pt}{6pt}
 
 \Titlepage
     {Deep Learning for Radiation Dose Estimation}   % Titel der Arbeit

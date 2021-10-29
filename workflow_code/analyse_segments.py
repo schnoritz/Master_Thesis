@@ -1,40 +1,30 @@
 
+from operator import pos
 import matplotlib.pylab as plt
 import os
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.pylab as pl
+import seaborn as sns
+from tqdm import tqdm
+import scipy.stats as ss
 
 
-def latex(func):
+def latex(width, height, path):
     '''Decorator that sets latex parameters for plt'''
+    def do_latex(func):
+        def wrap(*args, **kwargs):
 
-    def wrap(*args, **kwargs):
-
-        plt.rcParams["font.family"] = "serif"
-        plt.rcParams["font.size"] = 11
-        result = func(*args, **kwargs)
-
-        return result
-
-    return wrap
-
-
-def set_latex_params():
-    cm = 1/2.54
-    plt.rcParams["font.monospace"] = "Computer Modern"
-    plt.rcParams["font.size"] = 11
-
-
-def latex_plot(fig, width, height, path):
-
-    cm = 1/2.54
-    plt.rcParams["font.monospace"] = "Computer Modern"
-    plt.rcParams["font.size"] = 12
-    pl.figure(fig)
-    fig.set_size_inches(width*cm, height*cm, forward=True)
-    plt.savefig(path, dpi=300, bbox_inches='tight')
+            plt.rcParams["font.family"] = "serif"
+            plt.rcParams["font.serif"] = "Palatino"
+            plt.rcParams["font.size"] = 11
+            fig = func(*args, **kwargs)
+            cm = 1/2.54
+            fig.set_size_inches(width*cm, height*cm, forward=True)
+            plt.savefig(path, dpi=300, bbox_inches='tight')
+        return wrap
+    return do_latex
 
 
 def plot_histogram(heights, positions):
@@ -45,33 +35,72 @@ def plot_histogram(heights, positions):
     plt.bar(pos, heights, width=width, align="center", edgecolor='black', linewidth=1.2, alpha=0.5)
 
 
-@latex
-def main():
+def get_results(root):
 
-    import seaborn as sns
+    patients = [x for x in os.listdir(root) if not x.startswith(".")]
+    results = []
+    for patient in tqdm(patients):
+        pat_dir = os.path.join(root, patient)
+        segments = [x for x in os.listdir(pat_dir) if not x.startswith(".")]
 
-    results = "/Users/simongutwein/Desktop/tests.pkl"
+        for segment in tqdm(segments):
+            mix_dir = os.path.join(root, patient, segment, "mixed_trained_UNET_1183.pt", "gamma.txt")
+            prost_dir = os.path.join(root, patient, segment, "prostate_trained_UNET_2234.pt", "gamma.txt")
+            print(mix_dir)
+            with open(mix_dir, "r") as fin:
+                lines = fin.readlines()
+                mix_result = lines[4]
+                size = lines[8][7:-2]
+
+            with open(prost_dir, "r") as fin:
+                prost_result = fin.readlines()[4]
+
+            results.append({
+                "segment": segment,
+                "mixed": mix_result,
+                "prostate": prost_result,
+                "fieldsize": size
+            })
+
+    df = pd.DataFrame(results)
+    df.to_pickle("/Users/simongutwein/Desktop/segment_results.pkl")
+
+
+@latex(width=20, height=12, path="/Users/simongutwein/Desktop/segs.pdf")
+def fieldsize_analysis():
+
+    # root = "/Users/simongutwein/mnt/qb/baumgartner/sgutwein84/segment_results"
+    # get_results(root)
+
+    results = "/Users/simongutwein/Desktop/segment_results.pkl"
 
     df = pd.read_pickle(results)
-    sizes = df["size"]
-    model = df["model"]
-    model[model == "mixed_trained_UNET_1183.pt"] = "mixed"
-    model[model == "prostate_trained_UNET_2234.pt"] = "prostate"
-    df["model"] = model
+    df = pd.melt(df, id_vars=['segment', "fieldsize"], value_vars=['mixed', 'prostate'])
+    df["fieldsize"] = df["fieldsize"].astype(float)
+    df["value"] = df["value"].replace("\n", "").astype(float)
 
+    sizes = df["fieldsize"]
     max_s = sizes.max()
     max_s = (np.ceil((max_s/10)+1)*10).astype(int)
-    df['discrete'] = pd.cut(df["size"], list(range(0, max_s, 10)), include_lowest=True)
+    df['discrete'] = pd.cut(df["fieldsize"], list(range(0, max_s, 10)), include_lowest=True)
     df["discrete"] = [int(x.right) for x in df["discrete"]]
-    hist = np.histogram(df["size"][::2], bins=list(range(0, max_s, 10)))
+
+    hist = list(np.histogram(df["fieldsize"][::2], bins=list(range(0, max_s, 10))))
 
     fig, ax = plt.subplots()
-
-    ax.bar(list(range(int(max_s/10)-1)), hist[0], alpha=0.2, width=1, linewidth=2, edgecolor="black", facecolor="black", zorder=0)
+    ax.bar(list(range(int(max_s/10)-1)), hist[0], alpha=0.2, width=1, linewidth=1, edgecolor="black", facecolor="black", zorder=0)
     ax2 = ax.twinx()
-    ax2 = sns.boxplot(x="discrete", y="gamma", hue="model", data=df, palette="Reds", zorder=10)
+    ax2 = sns.boxplot(x="discrete", y="value", hue="variable", data=df, palette="Reds", color=1, hue_order=["prostate", "mixed"], zorder=10)
+    for axs in ax2.get_children()[2:277]:
+        axs.set_color('k')
 
-    x_ticks = [f"({x} - {x+10}]" for x in range(0, max_s-10, 10)]
+    for axs in ax2.get_children()[278:323]:
+        axs.set_edgecolor('k')
+
+    _, labels = plt.xticks()
+    labels = [int(labels[x].get_text()) for x in range(len(labels))]
+    labels.insert(0, 0)
+    x_ticks = [f"({labels[i]} - {labels[i+1]}]" for i in range(0, len(labels)-1)]
     ax.set_ylabel('Occurence')
     ax.set_xticklabels(x_ticks, rotation=45)
 
@@ -79,28 +108,112 @@ def main():
     ax.set_xlabel("Fieldsize /$cm^2$")
     ax2.legend(bbox_to_anchor=(0.5, 1.1), borderaxespad=0, loc="center", ncol=2)
 
-    latex_plot(fig, 14, 7.875, "/Users/simongutwein/Documents/GitHub/Master_Thesis/Masterarbeit_Text/Images/test.pdf")
+    return fig
 
-    #tikzplotlib.save("/Users/simongutwein/Documents/GitHub/Master_Thesis/Masterarbeit_Text/Images/test.tex", axis_height=r"0.5\textwidth", axis_width=r"\textwidth")
 
-    hist = np.histogram(df["size"][::2], bins=list(range(0, max_s, 10)))
+@latex(width=8, height=12, path="/Users/simongutwein/Desktop/segs_all.pdf")
+def overall_performance():
 
-    _, ax = plt.subplots(2, 1, figsize=(10, 10))
+    # root = "/Users/simongutwein/mnt/qb/baumgartner/sgutwein84/segment_results"
+    # get_results(root)
 
-    ax[1] = sns.boxplot(x="discrete", y="gamma", hue="model", data=df, palette="Reds")
-    # ax[].legend(bbox_to_anchor=(0.65, 1.2),
-    #           borderaxespad=0)
-    ax[1].set_xlabel("Fieldsize /mm")
+    results = "/Users/simongutwein/Desktop/segment_results.pkl"
 
-    ax[0].bar(np.array(range(0, max_s-10, 10))+5, hist[0], width=10, edgecolor="black", linewidth=2, facecolor="firebrick")
-    ax[0].set_ylabel('Occurence')
-    ax[0].set_xlabel("Fieldsize /mm")
-    ax[0].set_xlim(0, 130)
-    ax[0].set_xticks(range(5, max_s-10, 10))
-    ax[0].set_xticklabels(range(10, max_s, 10))
+    df = pd.read_pickle(results)
+    df = pd.melt(df, id_vars=['segment', "fieldsize"], value_vars=['mixed', 'prostate'])
+    df["value"] = df["value"].replace("\n", "").astype(float)
 
-    plt.show()
+    fig, ax = plt.subplots()
+    ax = sns.violinplot(x="variable", y="value", data=df, palette="Reds", order=["prostate", "mixed"], cut=0)
+    ax2 = sns.swarmplot(x="variable", y="value", data=df, color="black", size=1, order=["prostate", "mixed"])
+    ax.set_xticklabels(["Prostate Model", "Mixed Model"])
+
+    ax.set_ylabel(r'Gamma-Value /%')
+    ax.set_xlabel("")
+    ax.set_ylim([0, 119])
+
+    wilcox = np.round(ss.wilcoxon(df[df['variable'].str.match("prostate")]["value"], df[df['variable'].str.match("mixed")]["value"])[1], 5)
+
+    n = df[df['variable'].str.match("prostate")].count()[0]
+
+    if wilcox < 1E-3:
+        wilcox = f"***"
+    else:
+        wilcox = f"p = {wilcox}\nn={n}"
+
+    x1, x2 = 0, 1   # columns 'Sat' and 'Sun' (first column: 0, see plt.xticks())
+    y, h, col = 108, 3, 'k'
+    plt.plot([x1, x1, x2, x2], [y, y+h, y+h, y], lw=1, c=col)
+    plt.text((x1+x2)*.5, y+h-2, wilcox, ha='center', va='bottom', color=col)
+
+    plt.text(0.5, 107, f"n={n}", ha='center', va='center')
+
+    return fig
+
+
+@latex(width=12, height=14, path="/Users/simongutwein/Desktop/segs_test.pdf")
+def test_set_performance():
+
+    # root = "/Users/simongutwein/mnt/qb/baumgartner/sgutwein84/segment_results"
+    # get_results(root)
+
+    results = "/Users/simongutwein/Desktop/segment_results.pkl"
+
+    df = pd.read_pickle(results)
+    df = pd.melt(df, id_vars=['segment', "fieldsize"], value_vars=['mixed', 'prostate'])
+    df["value"] = df["value"].replace("\n", "").astype(float)
+
+    df["test"] = ""
+    df.loc[df['segment'].str.match("ht"), "test"] = "Mixed"
+    df.loc[df['segment'].str.match("mt"), "test"] = "Mixed"
+    df.loc[df['segment'].str.match("lt"), "test"] = "Mixed"
+    df.loc[df['segment'].str.match("pt"), "test"] = "Prostate"
+    df.loc[df['segment'].str.match("nt"), "test"] = "Lymphnodes"
+
+    fig, ax = plt.subplots()
+    ax = sns.violinplot(x="test", y="value", hue="variable", data=df, palette="Reds", inner="box", order=["Prostate", "Mixed", "Lymphnodes"], hue_order=["prostate", "mixed"], cut=0)
+    for axs in ax.collections:
+        axs.set_edgecolor('k')
+
+    for axs in ax.get_children()[14:26]:
+        axs.set_color('k')
+
+    ax.set_ylim([0, 110])
+
+    ax.set_ylabel(r'Gamma-Value /%')
+    ax.set_xlabel("")
+    handles, labels = ax.get_legend_handles_labels()
+    ax.legend(handles[: 2], labels[: 2], loc="lower right")
+
+    wilcox = []
+    counts = []
+    test_cases = ["Prostate", "Mixed", "Lymphnodes"]
+
+    for i in range(3):
+        temp_df = df.loc[df['test'].str.match(test_cases[i])]
+        test_cases[i] = test_cases[i] + f"\nn={temp_df.count()[0]}"
+        counts.append(temp_df.count()[0])
+        wilcox.append(ss.wilcoxon(temp_df[temp_df['variable'].str.match("prostate")]["value"], temp_df[temp_df['variable'].str.match("mixed")]["value"])[1])
+
+    print(wilcox)
+    ax.set_xticklabels(test_cases)
+
+    for i in range(len(wilcox)):
+        if wilcox[i] < 1E-3:
+            wilcox[i] = f"***"
+        else:
+            wilcox[i] = f"p={wilcox[i]}"
+
+    for i in range(3):
+        x1, x2 = i-0.2, i+0.2   # columns 'Sat' and 'Sun' (first column: 0, see plt.xticks())
+        y, h, col = 103, 2, 'k'
+        plt.plot([x1, x1, x2, x2], [y, y+h, y+h, y], lw=1, c=col)
+        plt.text((x1+x2)*.5, y+h, wilcox[i], ha='center', va='bottom', color=col)
+
+    return fig
 
 
 if __name__ == "__main__":
-    main()
+    fieldsize_analysis()
+    overall_performance()
+    test_set_performance()

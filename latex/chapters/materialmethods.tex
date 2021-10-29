@@ -14,13 +14,12 @@ Beschreibung der Patientendaten (wie viele, wie verteilt)
 Infos zu der Ethical...
 Falls in der Discussion die Feldgröße von Relevanz ist dann Infos mit rein nehmen. Nähere Infos in Tabelle
 
-
-
 \subsection{Network Architecture}
 
 3D UNet architecture with a downsampling ratio of 8 and a maximum layer depth of 512 in the bottleneck connection and skip connections before each pooling layer. multiple input masks in the size of CT with a resolution od 1.1718 x 1.1718 x 3 mm\textsuperscript{3} resolution in coronal, sagital, and tanversal dimension respectively. shown in image \autoref{fig:network}
 
 \begin{figure}
+    \centering
     \includegraphics[width=0.9\textwidth]{UNET.pdf}
     \caption{Network architeture scheme. Size of the input masks are depicted by width (W), height (H) and depth (D). Input dimensionality is WxHxDx5 and output dimensionality is WxHxDx1.}
     \label{fig:network}
@@ -44,7 +43,7 @@ erklären, dass aufgrund der Natur von 3D-Daten und dem Limit des Grafikkarten s
 
 \subsubsection{Network Input}
 
-The input consists of 5 3D volumes (\autoref{fig:masks}) to combine different spatial, anatomical aswell a accelorator information into the training data. ref auf bild. the accelerator information were included in 4 of the 5 masks:
+The input consists of 5 3D volumes (\autoref{fig:masks}) to combine different spatial, anatomical aswell a accelorator information into the training data. the masks are used to achieve a direct connection from accelerator that translates onto the patients anatomy
 
 \setlength{\hangingindent}{1em}
 \begin{hangingpar}
@@ -78,7 +77,62 @@ The output yielded by the network is the single volume of the predicted dose for
 
 \subsection{Training Data Generation}
 
-The patient anatomy and accelerator information of each segment was extracted from the radio treatment plan. The required masks were created from this information using in-house python scripts. The target dose mask was simulated using the dosxyznrc software tool from the EGSnrc software package (the code is publicly available at https://github.com/nrc-cnrc/EGSnrc). EGSnrc was used because the MR linac accelerator head was modelled in previous work at our institution, which allowed us to simulate each beam segment from each patient's treatment plan. Each segment was simulated using 10\textsuperscript{7} for time efficiency. 
+The patient anatomy and accelerator information of each segment was extracted from the radio treatment plan. The required masks were created from this information using in-house python scripts. The target dose mask was simulated using the dosxyznrc software tool from the EGSnrc software package (the code is publicly available at https://github.com/nrc-cnrc/EGSnrc). EGSnrc enabled us to  us to simulate each beam segment from each patient's treatment plan, with the accurate MR linac accelerator head model frrom previous work at our institution. Each segment was simulated using 10\textsuperscript{7} for time efficiency. 
+
+hier noch beschreiben wie lange due daten generation braucht? wichtig? 
+
+\subsection{Evaluation Metrics}
+
+to directly asses the quality of the dose prediction, we used the gamma - passrate, which compares two dose distrbutioins on the same grid. in this analysis tool eaach voxel and its value on grid 1 is compared to the zugehörigen voxel from the second dose distribution. two margins are used that define in which margin the seconds dose voxel can vary to be accepted as valid. the two margins are a dose value margin aswell as a spatial margin. hier noch erklären was der spatial margin eigentlich aussagt
+
+heri noch vllt formel und abbildung die auswertungsmetrik
+
+\subsection{Hypotheses}
+
+\begin{hangingpar}
+    \item\textbf{These 1}: the general dose deposition process for a spcific tumor entity can be learned on data of a multitude of radio treatment plans on that the specific tumor site. We therefore train a network on prostate patient treatment plan data and anatomies and assess the quality of predicted dose distribution with the gamma passrate of each segment as well asa the entire plan. 
+\end{hangingpar}
+
+\begin{hangingpar}
+    \item\textbf{These 2}: the in These 1 trained network performes poorly when translating into different tumor sites that were not included in the training data and therefore generalizes poorly. To test translational capabilities the network is tested against liver, breast, head \& neck and lymph node treatment plan data.
+\end{hangingpar}
+
+\begin{hangingpar}
+    \item\textbf{These 3}: the includation of different tumor sites into the training data improves the the translational capabilites of the network to other tumor sites, while maintaining high accuracy on the included tumor sites and therefore improve the robustness of the network. we therefore train the same network from these 1 on prostate, liver, breast and head \& neck treatment plan data. the translational capabilities are then assed by testing with prostate, liver, breast, head \& neck and lymph node data. by doing this we asses if the network performance decreases on prostate data by including new tumor sites into the training data and we assess its performance on seen (prostate, liver, heaad \& neck, breast) aswell as unseen treatment plan data (lymph nodes).
+\end{hangingpar}
+
+\begin{hangingpar}
+    \item\textbf{These 4}: The network is capable of learning the underlying physics of the dose depositiopn process. By creating phantom input data in the form of a water slap at various positions inside an air volume, we investigate if the network has learned the underlying physics of the dose deposition process.
+\end{hangingpar}
+
+\subsection{Patient Data}
+
+patient data from our institution previously treated at the mr linac. all plans were created by a medical physicist in agreement with a oncologist
+Welche Entitäten: Prostate only training: 45 prostate treatment plans with a total of 2342 Segments, 36/4/5 split für train / val / test split. with a mean fieldsize of 36.57 ± 17.9 cm\textsuperscript{2} for training / validation set and 34.57 ± 15.86 cm\textsuperscript{2} for the test set.
+mixed model 15 prostate with 720 segments , 35.49 ± 18.01 and 34.57 ± 15.86 15 liver 819 Segments 24.09 ± 18.36 and 22.81 ± 14.47 15 mamma 656 Segments 40.72 ± 28.48 and 40.60 ± 37.98 14 head \& neck 929 segments in einem 8/2/5 split also in 32/8/20 train / validation / test ratio. aswell as 15 patient plans 659 segments for lymphnodes exclusively for testing with a mean fieldsize of 25.95 ± 25.59
+as you can see in \autoref{tab:patients}
+
+63.00 ± 50.47
+68.89 ± 53.56
+
+\begin{table}
+\centering
+    \scalebox{0.7}{
+        \begin{tabular}{|lcccccc|}
+        \hline
+                                            & \textbf{Prostate-Only}           & \multicolumn{4}{c}{\textbf{Mixed-Entity}}                                   & \textbf{Testing} \\ \hline
+                                            & \multicolumn{1}{c|}{}            & Liver       & Mamma       & Head \& Neck & \multicolumn{1}{c|}{Prostate}    & Lymphnodes       \\
+            Number of Segments              & \multicolumn{1}{c|}{45}          & 15          & 15          & 15           & \multicolumn{1}{c|}{15}          & 15               \\
+            Number of Segments              & \multicolumn{1}{c|}{2342}        & 819         & 656         & 929          & \multicolumn{1}{c|}{720}         & 659              \\
+            Training / Validation / Testing & \multicolumn{1}{c|}{36/4/5}      & 8/5/2       & 8/2/5       & 8/5/2        & \multicolumn{1}{c|}{8/5/2}       & Only Testing     \\
+            Fieldsize Training/Validation   & \multicolumn{1}{c|}{36.5 (17.9)} & 24.1 (18.4) & 40.7 (28.5) & 63.0 (50.5)  & \multicolumn{1}{c|}{35.5 (18.0)} & N/A              \\
+            Fieldsize Testing               & \multicolumn{1}{c|}{34.5 (15.8)} & 22.8 (14.4) & 40.6 (38.0) & 68.9 (53.6)  & \multicolumn{1}{c|}{34.6 (15.9)} & 26.0 (25.6)      \\ \hline
+        \end{tabular}
+    }
+    \caption{Patient data infortmation for Prostate-Only as well as Mixed-Entity trained model and testing data set. Fieldsizes are given as mean (standard deviation).}
+    \label{tab:patients}
+\end{table}
+
 
 
 % \textbf{\emph{Patient Data}}

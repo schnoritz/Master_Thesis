@@ -14,6 +14,7 @@ def latex(width, height, path):
         def wrap(*args, **kwargs):
 
             plt.rcParams["font.family"] = "serif"
+            plt.rcParams["font.serif"] = "Palatino"
             plt.rcParams["font.size"] = 11
             fig = func(*args, **kwargs)
             cm = 1/2.54
@@ -31,56 +32,73 @@ def plot_histogram(heights, positions):
     plt.bar(pos, heights, width=width, align="center", edgecolor='black', linewidth=1.2, alpha=0.5)
 
 
-@latex(width=14, height=12, path="/Users/simongutwein/Desktop/test.pdf")
+@latex(width=20, height=12, path="/Users/simongutwein/Desktop/test.pdf")
 def main():
 
-    results = "/Users/simongutwein/mnt/qb/baumgartner/sgutwein84/test_results"
+    colors = ["#FF0B04", "#4374B3"]
+    sb.set_palette(sb.color_palette(colors))
 
-    test_cases = [x for x in os.listdir(results) if not x.startswith(".")]
+    # results = "/Users/simongutwein/mnt/qb/baumgartner/sgutwein84/test_results"
 
-    info = []
-    for test_case in test_cases:
-        case_path = os.path.join(results, test_case)
-        models = [x for x in os.listdir(case_path) if not x.startswith(".")]
-        for model in models:
-            gamma_path = os.path.join(case_path, model, "gamma.txt")
+    # test_cases = [x for x in os.listdir(results) if not x.startswith(".")]
 
-            with open(gamma_path) as fin:
-                gamma = float(fin.readlines()[-1])
+    # info = []
+    # for test_case in test_cases:
+    #     case_path = os.path.join(results, test_case)
+    #     models = [x for x in os.listdir(case_path) if not x.startswith(".")]
+    #     for model in models:
+    #         gamma_path = os.path.join(case_path, model, "gamma.txt")
 
-            print(test_case)
-            segment_path = os.path.join("/Users/simongutwein/mnt/qb/baumgartner/sgutwein84/test_cases", test_case)
-            segments = [x for x in os.listdir(segment_path) if not x.startswith(".") and not "ct" in x and not "dcm" in x]
-            modulated = len(segments)
+    #         with open(gamma_path) as fin:
+    #             gamma = float(fin.readlines()[-1])
 
-            info.append({
-                "plan": test_case,
-                "model": model,
-                "gamma": gamma,
-                "modulated": modulated
-            })
+    #         print(test_case)
+    #         segment_path = os.path.join("/Users/simongutwein/mnt/qb/baumgartner/sgutwein84/test_cases", test_case)
+    #         segments = [x for x in os.listdir(segment_path) if not x.startswith(".") and not "ct" in x and not "dcm" in x]
+    #         modulated = len(segments)
 
-    df = pd.DataFrame(info)
-    df.to_excel("/Users/simongutwein/mnt/qb/baumgartner/sgutwein84/test_case_results.xlsx")
-    df.to_pickle("/Users/simongutwein/mnt/qb/baumgartner/sgutwein84/test_case_results.pkl")
+    #         if "m" in test_case:
+    #             test_modularity = "Mixed (2)"
+    #         elif "l" in test_case:
+    #             test_modularity = "Mixed (2)"
+    #         elif "h" in test_case:
+    #             test_modularity = "Mixed (2)"
+    #         elif "p" in test_case:
+    #             test_modularity = "Prostate (1)"
+    #         elif "n" in test_case:
+    #             test_modularity = "Lymphnodes (3)"
+
+    #         info.append({
+    #             "plan": test_case,
+    #             "model": model,
+    #             "gamma": gamma,
+    #             "modulated": modulated,
+    #             "test_modularity": test_modularity
+    #         })
+
+    # df = pd.DataFrame(info)
+
+    # df.to_excel("/Users/simongutwein/mnt/qb/baumgartner/sgutwein84/test_case_results.xlsx")
+    # df.to_pickle("/Users/simongutwein/mnt/qb/baumgartner/sgutwein84/test_case_results.pkl")
 
     df = pd.read_pickle("/Users/simongutwein/mnt/qb/baumgartner/sgutwein84/test_case_results.pkl")
 
-    df.loc[df.model == "mixed_trained_UNET_1183.pt", "model"] = "mixed"
-    df.loc[df.model == "prostate_trained_UNET_2234.pt", "model"] = "prostate"
+    df.loc[df.model == "mixed_trained_UNET_1183.pt", "model"] = "Mixed Model (B)"
+    df.loc[df.model == "prostate_trained_UNET_2234.pt", "model"] = "Prostate Model (A)"
 
-    fig, ax = plt.subplots(2, 1, gridspec_kw={'height_ratios': [1.5, 3]})
-    sb.boxplot(x="gamma", y="model", data=df, palette="Reds", ax=ax[0], width=0.5)
-    sb.swarmplot(y="model", x="gamma", data=df, color="black", ax=ax[0])
+    print(df.groupby(['test_modularity', 'model']).describe())
+    test = df.groupby(['test_modularity', 'model']).describe()
 
-    sb.scatterplot(x="plan", y="gamma", style="model", hue="model", data=df, palette="Reds", markers=['D', 'X'], ax=ax[1])
-    ax[0].set_xlabel("Gamma Passrate /%")
-    ax[1].set_xlabel("Test Case")
-    ax[1].tick_params(axis='x', rotation=-45)
-    ax[1].set_ylabel("Gamma Passrate /%")
-    ax[0].set_ylabel("")
-    legend = ax[1].legend()
-    legend.texts[0].set_text("mixed")
+    fig, ax = plt.subplots(1, 1)
+    sb.violinplot(cut=0, inner="point", x="test_modularity", y="gamma", hue="model", data=df, hue_order=[
+                  "Prostate Model (A)", "Mixed Model (B)"], order=["Prostate (1)", "Mixed (2)", "Lymphnodes (3)"], dodge=True)
+    # sb.swarmplot(x="test_modularity", y="gamma", hue="model", data=df, color="black", dodge=True, size=4, hue_order=[
+    # Prostate Model (A)", "Mixed Model (B)"], order = ["Prostate (1)", "Mixed (2)", "Lymphnodes (3)"])
+    handles, labels = ax.get_legend_handles_labels()
+    ax.legend(handles[: 2], labels[: 2])
+    ax.set_ylabel("Gamma Passrate [%]")
+    ax.set_xlabel("")
+    #ax.set_ylim([-5, 105])
     plt.tight_layout()
     return fig
 

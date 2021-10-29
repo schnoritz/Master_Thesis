@@ -1,0 +1,105 @@
+Gliederung
+
+Nummerierung in 
+
+Abstract
+	- Klassisches Abstract
+Declaration
+	- Klassische Declaration -> Vorlage raussuchen, Mail schreiben Prüfungsamt -> King
+
+	Selbstständigkeitserklärung
+
+
+Hiermit erkläre ich, dass ich die abgegebene Masterarbeit ohne fremde Hilfe verfasst  habe. Alle wörtlich oder sinngemäß aus anderen Werken, gegebenenfalls auch aus elektronischen Medien, übernommenen Aussagen habe ich als solche gekennzeichnet. Mir ist bewusst, dass meine Masterarbeit in digitaler Form auf die Verwendung fremder nicht gekennzeichneter Texte im Ganzen oder in Teilen auf Plagiat geprüft wird. Ein Verstoß gegen die Grundregeln wissenschaftlichen Arbeitens gilt als Täuschungs- bzw. Betrugsversuch und zieht die entsprechenden Konsequenzen gemäß gültiger Prüfungsordnung des Studiengangs Medizinische Strahlenwissenschaften nach sich. Für den Vergleich meiner Masterarbeit mit bestehenden Quellen stimme ich zu, dass meine Masterarbeit in eine Datenbank eingespielt wird wo sie auch nach meinem Universitätsabschluss verbleibt. Weitere Rechte auf Abdruck und Verwendung trete ich nicht ab. Ich erkläre weiterhin, dass die Arbeit weder vollständig noch in wesentlichen Teilen Gegenstand eines anderen Prüfungsverfahrens gewesen bzw. nicht publiziert ist.
+
+
+Introduction
+	- Genereller Ablauf am MR-Linac stand jetzt
+	- Wie soll der Ablauf einmal aussehen beim MR-Linac
+	- Und dann auf Dosisdeposition eingehen / Was ist aktuelle Methode
+	- Einleitung zu Deep Learning
+	- Wo findest Deep Learning Anwendung (Bezug zu Medizin)
+	- Was ist die Contribution / Aims <- Ziel: Dosisvorhersage mit DL, möglichst robust
+
+Previous Work (evtl. mit in die Introduction) / Related Work
+	- Bezug nehmen auf: 
+		- DeepDose
+		- Weitere Paper zu dem Thema (Protonen mit LSTM, weitere Dosisberechnungen, siehe Paper, dass Christian gesendet hat)
+
+Medical Base Knowledge:
+	- Aktuelle Abläufe und Grundvoraussetzungen
+	- Erläuterung warum Monte Carlo hier beschrieben wird
+
+Material and Methods (Unsicher wie ich das aufbauen soll)
+	Hier erklären wie Dosisdeposition aktuell simuliert wird
+	
+	Netzwerk Architektur
+	Dataloading
+	Was ist Input
+	Wie werden Trainingsdaten erzeugt
+	Auswertungsmetriken
+		
+	- Hypothesen und wie wir diese Überprüfen:
+			- ... 
+
+	Data:
+	Beschreibung der Patientendaten (wie viele, wie verteilt)
+	Infos zu der Ethical...
+	Falls in der Discussion die Feldgröße von Relevanz ist dann Infos mit rein nehmen. Nähere Infos in Tabelle
+
+		
+
+Experiments / Results
+
+- Experiments:
+
+	Experiment 1:
+	- Patienten Daten (40 Prostata)
+	- Warum dieses Experiment durchgeführt wurde, welche Hypothese wird überprüft.
+	- Training des Netzwerks
+
+	-> Experiment 1: Results
+	- Plot nur für Prostata netz und Prostata Daten + plot für Prostata Netz und weitere Daten
+	- Ergebnisse für einzelne Segmente
+	- Ergebnisse für gesamte Pläne
+
+	Experiment 2:
+	- Patienten Daten (10 M, 10, L, 10 H&N, 10 Nodes und 10 Prostata)
+	- Info über diese Daten
+	- Training des Netzwerks
+
+	-> Experiment 2: Results
+
+	Experiment 3:
+	Phantom Experiment mit verschiedenen Positionen des Phantoms
+
+	- Wie ist das Training verlaufen (Graph Training - Validation Loss)
+	- Ergebnisse für einzelne Segmente
+	- Ergebnisse für gesamte Pläne
+	- Wie sehen die Test Ergebnisse aus (Test - Patienten)
+		- Mixed vs Prostata
+	- Wie performed das Netzwerk auf verschiedene Feldgrößen
+	- Wie performed das Netzwerk bei verschiedenen Winkeln
+	- Wie lange braucht eine Prediction
+
+ 
+Discussion
+	- Warum sind unsere Ergebnisse anders und Bezug auf andere Ebene nehmen
+	- Ist unser Ansatz medical useable, wenn nicht warum nicht
+	- Fragestellung: Warum das Netzwerk für mixed schneller "overfitted"
+	- Hat das Netzwerk die Physik gelernt
+	- Wie gut kann das Netzwerk generalisieren
+	- Ergebnisse auf Phantomen
+	- Vergleich Mixed vs. Prostata
+	- Ausblick mit Idee was man machen könnte
+		- Testfelder (Künstliche Felder) auf zufälligen Positionen im Körper
+		- Neue Architekturen 
+
+Conclusion
+	- Was haben wir erreicht
+	- Gezeigt dass Training auf unterschiedlichen Entitäten das Netzwerk besser generalisieren lassen
+	- Physik wurde nicht gelernt 
+	- Folgende Schritte
+
+
+

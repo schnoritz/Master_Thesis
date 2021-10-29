@@ -6,13 +6,14 @@ from pydicom import dcmread, uid
 
 def read_in(ct_path):
 
-    return [ct_path + x for x in os.listdir(ct_path) if not x.startswith(".") and "dcm" in x]
+    return [ct_path + x for x in os.listdir(ct_path) if not x.startswith(".") and "dcm" in x and not "strctr" in x]
 
 
 def sort_ct_slices(files):
 
     locations = []
     for file_ in files:
+        print(file_)
         dcm = dcmread(file_, force=True)
         locations.append(dcm.SliceLocation)
 
