@@ -66,7 +66,7 @@ def get_results(root):
     df.to_pickle("/Users/simongutwein/Desktop/segment_results.pkl")
 
 
-@latex(width=20, height=12, path="/Users/simongutwein/Desktop/segs.pdf")
+@latex(width=14, height=8, path="/Users/simongutwein/Desktop/segs.pdf")
 def fieldsize_analysis():
 
     # root = "/Users/simongutwein/mnt/qb/baumgartner/sgutwein84/segment_results"
@@ -81,21 +81,21 @@ def fieldsize_analysis():
 
     sizes = df["fieldsize"]
     max_s = sizes.max()
-    max_s = (np.ceil((max_s/10)+1)*10).astype(int)
-    df['discrete'] = pd.cut(df["fieldsize"], list(range(0, max_s, 10)), include_lowest=True)
+    max_s = (np.ceil((max_s/15)+1)*15).astype(int)
+    df['discrete'] = pd.cut(df["fieldsize"], list(range(0, max_s, 15)), include_lowest=True)
     df["discrete"] = [int(x.right) for x in df["discrete"]]
 
-    hist = list(np.histogram(df["fieldsize"][::2], bins=list(range(0, max_s, 10))))
+    hist = list(np.histogram(df["fieldsize"][::2], bins=list(range(0, max_s, 15))))
 
     fig, ax = plt.subplots()
-    ax.bar(list(range(int(max_s/10)-1)), hist[0], alpha=0.2, width=1, linewidth=1, edgecolor="black", facecolor="black", zorder=0)
+    ax.bar(list(range(int(max_s/15)-1)), hist[0], alpha=0.2, width=1, linewidth=1, edgecolor="black", facecolor="black", zorder=0)
     ax2 = ax.twinx()
     ax2 = sns.boxplot(x="discrete", y="value", hue="variable", data=df, palette="Reds", color=1, hue_order=["prostate", "mixed"], zorder=10)
-    for axs in ax2.get_children()[2:277]:
-        axs.set_color('k')
+    # for axs in ax2.get_children()[2:277]:
+    #     axs.set_color('k')
 
-    for axs in ax2.get_children()[278:323]:
-        axs.set_edgecolor('k')
+    # for axs in ax2.get_children()[278:323]:
+    #     axs.set_edgecolor('k')
 
     _, labels = plt.xticks()
     labels = [int(labels[x].get_text()) for x in range(len(labels))]
@@ -105,13 +105,19 @@ def fieldsize_analysis():
     ax.set_xticklabels(x_ticks, rotation=45)
 
     ax2.set_ylabel(r'Gamma-Value /%')
+    ax.yaxis.tick_right()
+    ax.yaxis.set_label_position("right")
+
+    ax2.yaxis.tick_left()
+    ax2.yaxis.set_label_position("left")
+
     ax.set_xlabel("Fieldsize /$cm^2$")
     ax2.legend(bbox_to_anchor=(0.5, 1.1), borderaxespad=0, loc="center", ncol=2)
 
     return fig
 
 
-@latex(width=8, height=12, path="/Users/simongutwein/Desktop/segs_all.pdf")
+@latex(width=7, height=10, path="/Users/simongutwein/Desktop/segs_all.pdf")
 def overall_performance():
 
     # root = "/Users/simongutwein/mnt/qb/baumgartner/sgutwein84/segment_results"
@@ -124,10 +130,11 @@ def overall_performance():
     df["value"] = df["value"].replace("\n", "").astype(float)
 
     fig, ax = plt.subplots()
-    ax = sns.violinplot(x="variable", y="value", data=df, palette="Reds", order=["prostate", "mixed"], cut=0)
-    ax2 = sns.swarmplot(x="variable", y="value", data=df, color="black", size=1, order=["prostate", "mixed"])
-    ax.set_xticklabels(["Prostate Model", "Mixed Model"])
+    ax = sns.violinplot(inner="box", x="variable", y="value", data=df, palette="Reds", order=["prostate", "mixed"], cut=0)
+    #ax2 = sns.swarmplot(x="variable", y="value", data=df, color="black", size=1, order=["prostate", "mixed"])
 
+    ax.set_xticklabels(["Prostate Model", "Mixed Model"])
+    ax.set_xlim([-0.5, 1.5])
     ax.set_ylabel(r'Gamma-Value /%')
     ax.set_xlabel("")
     ax.set_ylim([0, 119])
@@ -215,5 +222,5 @@ def test_set_performance():
 
 if __name__ == "__main__":
     fieldsize_analysis()
-    overall_performance()
-    test_set_performance()
+    # overall_performance()
+    # test_set_performance()

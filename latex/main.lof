@@ -6,3 +6,11 @@
 \contentsline {figure}{\numberline {2}{\ignorespaces Memory efficient queue based dataloading for 3D patch based training. data from different segments are depicted in differnt color shades.\relax }}{9}{figure.caption.2}%
 \defcounter {refsection}{0}\relax 
 \contentsline {figure}{\numberline {3}{\ignorespaces From left to right: Beam Shape Mask, Center Beam Line Distance Mask, Source Distance Mask, CT Mask, Radiological Depth, Target Dose Mask\relax }}{10}{figure.caption.3}%
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {4}{\ignorespaces Dose prediction example on isocentric slice on prostate cancer patient from test cohort with prostate data only trained model. From left to right: target dose; dose prediction; gamma map for isocentric slice with a gamma pass rate of 98.02\%\relax }}{13}{figure.caption.5}%
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {5}{\ignorespaces Prediction accuracy comparison between prostate only and mixed trained models. Passrates for liver, mamma and H\&N are combined into one group of `mixed' data. Significance level using a wilcoxon signed-ranked test are shown above the compared dataseries.\relax }}{15}{figure.caption.8}%
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {6}{\ignorespaces Prediction accuracy for all segments of the test data.\relax }}{16}{figure.caption.9}%
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {7}{\ignorespaces Prediction accuracy of each segment with allocation in terms of field size for prostate only and mixed trained model.\relax }}{16}{figure.caption.10}%

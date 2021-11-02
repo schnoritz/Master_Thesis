@@ -21,8 +21,7 @@ Falls in der Discussion die Feldgröße von Relevanz ist dann Infos mit rein neh
 \begin{figure}
     \centering
     \includegraphics[width=0.9\textwidth]{UNET.pdf}
-    \caption{Network architeture scheme. Size of the input masks are depicted by width (W), height (H) and depth (D). Input dimensionality is WxHxDx5 and output dimensionality is WxHxDx1.}
-    \label{fig:network}
+    \caption{Network architeture scheme. Size of the input masks are depicted by width (W), height (H) and depth (D). Input dimensionality is WxHxDx5 and output dimensionality is WxHxDx1.}\label{fig:network}
 \end{figure}
 
 \subsection{Dataloading}
@@ -90,34 +89,37 @@ heri noch vllt formel und abbildung die auswertungsmetrik
 \subsection{Hypotheses}
 
 \begin{hangingpar}
-    \item\textbf{These 1}: the general dose deposition process for a spcific tumor entity can be learned on data of a multitude of radio treatment plans on that the specific tumor site. We therefore train a network on prostate patient treatment plan data and anatomies and assess the quality of predicted dose distribution with the gamma passrate of each segment as well asa the entire plan. 
+    \item\textbf{These 1}: the general dose deposition process for a spcific tumor entity can be learned on data of a multitude of radio treatment plans on that the specific tumor site. 
+    \item\textbf{Experiment 1}: We therefore train a network on prostate patient treatment plan data and anatomies and assess the quality of predicted dose distribution with the gamma passrate of each segment as well asa the entire plan. 
 \end{hangingpar}
 
 \begin{hangingpar}
-    \item\textbf{These 2}: the in These 1 trained network performes poorly when translating into different tumor sites that were not included in the training data and therefore generalizes poorly. To test translational capabilities the network is tested against liver, breast, head \& neck and lymph node treatment plan data.
+    \item\textbf{These 2}: the in These 1 trained network performes poorly when translating into different tumor sites that were not included in the training data and therefore generalizes poorly. 
+    \item\textbf{Experiment 2}: To test translational capabilities the network is tested against liver, breast, head \& neck and lymph node treatment plan data.
 \end{hangingpar}
 
 \begin{hangingpar}
-    \item\textbf{These 3}: the includation of different tumor sites into the training data improves the the translational capabilites of the network to other tumor sites, while maintaining high accuracy on the included tumor sites and therefore improve the robustness of the network. we therefore train the same network from these 1 on prostate, liver, breast and head \& neck treatment plan data. the translational capabilities are then assed by testing with prostate, liver, breast, head \& neck and lymph node data. by doing this we asses if the network performance decreases on prostate data by including new tumor sites into the training data and we assess its performance on seen (prostate, liver, heaad \& neck, breast) aswell as unseen treatment plan data (lymph nodes).
+    \item\textbf{These 3}: the includation of different tumor sites into the training data improves the the translational capabilites of the network to other tumor sites, while maintaining high accuracy on the included tumor sites and therefore improve the robustness of the network.
+    \item\textbf{Experiment 3}: we therefore train the same network from these 1 on prostate, liver, breast and head \& neck treatment plan data. the translational capabilities are then assed by testing with prostate, liver, breast, head \& neck and lymph node data. by doing this we asses if the network performance decreases on prostate data by including new tumor sites into the training data and we assess its performance on seen (prostate, liver, heaad \& neck, breast) aswell as unseen treatment plan data (lymph nodes).
 \end{hangingpar}
 
 \begin{hangingpar}
-    \item\textbf{These 4}: The network is capable of learning the underlying physics of the dose depositiopn process. By creating phantom input data in the form of a water slap at various positions inside an air volume, we investigate if the network has learned the underlying physics of the dose deposition process.
+    \item\textbf{These 4}: The network is capable of learning the underlying physics of the dose depositiopn process. 
+    \item\textbf{Experiment 4}: By creating phantom input data in the form of a water slap at various positions inside an air volume, we investigate if the network has learned the underlying physics of the dose deposition process.
 \end{hangingpar}
 
 \subsection{Patient Data}
-
+All patients gave their informed written consent to this study, which was approved by the local ethical committee (ethics approval No. 659/2017BO1).
 patient data from our institution previously treated at the mr linac. all plans were created by a medical physicist in agreement with a oncologist
 Welche Entitäten: Prostate only training: 45 prostate treatment plans with a total of 2342 Segments, 36/4/5 split für train / val / test split. with a mean fieldsize of 36.57 ± 17.9 cm\textsuperscript{2} for training / validation set and 34.57 ± 15.86 cm\textsuperscript{2} for the test set.
 mixed model 15 prostate with 720 segments , 35.49 ± 18.01 and 34.57 ± 15.86 15 liver 819 Segments 24.09 ± 18.36 and 22.81 ± 14.47 15 mamma 656 Segments 40.72 ± 28.48 and 40.60 ± 37.98 14 head \& neck 929 segments in einem 8/2/5 split also in 32/8/20 train / validation / test ratio. aswell as 15 patient plans 659 segments for lymphnodes exclusively for testing with a mean fieldsize of 25.95 ± 25.59
 as you can see in \autoref{tab:patients}
+All patients gave their informed written consent to this study, which was approved by the local ethical committee (ethics approval No. 659/2017BO1).
 
-63.00 ± 50.47
-68.89 ± 53.56
 
 \begin{table}
 \centering
-    \scalebox{0.7}{
+    \scalebox{0.71}{
         \begin{tabular}{|lcccccc|}
         \hline
                                             & \textbf{Prostate-Only}           & \multicolumn{4}{c}{\textbf{Mixed-Entity}}                                   & \textbf{Testing} \\ \hline

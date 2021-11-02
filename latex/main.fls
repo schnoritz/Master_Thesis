@@ -169,6 +169,8 @@ INPUT /usr/local/texlive/2020/texmf-dist/tex/latex/hang/hang.sty
 INPUT /usr/local/texlive/2020/texmf-dist/tex/latex/hang/hang.sty
 INPUT /usr/local/texlive/2020/texmf-dist/tex/latex/multirow/multirow.sty
 INPUT /usr/local/texlive/2020/texmf-dist/tex/latex/multirow/multirow.sty
+INPUT /usr/local/texlive/2020/texmf-dist/tex/latex/tools/array.sty
+INPUT /usr/local/texlive/2020/texmf-dist/tex/latex/tools/array.sty
 INPUT /usr/local/texlive/2020/texmf-dist/tex/latex/blindtext/blindtext.sty
 INPUT /usr/local/texlive/2020/texmf-dist/tex/latex/blindtext/blindtext.sty
 INPUT /usr/local/texlive/2020/texmf-dist/tex/latex/tools/xspace.sty
@@ -232,6 +234,12 @@ INPUT chapters/materialmethods.tex
 INPUT images/UNET.pdf
 INPUT images/dataloading.pdf
 INPUT images/masks.pdf
+INPUT chapters/results.tex
+INPUT chapters/results.tex
+INPUT images/example.pdf
+INPUT images/plans.pdf
+INPUT images/segs_all.pdf
+INPUT images/segs_fz_15.pdf
 INPUT main.aux
 INPUT ./main.out
 INPUT ./main.out

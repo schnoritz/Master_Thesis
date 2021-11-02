@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.14159265-2.6-0.999992 (TeX Live 2020) (preloaded format=xelatex 2021.2.17)  29 OCT 2021 10:37
+This is XeTeX, Version 3.14159265-2.6-0.999992 (TeX Live 2020) (preloaded format=xelatex 2021.2.17)  2 NOV 2021 09:31
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -707,6 +707,15 @@ Package: multirow 2019/05/31 v2.5 Span multiple rows of a table
 \multirow@cntb=\count412
 \multirow@dima=\skip118
 \bigstrutjot=\dimen165
+) (/usr/local/texlive/2020/texmf-dist/tex/latex/tools/array.sty
+Package: array 2019/08/31 v2.4l Tabular extension package (FMi)
+\col@sep=\dimen166
+\ar@mcellbox=\box50
+\extrarowheight=\dimen167
+\NC@list=\toks23
+\extratabsurround=\skip119
+\backup@length=\skip120
+\ar@cellbox=\box51
 )) (/usr/local/texlive/2020/texmf-dist/tex/latex/blindtext/blindtext.sty
 Package: blindtext 2012/01/06 V2.0 blindtext-Package
  (/usr/local/texlive/2020/texmf-dist/tex/latex/tools/xspace.sty
@@ -762,7 +771,7 @@ LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 15.
 LaTeX Font Info:    ... okay on input line 15.
 LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 15.
 LaTeX Font Info:    ... okay on input line 15.
-\AtBeginShipoutBox=\box50
+\AtBeginShipoutBox=\box52
 Package hyperref Info: Link coloring OFF on input line 15.
  (/usr/local/texlive/2020/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2019/09/16 v2.46 Cross-referencing by name of section
@@ -906,7 +915,12 @@ File: se-ascii-print.def 2019/11/29 v1.12 stringenc: Printable ASCII characters
 \tf@toc=\write5
 \openout5 = `main.toc'.
 
- [2] (./main.lof)
+ [2] (./main.lof
+Overfull \hbox (0.75345pt too wide) in paragraph at lines 12--12
+ [][] [][]\TU/lmr/m/n/12 Prediction accuracy comparison between prostate only and mixed trained 
+ []
+
+)
 \tf@lof=\write6
 \openout6 = `main.lof'.
 
@@ -964,43 +978,70 @@ File: images/dataloading.pdf Graphic file (type pdf)
 File: images/masks.pdf Graphic file (type pdf)
 <use images/masks.pdf>
  [10]
-Overfull \hbox (31.24792pt too wide) in paragraph at lines 80--81
+Overfull \hbox (31.24792pt too wide) in paragraph at lines 79--80
 \TU/lmr/m/n/12 tool from the EGSnrc software package (the code is publicly available at https://github.com/nrc-
  []
 
-[11]) [12]
-Package biblatex Info: Delimiter 'nametitledelim' in context 'bib' already defined, overwriting on input line 104.
-Package biblatex Info: Delimiter 'nametitledelim' in context 'biblist' already defined, overwriting on input line 104.
+[11]) [12] (./chapters/results.tex
+File: images/example.pdf Graphic file (type pdf)
+<use images/example.pdf>
 
-Overfull \hbox (6.1182pt too wide) in paragraph at lines 116--116
+
+LaTeX Warning: No positions in optional float specifier.
+               Default added (so using `tbp') on input line 20.
+
+[13]
+
+LaTeX Warning: No positions in optional float specifier.
+               Default added (so using `tbp') on input line 41.
+
+
+Overfull \hbox (8.61032pt too wide) in paragraph at lines 45--45
+ []|\TU/lmr/bx/n/12 Mamma| 
+ []
+
+File: images/plans.pdf Graphic file (type pdf)
+<use images/plans.pdf>
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+File: images/segs_all.pdf Graphic file (type pdf)
+<use images/segs_all.pdf>
+File: images/segs_fz_15.pdf Graphic file (type pdf)
+<use images/segs_fz_15.pdf>
+) [14] [15] [16]
+Package biblatex Info: Delimiter 'nametitledelim' in context 'bib' already defined, overwriting on input line 105.
+Package biblatex Info: Delimiter 'nametitledelim' in context 'biblist' already defined, overwriting on input line 105.
+
+Overfull \hbox (6.1182pt too wide) in paragraph at lines 117--117
 \TU/lmr/m/it/12 Premenopausal Women with Breast Cancer\TU/lmr/m/n/12 . In: The New England Journal of Medicine
  []
 
-[13] [14] [15]
-Overfull \hbox (188.11249pt too wide) in paragraph at lines 116--116
+[17] [18] [19]
+Overfull \hbox (188.11249pt too wide) in paragraph at lines 117--117
 \TU/lmr/m/it/12 work method\TU/lmr/m/n/12 . In: Medical Physics 44.4 (2017). _eprint: https://aapm.onlinelibrary.wiley.com/doi/pdf/10.1002/mp.12155,
  []
 
-[16] [17]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 123.
- [18]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 123.
+[20] [21]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 124.
+ [22]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 124.
  (./main.aux)
-Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 123.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 123.
+Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 124.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 124.
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: 96DFFCC86B0808B708E9CAFE48CB5473;1072.
+(rerunfilecheck)             Checksum: 0A5F395D3D936CC15CE9E05C68FCA59A;1450.
 Package logreq Info: Writing requests to 'main.run.xml'.
 \openout1 = `main.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 22214 strings out of 479418
- 421664 string characters out of 5884585
- 1176075 words of memory out of 5000000
- 39436 multiletter control sequences out of 15000+600000
+ 22304 strings out of 479418
+ 422971 string characters out of 5884585
+ 1178489 words of memory out of 5000000
+ 39517 multiletter control sequences out of 15000+600000
  535546 words of font info for 48 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
- 47i,12n,52p,3267b,6260s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 47i,12n,52p,3267b,6258s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on main.xdv (24 pages, 390808 bytes).
+Output written on main.xdv (28 pages, 452028 bytes).
