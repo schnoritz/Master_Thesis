@@ -1,279 +1,189 @@
-Material and Methods (Unsicher wie ich das aufbauen soll)
-
-Netzwerk Architektur
-Dataloading
-Was ist Input
-Wie werden Trainingsdaten erzeugt
-Auswertungsmetriken
-
-- Hypothesen und wie wir diese Überprüfen:
-- ... 
-
-Data:
-Beschreibung der Patientendaten (wie viele, wie verteilt)
-Infos zu der Ethical...
-Falls in der Discussion die Feldgröße von Relevanz ist dann Infos mit rein nehmen. Nähere Infos in Tabelle
-
 \subsection{Network Architecture}
 
-3D UNet architecture with a downsampling ratio of 8 and a maximum layer depth of 512 in the bottleneck connection and skip connections before each pooling layer. multiple input masks in the size of CT with a resolution od 1.1718 x 1.1718 x 3 mm\textsuperscript{3} resolution in coronal, sagital, and tanversal dimension respectively. shown in image \autoref{fig:network}
+The network architecture (\autoref{fig:network}) is based on a basic 3D-UNet implemented by \citeauthor{ronneberger_u-net_2015-1}~\cite{ronneberger_u-net_2015-1} with slight adaptions in downsampling depth, due to memory limitations when using 3D data. We used a downsampling ratio of 8 and a maximum layer depth of 512 in the bottleneck connection. Skip connections are used after each convolutional steps before each pooling layer. To include a multitude of information from the patient aswell as the accelerator, we used five input volumes concatenated along the forth dimension, resulting in an input volume of size $5 \times width \ (W) \times height \ (H) \times depth \ (D)$. As the base resolution for all volmes we used the resolution of our CT scans with voxel dimensions of $1.1718 \times 1.1718 \times 3 mm^3$ in the coronal, sagital, and tanversal plane. 
+
 
 \begin{figure}
     \centering
     \includegraphics[width=0.9\textwidth]{UNET.pdf}
-    \caption{Network architeture scheme. Size of the input masks are depicted by width (W), height (H) and depth (D). Input dimensionality is WxHxDx5 and output dimensionality is WxHxDx1.}\label{fig:network}
+    \caption{Basic scheme of adapted network architecture with a downsampling ratio of 8 and a maximum depth of 512 in the bottleneck layer. Input dimensions: $5 \times W \times H \times D$; Output dimensions: $1 \times W \times H \times D$}\label{fig:network}
 \end{figure}
 
 \subsection{Dataloading}
 
-Patch based training, warum
-erklären, dass aufgrund der Natur von 3D-Daten und dem Limit des Grafikkarten speichers nur ein teil der daten geladen werden können. erklären, dass der speicherpaltz verbrauch zum vorherigen abspeichern aller patches zu groß ist und die patches somit on the fly extrahiert werden mussen. eingehen auf TorchIO und deren lösung mittels einer queue an der sich meine lösung orientiert. on the fly loading von den daten in den datenspeicher und dann nach und nach füttern des Netzwerks mit gemischten Patches von verschiedenen patienten. verweis auf \autoref{fig:dataloading}
+Memory usage is a serious concern in the application of deep learning and espeacially when dealing with 3D data sets. 
+In our case not only the memory usage in the \ac{GPU} but in the \ac{RAM} is of importance. For each training epoch, the network sees all present training data. 
+In most applications all data can be loaded into the \acs{RAM} and is then passed onto the \acs{GPU}.
+A solution to this problem is to load data on the fly into the RAM and then process it.
+This is not applicable because of the immense size of the 3D volumes (multiple 100 MB per volume) that are used for training. 
+We therefore developed an partial on the fly dataloading inspired by the \emph{Queue} class from \citeauthor{perez-garcia_torchio_2021}~\cite{perez-garcia_torchio_2021}. 
+Due to the quantitative nature of our intput data, we were not able to use data augmentation for our input data. 
+To still achieve some additional variation in training data we used the approach of patch based training. 
+A multitude of patches can therefore be extracted from the same volume, increasing the variety in training data while using the relatively small number of training volumes. 
+To combine the semi-on-the-fly dataloading and the patch based training, multiple volumes are loadded into the RAM and then processed together. 
+\autoref{fig:dataloading} shows a scheme of this dataloading approach. 
+A fixed amount of training data is loaded from the randomized training data pool and loaded into the RAM. 
+From this set of training volumes a subset of patches is extracted from each volume and stored in a queue of patches, which is then shuffled and batch wise passed onto the GPU and the network. 
 
 \begin{figure}
     \centering
-    \includegraphics[width=0.9\textwidth]{dataloading.pdf}
-    \caption{Memory efficient queue based dataloading for 3D patch based training. data from different segments are depicted in differnt color shades.}
-    \label{fig:dataloading}
+    \includegraphics[width=0.7\textwidth]{dataloading.pdf}
+    \caption{Dataloading scheme for memory efficient patch based dataloading for 3D training volumes. A subset of patches from one training volume is depicted in one color shade.}\label{fig:dataloading}
 \end{figure}
 
 \subsection{Network Input \& Output}
 
-
-
 \subsubsection{Network Input}
 
-The input consists of 5 3D volumes (\autoref{fig:masks}) to combine different spatial, anatomical aswell a accelorator information into the training data. the masks are used to achieve a direct connection from accelerator that translates onto the patients anatomy
+The network expects five 3D volumes concatenated along their fourth dimension as input. 
+These five 3D volumes (\autoref{fig:masks}) combine different spatial, anatomical aswell as accelorator information into the training data. 
+By doing so gantry aswell as accelerator head information can be directly translated into 3D space, which makes them interpretable for the network. 
 
 \setlength{\hangingindent}{1em}
+
 \begin{hangingpar}
-    \item \textbf{Beam Shape}: beam shape information in form of a volume indicating the trajectory of the beam and its specific shape for each segment. in the masks voxels which the trajecotry passes contain the beam area. this accounts for the outputfactor of the accelerator, meaning that for bigger fields the in-scatter in the central beam line is higher than for smaller fields. 
-\end{hangingpar}
-\begin{hangingpar}
-    \item \textbf{Center Beam Line Distance}: The beam of a linear accelerator is best defined in the central beam line. therefore the distance from the central beam line is of importance for the dose deposition. the minimum distance of each voxel from the central beam line accounting voxel dimensionality is saved in this mask.
-\end{hangingpar}
-\begin{hangingpar}
-    \item \textbf{Source Distance}: The square rule of distance for the tissue in which the photons interact and the radiation source is of crucial importance for the dose deposited in the affected tissue. the values in this mask reflect the distance from each voxel to the radiation source with accounting the voxel dimensionality. 
-\end{hangingpar}
-\begin{hangingpar}
-    \item \textbf{CT}: Dose deposition and particle interaction in genereal are defined by their energy aswell as the electron density of the affected volume. as the energy of the radiated photons is constant, the impact of the electron density of the volume (in this case the patients anatomy) is accounted in this mask. It consits of the houndsfield units from a ct scan. with this mask dose deposition in denser tissues can be accounted for.
-\end{hangingpar}
-\begin{hangingpar}
-    \item \textbf{Radiological Depth}: as a particle passes trough the affected volume it loses its energy on its path. therefore the depth, which a particle has already passedd inside a tissue is very important for the dose deposition effects that take place. because particles lose their energy faster in dense materials, this affect is accounted for using the radiological depth. it accounts for the distance from the source as well as the electron density of the passed tissue. A depth in a dense material results in a higher radiological depth that the same depth in soft tissue.
+    \item \textbf{(a) Beam Shape}: The trajectory of the beamshape into 3D space if of crucial importance. 
+    It is most important accelerator information for the network. 
+    It combines leaf configurations as well as gantry angle into one volume. 
+    It acts in some way as a binary indexing mask giving the network information about which voxel is intersected by the beams trajectory into 3D space. 
+    To additionaly account for the outputfactor the fieldsize of that specific segment is stored in each voxel intersected by the beam field. 
+    The output factor describes the physical process of increasing photon in-scatter into the central beamline for increasing fieldsizes. 
 \end{hangingpar}
 
-To only clip the mask values to the actual patients anatomy, all values in each mask were set to zero where the CT mask had a HU value smaller than 874 (150 values above the HU value for air).
+\begin{hangingpar}
+    \item \textbf{(b) Center Beam Line Distance}: The beam of a linear accelerator is best defined in the central beam line. The use of \ac{FF} mostly corrects for this occurence. The distance from the central beam line is therefore of importance for the dose deposition. The minimum distance of each voxel from the central beam line accounting voxel dimensionality is saved in this mask. -> hier mal nochmal drüber reden
+\end{hangingpar}
+
+\begin{hangingpar}
+    \item \textbf{(c) Source Distance}: 
+    The radiation pattern of photons from the accelerator head can be assumed to be the front of a spherical wave. 
+    The photon fluence is therefore decreasing with the square of the distance from the source. 
+    The source distance mask takes this physical relationship into account. 
+    Each voxel within the volume is assigned its distance to the source, taking into account the different voxel dimensions in the different spatial directions. 
+    
+\end{hangingpar}
+
+\begin{hangingpar}
+    \item \textbf{(d) CT}: Dose deposition and particle interaction in genereal are defined by their energy aswell as the electron density of the affected volume. As the energy of the radiated photons is assumed constant, the impact of the electron density of the volume (in this case the patients anatomy) is mainly responsible to the different interaction processes of the photon and secondary electrons. The masks consists of the houndsfield units from the initial CT scan of the patient. Particles radiation from gantry angles below the treatment couch, interact partly inside the treatment couch, therefore it is included in the CT mask. 
+\end{hangingpar}
+
+\begin{hangingpar}
+    \item \textbf{(e) Radiological Depth}: A photon or electron that passes trough the interaction medium loses its energy on its path. Therefore, the path that a particle follows through a medium is of highly relevant for the dose deposition effects that take place. The radiological depth combines the distance from the source aswell as the interaction mediums density. It is the sum of the path length through a medium multiplied by the density of intersected voxels. Therefore the same spatial depth in a dense material results in a higher radiological depth than the same depth in soft tissue.
+\end{hangingpar}
+
+Particles interact negligibly in air, therefore were all masks set to zero where the CT masks was 150 HU over the HU for air. Air or low density volumes inside the body of the patient were not affected by this step, to account for the \ac{ERE} on the surface of air cavities inside the patient. 
 
 \begin{figure}
     \centering
     \includegraphics[width=\textwidth]{masks.pdf}
-    \caption{From left to right: Beam Shape Mask, Center Beam Line Distance Mask, Source Distance Mask, CT Mask, Radiological Depth, Target Dose Mask}
-    \label{fig:masks}
+    \caption{Examplary input and output for a single segment of a prostate plan. (a): beam shape, (b): center beam line distance, (c): source distance, (d): CT, (e): radiological depth, (f): dose distribution, }\label{fig:masks}
 \end{figure}
 
 \subsubsection{Network Output}
 
-The output yielded by the network is the single volume of the predicted dose for the given input. It has the same dimensionality for wudthm height and depth aswell as voxel dimensions as the input masks. shown in \autoref{fig:masks}
+The network combines the information from the five 3D volumes and yields a single volume with the respective dose distribution for the given input. Spatial dimensions for width height and depth aswell as voxel dimensions are preserved during inference. In \autoref{fig:masks} (f) an exemplary dose distribution for the respective inputs (a) - (e) is given
 
 \subsection{Training Data Generation}
 
-The patient anatomy and accelerator information of each segment was extracted from the radio treatment plan. The required masks were created from this information using in-house python scripts. The target dose mask was simulated using the dosxyznrc software tool from the EGSnrc software package (the code is publicly available at https://github.com/nrc-cnrc/EGSnrc). EGSnrc enabled us to  us to simulate each beam segment from each patient's treatment plan, with the accurate MR linac accelerator head model frrom previous work at our institution. Each segment was simulated using 10\textsuperscript{7} for time efficiency. 
-
-hier noch beschreiben wie lange due daten generation braucht? wichtig? 
+All training data was generated from patient data taken from the institutional database of radiotherapy treatment plans. 
+Information for all input masks are given in the CT scan, the dose file aswell as the plan file. 
+The patients anatomy for the CT masks is taken from the CT files and adjusted to the right slice thickness, due to different aquisition protocols using 2~mm or 3~mm slice spacing. 
+Dose distribution used as training target for each segment were calculated using the EGSnrc open source software package provided under~\cite{noauthor_nrc-cnrcegsnrc_2021}. 
+The work of \citeauthor{friedel_development_2019} enabled us to accurately simulate single segment dose distributions for the MR-Linac. 
+Simulation of all segments was dose using a remote \ac{HPC} solution provided by the state of Baden-Württemberg. 
+Coordinate system orientation of the patients anatomy as well as \ac{MLC} and gantry positions are given in the dose and plan file. 
+Simulation of $10^7$ particles took around 4 hours on average.
+The 3D input volumes to the network were calculated using in-house developed python scripts with the provided information from CT, dose and plan files. (GITHUB LINK?, hier noch näher drauf eingehen?)
 
 \subsection{Evaluation Metrics}
 
-to directly asses the quality of the dose prediction, we used the gamma - passrate, which compares two dose distrbutioins on the same grid. in this analysis tool eaach voxel and its value on grid 1 is compared to the zugehörigen voxel from the second dose distribution. two margins are used that define in which margin the seconds dose voxel can vary to be accepted as valid. the two margins are a dose value margin aswell as a spatial margin. hier noch erklären was der spatial margin eigentlich aussagt
+Dose conformaty of dose distributions are clinically assessed using the gamma-index metric first introduced by \citeauthor{low_technique_1998}~\cite{low_technique_1998} in \citeyear{low_technique_1998}. The evaluation metric composed of two parametric values that set the criteria for which dose distributions are analysed. Spatial deviations aswell as deviations of dose are respected when analysing. Dose conformaty is assessed by analyzing each individual voxel of a given dose distribution using the following equation:
 
-heri noch vllt formel und abbildung die auswertungsmetrik
+\begin{equation}\label{eq:gamma}
+    \Gamma (r_m, r_c) = \sqrt{\frac{r^2(r_m,r_c)}{\Delta d^2_M} + \frac{\delta ^2(r_m,r_c)}{\Delta D^2_M}}
+\end{equation}
 
-\subsection{Hypotheses}
+where $\Delta D_M$ and $\Delta d_M$ are the dose difference and spatial criterion respectively, in our case 3\% and 3~mm.  $r^2(r_m,r_c)$ and $\delta ^2(r_m,r_c)$ are the squared spatial distance and dose difference from the reference point $r_m$ to evaluation point $r_c$ respetively. If $\Gamma \leq 1$ the criterion are passed. By evaluating the entire volume in that manner an overrall gamma passrate can be calulated with the following formula. 
 
-\begin{hangingpar}
-    \item\textbf{These 1}: the general dose deposition process for a spcific tumor entity can be learned on data of a multitude of radio treatment plans on that the specific tumor site. 
-    \item\textbf{Experiment 1}: We therefore train a network on prostate patient treatment plan data and anatomies and assess the quality of predicted dose distribution with the gamma passrate of each segment as well asa the entire plan. 
-\end{hangingpar}
+\begin{equation}\label{eq:gamma_rate}
+    \gamma = \frac{NoT(\Gamma \leq 1)}{NoT}
+\end{equation}
 
-\begin{hangingpar}
-    \item\textbf{These 2}: the in These 1 trained network performes poorly when translating into different tumor sites that were not included in the training data and therefore generalizes poorly. 
-    \item\textbf{Experiment 2}: To test translational capabilities the network is tested against liver, breast, head \& neck and lymph node treatment plan data.
-\end{hangingpar}
+where $NoT$ is the number of points to be tested, in this case the number of voxels in the entire volume and $NoT(\Gamma \leq 1)$ is the number of tests that passed the gamma criterion following \autoref{eq:gamma}. The equations \autoref{eq:gamma} and \autoref{eq:gamma_rate} hold true for single aswell as multiple dimensions. A 2D example for a passed aswell as a failed gamma test is given in \autoref{fig:gamma}. 
 
-\begin{hangingpar}
-    \item\textbf{These 3}: the includation of different tumor sites into the training data improves the the translational capabilites of the network to other tumor sites, while maintaining high accuracy on the included tumor sites and therefore improve the robustness of the network.
-    \item\textbf{Experiment 3}: we therefore train the same network from these 1 on prostate, liver, breast and head \& neck treatment plan data. the translational capabilities are then assed by testing with prostate, liver, breast, head \& neck and lymph node data. by doing this we asses if the network performance decreases on prostate data by including new tumor sites into the training data and we assess its performance on seen (prostate, liver, heaad \& neck, breast) aswell as unseen treatment plan data (lymph nodes).
-\end{hangingpar}
+\begin{figure}
+    \centering
+    \includegraphics[width=0.5\textwidth]{gamma.pdf}
+    \caption{Gamma test for two points $r_{passed}$ and $r_{failed}$ and the reference point $r_m$ for a 2D (X,Y) space case. Orange and brown rings indicate distance and dose parameter acceptance margins respectively. The Gray sphere represents the set of all points that pass the gamma test. Green and Red arrow indicate a passed and failed gamma test for the given reference point $r_m$, dose and spatial parameter.}\label{fig:gamma}
+\end{figure}
 
-\begin{hangingpar}
-    \item\textbf{These 4}: The network is capable of learning the underlying physics of the dose depositiopn process. 
-    \item\textbf{Experiment 4}: By creating phantom input data in the form of a water slap at various positions inside an air volume, we investigate if the network has learned the underlying physics of the dose deposition process.
-\end{hangingpar}
+\subsection{Hypotheses and Experiments}
+
+\subsubsection{General Applicability}\label{sssec:H1}
+\begin{hanginglist}\itemsep2pt
+
+    \item\textbf{Hypothesis}\newline
+    The network is able to learn the general dose deposition process from the given input taken from a multitude of radio treatment segments of one tumor entity. 
+    Dose predictions for segments of the same entity are accurate and robust.
+
+    \item\textbf{Experiment}\newline
+    Training of the proposed 3D-UNet on a mutlitude of prostate cancer patient radio treatment segments. 
+    Dose conformaty assessment with the gamma passrate for each individual test segment aswell as entire test plans. 
+
+\end{hanginglist}
+
+\subsubsection{Poor Initial Translatability}\label{sssec:H2}
+\begin{hanginglist}\itemsep2pt
+
+    \item\textbf{Hypothesis}\newline
+    Different tumor sites vary drastically in segment shape, orientation and \ac{SSD}. The \acs{SSD} is, compared to other entities such as \acs{HN}, mostly constant for prostate cancer patients. The same holds true for tissue homogenity aspects of the respective body regions, when comparing lower abdomen to e.g. \acs{HN}. We therefore assume that the network will not reach the previously achieved gamma passrates when testing on different tumor sites and patient anatomies. 
+
+    \item\textbf{Experiment}\newline
+    The from \emph{\ref{sssec:H1} \nameref{sssec:H1}} trained network is then used for inference on additional testing data from a multitude of tumor entities aswell as patient anatomies to test its translational capabilities to a varying set of input characteristics. 
+
+\end{hanginglist}
+
+\subsubsection{Increased Robustness}\label{sssec:H3}
+\begin{hanginglist}\itemsep2pt
+
+    \item\textbf{Hypothesis}\newline
+    The includation of a broader variety of segments shapes, sizes and positions inside the patients anatomy, as well as differing body regions and therefore varying \acs{SSD} values and tissue densities result in a better robustness of the networks prediction accuracy. 
+
+    \item\textbf{Experiment}\newline
+    Network architecture aswell as training algorithm of the in \emph{\ref{sssec:H1} \nameref{sssec:H1}} trained network are kept, while including additional trainign data from liver, breast and \acs{HN} patients. 
+    We therefore include liver, breast and \ac{HN} into the training of the same network from \emph{Hypothesis 1}. The translational capabilities are then assed by testing the newly trained network on prostate, liver, breast, H\&N and lymph node data. By doing this we asses if the network performance decreases on prostate data by including new tumor sites into the training data and we assess its performance on seen (prostate, liver, heaad \& neck, breast) aswell as unseen treatment plan data (lymph nodes).
+
+    \item\textbf{Experiment}:
+\end{hanginglist}
+
+\subsubsection{Underlying Physics}\label{sssec:H4}
+\begin{hanginglist}\itemsep2pt
+    \item\textbf{Hypothesis 4}: The network is capable of learning the underlying physics of the dose depositiopn process. 
+    \item\textbf{Experiment 4}: in order to decouple the dose delivery from the patient anatomy, we have created a phantom data set. The phantoms consist of an air volume in the shape of a cube with the dimensions 600 $\times$ 600 $\times$ 600 $mm^3$ (512 $\times$ 512 $\times$ 200 voxel for coronal, sagital and transversal plane, respectively). Within this air volume, a water slab is placed at various locations to account for the influence of the distance-squared law. in this volume, we now simulate and predict a 10 $\times$ 10 beam from 0° and observe the depth dose profile, as well as the coronal and sagital transverse dose profiles in the middle of the water volume. A multitude of aspects of the physics can distance-squared law, penumbra, qualitative and quantitative depth dose profiles, field divergence in central beamline. 
+\end{hanginglist}
 
 \subsection{Patient Data}
 All patients gave their informed written consent to this study, which was approved by the local ethical committee (ethics approval No. 659/2017BO1).
-patient data from our institution previously treated at the mr linac. all plans were created by a medical physicist in agreement with a oncologist
-Welche Entitäten: Prostate only training: 45 prostate treatment plans with a total of 2342 Segments, 36/4/5 split für train / val / test split. with a mean fieldsize of 36.57 ± 17.9 cm\textsuperscript{2} for training / validation set and 34.57 ± 15.86 cm\textsuperscript{2} for the test set.
-mixed model 15 prostate with 720 segments , 35.49 ± 18.01 and 34.57 ± 15.86 15 liver 819 Segments 24.09 ± 18.36 and 22.81 ± 14.47 15 mamma 656 Segments 40.72 ± 28.48 and 40.60 ± 37.98 14 head \& neck 929 segments in einem 8/2/5 split also in 32/8/20 train / validation / test ratio. aswell as 15 patient plans 659 segments for lymphnodes exclusively for testing with a mean fieldsize of 25.95 ± 25.59
+patient data from our institution previously treated at the mr linac.\ all plans were created by a medical physicist in agreement with a oncologist
+Welche Entitäten: Prostate only training: 45 prostate treatment plans with a total of 2342 Segments, 36/4/5 split für train / val / test split.\ with a mean fieldsize of 36.57 ± 17.9 cm\textsuperscript{2} for training / validation set and 34.57 ± 15.86 cm\textsuperscript{2} for the test set.
+mixed model 15 prostate with 720 segments, 35.49 ± 18.01 and 34.57 ± 15.86 15 liver 819 Segments 24.09 ± 18.36 and 22.81 ± 14.47 15 mamma 656 Segments 40.72 ± 28.48 and 40.60 ± 37.98 14 head \& neck 929 segments in einem 8/2/5 split also in 32/8/20 train / validation / test ratio.\ aswell as 15 patient plans 659 segments for lymphnodes exclusively for testing with a mean fieldsize of 25.95 ± 25.59
 as you can see in \autoref{tab:patients}
 All patients gave their informed written consent to this study, which was approved by the local ethical committee (ethics approval No. 659/2017BO1).
 
 
 \begin{table}
 \centering
-    \scalebox{0.71}{
+    \scalebox{0.7}{
         \begin{tabular}{|lcccccc|}
         \hline
                                             & \textbf{Prostate-Only}           & \multicolumn{4}{c}{\textbf{Mixed-Entity}}                                   & \textbf{Testing} \\ \hline
                                             & \multicolumn{1}{c|}{}            & Liver       & Mamma       & Head \& Neck & \multicolumn{1}{c|}{Prostate}    & Lymphnodes       \\
-            Number of Segments              & \multicolumn{1}{c|}{45}          & 15          & 15          & 15           & \multicolumn{1}{c|}{15}          & 15               \\
+            Number of Patients              & \multicolumn{1}{c|}{45}          & 15          & 15          & 15           & \multicolumn{1}{c|}{15}          & 15               \\
             Number of Segments              & \multicolumn{1}{c|}{2342}        & 819         & 656         & 929          & \multicolumn{1}{c|}{720}         & 659              \\
-            Training / Validation / Testing & \multicolumn{1}{c|}{36/4/5}      & 8/5/2       & 8/2/5       & 8/5/2        & \multicolumn{1}{c|}{8/5/2}       & Only Testing     \\
+            Training / Validation / Testing & \multicolumn{1}{c|}{36/4/5}      & 8/2/5       & 8/2/5       & 8/2/5        & \multicolumn{1}{c|}{8/2/5}       & Only Testing     \\
             Fieldsize Training/Validation   & \multicolumn{1}{c|}{36.5 (17.9)} & 24.1 (18.4) & 40.7 (28.5) & 63.0 (50.5)  & \multicolumn{1}{c|}{35.5 (18.0)} & N/A              \\
             Fieldsize Testing               & \multicolumn{1}{c|}{34.5 (15.8)} & 22.8 (14.4) & 40.6 (38.0) & 68.9 (53.6)  & \multicolumn{1}{c|}{34.6 (15.9)} & 26.0 (25.6)      \\ \hline
         \end{tabular}
     }
-    \caption{Patient data infortmation for Prostate-Only as well as Mixed-Entity trained model and testing data set. Fieldsizes are given as mean (standard deviation).}
-    \label{tab:patients}
+    \caption{Patient data infortmation for Prostate-Only as well as Mixed-Entity trained model and testing data set. Fieldsizes are given as mean (standard deviation).}\label{tab:patients}
 \end{table}
-
-
-
-% \textbf{\emph{Patient Data}}
-
-% We used the treatment information from 45 prostate, 10 breast, 10 lymph node, 10 head and neck and 10 liver patients who were previoulsy treated using the MRI-Linac Elekta Unity (Elekta, Stockholm, Sweden) in our institution. \textbf{List fieldsizes, and gantry angle distribution (maybe a fanfy plot with a circualr coordinate system, like a distribution over angles) respectively}. 
-% To to improve transational capabilities of the network 
-
-% List how many segments for which entity I used and then how i split them up into training, validation and test patients and their respective number of segments. to match CT image shape dose distribution were resized to match the 512x512x number of slices shape of the ct input array. (siehe workflow\_code/utils.py skripte). The original iso center of the plan was used weather it was centered in the volume or not. 
-
-% Ground truth dose distributions were calculated EGSnrc using 10\textsuperscript{7} histories. (information über EGSnrc also software version und release %\cite{noauthor_nrc-cnrcegsnrc_2021}) Each segment was calculated using same number of monitor units which enabled me to scale the segment based on the segment weight when predicting an entire treatment plan. 
-
-% \textbf{\emph{Network}}
-
-% The U-Net expects a 3d input of size (batchsize, num\_masks, W, H, D) and samples this input over the encoding path down to extract important features on a lower level scale from size [W, H, D] down to [W/2, H/2, D/2]. The decoding is done using 3D transposed convolutions with a kernelsize and a stride of 2 respectively. A skip connecting was added to before pooling to pass on highler level of volume resolution to later parts of the U-Net. 
-% Each block building block consits of a convolutional layer with zero padding, to maintain dimensionality, kernel size 3$x$3$x$3 and a stride of 1, a 3D batch normalization layer and a RelU layer. No dropout was used. 
-% Modified version of (doi:10.1007/978$-$3$-$319$-$24574$-$4\_28)
-
-
-% % \begin{figure}
-% % 	\centering
-% %     \includegraphics[width=\textwidth]{UNET.pdf}
-% %     \caption{3D U-Net architecture}
-% %     \label{fig: unet}
-% % \end{figure}
-
-% % \begin{figure}
-% % 	\centering
-% %     \includegraphics{test.pdf}
-% %     \caption{Performance of the networks, trained on mixed and on prostate only patients anatomies and plan configurations. The underlying bar chart (left y axis) shows the occurneces of the fieldsizes listed on the x axis. The box plots (right y axis) shows the performance value of each discretized fieldsize range for both mixed and prostate only trained model. Outliers are depicted with a diamond shape}
-% %     \label{fig: test}
-% % \end{figure}
-
-% % \begin{figure}
-% % 	\centering
-% %     \includegraphics{phantomP100T200_10x10_x.pdf}
-% %     \caption{NONE}
-% %     \label{fig: test}
-% % \end{figure}
-% % \begin{figure}
-% % 	\centering
-% %     \includegraphics{phantomP100T200_10x10_y.pdf}
-% %     \caption{NONE}
-% %     \label{fig: test}
-% % \end{figure}
-
-% % \begin{figure}
-% % 	\centering
-% %     \includegraphics{phantomP100T200_10x10_z.pdf}
-% %     \caption{NONE}
-% %     \label{fig: test}
-% % \end{figure}
-
-% % \begin{figure}
-% % 	\centering
-% %     \includegraphics{test_cases.pdf}
-% %     \caption{NONE}
-% %     \label{fig: test}
-% % \end{figure}
-
-% % \begin{figure}
-% % 	\centering
-% %     \includegraphics[width=\textwidth]{masks.pdf}
-% %     \caption{Sample from a slice of training data. From left to right: beam shape, CT with Houndsfield Units, radiological depth, center beamline distance, source distance}
-% %     \label{fig: test}
-% % \end{figure}
-
-% \textbf{\emph{Input Data}}
-
-% The input of the network consists of 5 different masks containig spatial information about the given volume. (insert image with different masks and a little description of it) refer to deepdose paper by kontaxis %\cite{kontaxis_deepdose_2020}
-
-% % \begin{figure}[H]
-% %     \vspace{1cm}
-% %     \minipage{0.32\textwidth}
-% %         \includegraphics[width=4cm]{binary}
-% %         \caption*{(a)}
-% %     \endminipage\hfill
-% %     \minipage{0.32\textwidth}
-% %         \captionsetup{format=hang}
-% %         \includegraphics[width=4cm]{ct.png}
-% %         \caption*{(b)}
-% %     \endminipage\hfill
-% %     \minipage{0.32\textwidth}%
-% %         \includegraphics[width=4cm]{radio.png}
-% %         \caption*{(c)}
-% %     \endminipage
-% %     \vspace{1cm}
-% %     \minipage{0.49\textwidth}
-% %         \centering
-% %         \includegraphics[width=4cm]{center}
-% %         \caption*{(d)}
-% %     \endminipage\hfill
-% %     \minipage{0.49\textwidth}
-% %         \centering
-% %         \includegraphics[width=4cm]{source}
-% %         \caption*{(e)}
-% %     \endminipage\hfill
-% %     \caption{Input masks for training}\label{fig: masks}
-% % \end{figure}
-
-% in the image above the the different input masks can bee seen. the masks are the binary beam shape (a), ct image with (electron density oder HU values, mal schauen was besser performed) (b) radiologial depth (c) center beamline distance (d) and source distance (d) 
-% the binary beam shape input is most importance, due to the fact that this input mask is the only one providing the network with information about the beam position and orientation concerning shape and limits
-
-% ct and readiological depth provide structural information about the parient anatomy. the radiological depth in particular helps the network to understand spatial dimensions when being given patches for training, becuase the information where a specific voxel is located inside the patients anatony would be lost when training with patches without the radiological depth. the algorithm for radiological depth calculation is implemented in python and based on  %\cite{siddon_fast_1985}
-
-% all input masks are limited to the volume where the ct mask has a houndsfield unit value higher than 150, since this is the threshhold of our institunional dose esmiation software.
-
-% The entire network and training algorithm is programmed in PyTorch. The dataloading was inspired by TorchIO, a libary for efficient dataloading for 3d medical imaging and especially patch based loading of 3d data. (torch io citen %\cite{perez-garcia_torchio_2021}) Due to the immense memory usage of (nummer an segmenten angeben) segments, not all segments could be loaded simutaneously into the memory. to archieve a randomised set of patches presented to the network at each training itteration, the dataloading is based on a subset of patient segments randomly selected from the entire training data pool. To further inprove dataloading time, a simutaneous loading of multiple segments at the same time using multi threading was implemented. 
-
-% % \begin{figure}
-% %     \centering
-% %     \includegraphics[width=\textwidth]{dataloading.pdf}
-% %     \caption{Dataloading scheme}\label{fig: dataloading}
-% % \end{figure}
-
-% % \begin{figure}
-% %     \centering
-% %     \input{/Users/simongutwein/Documents/GitHub/Master_Thesis/Masterarbeit_Text/Images/test.tex}
-% %     \caption{Dataloading scheme}\label{fig:test}
-% % \end{figure}
-
-% (referenz auf bild was dataloading verdeutlicht) shows the schematic process of preloading a data queue from which random patches are taken for each batch presented the network for training. when the queue gets filled with patches a by the user specified number of segments gets randomly selected from the pool. then another by the user specified number of random patch positions per segment are extracted from the entire volume. then the entire queue gets shuffled and is then emptied during the training process. after the dataqueue is empty it is refilled with new patches from not previously used segments.
-% after all segments have been used for patch extraction, the list of available segments is reset.
-
-
-% \subsection{Training}
-
-% The 3D-UNet was trained on a HPC cloud based solution using a 4 Nvidia GTX 2080 Ti with 11GB of VRAM. The batchsize for training was 128 and the patch size was 32 in all dimensions resulting in the input shape of (128, 5, 32, 32, 32). Since 4 graphics cards were used each card processed 32 patches of size (5, 32, 32, 32) simutaneously. The spatial resolution of a 32 x 32 x 32 patch was 37.4 x 37.4 x 96 mm\textsuperscript{3} with voxel dimensionality of 1.17 x 1.17 x 3 mm\textsuperscript{3}. 
-% The loss function used was the root mean squared error and the ADAM optimizer with a starting learning rate of 10\textsuperscript{-4}, and the standard settings for beta1, beta2 and epsilon of 0.9, 0.999 and 10-8 respectively. Learning rate was reduced by a factor of 10 when no improvement in the validation loss could be observed. 
-% A validation step was done after the training queue has been refilled resulting in a validation step after 12800 patches with 64 segments per queue and 200 patches per segment. The overall accuracy regarding the 3mm/3\% gamma values was assessed every 5 queue refillings. Training was stopped when no validation loss improvement could be observed for 30 epochs after learning rate reduction to 10\textsuperscript{-6}.
-
-% Training supervision was done using Tensorboard in which training loss, validation loss and a the gamma pass rate could be viewed during training. 
-
-
-% \subsection{Output analysis}
-
-% To assess the overall performance of the network a gamma anlysis (cite gamma paper) was perfomed. The settings for individual segments and total plan are shown in Table. 
-
-% Hier mal noch mit den anderen diskutieren, was man noch machen könnte. DVH? oder sonstige analysen der Dosis. z.B. diese Dice analyse die ich geplant hatte, wo man einen Threshold setzt und dann schauen wie sehr sich die prozente überschneiden.
-
-% \subsection{Testing}
-
-% The model tested on only prostate patients was tested against all other entities so assess the translational capabilities of a model only trained on one entity. The model trained on prostate, liver, breast and head and neck radio treatment data, was evaluated on all entities trained on aswell as on lypmh nodes to asses the translation to a tumor entity which was not present in the training data.

@@ -1,16 +1,24 @@
 \boolfalse {citerequest}\boolfalse {citetracker}\boolfalse {pagetracker}\boolfalse {backtracker}\relax 
 \babel@toc {english}{}
 \defcounter {refsection}{0}\relax 
-\contentsline {figure}{\numberline {1}{\ignorespaces Network architeture scheme. Size of the input masks are depicted by width (W), height (H) and depth (D). Input dimensionality is WxHxDx5 and output dimensionality is WxHxDx1.\relax }}{8}{figure.caption.1}%
+\contentsline {figure}{\numberline {1}{\ignorespaces Basic scheme of adapted network architecture with a downsampling ratio of 8 and a maximum depth of 512 in the bottleneck layer. Input dimensions: $5 \times W \times H \times D$; Output dimensions: $1 \times W \times H \times D$\relax }}{8}{figure.caption.1}%
 \defcounter {refsection}{0}\relax 
-\contentsline {figure}{\numberline {2}{\ignorespaces Memory efficient queue based dataloading for 3D patch based training. data from different segments are depicted in differnt color shades.\relax }}{9}{figure.caption.2}%
+\contentsline {figure}{\numberline {2}{\ignorespaces Dataloading scheme for memory efficient patch based dataloading for 3D training volumes. A subset of patches from one training volume is depicted in one color shade.\relax }}{9}{figure.caption.4}%
 \defcounter {refsection}{0}\relax 
-\contentsline {figure}{\numberline {3}{\ignorespaces From left to right: Beam Shape Mask, Center Beam Line Distance Mask, Source Distance Mask, CT Mask, Radiological Depth, Target Dose Mask\relax }}{10}{figure.caption.3}%
+\contentsline {figure}{\numberline {3}{\ignorespaces Examplary input and output for a single segment of a prostate plan. (a): beam shape, (b): center beam line distance, (c): source distance, (d): CT, (e): radiological depth, (f): dose distribution, \relax }}{11}{figure.caption.7}%
 \defcounter {refsection}{0}\relax 
-\contentsline {figure}{\numberline {4}{\ignorespaces Dose prediction example on isocentric slice on prostate cancer patient from test cohort with prostate data only trained model. From left to right: target dose; dose prediction; gamma map for isocentric slice with a gamma pass rate of 98.02\%\relax }}{13}{figure.caption.5}%
+\contentsline {figure}{\numberline {4}{\ignorespaces Gamma test for two points $r_{passed}$ and $r_{failed}$ and the reference point $r_m$ for a 2D (X,Y) space case. Orange and brown rings indicate distance and dose parameter acceptance margins respectively. The Gray sphere represents the set of all points that pass the gamma test. Green and Red arrow indicate a passed and failed gamma test for the given reference point $r_m$, dose and spatial parameter.\relax }}{13}{figure.caption.10}%
 \defcounter {refsection}{0}\relax 
-\contentsline {figure}{\numberline {5}{\ignorespaces Prediction accuracy comparison between prostate only and mixed trained models. Passrates for liver, mamma and H\&N are combined into one group of `mixed' data. Significance level using a wilcoxon signed-ranked test are shown above the compared dataseries.\relax }}{15}{figure.caption.8}%
+\contentsline {figure}{\numberline {5}{\ignorespaces dvh for prostate cancer test plan with gamma passrate of 99.36.\relax }}{17}{figure.caption.14}%
 \defcounter {refsection}{0}\relax 
-\contentsline {figure}{\numberline {6}{\ignorespaces Prediction accuracy for all segments of the test data.\relax }}{16}{figure.caption.9}%
+\contentsline {figure}{\numberline {6}{\ignorespaces Dose prediction example on isocentric slice on prostate cancer patient from test cohort with prostate data only trained model. From left to right: target dose; dose prediction; gamma map for isocentric slice with a gamma pass rate of 98.02\%\relax }}{18}{figure.caption.15}%
 \defcounter {refsection}{0}\relax 
-\contentsline {figure}{\numberline {7}{\ignorespaces Prediction accuracy of each segment with allocation in terms of field size for prostate only and mixed trained model.\relax }}{16}{figure.caption.10}%
+\contentsline {figure}{\numberline {7}{\ignorespaces Dose prediction example on isocentric slice on breast cancer patient from test cohort with prostate data only trained model. From left to right: target dose; dose prediction; gamma map for isocentric slice with a gamma pass rate of 53.78\%\relax }}{18}{figure.caption.16}%
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {8}{\ignorespaces Prediction accuracy comparison between prostate only and mixed trained models. Passrates for liver, mamma and H\&N are combined into one group of `mixed' data. Significance level using a wilcoxon signed-ranked test are shown above the compared dataseries. zusätzlich plot für einzelne entities also leber, mamma, h\&N einzeln, sternchen erklären oder direkt obendrüber schreiben, feste convention finden wie ich die beiden Model nennen will\relax }}{29}{figure.caption.19}%
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {9}{\ignorespaces Prediction accuracy for all segments of the test data.\relax }}{30}{figure.caption.20}%
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {10}{\ignorespaces Prediction accuracy of each segment with respect to field size for prostate only and mixed trained model.\relax }}{31}{figure.caption.21}%
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {11}{\ignorespaces Coronal, sagital and transversal view of the dose distributions for 100, 200 and 300 px depth in the phantom volume\relax }}{32}{figure.caption.22}%

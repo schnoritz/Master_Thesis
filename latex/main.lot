@@ -1,8 +1,10 @@
 \boolfalse {citerequest}\boolfalse {citetracker}\boolfalse {pagetracker}\boolfalse {backtracker}\relax 
 \babel@toc {english}{}
 \defcounter {refsection}{0}\relax 
-\contentsline {table}{\numberline {1}{\ignorespaces Patient data infortmation for Prostate-Only as well as Mixed-Entity trained model and testing data set. Fieldsizes are given as mean (standard deviation).\relax }}{13}{table.caption.4}%
+\contentsline {table}{\numberline {1}{\ignorespaces Patient data infortmation for Prostate-Only as well as Mixed-Entity trained model and testing data set. Fieldsizes are given as mean (standard deviation).\relax }}{15}{table.caption.13}%
 \defcounter {refsection}{0}\relax 
-\contentsline {table}{\numberline {2}{\ignorespaces Summary of gamma passrates for liver, mamma, head and lyphnodes tumor patients\relax }}{14}{table.caption.6}%
+\contentsline {table}{\numberline {2}{\ignorespaces Summary of gamma passrates for liver, mamma, head and lyphnodes tumor patients, hier noch min max einfügen\relax }}{17}{table.caption.17}%
 \defcounter {refsection}{0}\relax 
-\contentsline {table}{\numberline {3}{\ignorespaces Summary of gamma passrates for liver, mamma, head and lyphnodes tumor patients\relax }}{14}{table.caption.7}%
+\contentsline {table}{\numberline {3}{\ignorespaces Summary of gamma passrates for liver, mamma, head and lyphnodes tumor patients min max hinzufügen \relax }}{19}{table.caption.18}%
+\defcounter {refsection}{0}\relax 
+\contentsline {table}{\numberline {4}{\ignorespaces Gamma passrates for prostate only and mixed trained models for different water slab phantom positions inside an air volume. Water slab thickness was 200 pixels.\relax }}{19}{table.caption.23}%

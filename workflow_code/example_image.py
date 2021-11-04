@@ -20,13 +20,16 @@ def latex(width, height, path):
     return do_latex
 
 
-@latex(width=20, height=12, path="/Users/simongutwein/Desktop/example.pdf")
+@latex(width=20, height=12, path="/Users/simongutwein/Desktop/example_mt1.pdf")
 def example():
 
     import torch
+    pat = "mt1"
 
-    pred = np.array(torch.load("/Users/simongutwein/Studium/Masterarbeit/plan_predictions_test/pt1/pt1_prediction.pt"))
-    target = np.array(torch.load("/Users/simongutwein/Studium/Masterarbeit/plan_predictions_test/pt1/pt1_target.pt"))
+    pred = np.array(torch.load(f"/Users/simongutwein/Studium/Masterarbeit/plan_predictions_test/{pat}/prediction.pt"))
+    target = np.array(torch.load(f"/Users/simongutwein/Studium/Masterarbeit/plan_predictions_test/{pat}/target.pt"))
+
+    ct = np.array(torch.load(f"/Users/simongutwein/Studium/Masterarbeit/plan_predictions_test/{pat}/training_data.pt"))[1]
 
     import pymedphys
 
@@ -35,7 +38,7 @@ def example():
     gamma_options = {
         'dose_percent_threshold': 3,
         'distance_mm_threshold': 3,
-        'lower_percent_dose_cutoff': 3,
+        'lower_percent_dose_cutoff': 10,
         'interp_fraction': 3,  # Should be 10 or more for more accurate results
         'max_gamma': 2,
         'quiet': False,
@@ -44,6 +47,7 @@ def example():
 
     pred = pred[:, :, slice_-3:slice_+3]
     target = target[:, :, slice_-3:slice_+3]
+    ct = ct[:, :, slice_-3:slice_+3]
 
     coords = (np.arange(0, 1.17*target.shape[0], 1.17), np.arange(
         0, 1.17*target.shape[1], 1.17), np.arange(0, 3*target.shape[2], 3))
@@ -68,15 +72,17 @@ def example():
 
     fig, ax = plt.subplots(1, 3, figsize=(12, 4))
 
-    target[target < 0.1] = np.nan
-    pred[pred < 0.1] = np.nan
+    pred[pred < 0.1*target.max()] = np.nan
+    target[target < 0.1*target.max()] = np.nan
+    ct[ct < (80/1800)] = np.nan
 
-    print(target.shape)
-
-    ax[0].imshow(target[cut_top:, :, 3], cmap="Oranges")
+    ax[0].imshow(ct[cut_top:, :, 3], cmap="bone")
+    ax[0].imshow(target[cut_top:, :, 3], cmap="Oranges", alpha=0.8)
     ax[0].axis("off")
-    ax[1].imshow(pred[cut_top:, :, 3],  cmap="Oranges")
+    ax[1].imshow(ct[cut_top:, :, 3], cmap="bone")
+    ax[1].imshow(pred[cut_top:, :, 3],  cmap="Oranges", alpha=0.8)
     ax[1].axis("off")
+    ax[2].imshow(ct[cut_top:, :, 3], cmap="bone")
     axs = ax[2].imshow(gamma_val[cut_top:, :, 3],  cmap=newcmp)
     cbar = fig.colorbar(axs, fraction=0.035, pad=0.04)
     cbar.ax.set_yticklabels(["  "])

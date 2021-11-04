@@ -2,8 +2,9 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%   Zusaetzliche Pakete  %%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage[utf8]{inputenc}
 \usepackage[english]{babel}
-\usepackage{acronym}
+\usepackage[printonlyused,withpage]{acronym}
 \usepackage{enumerate}  
 \usepackage{a4wide}
 \usepackage{fancyhdr}
@@ -15,11 +16,9 @@
 \usepackage[bookmarks]{hyperref}
 \RequirePackage[ngerman=ngerman-x-latest]{hyphsubst}
 
-\usepackage[style=numeric-comp,sorting=none]{biblatex}
+\usepackage[maxbibnames=9, maxcitenames=1,style=numeric-comp,sorting=none]{biblatex}
 \usepackage[format=hang, labelfont={small,bf}, font=small]{caption}
 \usepackage[a4paper, margin=0cm, left=3cm, top=2.5cm, right=2cm, bottom=3.5cm]{geometry} 
-\usepackage{etoolbox}
-\usepackage{acronym}
 \usepackage{titlesec}
 \usepackage[titles]{tocloft}
 \usepackage{fontspec}
@@ -131,3 +130,13 @@
     \input{#2}
     \newpage
 }
+
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd{\AC@@acro}
+  {\dotfill\pageref{acro:#1}}
+  {\nobreak\leaders\hbox{$\mkern -7mu \mkern \@dotsep mu\hbox{.}\mkern \@dotsep mu \mkern 7mu$}%
+   \hfill\nobreak\makebox[1.3em][r]{\pageref{acro:#1}}}
+  {}
+  {}
+\makeatother

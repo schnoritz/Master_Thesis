@@ -27,6 +27,16 @@
 \@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {section}{Abbildungsverzeichnis}{iii}{Doc-Start}\protected@file@percent }
 \@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {section}{Tabellenverzeichnis}{iv}{Doc-Start}\protected@file@percent }
 \@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {section}{Abkürzungsverzeichnis}{v}{Doc-Start}\protected@file@percent }
+\newacro{HN}[\AC@hyperlink{HN}{H\&N}]{head \& neck}
+\newacro{GPU}[\AC@hyperlink{GPU}{GPU}]{graphics processing unit}
+\newacro{RAM}[\AC@hyperlink{RAM}{RAM}]{random-access memory}
+\newacro{FF}[\AC@hyperlink{FF}{FF}]{flattening filter}
+\newacro{FFF}[\AC@hyperlink{FFF}{FFF}]{flattening filter free}
+\newacro{ERE}[\AC@hyperlink{ERE}{ERE}]{electron return effect}
+\newacro{CT}[\AC@hyperlink{CT}{CT}]{computer tomography}
+\newacro{HPC}[\AC@hyperlink{HPC}{HPC}]{high-performance computing}
+\newacro{MLC}[\AC@hyperlink{MLC}{MLC}]{multi leaf collimator}
+\newacro{SSD}[\AC@hyperlink{SSD}{SSD}]{source surface distance}
 \HyPL@Entry{6<</S/D>>}
 \@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {section}{\numberline {1}Introduction}{1}{section.1}\protected@file@percent }
 \newlabel{Introduction}{{1}{1}{Introduction}{section.1}{}}
@@ -94,44 +104,109 @@
 \newlabel{Previous Work}{{2}{5}{Previous Work}{section.2}{}}
 \@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {section}{\numberline {3}Medical Knowledge}{7}{section.3}\protected@file@percent }
 \newlabel{Medical Knowledge}{{3}{7}{Medical Knowledge}{section.3}{}}
-\@writefile{lof}{\defcounter {refsection}{0}\relax }\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces Network architeture scheme. Size of the input masks are depicted by width (W), height (H) and depth (D). Input dimensionality is WxHxDx5 and output dimensionality is WxHxDx1.\relax }}{8}{figure.caption.1}\protected@file@percent }
+\abx@aux@cite{ronneberger_u-net_2015-1}
+\abx@aux@segm{0}{0}{ronneberger_u-net_2015-1}
+\abx@aux@cite{ronneberger_u-net_2015-1}
+\abx@aux@segm{0}{0}{ronneberger_u-net_2015-1}
+\abx@aux@cite{perez-garcia_torchio_2021}
+\abx@aux@segm{0}{0}{perez-garcia_torchio_2021}
+\abx@aux@cite{perez-garcia_torchio_2021}
+\abx@aux@segm{0}{0}{perez-garcia_torchio_2021}
+\@writefile{lof}{\defcounter {refsection}{0}\relax }\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces Basic scheme of adapted network architecture with a downsampling ratio of 8 and a maximum depth of 512 in the bottleneck layer. Input dimensions: $5 \times W \times H \times D$; Output dimensions: $1 \times W \times H \times D$\relax }}{8}{figure.caption.1}\protected@file@percent }
 \providecommand*\caption@xref[2]{\@setref\relax\@undefined{#1}}
-\newlabel{fig:network}{{1}{8}{Network architeture scheme. Size of the input masks are depicted by width (W), height (H) and depth (D). Input dimensionality is WxHxDx5 and output dimensionality is WxHxDx1.\relax }{figure.caption.1}{}}
+\newlabel{fig:network}{{1}{8}{Basic scheme of adapted network architecture with a downsampling ratio of 8 and a maximum depth of 512 in the bottleneck layer. Input dimensions: $5 \times W \times H \times D$; Output dimensions: $1 \times W \times H \times D$\relax }{figure.caption.1}{}}
 \@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {section}{\numberline {4}Material and Methods}{8}{section.4}\protected@file@percent }
 \newlabel{Material and Methods}{{4}{8}{Material and Methods}{section.4}{}}
 \@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {subsection}{\numberline {4.1}Network Architecture}{8}{subsection.4.1}\protected@file@percent }
 \@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {subsection}{\numberline {4.2}Dataloading}{8}{subsection.4.2}\protected@file@percent }
-\@writefile{lof}{\defcounter {refsection}{0}\relax }\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces Memory efficient queue based dataloading for 3D patch based training. data from different segments are depicted in differnt color shades.\relax }}{9}{figure.caption.2}\protected@file@percent }
-\newlabel{fig:dataloading}{{2}{9}{Memory efficient queue based dataloading for 3D patch based training. data from different segments are depicted in differnt color shades.\relax }{figure.caption.2}{}}
+\AC@undonewlabel{acro:GPU}
+\newlabel{acro:GPU}{{4.2}{8}{Dataloading}{section*.2}{}}
+\acronymused{GPU}
+\AC@undonewlabel{acro:RAM}
+\newlabel{acro:RAM}{{4.2}{8}{Dataloading}{section*.3}{}}
+\acronymused{RAM}
+\acronymused{RAM}
+\acronymused{GPU}
+\@writefile{lof}{\defcounter {refsection}{0}\relax }\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces Dataloading scheme for memory efficient patch based dataloading for 3D training volumes. A subset of patches from one training volume is depicted in one color shade.\relax }}{9}{figure.caption.4}\protected@file@percent }
+\newlabel{fig:dataloading}{{2}{9}{Dataloading scheme for memory efficient patch based dataloading for 3D training volumes. A subset of patches from one training volume is depicted in one color shade.\relax }{figure.caption.4}{}}
 \@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {subsection}{\numberline {4.3}Network Input \& Output}{9}{subsection.4.3}\protected@file@percent }
 \@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.3.1}Network Input}{9}{subsubsection.4.3.1}\protected@file@percent }
-\@writefile{lof}{\defcounter {refsection}{0}\relax }\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces From left to right: Beam Shape Mask, Center Beam Line Distance Mask, Source Distance Mask, CT Mask, Radiological Depth, Target Dose Mask\relax }}{10}{figure.caption.3}\protected@file@percent }
-\newlabel{fig:masks}{{3}{10}{From left to right: Beam Shape Mask, Center Beam Line Distance Mask, Source Distance Mask, CT Mask, Radiological Depth, Target Dose Mask\relax }{figure.caption.3}{}}
+\AC@undonewlabel{acro:FF}
+\newlabel{acro:FF}{{4.3.1}{10}{Network Input}{section*.5}{}}
+\acronymused{FF}
+\abx@aux@cite{noauthor_nrc-cnrcegsnrc_2021}
+\abx@aux@segm{0}{0}{noauthor_nrc-cnrcegsnrc_2021}
+\abx@aux@cite{friedel_development_2019}
+\abx@aux@segm{0}{0}{friedel_development_2019}
+\@writefile{lof}{\defcounter {refsection}{0}\relax }\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces Examplary input and output for a single segment of a prostate plan. (a): beam shape, (b): center beam line distance, (c): source distance, (d): CT, (e): radiological depth, (f): dose distribution, \relax }}{11}{figure.caption.7}\protected@file@percent }
+\newlabel{fig:masks}{{3}{11}{Examplary input and output for a single segment of a prostate plan. (a): beam shape, (b): center beam line distance, (c): source distance, (d): CT, (e): radiological depth, (f): dose distribution, \relax }{figure.caption.7}{}}
+\AC@undonewlabel{acro:ERE}
+\newlabel{acro:ERE}{{4.3.1}{11}{Network Input}{section*.6}{}}
+\acronymused{ERE}
 \@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.3.2}Network Output}{11}{subsubsection.4.3.2}\protected@file@percent }
 \@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {subsection}{\numberline {4.4}Training Data Generation}{11}{subsection.4.4}\protected@file@percent }
-\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {subsection}{\numberline {4.5}Evaluation Metrics}{11}{subsection.4.5}\protected@file@percent }
-\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {subsection}{\numberline {4.6}Hypotheses}{11}{subsection.4.6}\protected@file@percent }
-\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {subsection}{\numberline {4.7}Patient Data}{12}{subsection.4.7}\protected@file@percent }
-\@writefile{lot}{\defcounter {refsection}{0}\relax }\@writefile{lot}{\contentsline {table}{\numberline {1}{\ignorespaces Patient data infortmation for Prostate-Only as well as Mixed-Entity trained model and testing data set. Fieldsizes are given as mean (standard deviation).\relax }}{13}{table.caption.4}\protected@file@percent }
-\newlabel{tab:patients}{{1}{13}{Patient data infortmation for Prostate-Only as well as Mixed-Entity trained model and testing data set. Fieldsizes are given as mean (standard deviation).\relax }{table.caption.4}{}}
-\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {section}{\numberline {5}Results}{13}{section.5}\protected@file@percent }
-\newlabel{Results}{{5}{13}{Results}{section.5}{}}
-\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {subsection}{\numberline {5.1}These 1 / Experiment 1}{13}{subsection.5.1}\protected@file@percent }
-\@writefile{lof}{\defcounter {refsection}{0}\relax }\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces Dose prediction example on isocentric slice on prostate cancer patient from test cohort with prostate data only trained model. From left to right: target dose; dose prediction; gamma map for isocentric slice with a gamma pass rate of 98.02\%\relax }}{13}{figure.caption.5}\protected@file@percent }
-\newlabel{fig:prediction}{{4}{13}{Dose prediction example on isocentric slice on prostate cancer patient from test cohort with prostate data only trained model. From left to right: target dose; dose prediction; gamma map for isocentric slice with a gamma pass rate of 98.02\%\relax }{figure.caption.5}{}}
-\@writefile{lot}{\defcounter {refsection}{0}\relax }\@writefile{lot}{\contentsline {table}{\numberline {2}{\ignorespaces Summary of gamma passrates for liver, mamma, head and lyphnodes tumor patients\relax }}{14}{table.caption.6}\protected@file@percent }
-\newlabel{tab:prost}{{2}{14}{Summary of gamma passrates for liver, mamma, head and lyphnodes tumor patients\relax }{table.caption.6}{}}
-\@writefile{lot}{\defcounter {refsection}{0}\relax }\@writefile{lot}{\contentsline {table}{\numberline {3}{\ignorespaces Summary of gamma passrates for liver, mamma, head and lyphnodes tumor patients\relax }}{14}{table.caption.7}\protected@file@percent }
-\newlabel{tab:mixed}{{3}{14}{Summary of gamma passrates for liver, mamma, head and lyphnodes tumor patients\relax }{table.caption.7}{}}
-\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {subsection}{\numberline {5.2}These 2 / Experiment 2}{14}{subsection.5.2}\protected@file@percent }
-\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {subsection}{\numberline {5.3}These 3 / Experiment 3}{14}{subsection.5.3}\protected@file@percent }
-\@writefile{lof}{\defcounter {refsection}{0}\relax }\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces Prediction accuracy comparison between prostate only and mixed trained models. Passrates for liver, mamma and H\&N are combined into one group of `mixed' data. Significance level using a wilcoxon signed-ranked test are shown above the compared dataseries.\relax }}{15}{figure.caption.8}\protected@file@percent }
-\newlabel{fig:comparison}{{5}{15}{Prediction accuracy comparison between prostate only and mixed trained models. Passrates for liver, mamma and H\&N are combined into one group of `mixed' data. Significance level using a wilcoxon signed-ranked test are shown above the compared dataseries.\relax }{figure.caption.8}{}}
-\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {subsection}{\numberline {5.4}These 4 / Experiment 4}{15}{subsection.5.4}\protected@file@percent }
-\@writefile{lof}{\defcounter {refsection}{0}\relax }\@writefile{lof}{\contentsline {figure}{\numberline {6}{\ignorespaces Prediction accuracy for all segments of the test data.\relax }}{16}{figure.caption.9}\protected@file@percent }
-\newlabel{fig:all_test}{{6}{16}{Prediction accuracy for all segments of the test data.\relax }{figure.caption.9}{}}
-\@writefile{lof}{\defcounter {refsection}{0}\relax }\@writefile{lof}{\contentsline {figure}{\numberline {7}{\ignorespaces Prediction accuracy of each segment with allocation in terms of field size for prostate only and mixed trained model.\relax }}{16}{figure.caption.10}\protected@file@percent }
-\newlabel{fig:fz_test}{{7}{16}{Prediction accuracy of each segment with allocation in terms of field size for prostate only and mixed trained model.\relax }{figure.caption.10}{}}
+\AC@undonewlabel{acro:HPC}
+\newlabel{acro:HPC}{{4.4}{11}{Training Data Generation}{section*.8}{}}
+\abx@aux@cite{low_technique_1998}
+\abx@aux@segm{0}{0}{low_technique_1998}
+\abx@aux@cite{low_technique_1998}
+\abx@aux@segm{0}{0}{low_technique_1998}
+\abx@aux@cite{low_technique_1998}
+\abx@aux@segm{0}{0}{low_technique_1998}
+\acronymused{HPC}
+\AC@undonewlabel{acro:MLC}
+\newlabel{acro:MLC}{{4.4}{12}{Training Data Generation}{section*.9}{}}
+\acronymused{MLC}
+\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {subsection}{\numberline {4.5}Evaluation Metrics}{12}{subsection.4.5}\protected@file@percent }
+\newlabel{eq:gamma}{{1}{12}{Evaluation Metrics}{equation.4.1}{}}
+\newlabel{eq:gamma_rate}{{2}{12}{Evaluation Metrics}{equation.4.2}{}}
+\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {subsection}{\numberline {4.6}Hypotheses and Experiments}{12}{subsection.4.6}\protected@file@percent }
+\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.6.1}General Applicability}{12}{subsubsection.4.6.1}\protected@file@percent }
+\newlabel{sssec:H1}{{4.6.1}{12}{General Applicability}{subsubsection.4.6.1}{}}
+\@writefile{lof}{\defcounter {refsection}{0}\relax }\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces Gamma test for two points $r_{passed}$ and $r_{failed}$ and the reference point $r_m$ for a 2D (X,Y) space case. Orange and brown rings indicate distance and dose parameter acceptance margins respectively. The Gray sphere represents the set of all points that pass the gamma test. Green and Red arrow indicate a passed and failed gamma test for the given reference point $r_m$, dose and spatial parameter.\relax }}{13}{figure.caption.10}\protected@file@percent }
+\newlabel{fig:gamma}{{4}{13}{Gamma test for two points $r_{passed}$ and $r_{failed}$ and the reference point $r_m$ for a 2D (X,Y) space case. Orange and brown rings indicate distance and dose parameter acceptance margins respectively. The Gray sphere represents the set of all points that pass the gamma test. Green and Red arrow indicate a passed and failed gamma test for the given reference point $r_m$, dose and spatial parameter.\relax }{figure.caption.10}{}}
+\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.6.2}Poor Initial Translatability}{13}{subsubsection.4.6.2}\protected@file@percent }
+\newlabel{sssec:H2}{{4.6.2}{13}{Poor Initial Translatability}{subsubsection.4.6.2}{}}
+\AC@undonewlabel{acro:SSD}
+\newlabel{acro:SSD}{{4.6.2}{13}{Poor Initial Translatability}{section*.11}{}}
+\acronymused{SSD}
+\acronymused{SSD}
+\acronymused{HN}
+\acronymused{HN}
+\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.6.3}Increased Robustness}{14}{subsubsection.4.6.3}\protected@file@percent }
+\newlabel{sssec:H3}{{4.6.3}{14}{Increased Robustness}{subsubsection.4.6.3}{}}
+\acronymused{SSD}
+\acronymused{HN}
+\AC@undonewlabel{acro:HN}
+\newlabel{acro:HN}{{4.6.3}{14}{Increased Robustness}{section*.12}{}}
+\acronymused{HN}
+\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.6.4}Underlying Physics}{14}{subsubsection.4.6.4}\protected@file@percent }
+\newlabel{sssec:H4}{{4.6.4}{14}{Underlying Physics}{subsubsection.4.6.4}{}}
+\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {subsection}{\numberline {4.7}Patient Data}{14}{subsection.4.7}\protected@file@percent }
+\@writefile{lot}{\defcounter {refsection}{0}\relax }\@writefile{lot}{\contentsline {table}{\numberline {1}{\ignorespaces Patient data infortmation for Prostate-Only as well as Mixed-Entity trained model and testing data set. Fieldsizes are given as mean (standard deviation).\relax }}{15}{table.caption.13}\protected@file@percent }
+\newlabel{tab:patients}{{1}{15}{Patient data infortmation for Prostate-Only as well as Mixed-Entity trained model and testing data set. Fieldsizes are given as mean (standard deviation).\relax }{table.caption.13}{}}
+\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {section}{\numberline {5}Results}{16}{section.5}\protected@file@percent }
+\newlabel{Results}{{5}{16}{Results}{section.5}{}}
+\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {subsection}{\numberline {5.1}These 1 / Experiment 1}{16}{subsection.5.1}\protected@file@percent }
+\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {subsection}{\numberline {5.2}These 2 / Experiment 2}{16}{subsection.5.2}\protected@file@percent }
+\@writefile{lof}{\defcounter {refsection}{0}\relax }\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces dvh for prostate cancer test plan with gamma passrate of 99.36.\relax }}{17}{figure.caption.14}\protected@file@percent }
+\newlabel{fig:dvh}{{5}{17}{dvh for prostate cancer test plan with gamma passrate of 99.36.\relax }{figure.caption.14}{}}
+\@writefile{lot}{\defcounter {refsection}{0}\relax }\@writefile{lot}{\contentsline {table}{\numberline {2}{\ignorespaces Summary of gamma passrates for liver, mamma, head and lyphnodes tumor patients, hier noch min max einfügen\relax }}{17}{table.caption.17}\protected@file@percent }
+\newlabel{tab:prost}{{2}{17}{Summary of gamma passrates for liver, mamma, head and lyphnodes tumor patients, hier noch min max einfügen\relax }{table.caption.17}{}}
+\@writefile{lof}{\defcounter {refsection}{0}\relax }\@writefile{lof}{\contentsline {figure}{\numberline {6}{\ignorespaces Dose prediction example on isocentric slice on prostate cancer patient from test cohort with prostate data only trained model. From left to right: target dose; dose prediction; gamma map for isocentric slice with a gamma pass rate of 98.02\%\relax }}{18}{figure.caption.15}\protected@file@percent }
+\newlabel{fig:prediction}{{6}{18}{Dose prediction example on isocentric slice on prostate cancer patient from test cohort with prostate data only trained model. From left to right: target dose; dose prediction; gamma map for isocentric slice with a gamma pass rate of 98.02\%\relax }{figure.caption.15}{}}
+\@writefile{lof}{\defcounter {refsection}{0}\relax }\@writefile{lof}{\contentsline {figure}{\numberline {7}{\ignorespaces Dose prediction example on isocentric slice on breast cancer patient from test cohort with prostate data only trained model. From left to right: target dose; dose prediction; gamma map for isocentric slice with a gamma pass rate of 53.78\%\relax }}{18}{figure.caption.16}\protected@file@percent }
+\newlabel{fig:mamma_pred}{{7}{18}{Dose prediction example on isocentric slice on breast cancer patient from test cohort with prostate data only trained model. From left to right: target dose; dose prediction; gamma map for isocentric slice with a gamma pass rate of 53.78\%\relax }{figure.caption.16}{}}
+\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {subsection}{\numberline {5.3}These 3 / Experiment 3}{18}{subsection.5.3}\protected@file@percent }
+\@writefile{lot}{\defcounter {refsection}{0}\relax }\@writefile{lot}{\contentsline {table}{\numberline {3}{\ignorespaces Summary of gamma passrates for liver, mamma, head and lyphnodes tumor patients min max hinzufügen \relax }}{19}{table.caption.18}\protected@file@percent }
+\newlabel{tab:mixed}{{3}{19}{Summary of gamma passrates for liver, mamma, head and lyphnodes tumor patients min max hinzufügen \relax }{table.caption.18}{}}
+\@writefile{lot}{\defcounter {refsection}{0}\relax }\@writefile{lot}{\contentsline {table}{\numberline {4}{\ignorespaces Gamma passrates for prostate only and mixed trained models for different water slab phantom positions inside an air volume. Water slab thickness was 200 pixels.\relax }}{19}{table.caption.23}\protected@file@percent }
+\newlabel{tab:phantom_res}{{4}{19}{Gamma passrates for prostate only and mixed trained models for different water slab phantom positions inside an air volume. Water slab thickness was 200 pixels.\relax }{table.caption.23}{}}
+\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {subsection}{\numberline {5.4}These 4 / Experiment 4}{19}{subsection.5.4}\protected@file@percent }
+\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {section}{\numberline {6}Discussion}{20}{section.6}\protected@file@percent }
+\newlabel{Discussion}{{6}{20}{Discussion}{section.6}{}}
+\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {section}{\numberline {7}Aknowledgement}{21}{section.7}\protected@file@percent }
+\newlabel{Aknowledgement}{{7}{21}{Aknowledgement}{section.7}{}}
 \abx@aux@refcontextdefaultsdone
 \abx@aux@defaultrefcontext{0}{geinitz_3d_2005}{none/global//global/global}
 \abx@aux@defaultrefcontext{0}{nguyen_curative_2005}{none/global//global/global}
@@ -163,5 +238,18 @@
 \abx@aux@defaultrefcontext{0}{han_mr-based_2017}{none/global//global/global}
 \abx@aux@defaultrefcontext{0}{wolterink_deep_2017}{none/global//global/global}
 \abx@aux@defaultrefcontext{0}{dinkla_mr-only_2018}{none/global//global/global}
-\newlabel{Apendix}{{5.4}{22}{}{subsection.5.4}{}}
-\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {section}{Apendix}{22}{subsection.5.4}\protected@file@percent }
+\abx@aux@defaultrefcontext{0}{ronneberger_u-net_2015-1}{none/global//global/global}
+\abx@aux@defaultrefcontext{0}{perez-garcia_torchio_2021}{none/global//global/global}
+\abx@aux@defaultrefcontext{0}{noauthor_nrc-cnrcegsnrc_2021}{none/global//global/global}
+\abx@aux@defaultrefcontext{0}{friedel_development_2019}{none/global//global/global}
+\abx@aux@defaultrefcontext{0}{low_technique_1998}{none/global//global/global}
+\newlabel{Apendix}{{7}{28}{}{section.7}{}}
+\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {section}{Apendix}{28}{section.7}\protected@file@percent }
+\@writefile{lof}{\defcounter {refsection}{0}\relax }\@writefile{lof}{\contentsline {figure}{\numberline {8}{\ignorespaces Prediction accuracy comparison between prostate only and mixed trained models. Passrates for liver, mamma and H\&N are combined into one group of `mixed' data. Significance level using a wilcoxon signed-ranked test are shown above the compared dataseries. zusätzlich plot für einzelne entities also leber, mamma, h\&N einzeln, sternchen erklären oder direkt obendrüber schreiben, feste convention finden wie ich die beiden Model nennen will\relax }}{29}{figure.caption.19}\protected@file@percent }
+\newlabel{fig:comparison}{{8}{29}{Prediction accuracy comparison between prostate only and mixed trained models. Passrates for liver, mamma and H\&N are combined into one group of `mixed' data. Significance level using a wilcoxon signed-ranked test are shown above the compared dataseries. zusätzlich plot für einzelne entities also leber, mamma, h\&N einzeln, sternchen erklären oder direkt obendrüber schreiben, feste convention finden wie ich die beiden Model nennen will\relax }{figure.caption.19}{}}
+\@writefile{lof}{\defcounter {refsection}{0}\relax }\@writefile{lof}{\contentsline {figure}{\numberline {9}{\ignorespaces Prediction accuracy for all segments of the test data.\relax }}{30}{figure.caption.20}\protected@file@percent }
+\newlabel{fig:all_test}{{9}{30}{Prediction accuracy for all segments of the test data.\relax }{figure.caption.20}{}}
+\@writefile{lof}{\defcounter {refsection}{0}\relax }\@writefile{lof}{\contentsline {figure}{\numberline {10}{\ignorespaces Prediction accuracy of each segment with respect to field size for prostate only and mixed trained model.\relax }}{31}{figure.caption.21}\protected@file@percent }
+\newlabel{fig:fz_test}{{10}{31}{Prediction accuracy of each segment with respect to field size for prostate only and mixed trained model.\relax }{figure.caption.21}{}}
+\@writefile{lof}{\defcounter {refsection}{0}\relax }\@writefile{lof}{\contentsline {figure}{\numberline {11}{\ignorespaces Coronal, sagital and transversal view of the dose distributions for 100, 200 and 300 px depth in the phantom volume\relax }}{32}{figure.caption.22}\protected@file@percent }
+\newlabel{fig:phantom}{{11}{32}{Coronal, sagital and transversal view of the dose distributions for 100, 200 and 300 px depth in the phantom volume\relax }{figure.caption.22}{}}

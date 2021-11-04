@@ -1,19 +1,19 @@
 [0] Config.pm:304> INFO - This is Biber 2.14
 [0] Config.pm:307> INFO - Logfile is 'main.blg'
-[89] biber-darwin:322> INFO - === Tue Nov  2, 2021, 08:57:39
-[105] Biber.pm:415> INFO - Reading 'main.bcf'
-[209] Biber.pm:943> INFO - Found 30 citekeys in bib section 0
-[224] Biber.pm:4256> INFO - Processing section 0
-[224] Utils.pm:75> INFO - Globbing data source 'bib.bib'
-[224] Utils.pm:91> INFO - Globbed data source 'bib.bib' to bib.bib
-[235] Biber.pm:4455> INFO - Looking for bibtex format file 'bib.bib' for section 0
-[251] bibtex.pm:1653> INFO - LaTeX decoding ...
-[576] bibtex.pm:1471> INFO - Found BibTeX data source 'bib.bib'
-[894] Utils.pm:304> WARN - ISBN '978-3-030-32244-1 978-3-030-32245-8' in entry 'shen_medical_2019' is invalid - run biber with '--validate_datamodel' for details.
-[1025] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'normalization = NFD' with 'normalization = prenormalized'
-[1025] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'variable = shifted' with 'variable = non-ignorable'
-[1025] Biber.pm:4084> INFO - Sorting list 'none/global//global/global' of type 'entry' with template 'none' and locale 'en-US'
-[1025] Biber.pm:4090> INFO - No sort tailoring available for locale 'en-US'
-[1057] bbl.pm:652> INFO - Writing 'main.bbl' with encoding 'UTF-8'
-[1112] bbl.pm:755> INFO - Output to main.bbl
-[1113] Biber.pm:128> INFO - WARNINGS: 1
+[93] biber-darwin:322> INFO - === Thu Nov  4, 2021, 13:36:10
+[115] Biber.pm:415> INFO - Reading 'main.bcf'
+[226] Biber.pm:943> INFO - Found 35 citekeys in bib section 0
+[241] Biber.pm:4256> INFO - Processing section 0
+[242] Utils.pm:75> INFO - Globbing data source 'bib.bib'
+[242] Utils.pm:91> INFO - Globbed data source 'bib.bib' to bib.bib
+[255] Biber.pm:4455> INFO - Looking for bibtex format file 'bib.bib' for section 0
+[273] bibtex.pm:1653> INFO - LaTeX decoding ...
+[644] bibtex.pm:1471> INFO - Found BibTeX data source 'bib.bib'
+[969] Utils.pm:304> WARN - ISBN '978-3-030-32244-1 978-3-030-32245-8' in entry 'shen_medical_2019' is invalid - run biber with '--validate_datamodel' for details.
+[1136] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'variable = shifted' with 'variable = non-ignorable'
+[1136] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'normalization = NFD' with 'normalization = prenormalized'
+[1137] Biber.pm:4084> INFO - Sorting list 'none/global//global/global' of type 'entry' with template 'none' and locale 'en-US'
+[1137] Biber.pm:4090> INFO - No sort tailoring available for locale 'en-US'
+[1175] bbl.pm:652> INFO - Writing 'main.bbl' with encoding 'UTF-8'
+[1237] bbl.pm:755> INFO - Output to main.bbl
+[1237] Biber.pm:128> INFO - WARNINGS: 1

@@ -1,6 +1,6 @@
 
 from operator import pos
-import matplotlib.pylab as plt
+import matplotlib as mpl
 import os
 import pandas as pd
 import numpy as np
@@ -72,6 +72,8 @@ def fieldsize_analysis():
     # root = "/Users/simongutwein/mnt/qb/baumgartner/sgutwein84/segment_results"
     # get_results(root)
 
+    n = 15
+
     results = "/Users/simongutwein/Desktop/segment_results.pkl"
 
     df = pd.read_pickle(results)
@@ -81,27 +83,30 @@ def fieldsize_analysis():
 
     sizes = df["fieldsize"]
     max_s = sizes.max()
-    max_s = (np.ceil((max_s/15)+1)*15).astype(int)
-    df['discrete'] = pd.cut(df["fieldsize"], list(range(0, max_s, 15)), include_lowest=True)
+    max_s = (np.ceil((max_s/n)+1)*n).astype(int)
+    df['discrete'] = pd.cut(df["fieldsize"], list(range(0, max_s, n)), include_lowest=True)
     df["discrete"] = [int(x.right) for x in df["discrete"]]
 
-    hist = list(np.histogram(df["fieldsize"][::2], bins=list(range(0, max_s, 15))))
+    hist = list(np.histogram(df["fieldsize"][::2], bins=list(range(0, max_s, n)), density=True))
 
     fig, ax = plt.subplots()
-    ax.bar(list(range(int(max_s/15)-1)), hist[0], alpha=0.2, width=1, linewidth=1, edgecolor="black", facecolor="black", zorder=0)
+    ax.bar(list(range(int(max_s/n)-1)), hist[0]*100*n, width=1, linewidth=1, edgecolor="grey", facecolor="lightgrey", zorder=0)
     ax2 = ax.twinx()
-    ax2 = sns.boxplot(x="discrete", y="value", hue="variable", data=df, palette="Reds", color=1, hue_order=["prostate", "mixed"], zorder=10)
-    # for axs in ax2.get_children()[2:277]:
-    #     axs.set_color('k')
-
-    # for axs in ax2.get_children()[278:323]:
-    #     axs.set_edgecolor('k')
+    ax2 = sns.boxplot(x="discrete", y="value", hue="variable", data=df, palette="Reds", color=1, hue_order=["prostate", "mixed"], zorder=10, fliersize=2)
+    for axs in ax2.get_children():
+        print(axs)
+        if isinstance(axs, mpl.lines.Line2D):
+            axs.set_color('k')
+            axs.set_linewidth(1)
+        if isinstance(axs, mpl.patches.PathPatch):
+            axs.set_edgecolor('k')
+            axs.set_linewidth(1)
 
     _, labels = plt.xticks()
     labels = [int(labels[x].get_text()) for x in range(len(labels))]
     labels.insert(0, 0)
     x_ticks = [f"({labels[i]} - {labels[i+1]}]" for i in range(0, len(labels)-1)]
-    ax.set_ylabel('Occurence')
+    ax.set_ylabel('Occurence /%')
     ax.set_xticklabels(x_ticks, rotation=45)
 
     ax2.set_ylabel(r'Gamma-Value /%')
@@ -132,6 +137,12 @@ def overall_performance():
     fig, ax = plt.subplots()
     ax = sns.violinplot(inner="box", x="variable", y="value", data=df, palette="Reds", order=["prostate", "mixed"], cut=0)
     #ax2 = sns.swarmplot(x="variable", y="value", data=df, color="black", size=1, order=["prostate", "mixed"])
+    for axs in ax.get_children()[:4]:
+        print(axs)
+        axs.set_edgecolor('k')
+    for axs in ax.get_children()[4:12]:
+        print(axs)
+        axs.set_color('k')
 
     ax.set_xticklabels(["Prostate Model", "Mixed Model"])
     ax.set_xlim([-0.5, 1.5])

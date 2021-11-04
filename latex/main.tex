@@ -30,7 +30,7 @@
     {16.09.2021}                                    % Tag der Anemeldung 
     {16.03.2022}                                    % Tag der Abgabe
     {Medizinische Strahlenwissenschaften}           % Studiengang
-    {Prof. Dr. Daniela Thorwarth}                   % Name des Betreuers -- Hier sollte *immer* Prof. Winkelmann stehen
+    {Prof.~Dr.~Daniela Thorwarth}                   % Name des Betreuers -- Hier sollte *immer* Prof. Winkelmann stehen
     {5419474}                                       % Matrikelnummer 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -81,7 +81,18 @@
 \section*{Abkürzungsverzeichnis}
 \addcontentsline{toc}{section}{Abkürzungsverzeichnis}%
 \markboth{Abkürzungsverzeichnis}{Abkürzungsverzeichnis}
-
+\begin{acronym}[ACRO]\itemsep4pt
+  \acro{HN}[H\&N]{head \& neck}
+  \acro{GPU}[GPU]{graphics processing unit}
+  \acro{RAM}[RAM]{random-access memory}
+  \acro{FF}[FF]{flattening filter}
+  \acro{FFF}[FFF]{flattening filter free}
+  \acro{ERE}[ERE]{electron return effect}
+  \acro{CT}[CT]{computer tomography}
+  \acro{HPC}[HPC]{high-performance computing}
+  \acro{MLC}[MLC]{multi leaf collimator}
+  \acro{SSD}[SSD]{source surface distance}
+\end{acronym}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%  Abkürzungen %%
@@ -100,6 +111,8 @@
 \Kapitel{Medical Knowledge}{chapters/medicalknowledge.tex}
 \Kapitel{Material and Methods}{chapters/materialmethods.tex}
 \Kapitel{Results}{chapters/results.tex}
+\Kapitel{Discussion}{chapters/discussion.tex}
+\Kapitel{Aknowledgement}{chapters/aknowledgement.tex}
 
 \newpage
 \DeclareDelimFormat[bib,biblist]{nametitledelim}{\addcolon\space}

@@ -91,15 +91,15 @@
     </bcf:option>
     <bcf:option type="singlevalued">
       <bcf:key>maxbibnames</bcf:key>
-      <bcf:value>3</bcf:value>
+      <bcf:value>9</bcf:value>
     </bcf:option>
     <bcf:option type="singlevalued">
       <bcf:key>maxcitenames</bcf:key>
-      <bcf:value>3</bcf:value>
+      <bcf:value>1</bcf:value>
     </bcf:option>
     <bcf:option type="singlevalued">
       <bcf:key>maxsortnames</bcf:key>
-      <bcf:value>3</bcf:value>
+      <bcf:value>9</bcf:value>
     </bcf:option>
     <bcf:option type="singlevalued">
       <bcf:key>maxitems</bcf:key>
@@ -2212,6 +2212,15 @@
     <bcf:citekey order="10">han_mr-based_2017</bcf:citekey>
     <bcf:citekey order="10">wolterink_deep_2017</bcf:citekey>
     <bcf:citekey order="10">dinkla_mr-only_2018</bcf:citekey>
+    <bcf:citekey order="11">ronneberger_u-net_2015-1</bcf:citekey>
+    <bcf:citekey order="12">ronneberger_u-net_2015-1</bcf:citekey>
+    <bcf:citekey order="13">perez-garcia_torchio_2021</bcf:citekey>
+    <bcf:citekey order="14">perez-garcia_torchio_2021</bcf:citekey>
+    <bcf:citekey order="15">noauthor_nrc-cnrcegsnrc_2021</bcf:citekey>
+    <bcf:citekey order="16">friedel_development_2019</bcf:citekey>
+    <bcf:citekey order="17">low_technique_1998</bcf:citekey>
+    <bcf:citekey order="18">low_technique_1998</bcf:citekey>
+    <bcf:citekey order="19">low_technique_1998</bcf:citekey>
   </bcf:section>
   <!-- SORTING TEMPLATES -->
   <bcf:sortingtemplate name="none">

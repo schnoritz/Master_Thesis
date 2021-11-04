@@ -27,20 +27,32 @@
 \defcounter {refsection}{0}\relax 
 \contentsline {subsection}{\numberline {4.4}Training Data Generation}{11}{subsection.4.4}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {4.5}Evaluation Metrics}{11}{subsection.4.5}%
+\contentsline {subsection}{\numberline {4.5}Evaluation Metrics}{12}{subsection.4.5}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {4.6}Hypotheses}{11}{subsection.4.6}%
+\contentsline {subsection}{\numberline {4.6}Hypotheses and Experiments}{12}{subsection.4.6}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {4.7}Patient Data}{12}{subsection.4.7}%
+\contentsline {subsubsection}{\numberline {4.6.1}General Applicability}{12}{subsubsection.4.6.1}%
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {5}Results}{13}{section.5}%
+\contentsline {subsubsection}{\numberline {4.6.2}Poor Initial Translatability}{13}{subsubsection.4.6.2}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {5.1}These 1 / Experiment 1}{13}{subsection.5.1}%
+\contentsline {subsubsection}{\numberline {4.6.3}Increased Robustness}{14}{subsubsection.4.6.3}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {5.2}These 2 / Experiment 2}{14}{subsection.5.2}%
+\contentsline {subsubsection}{\numberline {4.6.4}Underlying Physics}{14}{subsubsection.4.6.4}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {5.3}These 3 / Experiment 3}{14}{subsection.5.3}%
+\contentsline {subsection}{\numberline {4.7}Patient Data}{14}{subsection.4.7}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {5.4}These 4 / Experiment 4}{15}{subsection.5.4}%
+\contentsline {section}{\numberline {5}Results}{16}{section.5}%
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{Apendix}{22}{subsection.5.4}%
+\contentsline {subsection}{\numberline {5.1}These 1 / Experiment 1}{16}{subsection.5.1}%
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {5.2}These 2 / Experiment 2}{16}{subsection.5.2}%
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {5.3}These 3 / Experiment 3}{18}{subsection.5.3}%
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {5.4}These 4 / Experiment 4}{19}{subsection.5.4}%
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {6}Discussion}{20}{section.6}%
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {7}Aknowledgement}{21}{section.7}%
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{Apendix}{28}{section.7}%
