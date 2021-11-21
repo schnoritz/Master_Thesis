@@ -1,0 +1,27 @@
+
+MR guided radiotherapy has received increased attention in the last years, with a multitude of studies and reasearch areas involved.
+The problem of fast \acs{DD} estimation is becoming increasingly important with the vision of online and even real-time radio treatment plan adaption.
+\acs{DD} algorithms are involved in primary and secondary dose engines aswell as dose verification processes. 
+Research contribution goes towards the question of secondary dose engine or dose verficiation, because for both the spcific accelerator parameters are given.\\
+Different approaches towards the solution of the deposition involving deep learning have been used. 
+\citeauthor{neishabouri_long_2021}~\cite{neishabouri_long_2021} applied a \ac{LSTM} in the application of \acs{DD} for proton radiation.
+Input to the \acs{LSTM} network was a sequence of 2D slices from the radiated volume.
+Each sequence represents the radiated volume of the proton beam.
+Due to the very limited range of protons inside matter and the small beam widening, volumes were small with $15 \times 15 \times 150~voxels$ resulting in a field of view of $30 \times 30 \times 300~mm^2$ with a isotropic resolution of 2~mm per voxel.
+Each given slice was therefore of sice $15 \times 15~pixels$.
+Network output was the respective dose distribution for the given input slice.
+To deviate from patient anatomies they used the approach of creating areas of increased density inside a $15 \times 15 \times 150~voxels$ sized volume.
+By variation in position and size of the area the network was able to map \acs{DD} processes to different densities translating to good results when applied to patient anatomies.
+Results show 98.57\% gamma passrate (1\%/3mm) for artificial cases and an average gama passrate of 97.85\% for patient test cases.\\
+A combination of a 3D-UNet and convolutional \acs{LSTM} networks as skip connections were used by \citeauthor{de_bruijne_high-particle_2021}~\cite{de_bruijne_high-particle_2021}. By aproaching the problem as an active denoising problem, they used a set of noisy monte carlo simulations as an input to the 3D-convLSTM-UNet and the network yielded denoised dose distributions.
+Gamma passrates were 94.1\% ± 1.2\% with 3\%/3~mm as the criteria for 5 patient dose distributions.\\
+Approaching the problem as an active denoising problem was also done by \citeauthor{neph_deepmcdose_2019}~\cite{neph_deepmcdose_2019} that used 3 input channels consisting of patient CT, photon fluence map and undersampled dose of a single beamlet.
+By individual analysis and latter combination of all information they achieved to predict the redisdual dose needed for denoising.
+Mean absolute error was reduced to 0.106\% from initial 25.7\% of the undersampled beamlet.
+A significant increase in calulation time was also reached with 220~ms compared to the 380~s simulation time needed for a fully samplet beamlet.\\
+Inclusion of fluence maps was also pursued by \citeauthor{fan_data-driven_2020}~\cite{fan_data-driven_2020}. By procetion of a 2D fluence map into the 3D patient anatomy they created 3D fluence volume from which a 3D UNet like network make predictions of the deposited dose.
+Dose variation normalized to the prescribed dose was 0.17\% ± 2.28\%.\\
+\citeauthor{kontaxis_deepdose_2020}~\cite{kontaxis_deepdose_2020} used a 3D-UNet with 5 3D Inputs combing information from the accelerator settings aswell as the radiated volume into the input of the network.
+This enables them to predict single segments, which can be added up to enitre treatment plans.
+Application was limited to lower abdomen cancer treatment plans with gamma passrates of 99.9 ± 0.3 for (3\%/3mm) for prostate cancer plans.
+Dose estimation times were short with approximately 3 minutes for a treatment plan with 41 segments.

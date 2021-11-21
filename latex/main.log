@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.14159265-2.6-0.999992 (TeX Live 2020) (preloaded format=xelatex 2021.2.17)  4 NOV 2021 14:29
+This is XeTeX, Version 3.14159265-2.6-0.999992 (TeX Live 2020) (preloaded format=xelatex 2021.2.17)  20 NOV 2021 18:28
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -908,196 +908,209 @@ LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `bold'
 LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `bold'
 (Font)                  OT1/cmtt/m/n --> TU/lmtt/b/n on input line 15.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <12> on input line 34.
+(Font)              <12> on input line 33.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <8> on input line 34.
+(Font)              <8> on input line 33.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <6> on input line 34.
+(Font)              <6> on input line 33.
 (/usr/local/texlive/2020/texmf-dist/tex/generic/stringenc/se-ascii-print.def
 File: se-ascii-print.def 2019/11/29 v1.12 stringenc: Printable ASCII characters
 ) [1
 
-] (./chapters/abstract.tex) [1
+] (./chapters/0_abstract.tex) [1
 
-] (./main.toc)
+] (./chapters/1_dedication.tex) [2] (./chapters/2_declaration.tex) [3] (./main.toc)
 \tf@toc=\write5
 \openout5 = `main.toc'.
 
- [2] (./main.lof
-Overfull \hbox (0.75345pt too wide) in paragraph at lines 18--18
- [][] [][]\TU/lmr/m/n/12 Prediction accuracy comparison between prostate only and mixed trained 
- []
-
-
-Overfull \hbox (1.3028pt too wide) in paragraph at lines 18--18
- \TU/lmr/m/n/12 test are shown above the compared dataseries. zusätzlich plot für einzelne 
- []
-
-)
+ [4] [5] (./main.lof [6])
 \tf@lof=\write6
 \openout6 = `main.lof'.
 
- [3] (./main.lot)
+ [7] (./main.lot
+Overfull \hbox (3.60304pt too wide) in paragraph at lines 6--6
+ [][] [][]\TU/lmr/m/n/12 Gamma rassrates for segments as well as plans for prostate, liver, mamma, 
+ []
+
+
+Overfull \hbox (11.08281pt too wide) in paragraph at lines 6--6
+ [][] \TU/lmr/m/n/12 and [][] predicted with the prostate-only data trained model. Gamma 
+ []
+
+
+Overfull \hbox (3.60304pt too wide) in paragraph at lines 8--8
+ [][] [][]\TU/lmr/m/n/12 Gamma rassrates for segments as well as plans for prostate, liver, mamma, 
+ []
+
+)
 \tf@lot=\write7
 \openout7 = `main.lot'.
 
- [4] [5] (./chapters/introduction.tex [1]
-Overfull \hbox (81.79271pt too wide) in paragraph at lines 13--15
-\TU/lmr/m/n/12 diology (https://sci-hub.ru /10.1038/srep24454, https://sci-hub.ru /10.1097/rli.0000000000000341),
- []
-
-
-Overfull \hbox (98.8119pt too wide) in paragraph at lines 13--15
-\TU/lmr/m/n/12 cardiology (https://arxiv.org/abs/1708.09843) or pathology (https://www.nature.com/articles/s41598-
- []
-
-[2]
-Overfull \hbox (26.24934pt too wide) in paragraph at lines 40--42
-\TU/lmr/m/n/12 inverse optimization of the treatment planning process for IMRT and VMAT (doi:10.1088/2632-
- []
-
-[3]
-Overfull \hbox (52.22078pt too wide) in paragraph at lines 51--52
-[]\TU/lmr/m/n/12 3. Dose Estimation ([[]26[], []27[]] active denoising of lower history MC Simulations (doi:10.1002/mp.13856
- []
-
-) [4] (./chapters/previouswork.tex
-Underfull \hbox (badness 10000) in paragraph at lines 11--13
-[]\TU/lmr/bx/n/12 https://iopscience.iop.org/article/10.1088/1361-6560/ab7630
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 14--16
-[]\TU/lmr/bx/n/12 https://aapm.onlinelibrary.wiley.com/doi/full/10.1002/mp.14658
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 17--19
-[]\TU/lmr/bx/n/12 https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7870566/
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 20--22
-\TU/lmr/bx/n/12 STMs
- []
-
-[5]) [6] (./chapters/medicalknowledge.tex) [7] (./chapters/materialmethods.tex
+ [8] [9] (./chapters/3_introduction.tex
+Package acronym Info: Label `acro:HN' newly defined as it shall be overridden
+although it is yet undefined on input line 3.
+Package acronym Info: Label `acro:LN' newly defined as it shall be overridden
+although it is yet undefined on input line 3.
+Package acronym Info: Label `acro:OAR' newly defined as it shall be overridden
+although it is yet undefined on input line 8.
+Package acronym Info: Label `acro:IMRT' newly defined as it shall be overridden
+although it is yet undefined on input line 10.
+Package acronym Info: Label `acro:CT' newly defined as it shall be overridden
+although it is yet undefined on input line 13.
+Package acronym Info: Label `acro:MRI' newly defined as it shall be overridden
+although it is yet undefined on input line 15.
+Package acronym Info: Label `acro:DD' newly defined as it shall be overridden
+although it is yet undefined on input line 20.
+Package acronym Info: Label `acro:DL' newly defined as it shall be overridden
+although it is yet undefined on input line 27.
+Package acronym Info: Label `acro:CV' newly defined as it shall be overridden
+although it is yet undefined on input line 27.
+) [1] [2] (./chapters/4_medicalknowledge.tex
+Package acronym Info: Label `acro:DNA' newly defined as it shall be overridden
+although it is yet undefined on input line 6.
+Package acronym Info: Label `acro:MLC' newly defined as it shall be overridden
+although it is yet undefined on input line 17.
+Package acronym Info: Label `acro:PTV' newly defined as it shall be overridden
+although it is yet undefined on input line 17.
+File: images/example_image.pdf Graphic file (type pdf)
+<use images/example_image.pdf>
+Package acronym Info: Label `acro:MC' newly defined as it shall be overridden
+although it is yet undefined on input line 49.
+ [3] [4]
+Package acronym Info: Label `acro:ERE' newly defined as it shall be overridden
+although it is yet undefined on input line 61.
+Package acronym Info: Label `acro:MU' newly defined as it shall be overridden
+although it is yet undefined on input line 77.
+ [5]) [6] (./chapters/5_previouswork.tex
+Package acronym Info: Label `acro:LSTM' newly defined as it shall be overridden
+although it is yet undefined on input line 7.
+) [7] [8] (./chapters/6_materialmethods.tex
 File: images/UNET.pdf Graphic file (type pdf)
 <use images/UNET.pdf>
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <10.95> on input line 9.
-Package acronym Info: Label `acro:GPU' newly defined as it shall be overridden
-although it is yet undefined on input line 15.
-Package acronym Info: Label `acro:RAM' newly defined as it shall be overridden
-although it is yet undefined on input line 15.
- [8]
-File: images/dataloading.pdf Graphic file (type pdf)
-<use images/dataloading.pdf>
+(Font)              <10.95> on input line 12.
  [9]
-Package acronym Info: Label `acro:FF' newly defined as it shall be overridden
-although it is yet undefined on input line 54.
+Package acronym Info: Label `acro:HU' newly defined as it shall be overridden
+although it is yet undefined on input line 56.
  [10]
-Package acronym Info: Label `acro:ERE' newly defined as it shall be overridden
-although it is yet undefined on input line 74.
 File: images/masks.pdf Graphic file (type pdf)
 <use images/masks.pdf>
 Package acronym Info: Label `acro:HPC' newly defined as it shall be overridden
-although it is yet undefined on input line 93.
-Package acronym Info: Label `acro:MLC' newly defined as it shall be overridden
-although it is yet undefined on input line 94.
+although it is yet undefined on input line 88.
  [11]
+Package acronym Info: Label `acro:GPU' newly defined as it shall be overridden
+although it is yet undefined on input line 107.
+Package acronym Info: Label `acro:RAM' newly defined as it shall be overridden
+although it is yet undefined on input line 107.
+ [12]
+File: images/dataloading.pdf Graphic file (type pdf)
+<use images/dataloading.pdf>
+ [13]
 File: images/gamma.pdf Graphic file (type pdf)
 <use images/gamma.pdf>
- [12]
+ [14]
 Package acronym Info: Label `acro:SSD' newly defined as it shall be overridden
-although it is yet undefined on input line 139.
- [13]
-Package acronym Info: Label `acro:HN' newly defined as it shall be overridden
-although it is yet undefined on input line 154.
- [14]) [15] (./chapters/results.tex
-File: images/dvh.pdf Graphic file (type pdf)
-<use images/dvh.pdf>
+although it is yet undefined on input line 169.
+ [15] [16]) [17] (./chapters/7_results.tex
+Package acronym Info: Label `acro:DVH' newly defined as it shall be overridden
+although it is yet undefined on input line 7.
+File: images/dvh_notable.pdf Graphic file (type pdf)
+<use images/dvh_notable.pdf>
 File: images/example_pt1.pdf Graphic file (type pdf)
 <use images/example_pt1.pdf>
+ [18]
 File: images/example_mt1.pdf Graphic file (type pdf)
 <use images/example_mt1.pdf>
- [16] [17]
-Overfull \hbox (8.61032pt too wide) in paragraph at lines 60--60
- []|\TU/lmr/bx/n/12 Mamma| 
- []
-
-File: images/plans.pdf Graphic file (type pdf)
-<use images/plans.pdf>
-[18]
-File: images/segs_all.pdf Graphic file (type pdf)
-<use images/segs_all.pdf>
-File: images/segs_fz_15.pdf Graphic file (type pdf)
-<use images/segs_fz_15.pdf>
+ [19] [20]
+File: images/test_results.pdf Graphic file (type pdf)
+<use images/test_results.pdf>
+File: images/segs_weight_fz.pdf Graphic file (type pdf)
+<use images/segs_weight_fz.pdf>
+ [21] [22] [23]
 File: images/quer.pdf Graphic file (type pdf)
 <use images/quer.pdf>
+) [24] (./chapters/8_discussion.tex
+File: images/mamma.pdf Graphic file (type pdf)
+<use images/mamma.pdf>
+ [25]
+File: images/cross.pdf Graphic file (type pdf)
+<use images/cross.pdf>
+ [26] [27]
+File: images/scale.pdf Graphic file (type pdf)
+<use images/scale.pdf>
+ [28]
+Underfull \hbox (badness 10000) in paragraph at lines 97--116
 
-
-LaTeX Warning: No positions in optional float specifier.
-               Default added (so using `tbp') on input line 104.
-
-
-Overfull \hbox (1.40002pt too wide) in paragraph at lines 105--111
-[][] 
  []
 
-) [19] (./chapters/discussion.tex) [20] (./chapters/aknowledgement.tex) [21]
-Package biblatex Info: Delimiter 'nametitledelim' in context 'bib' already defined, overwriting on input line 118.
-Package biblatex Info: Delimiter 'nametitledelim' in context 'biblist' already defined, overwriting on input line 118.
+[29]
+Underfull \hbox (badness 10000) in paragraph at lines 117--122
 
-Overfull \hbox (6.1182pt too wide) in paragraph at lines 130--130
+ []
+
+[30]) [31] (./chapters/9_conclusion.tex) [32] (./chapters/10_aknowledgement.tex) [33] (./chapters/11_appendix.tex) [34]
+Package biblatex Info: Delimiter 'nametitledelim' in context 'bib' already defined, overwriting on input line 135.
+Package biblatex Info: Delimiter 'nametitledelim' in context 'biblist' already defined, overwriting on input line 135.
+
+Overfull \hbox (11.09564pt too wide) in paragraph at lines 147--147
+[]\TU/lmr/m/n/12 Freddie Bray, Mathieu Laversanne, Elisabete Weiderpass, and Isabelle Soerjomataram:
+ []
+
+
+Overfull \hbox (6.1182pt too wide) in paragraph at lines 147--147
 \TU/lmr/m/it/12 Premenopausal Women with Breast Cancer\TU/lmr/m/n/12 . In: The New England Journal of Medicine
  []
 
-[22]
-Overfull \hbox (9.13155pt too wide) in paragraph at lines 130--130
+[35]
+Overfull \hbox (9.13155pt too wide) in paragraph at lines 147--147
 [][][][][][][][][][][] [] [][][] [] [][][] [] [][][][] [] [][] [] [][][][] [] [][][][][][][][][][][][][][][][][]$[] \TU/lmr/m/n/12 (visited on 08/16/2021). 
  []
 
-[23]
-Overfull \hbox (1.53957pt too wide) in paragraph at lines 130--130
+[36]
+Overfull \hbox (1.53957pt too wide) in paragraph at lines 147--147
 []\TU/lmr/m/n/12 Haruo Matsushita, Keiichi Jingu, Rei Umezawa, Takaya Yamamoto, Yojiro Ishikawa,
  []
 
-[24]
-Overfull \hbox (6.40736pt too wide) in paragraph at lines 130--130
-[]\TU/lmr/m/n/12 Shujun Liang, Fan Tang, Xia Huang, Kaifan Yang, Tao Zhong, Runyue Hu, Shangqing
- []
-
-[25]
-Overfull \hbox (188.11249pt too wide) in paragraph at lines 130--130
+[37]
+Overfull \hbox (188.11249pt too wide) in paragraph at lines 147--147
 \TU/lmr/m/it/12 work method\TU/lmr/m/n/12 . In: Medical Physics 44.4 (2017). _eprint: https://aapm.onlinelibrary.wiley.com/doi/pdf/10.1002/mp.12155,
  []
 
 
-Overfull \hbox (4.21022pt too wide) in paragraph at lines 130--130
+Overfull \hbox (6.40736pt too wide) in paragraph at lines 147--147
+[]\TU/lmr/m/n/12 Shujun Liang, Fan Tang, Xia Huang, Kaifan Yang, Tao Zhong, Runyue Hu, Shangqing
+ []
+
+[38] [39] [40]
+Overfull \hbox (5.85153pt too wide) in paragraph at lines 147--147
+[]\TU/lmr/m/n/12 Ahmad Neishabouri, Niklas Wahl, Andrea Mairani, Ullrich Köthe, and Mark Bangert:
+ []
+
+[41]
+Overfull \hbox (4.21022pt too wide) in paragraph at lines 147--147
 \TU/lmr/m/it/12 medical images in deep learning\TU/lmr/m/n/12 . In: Computer Methods and Programs in Biomedicine
  []
 
-[26] [27]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 137.
- [28] [29] [30] [31] [32]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 137.
+[42]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 154.
+ [43]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 154.
  (./main.aux)
-Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 137.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 137.
+Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 154.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 154.
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: 73B0E76699D34BD7E02C85338D132FC0;1905.
+(rerunfilecheck)             Checksum: 664B764E4A00D6C6F0254823FF3A54D9;2637.
 Package logreq Info: Writing requests to 'main.run.xml'.
 \openout1 = `main.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 22443 strings out of 479418
- 425663 string characters out of 5884585
- 1184925 words of memory out of 5000000
- 39644 multiletter control sequences out of 15000+600000
- 536462 words of font info for 51 fonts, out of 8000000 for 9000
+ 22621 strings out of 479418
+ 430010 string characters out of 5884585
+ 1193363 words of memory out of 5000000
+ 39804 multiletter control sequences out of 15000+600000
+ 536478 words of font info for 53 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
- 47i,11n,52p,3267b,6257s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 47i,12n,52p,3267b,6261s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on main.xdv (38 pages, 632100 bytes).
+Output written on main.xdv (53 pages, 1054484 bytes).

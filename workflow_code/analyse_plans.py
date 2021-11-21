@@ -26,62 +26,54 @@ def latex(width, height, path):
     return do_latex
 
 
-def plot_histogram(heights, positions):
-
-    width = [(positions[i+1] - positions[i]) for i in range(len(positions)-1)]
-    pos = [(positions[i+1] + positions[i])/2 for i in range(len(positions)-1)]
-
-    plt.bar(pos, heights, width=width, align="center", edgecolor='black', linewidth=1.2, alpha=0.5)
-
-
-@latex(width=14, height=20, path="/Users/simongutwein/Desktop/plans.pdf")
+@latex(width=12, height=14, path="/Users/simongutwein/Desktop/plans_new.pdf")
 def main():
 
-    # colors = ["#FF0B04", "#4374B3"]
-    # sb.set_palette(sb.color_palette(colors))
+    colors = ["#FF0B04", "#4374B3"]
+    sb.set_palette(sb.color_palette(colors))
 
-    # results = "/Users/simongutwein/mnt/qb/baumgartner/sgutwein84/test_results"
+    results = "/Users/simongutwein/mnt/qb/baumgartner/sgutwein84/plan_predictions_load/"
 
-    # test_cases = [x for x in os.listdir(results) if not x.startswith(".")]
+    test_cases = [x for x in os.listdir(results) if not x.startswith(".")]
 
-    # info = []
-    # for test_case in test_cases:
-    #     case_path = os.path.join(results, test_case)
-    #     models = [x for x in os.listdir(case_path) if not x.startswith(".")]
-    #     for model in models:
-    #         gamma_path = os.path.join(case_path, model, "gamma.txt")
+    info = []
+    for test_case in test_cases:
+        case_path = os.path.join(results, test_case)
+        models = [x for x in os.listdir(case_path) if not x.startswith(".")]
+        for model in models:
+            gamma_path = os.path.join(case_path, model, "gamma.txt")
 
-    #         with open(gamma_path) as fin:
-    #             gamma = float(fin.readlines()[-1])
+            with open(gamma_path) as fin:
+                gamma = float(fin.readlines()[-1])
 
-    #         print(test_case)
-    #         segment_path = os.path.join("/Users/simongutwein/mnt/qb/baumgartner/sgutwein84/test_cases", test_case)
-    #         segments = [x for x in os.listdir(segment_path) if not x.startswith(".") and not "ct" in x and not "dcm" in x]
-    #         modulated = len(segments)
+            print(test_case)
+            segment_path = os.path.join("/Users/simongutwein/mnt/qb/baumgartner/sgutwein84/test_cases", test_case)
+            segments = [x for x in os.listdir(segment_path) if not x.startswith(".") and not "ct" in x and not "dcm" in x]
+            modulated = len(segments)
 
-    #         if "m" in test_case:
-    #             test_modularity = "Mixed (2)"
-    #         elif "l" in test_case:
-    #             test_modularity = "Mixed (2)"
-    #         elif "h" in test_case:
-    #             test_modularity = "Mixed (2)"
-    #         elif "p" in test_case:
-    #             test_modularity = "Prostate (1)"
-    #         elif "n" in test_case:
-    #             test_modularity = "Lymphnodes (3)"
+            if "m" in test_case:
+                test_modularity = "Mixed (2)"
+            elif "l" in test_case:
+                test_modularity = "Mixed (2)"
+            elif "h" in test_case:
+                test_modularity = "Mixed (2)"
+            elif "p" in test_case:
+                test_modularity = "Prostate (1)"
+            elif "n" in test_case:
+                test_modularity = "Lymphnodes (3)"
 
-    #         info.append({
-    #             "plan": test_case,
-    #             "model": model,
-    #             "gamma": gamma,
-    #             "modulated": modulated,
-    #             "test_modularity": test_modularity
-    #         })
+            info.append({
+                "plan": test_case,
+                "model": model,
+                "gamma": gamma,
+                "modulated": modulated,
+                "test_modularity": test_modularity
+            })
 
-    # df = pd.DataFrame(info)
+    df = pd.DataFrame(info)
 
-    # df.to_excel("/Users/simongutwein/mnt/qb/baumgartner/sgutwein84/test_case_results.xlsx")
-    # df.to_pickle("/Users/simongutwein/mnt/qb/baumgartner/sgutwein84/test_case_results.pkl")
+    df.to_excel("/Users/simongutwein/mnt/qb/baumgartner/sgutwein84/test_case_results.xlsx")
+    df.to_pickle("/Users/simongutwein/mnt/qb/baumgartner/sgutwein84/test_case_results.pkl")
 
     df = pd.read_pickle("/Users/simongutwein/mnt/qb/baumgartner/sgutwein84/test_case_results.pkl")
 
@@ -107,6 +99,8 @@ def main():
             wilcox[i] = f"***"
         elif wilcox[i] < 1E-2:
             wilcox[i] = f"**"
+        elif wilcox[i] < 0.05:
+            wilcox[i] = f"*"
         elif wilcox[i] > 0.05:
             wilcox[i] = f"n.s."
 
@@ -133,12 +127,16 @@ def main():
 
     ax[0].get_legend().remove()
     ax[0].set_xlim([-0.5, 2.5])
-    ax[0].set_xticks([0, 1, 2])
-    ax[0].set_xticklabels(entities_label)
+    ax[0].set_xticks([])
+    ax[0].text(0, 116, entities_label[0], ha="center", va="top", fontsize=9)
+    ax[0].text(1, 116, entities_label[1], ha="center", va="top", fontsize=9)
+    ax[0].text(2, 116, entities_label[2], ha="center", va="top", fontsize=9)
+    ax[0].set_xticklabels([])
     ax[0].set_ylabel("Gamma Passrate [%]")
     ax[0].set_xlabel("")
-    ax[0].tick_params(axis="x", direction="in", pad=-30)
-    ax[0].set_ylim([40, 102])
+    #ax[0].tick_params(axis="x", direction="in", pad=-30)
+    ax[0].set_ylim([0, 119])
+    ax[0].plot([-0.5, 2.5], [100, 100], "--", linewidth=1, color="k")
 
     sb.violinplot(cut=0, inner="box", x="test_modularity", y="gamma", hue="model", data=df, hue_order=[
                   "Prostate Model", "Mixed Model"], palette="Reds", order=["Prostate (1)", "Mixed (2)", "Lymphnodes (3)"], dodge=True, ax=ax[1])
@@ -146,13 +144,14 @@ def main():
     # sb.swarmplot(x="test_modularity", y="gamma", hue="model", data=df, color="black", dodge=True, size=4, hue_order=[
     # Prostate Model (A)", "Mixed Model (B)"], order = ["Prostate (1)", "Mixed (2)", "Lymphnodes (3)"])
     handles, labels = ax[1].get_legend_handles_labels()
-    ax[1].legend(handles[: 2], labels[: 2], loc="lower right", facecolor="white").set_zorder(2.5)
+    ax[1].legend(handles[: 2], ["Prostate", "Mixed"], loc="lower left", facecolor="white").set_zorder(2.5)
     ax[1].set_xticks([0, 1, 2])
     ax[1].set_xlim([-0.5, 2.5])
     ax[1].set_xticklabels(test_cases)
     ax[1].set_ylabel("Gamma Passrate [%]")
     ax[1].set_xlabel("")
-    ax[1].set_ylim([50, 109])
+    ax[1].set_ylim([0, 119])
+    ax[1].plot([-0.5, 2.5], [100, 100], "--", linewidth=1, color="k")
 
     for axs in ax[1].collections:
         axs.set_edgecolor('k')
@@ -164,7 +163,7 @@ def main():
     for axs in ax[0].get_children()[12:26]:
         axs.set_color('k')
 
-    for i in range(3):
+    for i in range(1, 3):
         x1, x2 = i-0.2, i+0.2   # columns 'Sat' and 'Sun' (first column: 0, see plt.xticks())
         y, h, col = 103, 2, 'k'
         plt.plot([x1, x1, x2, x2], [y, y+h, y+h, y], lw=1, c=col)
@@ -172,7 +171,7 @@ def main():
 
     ax2 = plt.axes([0, 0, 1, 1], facecolor=(1, 1, 1, 0))
     ax2.axis("off")
-    x, y = np.array([[0.4, 0.4, 0.11, 0.974, 0.7, 0.7], [0.1225, 0.525, 0.5642, 0.5642, 0.525, 0.198]])
+    x, y = np.array([[0.4, 0.4, 0.11, 0.974, 0.7, 0.7], [0.1225, 0.525, 0.5642, 0.5642, 0.525, 0.1225]])
     line = Line2D(x, y, lw=1, color='k', zorder=0)
     ax2.add_line(line)
     x, y = np.array([[0.7, 0.7], [0.1225, 0.131]])

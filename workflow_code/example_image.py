@@ -34,13 +34,14 @@ def example():
     import pymedphys
 
     slice_ = np.argwhere(target == target.max())[0][2]
+    max_gamma = 3
 
     gamma_options = {
         'dose_percent_threshold': 3,
         'distance_mm_threshold': 3,
         'lower_percent_dose_cutoff': 10,
-        'interp_fraction': 3,  # Should be 10 or more for more accurate results
-        'max_gamma': 2,
+        'interp_fraction': 5,  # Should be 10 or more for more accurate results
+        'max_gamma': max_gamma,
         'quiet': False,
         'local_gamma': False,
     }
@@ -61,12 +62,12 @@ def example():
 
     cut_top = 150
 
-    total = 300
+    total = (max_gamma)*100
 
     reds = cm.get_cmap('Reds', 256)
     blues = cm.get_cmap('Blues', 256)
-    top = reds(np.linspace(0, 1, int(1/2*total)))
-    bottom = np.flip(blues(np.linspace(0, 1, int(1/2*total))), axis=0)
+    top = reds(np.linspace(0, 1, int((max_gamma-1)/(max_gamma)*total)))
+    bottom = np.flip(blues(np.linspace(0, 1, total-int(max_gamma/(max_gamma+1)*total))), axis=0)
     newcmp = np.concatenate([bottom, top])
     newcmp = ListedColormap(newcmp)
 
@@ -85,12 +86,12 @@ def example():
     ax[2].imshow(ct[cut_top:, :, 3], cmap="bone")
     axs = ax[2].imshow(gamma_val[cut_top:, :, 3],  cmap=newcmp)
     cbar = fig.colorbar(axs, fraction=0.035, pad=0.04)
-    cbar.ax.set_yticklabels(["  "])
-    cbar.ax.tick_params(size=0, rotation=90)
+
+    # cbar.ax.tick_params(size=0, rotation=90)
     ax[2].axis("off")
-    cbar.ax.text(6, 1, "1", rotation=90, va='center', ha="center", color='black')
-    cbar.ax.text(6, 2, "failed", rotation=90, va='top', ha="center", color='black')
-    cbar.ax.text(6, 0, "passed", rotation=90, va='bottom', ha="center", color='black')
+    # cbar.ax.text(6, 1, "1", rotation=90, va='center', ha="center", color='black')
+    # cbar.ax.text(6, 2, "failed", rotation=90, va='top', ha="center", color='black')
+    # cbar.ax.text(6, 0, "passed", rotation=90, va='bottom', ha="center", color='black')
 
     return fig
 

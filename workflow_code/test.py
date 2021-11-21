@@ -16,6 +16,7 @@ def latex(width, height, path):
             fig = func(*args, **kwargs)
             cm = 1/2.54
             fig.set_size_inches(width*cm, height*cm, forward=True)
+            plt.show()
             plt.savefig(path, dpi=300, bbox_inches='tight')
         return wrap
     return do_latex
@@ -50,7 +51,7 @@ def main():
     y_circ1 = np.sin(u)
     z_circ1 = np.zeros(len(y_circ1))
 
-    ax.plot_surface(x, y, z, linewidth=0.0, alpha=0.1, color="black", zorder=-1)
+    ax.plot_surface(x, y, z, linewidth=1, alpha=0.05, color="black", antialiased=False)  # ,  alpha=0.5, color="red", zorder=-1)  # alpha=0.5
 
     ax.scatter3D(0, 0, 0, marker="8", color="k")
     a = Arrow3D([0, 0], [-2, 2], [0, 0], mutation_scale=10, lw=1, arrowstyle="<|-|>", color="k")

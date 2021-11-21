@@ -13,7 +13,7 @@
 \usepackage{palatino}
 \usepackage{float}
 \usepackage{csquotes}
-\usepackage[bookmarks]{hyperref}
+\usepackage[bookmarks, hidelinks]{hyperref}
 \RequirePackage[ngerman=ngerman-x-latest]{hyphsubst}
 
 \usepackage[maxbibnames=9, maxcitenames=1,style=numeric-comp,sorting=none]{biblatex}
@@ -23,6 +23,10 @@
 \usepackage[titles]{tocloft}
 \usepackage{fontspec}
 \usepackage{hang}
+
+\titleformat*{\section}{\LARGE\bfseries}
+\titleformat*{\subsection}{\Large\bfseries}
+\titleformat*{\subsubsection}{\large\bfseries}
 
 \usepackage{multirow}
 
@@ -119,11 +123,30 @@
   \cleardoublepage
 }
 
+\newcommand{\Standard}{
+  \Abstract{}
+  \Dedication{}
+  \Declaration
+}
+
 \newcommand{\Abstract}{ 
   \section*{Abstract}
-  \input{chapters/abstract.tex}
+  \input{chapters/0_abstract.tex}
   \newpage
 }
+
+\newcommand{\Dedication}{ 
+  \section*{Dedication}
+  \input{chapters/1_dedication.tex}
+  \newpage
+}
+
+\newcommand{\Declaration}{ 
+  \section*{Declaration}
+  \input{chapters/2_declaration.tex}
+  \newpage
+}
+
 
 \newcommand{\Kapitel}[2]{
     \section{#1}\label{#1}

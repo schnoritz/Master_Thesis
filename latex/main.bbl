@@ -19,6 +19,132 @@
 
 \refsection{0}
   \datalist[entry]{none/global//global/global}
+    \entry{bray_everincreasing_2021}{article}{}
+      \name{author}{4}{}{%
+        {{hash=3dc58d92f805cee080ba2dde0a50c3e2}{%
+           family={Bray},
+           familyi={B\bibinitperiod},
+           given={Freddie},
+           giveni={F\bibinitperiod}}}%
+        {{hash=5eb2ecd736a65e3f85c68adf8e341d1d}{%
+           family={Laversanne},
+           familyi={L\bibinitperiod},
+           given={Mathieu},
+           giveni={M\bibinitperiod}}}%
+        {{hash=b1bd02971d81c4b2f5873976ea8251e1}{%
+           family={Weiderpass},
+           familyi={W\bibinitperiod},
+           given={Elisabete},
+           giveni={E\bibinitperiod}}}%
+        {{hash=1157717990b3a2879530e4acbb92b56c}{%
+           family={Soerjomataram},
+           familyi={S\bibinitperiod},
+           given={Isabelle},
+           giveni={I\bibinitperiod}}}%
+      }
+      \strng{namehash}{74cc8b3af0676dd7492582e70e84f78c}
+      \strng{fullhash}{a0fdbf07b8c82478558a13b7a326f39d}
+      \strng{bibnamehash}{a0fdbf07b8c82478558a13b7a326f39d}
+      \strng{authorbibnamehash}{a0fdbf07b8c82478558a13b7a326f39d}
+      \strng{authornamehash}{74cc8b3af0676dd7492582e70e84f78c}
+      \strng{authorfullhash}{a0fdbf07b8c82478558a13b7a326f39d}
+      \field{sortinit}{1}
+      \field{sortinithash}{50c6687d7fc80f50136d75228e3c59ba}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{The relative importance of cardiovascular disease ({CVD}) and cancer as leading causes of premature death are examined in this communication. {CVD} and cancer are now the leading causes in 127 countries, with {CVD} leading in 70 countries (including Brazil and India) and cancer leading in 57 countries (including China). Such observations can be seen as part of a late phase of an epidemiologic transition, taking place in the second half of the 20th century and the first half of the present one, in which the dominance of infectious diseases is progressively superseded by noncommunicable diseases. According to present ranks and recent trends, cancer may surpass {CVD} as the leading cause of premature death in most countries over the course of this century. Clearly, governments must factor in these transitions in developing cancer policies for the local disease profile. Cancer 2021;127:3029-3030. © 2021 American Cancer Society.}
+      \field{day}{15}
+      \field{issn}{0008-543X, 1097-0142}
+      \field{journaltitle}{Cancer}
+      \field{langid}{english}
+      \field{month}{8}
+      \field{number}{16}
+      \field{shortjournal}{Cancer}
+      \field{title}{The ever‐increasing importance of cancer as a leading cause of premature death worldwide}
+      \field{urlday}{17}
+      \field{urlmonth}{11}
+      \field{urlyear}{2021}
+      \field{volume}{127}
+      \field{year}{2021}
+      \field{dateera}{ce}
+      \field{urldateera}{ce}
+      \field{pages}{3029\bibrangedash 3030}
+      \range{pages}{2}
+      \verb{doi}
+      \verb 10.1002/cncr.33587
+      \endverb
+      \verb{file}
+      \verb Bray et al. - 2021 - The ever‐increasing importance of cancer as a lead.pdf:/Users/simongutwein/Zotero/storage/2IYICWMU/Bray et al. - 2021 - The ever‐increasing importance of cancer as a lead.pdf:application/pdf
+      \endverb
+      \verb{urlraw}
+      \verb https://onlinelibrary.wiley.com/doi/10.1002/cncr.33587
+      \endverb
+      \verb{url}
+      \verb https://onlinelibrary.wiley.com/doi/10.1002/cncr.33587
+      \endverb
+    \endentry
+    \entry{shahzad_overview_2018}{incollection}{}
+      \name{author}{2}{}{%
+        {{hash=323a44dd33dca7c992b5a52fcdaceec6}{%
+           family={Abbas},
+           familyi={A\bibinitperiod},
+           given={Zaigham},
+           giveni={Z\bibinitperiod}}}%
+        {{hash=a57fa1152e97bf1def9881ab4d41cccf}{%
+           family={Rehman},
+           familyi={R\bibinitperiod},
+           given={Sakina},
+           giveni={S\bibinitperiod}}}%
+      }
+      \name{editor}{1}{}{%
+        {{hash=5ac81390f08d1709e131a33b2a1b5cb3}{%
+           family={Shahzad},
+           familyi={S\bibinitperiod},
+           given={Hafiz\bibnamedelima Naveed},
+           giveni={H\bibinitperiod\bibinitdelim N\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {InTech}%
+      }
+      \strng{namehash}{3e4a7448da237a13aace1ab26e2b5849}
+      \strng{fullhash}{4f2c847995b44c90593c7f08af15026c}
+      \strng{bibnamehash}{4f2c847995b44c90593c7f08af15026c}
+      \strng{authorbibnamehash}{4f2c847995b44c90593c7f08af15026c}
+      \strng{authornamehash}{3e4a7448da237a13aace1ab26e2b5849}
+      \strng{authorfullhash}{4f2c847995b44c90593c7f08af15026c}
+      \strng{editorbibnamehash}{5ac81390f08d1709e131a33b2a1b5cb3}
+      \strng{editornamehash}{5ac81390f08d1709e131a33b2a1b5cb3}
+      \strng{editorfullhash}{5ac81390f08d1709e131a33b2a1b5cb3}
+      \field{sortinit}{2}
+      \field{sortinithash}{ed39bb39cf854d5250e95b1c1f94f4ed}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{Cancer is a global issue majorly affecting developing countries. According to a survey, 63\% of deaths due to cancer are reported from developing countries. There are different conventional treatment modalities that are available to treat and manage cancer. However, new cancer treatment options are being explored continuously as over 60\% of all current experimental trials worldwide are focusing on tumor cure. The success of treatment depends upon the type of cancer, locality of tumor, and its stage of progression. Surgery, radiation-based surgical knives, chemotherapy, and radiotherapy are some of the traditional and most widely used treatment options. Some of the modern modalities include hormone-based therapy, anti-angiogenic modalities, stem cell therapies, and dendritic cell-based immunotherapy. This chapter discusses different traditional and novel treatment modalities to combat different types of cancer.}
+      \field{booktitle}{Neoplasm}
+      \field{day}{19}
+      \field{isbn}{978-1-78923-777-1 978-1-78923-778-8}
+      \field{langid}{english}
+      \field{month}{9}
+      \field{title}{An Overview of Cancer Treatment Modalities}
+      \field{urlday}{17}
+      \field{urlmonth}{11}
+      \field{urlyear}{2021}
+      \field{year}{2018}
+      \field{dateera}{ce}
+      \field{urldateera}{ce}
+      \verb{doi}
+      \verb 10.5772/intechopen.76558
+      \endverb
+      \verb{file}
+      \verb Abbas und Rehman - 2018 - An Overview of Cancer Treatment Modalities.pdf:/Users/simongutwein/Zotero/storage/KCZECLD4/Abbas und Rehman - 2018 - An Overview of Cancer Treatment Modalities.pdf:application/pdf
+      \endverb
+      \verb{urlraw}
+      \verb http://www.intechopen.com/books/neoplasm/an-overview-of-cancer-treatment-modalities
+      \endverb
+      \verb{url}
+      \verb http://www.intechopen.com/books/neoplasm/an-overview-of-cancer-treatment-modalities
+      \endverb
+    \endentry
     \entry{geinitz_3d_2005}{article}{}
       \name{author}{6}{}{%
         {{hash=9fe8dc7d93387d3cfdd92d98e6c40c37}{%
@@ -58,8 +184,8 @@
       \strng{authorbibnamehash}{a9cf8dfef74d877e02e27b016cbc84b2}
       \strng{authornamehash}{d8fc6c40b83b6f2b8ca478c551fabfce}
       \strng{authorfullhash}{a9cf8dfef74d877e02e27b016cbc84b2}
-      \field{sortinit}{1}
-      \field{sortinithash}{50c6687d7fc80f50136d75228e3c59ba}
+      \field{sortinit}{3}
+      \field{sortinithash}{a37a8ef248a93c322189792c34fc68c9}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{issn}{01678140}
@@ -180,8 +306,8 @@
       \strng{authorbibnamehash}{21da552e96111d0ae219e6dde360c5d4}
       \strng{authornamehash}{21da552e96111d0ae219e6dde360c5d4}
       \strng{authorfullhash}{62cc033d683490669bc927f16780ef0a}
-      \field{sortinit}{1}
-      \field{sortinithash}{50c6687d7fc80f50136d75228e3c59ba}
+      \field{sortinit}{3}
+      \field{sortinithash}{a37a8ef248a93c322189792c34fc68c9}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{shorttitle}
       \field{issn}{01678140}
@@ -238,8 +364,8 @@
       \strng{authorbibnamehash}{97819f05ab6f016b180d814877c7516c}
       \strng{authornamehash}{2a4b0b5312884543c1d3f0f5ea442256}
       \strng{authorfullhash}{97819f05ab6f016b180d814877c7516c}
-      \field{sortinit}{1}
-      \field{sortinithash}{50c6687d7fc80f50136d75228e3c59ba}
+      \field{sortinit}{3}
+      \field{sortinithash}{a37a8ef248a93c322189792c34fc68c9}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{abstract}{External beam radiotherapy ({EBRT}) constitutes an important management option for prostate cancer ({PCa}). Radiation doses !74 Gy are warranted. Dose escalation of {EBRT} using three-dimensional-conformal radiotherapy ({RT}) or intensity-modulated {RT} improves the therapeutic index by minimizing normal tissue complication probability and increasing tumor control probability. Although higher doses are associated with better biochemical disease-free survival, no impact on local recurrence or overall survival has been demonstrated. Hypofractionation for {PCa} may be an attractive therapeutic option, but toxicity data need to be conﬁrmed in randomized phase {III} trials. Advances in {RT} technology, such as volumetric modulated arc therapy and imageguided {RT}, could facilitate the introduction of dose escalation and hypofractionation into clinical practice. Particle beam irradiation and more speciﬁc carbon ion {RT} are also very promising new techniques that are under investigation. Ultimately, these techniques may lead to focal dose escalation by selective boosting of dominant intraprostatic lesions, which is currently under investigation as a solution to overcome increased toxicity of homogenous dose escalation. This review will give a comprehensive overview of all the recent advances in these new radiation therapy techniques.}
@@ -321,8 +447,8 @@
       \strng{authorbibnamehash}{7a004057466373b9827d3864892163fb}
       \strng{authornamehash}{7a004057466373b9827d3864892163fb}
       \strng{authorfullhash}{55a51daf996fb27c8ab706be24d3f95e}
-      \field{sortinit}{2}
-      \field{sortinithash}{ed39bb39cf854d5250e95b1c1f94f4ed}
+      \field{sortinit}{4}
+      \field{sortinithash}{e071e0bcb44634fab398d68ad04e69f4}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{abstract}{Background Radiotherapy after mastectomy to treat early breast cancer has been known since the 1940s to reduce rates of local relapse. However, the routine use of postoperative radiotherapy began to decline in the 1980s because it failed to improve overall survival. We prospectively tested the efficacy of combining radiotherapy with chemotherapy. Methods From 1978 through 1986, 318 premenopausal women with node-positive breast cancer were randomly assigned, after modified radical mastectomy, to receive chemotherapy plus radiotherapy or chemotherapy alone. Radiotherapy was given to the chest wall and locoregional lymph nodes between the fourth and fifth cycles of cyclophosphamide, methotrexate, and fluorouracil. Results After 15 years of follow-up, the women assigned to chemotherapy plus radiotherapy had a 33 percent reduction in the rate of recurrence (relative risk, 0.67; 95 percent confidence interval, 0.50 to 0.90) and a 29 percent reduction in mortality from breast cancer (relative risk, 0.71; 95 percent confidence interval, 0.51 to 0.99), as compared with the women treated with chemotherapy alone. Conclusions Radiotherapy combined with chemotherapy after modified radical mastectomy decreases rates of locoregional and systemic relapse and reduces mortality from breast cancer. (N Engl J Med 1997;337:956-62.)}
@@ -371,8 +497,8 @@
       \strng{authorbibnamehash}{15e6392ba13bb0e190edbe003f80b435}
       \strng{authornamehash}{c861dd379ae48b033bbac5eb34de481d}
       \strng{authorfullhash}{15e6392ba13bb0e190edbe003f80b435}
-      \field{sortinit}{2}
-      \field{sortinithash}{ed39bb39cf854d5250e95b1c1f94f4ed}
+      \field{sortinit}{4}
+      \field{sortinithash}{e071e0bcb44634fab398d68ad04e69f4}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{abstract}{Combined treatment modality was applied in 110 consecutive women with primary inoperable (T3b-T4) breast cancer. Treatment was started with four cycles of adriamycin plus vincristine (.4V). This wasfollowed in responders by high-energy radiotherapy ({RT}). At the end of combined therapy, patients in complete remission ({CR}) were randomized to either no further treatment or six more cycles of chemotherapy. A V induced objective response in 89\% of patients (complete 15.5\%, partial 54.5\%, improvement 19\%). At the end of R T, 81 of 98 (82.7\%) patients responding to A V were classified in {CR}. The median duration of {CR} was 15 months. The median free interval was statistically prolonged by additional chemotherapy. The three-year survival was 52.8\%. Altogether, present findings indicate that combined treatment modality has improved the three-year survival compared to the previous series treated with radiotherapy alone. However, to achieve a satisfactory control of T3b--T4 breast cancer a more aggressive and prolonged treatment is required.}
@@ -483,8 +609,8 @@
       \strng{authorbibnamehash}{f30111d6c0b8a7d36612163923f3272e}
       \strng{authornamehash}{f30111d6c0b8a7d36612163923f3272e}
       \strng{authorfullhash}{6d9736b932936787d3c24ee03e1d0c24}
-      \field{sortinit}{2}
-      \field{sortinithash}{ed39bb39cf854d5250e95b1c1f94f4ed}
+      \field{sortinit}{4}
+      \field{sortinithash}{e071e0bcb44634fab398d68ad04e69f4}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{shorttitle}
       \field{abstract}{Purpose Radiotherapy reduces the absolute risk of breast cancer mortality by a few percentage points in suitable women but can cause a second cancer or heart disease decades later. We estimated the absolute long-term risks of modern breast cancer radiotherapy. Methods First, a systematic literature review was performed of lung and heart doses in breast cancer regimens published during 2010 to 2015. Second, individual patient data meta-analyses of 40,781 women randomly assigned to breast cancer radiotherapy versus no radiotherapy in 75 trials yielded rate ratios ({RRs}) for second primary cancers and cause-specific mortality and excess {RRs} ({ERRs}) per Gy for incident lung cancer and cardiac mortality. Smoking status was unavailable. Third, the lung or heart {ERRs} per Gy in the trials and the 2010 to 2015 doses were combined and applied to current smoker and nonsmoker lung cancer and cardiac mortality rates in population-based data. Results Average doses from 647 regimens published during 2010 to 2015 were 5.7 Gy for whole lung and 4.4 Gy for whole heart. The median year of irradiation was 2010 (interquartile range [{IQR}], 2008 to 2011). Meta-analyses yielded lung cancer incidence ≥ 10 years after radiotherapy {RR} of 2.10 (95\% {CI}, 1.48 to 2.98; P < .001) on the basis of 134 cancers, indicating 0.11 (95\% {CI}, 0.05 to 0.20) {ERR} per Gy whole-lung dose. For cardiac mortality, {RR} was 1.30 (95\% {CI}, 1.15 to 1.46; P < .001) on the basis of 1,253 cardiac deaths. Detailed analyses indicated 0.04 (95\% {CI}, 0.02 to 0.06) {ERR} per Gy whole-heart dose. Estimated absolute risks from modern radiotherapy were as follows: lung cancer, approximately 4\% for long-term continuing smokers and 0.3\% for nonsmokers; and cardiac mortality, approximately 1\% for smokers and 0.3\% for nonsmokers. Conclusion For long-term smokers, the absolute risks of modern radiotherapy may outweigh the benefits, yet for most nonsmokers (and ex-smokers), the benefits of radiotherapy far outweigh the risks. Hence, smoking can determine the net effect of radiotherapy on mortality, but smoking cessation substantially reduces radiotherapy risk.}
@@ -547,8 +673,8 @@
       \strng{authorbibnamehash}{182fdd3b39f9abedeb21b1918df53976}
       \strng{authornamehash}{c2310806795c1b1312a945b1e6b02bce}
       \strng{authorfullhash}{182fdd3b39f9abedeb21b1918df53976}
-      \field{sortinit}{3}
-      \field{sortinithash}{a37a8ef248a93c322189792c34fc68c9}
+      \field{sortinit}{5}
+      \field{sortinithash}{5dd416adbafacc8226114bc0202d5fdd}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{shorttitle}
       \field{issn}{0265-6736, 1464-5157}
@@ -600,8 +726,8 @@
       \strng{authorbibnamehash}{917e00867e308f036e0102acbba3da6c}
       \strng{authornamehash}{e15fe9c64cf934342caabfcf39b5171c}
       \strng{authorfullhash}{917e00867e308f036e0102acbba3da6c}
-      \field{sortinit}{3}
-      \field{sortinithash}{a37a8ef248a93c322189792c34fc68c9}
+      \field{sortinit}{5}
+      \field{sortinithash}{5dd416adbafacc8226114bc0202d5fdd}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{abstract}{Radiotherapy and surgery are the principal curative modalities in treatment of head and neck cancer. Conventional (two dimensional, 2D and three-dimensional conformal radiotherapy, 3DCRT) result in signiﬁcant side-effects and altered quality of life. Intensity modulated radiotherapy ({IMRT}) can spare the normal tissues, while delivering a curative dose to the tumour bearing tissues. Technical advances like volumetric intensity modulated arc therapy ({VMAT}) have helped optimise {IMRT} further. Image guided radiotherapy ({IGRT}) can be used to aid target delineation and also help reduce the {PTV} margins to further enhance the therapeutic ratio. Particle therapy using protons provides signiﬁcant advantage in terms of normal tissue sparing and is recommended for small cranial tumours and in radiotherapy for paediatric patients.}
@@ -663,8 +789,8 @@
       \strng{authorbibnamehash}{b89d3b93871cc8de41237e6ce735911b}
       \strng{authornamehash}{21918ebead15861e32fe301c3587bfee}
       \strng{authorfullhash}{b89d3b93871cc8de41237e6ce735911b}
-      \field{sortinit}{3}
-      \field{sortinithash}{a37a8ef248a93c322189792c34fc68c9}
+      \field{sortinit}{5}
+      \field{sortinithash}{5dd416adbafacc8226114bc0202d5fdd}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{issn}{10534296}
@@ -715,8 +841,8 @@
       \strng{authorbibnamehash}{564a6aae35d862a312a0a49281c74fd7}
       \strng{authornamehash}{d1ace37525e929056222e82c1a85e22b}
       \strng{authorfullhash}{564a6aae35d862a312a0a49281c74fd7}
-      \field{sortinit}{3}
-      \field{sortinithash}{a37a8ef248a93c322189792c34fc68c9}
+      \field{sortinit}{5}
+      \field{sortinithash}{5dd416adbafacc8226114bc0202d5fdd}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{abstract}{Background: Although there have been dramatic improvements in radiotherapy for head and neck squamous cell carcinoma ({HNSCC}), including robust intensity modulation and daily image guidance, these advances are not able to account for inherent structural and spatial changes that may occur during treatment. Many sources have reported volume reductions in the primary target, nodal volumes, and parotid glands over treatment, which may result in unintended dosimetric changes affecting the side effect profile and even efficacy of the treatment. Adaptive radiotherapy ({ART}) is an exciting treatment paradigm that has been developed to directly adjust for these changes. Main body: Adaptive radiotherapy may be divided into two categories: anatomy-adapted (A-{ART}) and responseadapted {ART} (R-{ART}). Anatomy-adapted {ART} is the process of re-planning patients based on structural and spatial changes occurring over treatment, with the intent of reducing overdosage of sensitive structures such as the parotids, improving dose homogeneity, and preserving coverage of the target. In contrast, response-adapted {ART} is the process of re-planning patients based on response to treatment, such that the target and/or dose changes as a function of interim imaging during treatment, with the intent of dose escalating persistent disease and/or deescalating surrounding normal tissue. The impact of R-{ART} on local control and toxicity outcomes is actively being investigated in several currently accruing trials. Conclusions: Anatomy-adapted {ART} is a promising modality to improve rates of xerostomia and coverage in individuals who experience significant volumetric changes during radiation, while R-{ART} is currently being studied to assess its utility in either dose escalation of radioresistant disease, or de-intensification of surrounding normal tissue following treatment response. In this paper, we will review the existing literature and recent advances regarding A-{ART} and R-{ART}.}
@@ -803,8 +929,8 @@
       \strng{authorbibnamehash}{bd4a6dd27ee5cb20fa4a35d53123d910}
       \strng{authornamehash}{46666113f098c9e02f13bb1335151cb8}
       \strng{authorfullhash}{bd4a6dd27ee5cb20fa4a35d53123d910}
-      \field{sortinit}{4}
-      \field{sortinithash}{e071e0bcb44634fab398d68ad04e69f4}
+      \field{sortinit}{6}
+      \field{sortinithash}{7851c86048328b027313775d8fbd2131}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{shorttitle}
       \field{abstract}{Over the past decade, there has been an increasing use of radiotherapy ({RT}) for the treatment of liver metastases. Most often, ablative doses are delivered to focal liver metastases with the goal of local control and ultimately improving survival. In contrast, low-dose whole-liver {RT} may be used for the palliation of symptomatic diffuse metastases. This review examines the available clinical data for both approaches. The review found that {RT} is effective both for local ablation of focal liver metastases and for palliation of patients with symptomatic liver metastases. However, there is a lack of a high level of evidence from randomized clinical trials.}
@@ -880,8 +1006,8 @@
       \strng{authornamehash}{3e589282e0c5a51cc5174e16d447d33d}
       \strng{authorfullhash}{6a1faa6b07b59295030bcfb207cc0cab}
       \field{extraname}{1}
-      \field{sortinit}{4}
-      \field{sortinithash}{e071e0bcb44634fab398d68ad04e69f4}
+      \field{sortinit}{6}
+      \field{sortinithash}{7851c86048328b027313775d8fbd2131}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{shorttitle}
       \field{abstract}{Background: Stereotactic irradiation of extracranial targets offers a non-invasive treatment modality for patients with localized tumors, which are not amenable for surgery or other invasive approaches because of age or impaired medical condition. The purpose of the study was the evaluation of the method to achieve local control of irradiated targets in relation to treatment toxicity. Patients and Methods: Irradiation was performed as hypofractionated treatment in three fractions of 10 Gy each, normalized to the {PTV} enclosing 65\% isodose with patient fixation in a stereotactic body frame. The isocenter was localized by stereotactic coordinates. Targets were circumscribed tumors in the lung (n = 27) and liver (n = 24) not amenable for other treatment modalities: primary lung cancer (n = 12), local recurrences of lung cancer (n = 4), lung metastases (n = 11), liver metastases (n = 23) and one cholangiocellular carcinoma. Median {CTV}/{PTV} for targets in the lung was 57/113 cm3 (min/max 5–277 cm3/17–343 cm3) and for targets in the liver 50/102 cm3 (min/max 9–516 cm3/42–772 cm3). Median follow-up for targets in the lung was 8 months (2–33) and 9 months (2–28) for liver targets. Local control was defined as complete or partial remission and stable disease, measured by repeated {CT} scans after 6 weeks and in 3 months intervals. Treatment toxicity was evaluated according to the {WHO} score. Results: Crude local control was 85\% for pulmonary targets and 83\% for hepatic targets. Actuarial local control after 1 and 2 years was 76\% and 76\% for lung tumors and 76\% and 61\% for liver tumors. Actuarial overall patient survival was 48\% after 1 year and 21\% after 2 years for targets in the lung and 71\% and 43\% for targets in the liver. No acute grade 3–5 side effects were observed. Serious late toxicity occurred in two patients: a chronic ulceration of the esophagus at a target close to the mediastinum after 3 months (grade 3) and fatal bleeding from the pulmonary artery after 9 months (grade 5) in a previously irradiated patient. It remained unclear, whether the bleeding was a side effect of irradiation or due to tumor infiltration. Conclusion: Hypofractionated stereotactic irradiation of targets in the lung and liver is a locally effective treatment with actuarial local control rates of 76\% after 1 year and 61–76\% after 2 years without relevant acute toxicity. Severe late toxicity did not occur, if targets close to the mediastinum were avoided.}
@@ -960,8 +1086,8 @@
       \strng{authornamehash}{75823d620d8687786a5df067f84dece7}
       \strng{authorfullhash}{92ab7387c406a56d155d4ec3f784389e}
       \field{extraname}{2}
-      \field{sortinit}{4}
-      \field{sortinithash}{e071e0bcb44634fab398d68ad04e69f4}
+      \field{sortinit}{6}
+      \field{sortinithash}{7851c86048328b027313775d8fbd2131}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{abstract}{The purpose was to evaluate the clinical results of stereotactic radiotherapy in primary liver tumors and hepatic metastases. Five patients with primary liver cancer and 39 patients with 51 hepatic metastases were treated by stereotactic radiotherapy since 1997. Twenty-eight targets were treated in a ‘‘low-dose’’-group with 3 )/10 Gy (n 0/27) or 4 )/7 Gy (n 0/1) prescribed to the {PTV}-encl. 65\%-isodose. In a ‘‘high-dose’’-group patients were treated with 3 )/12 (/12.5 Gy (n 0/19; same dose prescription) or 1 )/26 Gy/{PTV}-enclosing 80\%-isodose (n 0/9). Median follow-up was 15 months (2 Á48 months) for primary liver cancer and 15 months (2 Á85 months) for hepatic metastases. While all primary liver cancers were controlled, nine local failures (3 Á19 months) of 51 metastases were observed resulting in an actuarial local control rate of 92\% after 12 months and 66\% after 24 months and later. A borderline significant correlation between dose and local control was observed (p 0/0.077): the actuarial local control rate after 12 and 24 months was 86\% and 58\% in the low-dose-group versus 100\% and 82\% in the high-dose-group. In multivariate analysis high versus low-dose was the only significant factor predicting local control (p0/0.0089). Overall survival after 1 and 2 years was 72\% and 32\% for all patients and was impaired due to systemic progression of disease. No severe acute or late toxicity exceeding {RTOG}/{EORTC}-score 2 were observed. Stereotactic irradiation of primary liver cancer and hepatic metastases offers a locally effective treatment without significant complications in patients, who are not amenable for surgery. Patient selection is important, because those with low risk for systemic progression are more likely to benefit from this approach.}
@@ -1038,8 +1164,8 @@
       \strng{authorbibnamehash}{d267da1770286f7ece3f67932ff8947e}
       \strng{authornamehash}{e366e747f63b06485cbf8393238d9472}
       \strng{authorfullhash}{d267da1770286f7ece3f67932ff8947e}
-      \field{sortinit}{4}
-      \field{sortinithash}{e071e0bcb44634fab398d68ad04e69f4}
+      \field{sortinit}{6}
+      \field{sortinithash}{7851c86048328b027313775d8fbd2131}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{shorttitle}
       \field{issn}{0179-7158, 1439-099X}
@@ -1096,8 +1222,8 @@
       \strng{authorbibnamehash}{77784b44bd34a725509f1ee73eecdc32}
       \strng{authornamehash}{5d4afd10eaee04d4faf8e0e411f29dac}
       \strng{authorfullhash}{77784b44bd34a725509f1ee73eecdc32}
-      \field{sortinit}{4}
-      \field{sortinithash}{e071e0bcb44634fab398d68ad04e69f4}
+      \field{sortinit}{6}
+      \field{sortinithash}{7851c86048328b027313775d8fbd2131}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{shorttitle}
       \field{abstract}{{MRI}-guided radiotherapy is a novel and rapidly evolving technology that might enhance the risk–benefit ratio. Through direct visualisation of the tumour and the nearby healthy tissues, the radiation oncologist can deliver highly accurate treatment even to mobile targets. Each individual treatment can be customised to changing anatomy, potentially reducing the risk of radiation-related toxicities while simultaneously increasing the dose delivered to the tumour. {MRI}-guided radiotherapy offers a new tool for the radiation oncologist, and creates an opportunity to achieve durable local control of liver tumours that might not otherwise be possible. Future work will allow us to expand the population eligible for curative-intent radiotherapy, optimise and customise radiation doses to specific tumours, and hopefully create opportunities for improving outcomes through machine learning and radiomics-based approaches. This Review outlines the current and future applications for {MRI}-guided radiotherapy with respect to metastatic and primary liver cancers.}
@@ -1216,8 +1342,8 @@
       \strng{authorbibnamehash}{d6dcd7e74cc9f9c8678f6e88a8aff125}
       \strng{authornamehash}{d6dcd7e74cc9f9c8678f6e88a8aff125}
       \strng{authorfullhash}{617b82311adf93bcab42d0b793dc0955}
-      \field{sortinit}{5}
-      \field{sortinithash}{5dd416adbafacc8226114bc0202d5fdd}
+      \field{sortinit}{7}
+      \field{sortinithash}{f615fb9c6fba11c6f962fb3fd599810e}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{shorttitle}
       \field{issn}{0179-7158, 1439-099X}
@@ -1299,8 +1425,8 @@
       \strng{authorbibnamehash}{ecc4f01802b3f88479684ffcb4a7072e}
       \strng{authornamehash}{13f4d9ec65edb8ec6e7abc609e4f5080}
       \strng{authorfullhash}{ecc4f01802b3f88479684ffcb4a7072e}
-      \field{sortinit}{5}
-      \field{sortinithash}{5dd416adbafacc8226114bc0202d5fdd}
+      \field{sortinit}{7}
+      \field{sortinithash}{f615fb9c6fba11c6f962fb3fd599810e}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{abstract}{In recent years, the concept of oligometastases has become accepted and reports on stereotactic body radiotherapy as a treatment method have been published. Lesions in the brain, lung, and liver have been reported as target lesions. However, lymph node oligometastases could be a good candidate for stereotactic body radiotherapy as well. In this study, the usability of stereotactic body radiotherapy for oligometastases to lymph nodes is assessed by researching for each primary site. As a result, we could consider that stereotactic body radiotherapy could be almost well applied for lymph node oligometastases from the breast, gynecological organs, and prostate. However, doubts remain concerning the usefulness of stereotactic body radiotherapy for cervical node metastases from head and neck cancer or for mediastinal node metastases from lung or esophageal cancer since late toxicities have occurred with a large radiation dose at hypofractionation to major vessels or the central respiratory tract, especially in patients with irradiation histories. In addition, high-dose irradiation is required to control lymph node metastases from colorectal cancer due to its radioresistance, and severe late adverse events would therefore occur in adjacent organs such as the gastrointestinal tract. In cases of lymph node oligometastases with a primary tumor in the stomach or esophagus, stereotactic body radiotherapy should be used limitedly at present because this patient population is not so large and these metastases are often located close to organs at risk. Because of the varied status of recurrence and varied conditions of patients, it is difficult to determine the optimal dose for tumor control. It might be reasonable to determine the treatment dose individually based on dose constraints of adjacent organs. The oligometastatic state is becoming more frequently identified with more sensitive methods of detecting such oligometastases. In addition, there seems to be another type of oligometastases, so-called induced oligometastases, following successful systemic treatment. To determine the optimal indication of stereotactic body radiotherapy for lymph node oligometastases, further investigation about the mechanisms of oligometastases and further clinical studies including a phase {III} study are needed.}
@@ -1416,8 +1542,8 @@
       \strng{authorbibnamehash}{aa875f3291451893130b2d4a77e3bcca}
       \strng{authornamehash}{aa875f3291451893130b2d4a77e3bcca}
       \strng{authorfullhash}{ecf6ca28013b9f0583dd25b47e339399}
-      \field{sortinit}{5}
-      \field{sortinithash}{5dd416adbafacc8226114bc0202d5fdd}
+      \field{sortinit}{7}
+      \field{sortinithash}{f615fb9c6fba11c6f962fb3fd599810e}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{shorttitle}
       \field{abstract}{Introduction: Use of postoperative radiotherapy ({PORT}) in non–small-cell lung cancer remains controversial. Limited data indicate that {PORT} may benefit patients with involved N2 nodes. This study evaluates this hypothesis in a large retrospective cohort treated with chemotherapy and contemporary radiation techniques. Methods: The National Cancer Data Base was queried for patients diagnosed 2004–2006 with resected non–small-cell lung cancer and pathologically involved N2 ({pN}2) nodes also treated with chemotherapy. Multivariable Cox proportional hazards model was used to assess factors associated with overall survival ({OS}). Inverse probability of treatment weighting ({IPTW}) using the propensity score was used to reduce selection bias. {OS} was compared between patients treated with versus without {PORT} using the adjusted Kaplan–Meier estimator and weighted log-rank test based on {IPTW}. Results: Two thousand and one hundred and fifteen patients were eligible for analysis. 918 (43.4\%) received {PORT}, 1197 (56.6\%) did not. {PORT} was associated with better {OS} (median survival time 42 months with {PORT} versus 38 months without, p = 0.048). This effect was significant in multivariable and {IPTW} Cox models (hazard ratio: 0.87, 95\% confidence interval: 0.78–0.98, p = 0.026, and hazard ratio: 0.89, 95\% confidence interval: 0.79–1.00, p = 0.046, respectively). No interaction was seen between the effects of {PORT} and number of involved lymph nodes (p = 0.615). Conclusions: {PORT} was associated with better survival for patients with {pN}2 nodes also treated with chemotherapy. No interaction was seen between benefit of {PORT} and number of involved nodes. These findings reinforce the benefit of {PORT} for N2 disease in modern practice using the largest, most recent cohort of chemotherapytreated {pN}2 patients to date.}
@@ -1505,8 +1631,8 @@
       \strng{authorbibnamehash}{f6dba3ed565bd3fdd5e936f24fa8ca5b}
       \strng{authornamehash}{15686ed3b04a8c02e79e509a3af2ac79}
       \strng{authorfullhash}{f6dba3ed565bd3fdd5e936f24fa8ca5b}
-      \field{sortinit}{5}
-      \field{sortinithash}{5dd416adbafacc8226114bc0202d5fdd}
+      \field{sortinit}{7}
+      \field{sortinithash}{f615fb9c6fba11c6f962fb3fd599810e}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{abstract}{Background and purpose: Irradiation of the supraclavicular lymph nodes has historically increased the risk of brachial plexopathy. We report long-term symptoms after modern radiotherapy (based on 3D dose planning) in breast cancer patients with or without irradiation of the supraclavicular lymph nodes. Material and methods: We collected information from 814 women consecutively treated with adjuvant radiotherapy for breast cancer. The women had breast surgery with axillary dissection ({AD}) or sentinel node biopsy ({SNB}). The breast area was treated to 50 Gy in 2.0 Gy fractions. Women with >three lymph node metastases had regional radiotherapy ({RRT}) to the supraclavicular lymph nodes. Three to eight years after radiotherapy, they received a questionnaire asking about paraesthesia, oedema, pain, and strength in the upper limb. Results: Paraesthesia was reported by 38/192 (20\%) after {AD} with {RRT} compared to 68/505 (13\%) after {AD} without {RRT} (relative risk [{RR}] 1.47; 95\% conﬁdence interval [{CI}] 1.02–2.11) and by 9/112 (8\%) after {SNB} without {RRT} ({RR} 2.46; 95\% {CI} 1.24–4.90). Corresponding risks adjusted for oedema ({RR} 1.28; 95\% {CI} 0.93–1.76) and ({RR} 1.75; 95\% {CI} 0.90–3.39). In women 649 years with {AD} and {RRT}, 27\% reported paraesthesia. No signiﬁcant pain or decreased strength was reported after {RRT}. Conclusion: Radiotherapy to the supraclavicular lymph nodes after axillary dissection increases the occurrence of paraesthesia, mainly among younger women. When adjusted for oedema the contribution from radiotherapy is no longer formally statistically signiﬁcant indicating that there is also an indirect effect mediated by the oedema.}
@@ -1563,8 +1689,8 @@
       \strng{authorbibnamehash}{8d7065d28bdd4f819be17d9f7e8eef09}
       \strng{authornamehash}{5798ebf1d232c9e305cb5c6ce5822a56}
       \strng{authorfullhash}{8d7065d28bdd4f819be17d9f7e8eef09}
-      \field{sortinit}{5}
-      \field{sortinithash}{5dd416adbafacc8226114bc0202d5fdd}
+      \field{sortinit}{7}
+      \field{sortinithash}{f615fb9c6fba11c6f962fb3fd599810e}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{abstract}{Objectives To review the available data about stereotactic body-radiotherapy ({SBRT}) for oligometastatic lymph node cancer recurrence. Methods The inclusion criteria for this study were as follows: Medline search for the (1) English language (2) full paper (abstracts were excluded) on (3) adult oligometastatic solid cancer recurrence limited to lymph node that underwent {SBRT} (4) outcome data available and (5) published up to the 30th April 2014. Results 38 papers fulfilling the inclusion criteria have been found: 7 review articles and 31 patient series (20 and 11 retrospective and prospective studies, respectively) including between 1 and 69 patients (636 lymph nodes). Twelve articles reported only lymph node {SBRT} while in 19 – all types of {SBRT} including lymph node {SBRT} were presented. Two-year local control, 4-year progression free survival and overall survival was of up to 100\%, 30\% and 50\%, respectively. The progression was mainly out-field (10–30\% of patients had a recurrence in another lymph node/nodes). The toxicity was low with mainly mild acute events and single grade 3–4 late events. When compared to {SBRT} for any oligometastatic cancer, {SBRT} for lymph node recurrence carried better prognosis and showed lower toxicity. Conclusions {SBRT} is a feasible approach for oligometastatic lymph node recurrence, offering excellent in-field tumor control with low toxicity profile. The potential abscopal effect has been hypothesized as a basis of these findings. Future studies are warranted to identify the patients that benefit most from this treatment. The optimal combination with systemic treatment should also be defined.}
@@ -1595,543 +1721,53 @@
       \verb https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4661354/
       \endverb
     \endentry
-    \entry{kazemifar_segmentation_2018}{article}{}
-      \name{author}{7}{}{%
-        {{hash=7bf640b68010d999b096e31a9fca003f}{%
-           family={Kazemifar},
-           familyi={K\bibinitperiod},
-           given={Samaneh},
-           giveni={S\bibinitperiod}}}%
-        {{hash=2bc1bd61c1b509bdd0efabd586fbe8b5}{%
-           family={Balagopal},
-           familyi={B\bibinitperiod},
-           given={Anjali},
-           giveni={A\bibinitperiod}}}%
-        {{hash=3ecd991ab566324d3af8c80578f7ee44}{%
-           family={Nguyen},
-           familyi={N\bibinitperiod},
-           given={Dan},
-           giveni={D\bibinitperiod}}}%
-        {{hash=5952f5b9a153cb6f844d52cf5c24950d}{%
-           family={{McGuire}},
-           familyi={M\bibinitperiod},
-           given={Sarah},
-           giveni={S\bibinitperiod}}}%
-        {{hash=f180b95687f3149b05e95deef01f85aa}{%
-           family={Hannan},
-           familyi={H\bibinitperiod},
-           given={Raquibul},
-           giveni={R\bibinitperiod}}}%
-        {{hash=8b68eeb651a65cf41483362e5af8dbd0}{%
-           family={Jiang},
-           familyi={J\bibinitperiod},
-           given={Steve},
-           giveni={S\bibinitperiod}}}%
-        {{hash=4eb14fe429903c35d5cd1bdbdc0c97f0}{%
-           family={Owrangi},
-           familyi={O\bibinitperiod},
-           given={Amir},
-           giveni={A\bibinitperiod}}}%
+    \entry{cho_intensity-modulated_2018}{article}{}
+      \name{author}{1}{}{%
+        {{hash=4d716c7a95bbe673a763553c46ab77ee}{%
+           family={Cho},
+           familyi={C\bibinitperiod},
+           given={Byungchul},
+           giveni={B\bibinitperiod}}}%
       }
-      \strng{namehash}{1e4c1003c034651976a183232561b8e6}
-      \strng{fullhash}{34d48101f35b4f26146f7ea0f503ef50}
-      \strng{bibnamehash}{34d48101f35b4f26146f7ea0f503ef50}
-      \strng{authorbibnamehash}{34d48101f35b4f26146f7ea0f503ef50}
-      \strng{authornamehash}{1e4c1003c034651976a183232561b8e6}
-      \strng{authorfullhash}{34d48101f35b4f26146f7ea0f503ef50}
-      \field{sortinit}{6}
-      \field{sortinithash}{7851c86048328b027313775d8fbd2131}
+      \strng{namehash}{4d716c7a95bbe673a763553c46ab77ee}
+      \strng{fullhash}{4d716c7a95bbe673a763553c46ab77ee}
+      \strng{bibnamehash}{4d716c7a95bbe673a763553c46ab77ee}
+      \strng{authorbibnamehash}{4d716c7a95bbe673a763553c46ab77ee}
+      \strng{authornamehash}{4d716c7a95bbe673a763553c46ab77ee}
+      \strng{authorfullhash}{4d716c7a95bbe673a763553c46ab77ee}
+      \field{sortinit}{8}
+      \field{sortinithash}{1b24cab5087933ef0826a7cd3b99e994}
       \field{labelnamesource}{author}
-      \field{labeltitlesource}{title}
-      \field{day}{23}
-      \field{issn}{2057-1976}
-      \field{journaltitle}{Biomedical Physics \& Engineering Express}
-      \field{month}{7}
-      \field{number}{5}
-      \field{shortjournal}{Biomed. Phys. Eng. Express}
-      \field{title}{Segmentation of the prostate and organs at risk in male pelvic {CT} images using deep learning}
-      \field{urlday}{23}
-      \field{urlmonth}{8}
+      \field{labeltitlesource}{shorttitle}
+      \field{day}{31}
+      \field{issn}{2234-1900, 2234-3156}
+      \field{journaltitle}{Radiation Oncology Journal}
+      \field{langid}{english}
+      \field{month}{3}
+      \field{number}{1}
+      \field{shortjournal}{Radiat Oncol J}
+      \field{shorttitle}{Intensity-modulated radiation therapy}
+      \field{title}{Intensity-modulated radiation therapy: a review with a physics perspective}
+      \field{urlday}{17}
+      \field{urlmonth}{11}
       \field{urlyear}{2021}
-      \field{volume}{4}
+      \field{volume}{36}
       \field{year}{2018}
       \field{dateera}{ce}
       \field{urldateera}{ce}
-      \field{pages}{055003}
-      \range{pages}{1}
+      \field{pages}{1\bibrangedash 10}
+      \range{pages}{10}
       \verb{doi}
-      \verb 10.1088/2057-1976/aad100
+      \verb 10.3857/roj.2018.00122
       \endverb
       \verb{file}
-      \verb Eingereichte Version:/Users/simongutwein/Zotero/storage/VWGW35H6/Kazemifar et al. - 2018 - Segmentation of the prostate and organs at risk in.pdf:application/pdf
+      \verb Cho - 2018 - Intensity-modulated radiation therapy a review wi.pdf:/Users/simongutwein/Zotero/storage/JWZ3I62P/Cho - 2018 - Intensity-modulated radiation therapy a review wi.pdf:application/pdf
       \endverb
       \verb{urlraw}
-      \verb https://iopscience.iop.org/article/10.1088/2057-1976/aad100
+      \verb http://e-roj.org/journal/view.php?doi=10.3857/roj.2018.00122
       \endverb
       \verb{url}
-      \verb https://iopscience.iop.org/article/10.1088/2057-1976/aad100
-      \endverb
-    \endentry
-    \entry{liang_deep-learning-based_2019}{article}{}
-      \name{author}{9}{}{%
-        {{hash=834f114316722f3832975d524fe86fea}{%
-           family={Liang},
-           familyi={L\bibinitperiod},
-           given={Shujun},
-           giveni={S\bibinitperiod}}}%
-        {{hash=a958f774c08255289978af15ee6aa50f}{%
-           family={Tang},
-           familyi={T\bibinitperiod},
-           given={Fan},
-           giveni={F\bibinitperiod}}}%
-        {{hash=70690fdeb2e9ffeb415711090ebc9ee8}{%
-           family={Huang},
-           familyi={H\bibinitperiod},
-           given={Xia},
-           giveni={X\bibinitperiod}}}%
-        {{hash=783266f851e206eb88e38e2e9d58bc10}{%
-           family={Yang},
-           familyi={Y\bibinitperiod},
-           given={Kaifan},
-           giveni={K\bibinitperiod}}}%
-        {{hash=17ffd40c8403be522ef9c58a862d2ce7}{%
-           family={Zhong},
-           familyi={Z\bibinitperiod},
-           given={Tao},
-           giveni={T\bibinitperiod}}}%
-        {{hash=602983a3ab52982a09d9bc84028249e9}{%
-           family={Hu},
-           familyi={H\bibinitperiod},
-           given={Runyue},
-           giveni={R\bibinitperiod}}}%
-        {{hash=5315cad0e30e11bc6d37d518d658488d}{%
-           family={Liu},
-           familyi={L\bibinitperiod},
-           given={Shangqing},
-           giveni={S\bibinitperiod}}}%
-        {{hash=6c7b3bddba25d3458b550dda1bf7d8f3}{%
-           family={Yuan},
-           familyi={Y\bibinitperiod},
-           given={Xinrui},
-           giveni={X\bibinitperiod}}}%
-        {{hash=9a4f4a1ff661cd600eb26523a5ba8bb4}{%
-           family={Zhang},
-           familyi={Z\bibinitperiod},
-           given={Yu},
-           giveni={Y\bibinitperiod}}}%
-      }
-      \strng{namehash}{e27ba5b42eacc0920d3f2a92e9026ab6}
-      \strng{fullhash}{c687984172963bdbbc2a92cc89c94dd3}
-      \strng{bibnamehash}{c687984172963bdbbc2a92cc89c94dd3}
-      \strng{authorbibnamehash}{c687984172963bdbbc2a92cc89c94dd3}
-      \strng{authornamehash}{e27ba5b42eacc0920d3f2a92e9026ab6}
-      \strng{authorfullhash}{c687984172963bdbbc2a92cc89c94dd3}
-      \field{sortinit}{6}
-      \field{sortinithash}{7851c86048328b027313775d8fbd2131}
-      \field{labelnamesource}{author}
-      \field{labeltitlesource}{title}
-      \field{abstract}{Objective Accurate detection and segmentation of organs at risks ({OARs}) in {CT} image is the key step for efficient planning of radiation therapy for nasopharyngeal carcinoma ({NPC}) treatment. We develop a fully automated deep-learning-based method (termed organs-at-risk detection and segmentation network ({ODS} net)) on {CT} images and investigate {ODS} net performance in automated detection and segmentation of {OARs}. Methods The {ODS} net consists of two convolutional neural networks ({CNNs}). The first {CNN} proposes organ bounding boxes along with their scores, and then a second {CNN} utilizes the proposed bounding boxes to predict segmentation masks for each organ. A total of 185 subjects were included in this study for statistical comparison. Sensitivity and specificity were performed to determine the performance of the detection and the Dice coefficient was used to quantitatively measure the overlap between automated segmentation results and manual segmentation. Paired samples t tests and analysis of variance were employed for statistical analysis. Results {ODS} net provides an accurate detection result with a sensitivity of 0.997 to 1 for most organs and a specificity of 0.983 to 0.999. Furthermore, segmentation results from {ODS} net correlated strongly with manual segmentation with a Dice coefficient of more than 0.85 in most organs. A significantly higher Dice coefficient for all organs together (p = 0.0003 < 0.01) was obtained in {ODS} net (0.861 ± 0.07) than in fully convolutional neural network ({FCN}) (0.8 ± 0.07). The Dice coefficients of each {OAR} did not differ significantly between different T-staging patients. Conclusion The {ODS} net yielded accurate automated detection and segmentation of {OARs} in {CT} images and thereby may improve and facilitate radiotherapy planning for {NPC}. Key Points • A fully automated deep-learning method ({ODS} net) is developed to detect and segment {OARs} in clinical {CT} images. • This deep-learning-based framework produces reliable detection and segmentation results and thus can be useful in delineating {OARs} in {NPC} radiotherapy planning. • This deep-learning-based framework delineating a single image requires approximately 30 s, which is suitable for clinical workflows.}
-      \field{issn}{0938-7994, 1432-1084}
-      \field{journaltitle}{European Radiology}
-      \field{langid}{english}
-      \field{month}{4}
-      \field{number}{4}
-      \field{shortjournal}{Eur Radiol}
-      \field{title}{Deep-learning-based detection and segmentation of organs at risk in nasopharyngeal carcinoma computed tomographic images for radiotherapy planning}
-      \field{urlday}{23}
-      \field{urlmonth}{8}
-      \field{urlyear}{2021}
-      \field{volume}{29}
-      \field{year}{2019}
-      \field{dateera}{ce}
-      \field{urldateera}{ce}
-      \field{pages}{1961\bibrangedash 1967}
-      \range{pages}{7}
-      \verb{doi}
-      \verb 10.1007/s00330-018-5748-9
-      \endverb
-      \verb{file}
-      \verb Liang et al. - 2019 - Deep-learning-based detection and segmentation of .pdf:/Users/simongutwein/Zotero/storage/XEAQIKDE/Liang et al. - 2019 - Deep-learning-based detection and segmentation of .pdf:application/pdf
-      \endverb
-      \verb{urlraw}
-      \verb http://link.springer.com/10.1007/s00330-018-5748-9
-      \endverb
-      \verb{url}
-      \verb http://link.springer.com/10.1007/s00330-018-5748-9
-      \endverb
-    \endentry
-    \entry{shen_medical_2019}{collection}{}
-      \name{editor}{8}{}{%
-        {{hash=4be3a7080769a01b5a9027ae92b8c440}{%
-           family={Shen},
-           familyi={S\bibinitperiod},
-           given={Dinggang},
-           giveni={D\bibinitperiod}}}%
-        {{hash=7faa75cd0a9341fee33d1761b2b44234}{%
-           family={Liu},
-           familyi={L\bibinitperiod},
-           given={Tianming},
-           giveni={T\bibinitperiod}}}%
-        {{hash=2e9e8ad6e5b81ddb8a49e01d8924307d}{%
-           family={Peters},
-           familyi={P\bibinitperiod},
-           given={Terry\bibnamedelima M.},
-           giveni={T\bibinitperiod\bibinitdelim M\bibinitperiod}}}%
-        {{hash=8e4eccef17cacd52453cc109b060cfd9}{%
-           family={Staib},
-           familyi={S\bibinitperiod},
-           given={Lawrence\bibnamedelima H.},
-           giveni={L\bibinitperiod\bibinitdelim H\bibinitperiod}}}%
-        {{hash=4470b51212e02d6d9992bacd48ee75df}{%
-           family={Essert},
-           familyi={E\bibinitperiod},
-           given={Caroline},
-           giveni={C\bibinitperiod}}}%
-        {{hash=fb59119b1e852da0e1ae6ea7de32256e}{%
-           family={Zhou},
-           familyi={Z\bibinitperiod},
-           given={Sean},
-           giveni={S\bibinitperiod}}}%
-        {{hash=b97a01ef9253fda170cb859e3263f3f3}{%
-           family={Yap},
-           familyi={Y\bibinitperiod},
-           given={Pew-Thian},
-           giveni={P\bibinithyphendelim T\bibinitperiod}}}%
-        {{hash=31ee1db9c67b2817b746426d40e4c754}{%
-           family={Khan},
-           familyi={K\bibinitperiod},
-           given={Ali},
-           giveni={A\bibinitperiod}}}%
-      }
-      \list{location}{1}{%
-        {Cham}%
-      }
-      \list{publisher}{1}{%
-        {Springer International Publishing}%
-      }
-      \strng{namehash}{b85860514c80840f3f8b271de4f23b4e}
-      \strng{fullhash}{37fb9bfd986d300c074cd4c377abaf1a}
-      \strng{bibnamehash}{37fb9bfd986d300c074cd4c377abaf1a}
-      \strng{editorbibnamehash}{37fb9bfd986d300c074cd4c377abaf1a}
-      \strng{editornamehash}{b85860514c80840f3f8b271de4f23b4e}
-      \strng{editorfullhash}{37fb9bfd986d300c074cd4c377abaf1a}
-      \field{sortinit}{7}
-      \field{sortinithash}{f615fb9c6fba11c6f962fb3fd599810e}
-      \field{labelnamesource}{editor}
-      \field{labeltitlesource}{shorttitle}
-      \field{isbn}{978-3-030-32244-1 978-3-030-32245-8}
-      \field{langid}{english}
-      \field{series}{Lecture Notes in Computer Science}
-      \field{shorttitle}{Medical Image Computing and Computer Assisted Intervention – {MICCAI} 2019}
-      \field{title}{Medical Image Computing and Computer Assisted Intervention – {MICCAI} 2019: 22nd International Conference, Shenzhen, China, October 13–17, 2019, Proceedings, Part {II}}
-      \field{urlday}{23}
-      \field{urlmonth}{8}
-      \field{urlyear}{2021}
-      \field{volume}{11765}
-      \field{year}{2019}
-      \field{dateera}{ce}
-      \field{urldateera}{ce}
-      \verb{doi}
-      \verb 10.1007/978-3-030-32245-8
-      \endverb
-      \verb{file}
-      \verb Shen et al. - 2019 - Medical Image Computing and Computer Assisted Inte.pdf:/Users/simongutwein/Zotero/storage/ZY868YCH/Shen et al. - 2019 - Medical Image Computing and Computer Assisted Inte.pdf:application/pdf
-      \endverb
-      \verb{urlraw}
-      \verb https://link.springer.com/10.1007/978-3-030-32245-8
-      \endverb
-      \verb{url}
-      \verb https://link.springer.com/10.1007/978-3-030-32245-8
-      \endverb
-    \endentry
-    \entry{fan_automatic_2019}{article}{}
-      \name{author}{6}{}{%
-        {{hash=149aaa22326fbf2cf55ae56706bfeebe}{%
-           family={Fan},
-           familyi={F\bibinitperiod},
-           given={Jiawei},
-           giveni={J\bibinitperiod}}}%
-        {{hash=d883fada7d4cbfd3192187ba8373f64f}{%
-           family={Wang},
-           familyi={W\bibinitperiod},
-           given={Jiazhou},
-           giveni={J\bibinitperiod}}}%
-        {{hash=5c069394326941cace3c2b60358b9423}{%
-           family={Chen},
-           familyi={C\bibinitperiod},
-           given={Zhi},
-           giveni={Z\bibinitperiod}}}%
-        {{hash=65d4435147b2a1e70e996d611630dcd9}{%
-           family={Hu},
-           familyi={H\bibinitperiod},
-           given={Chaosu},
-           giveni={C\bibinitperiod}}}%
-        {{hash=4be62463c6bbd4876f8fceaf19e1edcf}{%
-           family={Zhang},
-           familyi={Z\bibinitperiod},
-           given={Zhen},
-           giveni={Z\bibinitperiod}}}%
-        {{hash=19c113d66fd6adf04d0c1c0b2c47f16f}{%
-           family={Hu},
-           familyi={H\bibinitperiod},
-           given={Weigang},
-           giveni={W\bibinitperiod}}}%
-      }
-      \strng{namehash}{4955de1e77f6f66e43e4b32785da91ea}
-      \strng{fullhash}{b8551b0de75e2209965430b76ab18e88}
-      \strng{bibnamehash}{b8551b0de75e2209965430b76ab18e88}
-      \strng{authorbibnamehash}{b8551b0de75e2209965430b76ab18e88}
-      \strng{authornamehash}{4955de1e77f6f66e43e4b32785da91ea}
-      \strng{authorfullhash}{b8551b0de75e2209965430b76ab18e88}
-      \field{sortinit}{8}
-      \field{sortinithash}{1b24cab5087933ef0826a7cd3b99e994}
-      \field{labelnamesource}{author}
-      \field{labeltitlesource}{title}
-      \field{abstract}{Purpose: To develop an automated treatment planning strategy for external beam intensity-modulated radiation therapy ({IMRT}), including a deep learning-based three-dimensional (3D) dose prediction and a dose distribution-based plan generation algorithm. Methods and Materials: A residual neural network-based deep learning model is trained to predict a dose distribution based on patient-specific geometry and prescription dose. A total of 270 headand-neck cancer cases were enrolled in this study, including 195 cases in the training dataset, 25 cases in the validation dataset, and 50 cases in the testing dataset. All patients were treated with {IMRT} with a variety of different prescription patterns. The model input consists of {CT} images and contours delineating the organs at risk ({OARs}) and planning target volumes ({PTVs}). The algorithm output is trained to predict the dose distribution on the {CT} image slices. The obtained prediction model is used to predict dose distributions for new patients. Then, an optimization objective function based on these predicted dose distributions is created for automatic plan generation. Results: Our results demonstrate that the deep learning method can predict clinically acceptable dose distributions. There is no statistically significant difference between prediction and real clinical plan for all clinically relevant dose–volume histogram ({DVH}) indices, except brainstem, right and left lens. However, the predicted plans were still clinically acceptable. The results of plan generation show no statistically significant differences between the automatic generated plan and the predicted plan except {PTV}70.4, but the difference is only 0.5\% which is still clinically acceptable. Conclusion: This study developed a new automated radiotherapy treatment planning system based on 3D dose prediction and 3D dose distribution-based optimization. It is a promising approach for realizing automated treatment planning in the future. © 2018 American Association of Physicists in Medicine [https://doi.org/10.1002/mp.13271]}
-      \field{issn}{00942405}
-      \field{journaltitle}{Medical Physics}
-      \field{langid}{english}
-      \field{month}{1}
-      \field{number}{1}
-      \field{shortjournal}{Med. Phys.}
-      \field{title}{Automatic treatment planning based on three-dimensional dose distribution predicted from deep learning technique}
-      \field{urlday}{16}
-      \field{urlmonth}{3}
-      \field{urlyear}{2021}
-      \field{volume}{46}
-      \field{year}{2019}
-      \field{dateera}{ce}
-      \field{urldateera}{ce}
-      \field{pages}{370\bibrangedash 381}
-      \range{pages}{12}
-      \verb{doi}
-      \verb 10.1002/mp.13271
-      \endverb
-      \verb{file}
-      \verb mp.13271.pdf:/Users/simongutwein/Studium/Masterarbeit/Paper/mp.13271.pdf:application/pdf
-      \endverb
-      \verb{urlraw}
-      \verb http://doi.wiley.com/10.1002/mp.13271
-      \endverb
-      \verb{url}
-      \verb http://doi.wiley.com/10.1002/mp.13271
-      \endverb
-    \endentry
-    \entry{liu_deep_2019}{article}{}
-      \name{author}{9}{}{%
-        {{hash=abe9fefc7586274d11d441f787828e0f}{%
-           family={Liu},
-           familyi={L\bibinitperiod},
-           given={Zhiqiang},
-           giveni={Z\bibinitperiod}}}%
-        {{hash=149aaa22326fbf2cf55ae56706bfeebe}{%
-           family={Fan},
-           familyi={F\bibinitperiod},
-           given={Jiawei},
-           giveni={J\bibinitperiod}}}%
-        {{hash=13af9768d9e6479f3ac9abc5fb1045ee}{%
-           family={Li},
-           familyi={L\bibinitperiod},
-           given={Minghui},
-           giveni={M\bibinitperiod}}}%
-        {{hash=402fca6eea43ee37782629a196fc9d46}{%
-           family={Yan},
-           familyi={Y\bibinitperiod},
-           given={Hui},
-           giveni={H\bibinitperiod}}}%
-        {{hash=c37e532529c1c4f5baf04303e4c97eda}{%
-           family={Hu},
-           familyi={H\bibinitperiod},
-           given={Zhihui},
-           giveni={Z\bibinitperiod}}}%
-        {{hash=16a1b156e5b597ff5f1fe282d02ad5bd}{%
-           family={Huang},
-           familyi={H\bibinitperiod},
-           given={Peng},
-           giveni={P\bibinitperiod}}}%
-        {{hash=d12eaa4bcfe35e37d08f0d3d058861fd}{%
-           family={Tian},
-           familyi={T\bibinitperiod},
-           given={Yuan},
-           giveni={Y\bibinitperiod}}}%
-        {{hash=8d0c6bba52e31bece728a4608f91994a}{%
-           family={Miao},
-           familyi={M\bibinitperiod},
-           given={Junjie},
-           giveni={J\bibinitperiod}}}%
-        {{hash=4067e6738b310aaec04f9b1c019abbbd}{%
-           family={Dai},
-           familyi={D\bibinitperiod},
-           given={Jianrong},
-           giveni={J\bibinitperiod}}}%
-      }
-      \strng{namehash}{fcc43c1bcfcd33a0a91cd80ea889282b}
-      \strng{fullhash}{b35c03912d1b925efc8687a2bd89528a}
-      \strng{bibnamehash}{b35c03912d1b925efc8687a2bd89528a}
-      \strng{authorbibnamehash}{b35c03912d1b925efc8687a2bd89528a}
-      \strng{authornamehash}{fcc43c1bcfcd33a0a91cd80ea889282b}
-      \strng{authorfullhash}{b35c03912d1b925efc8687a2bd89528a}
-      \field{sortinit}{8}
-      \field{sortinithash}{1b24cab5087933ef0826a7cd3b99e994}
-      \field{labelnamesource}{author}
-      \field{labeltitlesource}{title}
-      \field{abstract}{Purpose: To develop a deep learning method for prediction of three-dimensional (3D) voxel-byvoxel dose distributions of helical tomotherapy ({HT}). Methods: Using previously treated {HT} plans as training data, a deep learning model named U-{ResNet}-D was trained to predict a 3D dose distribution. First, the contoured structures and dose volumes were converted from plan database to 3D matrix with a program based on a developed visualization toolkit ({VTK}), then transferred to U-{ResNet}-D for correlating anatomical features and dose distributions at voxel-level. One hundred and ninety nasopharyngeal cancer ({NPC}) patients treated by {HT} with multiple planning target volumes ({PTVs}) in different prescription patterns were studied. The model was typically trained from scratch with weights randomly initialized rather than using transferlearning method, and used to predict new patient’s 3D dose distributions. The predictive accuracy was evaluated with three methods: (a) The dose difference at the position r, d(r, r) = Dc(r) À Dp(r), was calculated for each voxel. The mean (ld(r,r)) and standard deviation (rd(r,r)) of d(r, r) were calculated to assess the prediction bias and precision; (b) The mean absolute differences of dosimetric indexes ({DIs}) including maximum and mean dose, homogeneity index, conformity index, and dose spillage for {PTVs} and organ at risks ({OARs}) were calculated and statistically analyzed with the paired-samples t test; (c) Dice similarity coefficients ({DSC}) between predicted and clinical isodose volumes were calculated. Results: The U-{ResNet}-D model predicted 3D dose distribution accurately. For twenty tested patients, the prediction bias ranged from À2.0\% to 2.3\% and prediction error varied from 1.5\% to 4.5\% (relative to prescription) for 3D dose differences. The mean absolute dose differences for {PTVs} and {OARs} are within 2.0\% and 4.2\%, and nearly all the {DIs} for {PTVs} and {OARs} had no significant differences. The averaged {DSC} ranged from 0.95 to 1 for different isodose volumes. Conclusions: The study developed a new deep learning method for 3D voxel-by-voxel dose prediction, and shown to be able to produce accurately dose predictions for nasopharyngeal patients treated by {HT}. The predicted 3D dose map can be useful for improving radiotherapy planning design, ensuring plan quality and consistency, making clinical technique comparison, and guiding automatic treatment planning. © 2019 American Association of Physicists in Medicine [https://doi.org/10.1002/ mp.13490]}
-      \field{issn}{0094-2405, 2473-4209}
-      \field{journaltitle}{Medical Physics}
-      \field{langid}{english}
-      \field{month}{5}
-      \field{number}{5}
-      \field{shortjournal}{Med. Phys.}
-      \field{title}{A deep learning method for prediction of three‐dimensional dose distribution of helical tomotherapy}
-      \field{urlday}{16}
-      \field{urlmonth}{3}
-      \field{urlyear}{2021}
-      \field{volume}{46}
-      \field{year}{2019}
-      \field{dateera}{ce}
-      \field{urldateera}{ce}
-      \field{pages}{1972\bibrangedash 1983}
-      \range{pages}{12}
-      \verb{doi}
-      \verb 10.1002/mp.13490
-      \endverb
-      \verb{file}
-      \verb mp.13490.pdf:/Users/simongutwein/Studium/Masterarbeit/Paper/mp.13490.pdf:application/pdf
-      \endverb
-      \verb{urlraw}
-      \verb https://onlinelibrary.wiley.com/doi/abs/10.1002/mp.13490
-      \endverb
-      \verb{url}
-      \verb https://onlinelibrary.wiley.com/doi/abs/10.1002/mp.13490
-      \endverb
-    \endentry
-    \entry{kontaxis_deepdose_2020}{article}{}
-      \name{author}{4}{}{%
-        {{hash=fc6f1bd44b9c5cc30f61706d94f0c9b0}{%
-           family={Kontaxis},
-           familyi={K\bibinitperiod},
-           given={C.},
-           giveni={C\bibinitperiod}}}%
-        {{hash=eb1eed459138f9d1c45d90ddf869dcd0}{%
-           family={Bol},
-           familyi={B\bibinitperiod},
-           given={G.\bibnamedelimi H.},
-           giveni={G\bibinitperiod\bibinitdelim H\bibinitperiod}}}%
-        {{hash=eca20aed532cf31d426f0a745e899622}{%
-           family={Lagendijk},
-           familyi={L\bibinitperiod},
-           given={J.\bibnamedelimi J.\bibnamedelimi W.},
-           giveni={J\bibinitperiod\bibinitdelim J\bibinitperiod\bibinitdelim W\bibinitperiod}}}%
-        {{hash=748ea44dd505886b2b7bccf3de24decf}{%
-           family={Raaymakers},
-           familyi={R\bibinitperiod},
-           given={B.\bibnamedelimi W.},
-           giveni={B\bibinitperiod\bibinitdelim W\bibinitperiod}}}%
-      }
-      \strng{namehash}{c27060f5a3cdef96bb29dc58b200362f}
-      \strng{fullhash}{b8857ea61be559c60d02a03afb02db7f}
-      \strng{bibnamehash}{b8857ea61be559c60d02a03afb02db7f}
-      \strng{authorbibnamehash}{b8857ea61be559c60d02a03afb02db7f}
-      \strng{authornamehash}{c27060f5a3cdef96bb29dc58b200362f}
-      \strng{authorfullhash}{b8857ea61be559c60d02a03afb02db7f}
-      \field{sortinit}{9}
-      \field{sortinithash}{54047ffb55bdefa0694bbd554c1b11a0}
-      \field{labelnamesource}{author}
-      \field{labeltitlesource}{shorttitle}
-      \field{abstract}{We present {DeepDose}, a deep learning framework for fast dose calculations in radiation therapy. Given a patient anatomy and linear-accelerator {IMRT} multi-leaf-collimator shape or segment, a novel set of physics-based inputs is calculated that encode the linac machine parameters into the underlying anatomy. These inputs are then used to train a deep convolutional network to derive the dose distribution of individual {MLC} shapes on a given patient anatomy. In this work we demonstrate the proof-of-concept application of {DeepDose} on 101 prostate patients treated in our clinic with fixed-beam {IMRT}. The ground-truth data used for training, validation and testing of the prediction were calculated with a state-of-the-art Monte Carlo dose engine at 1\% statistical uncertainty per segment. A deep convolution network was trained using the data of 80 patients at the clinically used 3 mm3 grid spacing while 10 patients were used for validation. For another 11 independent test patients, the network was able to accurately estimate the segment doses from the clinical plans of each patient passing the clinical {QA} when compared with the Monte Carlo calculations, yielding on average 99.9\%±0.3\% for the forward calculated patient plans at 3\%/3 mm gamma tests. Dose prediction using the trained network was very fast at approximately 0.9 seconds for the input generation and 0.6 seconds for single {GPU} inference per segment and 1 minute per patient in total. The overall performance of this dose calculation framework in terms of both accuracy and inference speed, makes it compelling for online adaptive workflows where fast segment dose calculations are needed.}
-      \field{issn}{0031-9155}
-      \field{journaltitle}{Physics in Medicine \& Biology}
-      \field{langid}{english}
-      \field{month}{4}
-      \field{note}{Publisher: {IOP} Publishing}
-      \field{number}{7}
-      \field{shortjournal}{Phys. Med. Biol.}
-      \field{shorttitle}{{DeepDose}}
-      \field{title}{{DeepDose}: Towards a fast dose calculation engine for radiation therapy using deep learning}
-      \field{urlday}{23}
-      \field{urlmonth}{8}
-      \field{urlyear}{2021}
-      \field{volume}{65}
-      \field{year}{2020}
-      \field{dateera}{ce}
-      \field{urldateera}{ce}
-      \field{pages}{075013}
-      \range{pages}{1}
-      \verb{doi}
-      \verb 10.1088/1361-6560/ab7630
-      \endverb
-      \verb{file}
-      \verb IOP Full Text PDF:/Users/simongutwein/Zotero/storage/4MP5RNH9/Kontaxis et al. - 2020 - DeepDose Towards a fast dose calculation engine f.pdf:application/pdf
-      \endverb
-      \verb{urlraw}
-      \verb https://doi.org/10.1088/1361-6560/ab7630
-      \endverb
-      \verb{url}
-      \verb https://doi.org/10.1088/1361-6560/ab7630
-      \endverb
-    \endentry
-    \entry{bai_deep_2021}{article}{}
-      \name{author}{4}{}{%
-        {{hash=de71a9885f790ae21582bcd864c79211}{%
-           family={Bai},
-           familyi={B\bibinitperiod},
-           given={Ti},
-           giveni={T\bibinitperiod}}}%
-        {{hash=b939e41ba74fbf926a1cf9707b730b9f}{%
-           family={Wang},
-           familyi={W\bibinitperiod},
-           given={Biling},
-           giveni={B\bibinitperiod}}}%
-        {{hash=3ecd991ab566324d3af8c80578f7ee44}{%
-           family={Nguyen},
-           familyi={N\bibinitperiod},
-           given={Dan},
-           giveni={D\bibinitperiod}}}%
-        {{hash=8b68eeb651a65cf41483362e5af8dbd0}{%
-           family={Jiang},
-           familyi={J\bibinitperiod},
-           given={Steve},
-           giveni={S\bibinitperiod}}}%
-      }
-      \strng{namehash}{51f0ebaadf9da08977d3b6ad88000206}
-      \strng{fullhash}{6ed2d78293a05485f626e61d200ecab9}
-      \strng{bibnamehash}{6ed2d78293a05485f626e61d200ecab9}
-      \strng{authorbibnamehash}{6ed2d78293a05485f626e61d200ecab9}
-      \strng{authornamehash}{51f0ebaadf9da08977d3b6ad88000206}
-      \strng{authorfullhash}{6ed2d78293a05485f626e61d200ecab9}
-      \field{sortinit}{9}
-      \field{sortinithash}{54047ffb55bdefa0694bbd554c1b11a0}
-      \field{labelnamesource}{author}
-      \field{labeltitlesource}{shorttitle}
-      \field{day}{1}
-      \field{issn}{2632-2153}
-      \field{journaltitle}{Machine Learning: Science and Technology}
-      \field{langid}{english}
-      \field{month}{6}
-      \field{number}{2}
-      \field{shortjournal}{Mach. Learn.: Sci. Technol.}
-      \field{shorttitle}{Deep dose plugin}
-      \field{title}{Deep dose plugin: towards real-time Monte Carlo dose calculation through a deep learning-based denoising algorithm}
-      \field{urlday}{23}
-      \field{urlmonth}{8}
-      \field{urlyear}{2021}
-      \field{volume}{2}
-      \field{year}{2021}
-      \field{dateera}{ce}
-      \field{urldateera}{ce}
-      \field{pages}{025033}
-      \range{pages}{1}
-      \verb{doi}
-      \verb 10.1088/2632-2153/abdbfe
-      \endverb
-      \verb{file}
-      \verb Bai et al. - 2021 - Deep dose plugin towards real-time Monte Carlo do.pdf:/Users/simongutwein/Zotero/storage/CVQWBFKT/Bai et al. - 2021 - Deep dose plugin towards real-time Monte Carlo do.pdf:application/pdf
-      \endverb
-      \verb{urlraw}
-      \verb https://iopscience.iop.org/article/10.1088/2632-2153/abdbfe
-      \endverb
-      \verb{url}
-      \verb https://iopscience.iop.org/article/10.1088/2632-2153/abdbfe
+      \verb http://e-roj.org/journal/view.php?doi=10.3857/roj.2018.00122
       \endverb
     \endentry
     \entry{han_mr-based_2017}{article}{}
@@ -2148,8 +1784,8 @@
       \strng{authorbibnamehash}{e455b4baac829220a95ebc58f137271d}
       \strng{authornamehash}{e455b4baac829220a95ebc58f137271d}
       \strng{authorfullhash}{e455b4baac829220a95ebc58f137271d}
-      \field{sortinit}{1}
-      \field{sortinithash}{50c6687d7fc80f50136d75228e3c59ba}
+      \field{sortinit}{9}
+      \field{sortinithash}{54047ffb55bdefa0694bbd554c1b11a0}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{abstract}{Purpose Interests have been rapidly growing in the field of radiotherapy to replace {CT} with magnetic resonance imaging ({MRI}), due to superior soft tissue contrast offered by {MRI} and the desire to reduce unnecessary radiation dose. {MR}-only radiotherapy also simplifies clinical workflow and avoids uncertainties in aligning {MR} with {CT}. Methods, however, are needed to derive {CT}-equivalent representations, often known as synthetic {CT} ({sCT}), from patient {MR} images for dose calculation and {DRR}-based patient positioning. Synthetic {CT} estimation is also important for {PET} attenuation correction in hybrid {PET}-{MR} systems. We propose in this work a novel deep convolutional neural network ({DCNN}) method for {sCT} generation and evaluate its performance on a set of brain tumor patient images. Methods The proposed method builds upon recent developments of deep learning and convolutional neural networks in the computer vision literature. The proposed {DCNN} model has 27 convolutional layers interleaved with pooling and unpooling layers and 35 million free parameters, which can be trained to learn a direct end-to-end mapping from {MR} images to their corresponding {CTs}. Training such a large model on our limited data is made possible through the principle of transfer learning and by initializing model weights from a pretrained model. Eighteen brain tumor patients with both {CT} and T1-weighted {MR} images are used as experimental data and a sixfold cross-validation study is performed. Each {sCT} generated is compared against the real {CT} image of the same patient on a voxel-by-voxel basis. Comparison is also made with respect to an atlas-based approach that involves deformable atlas registration and patch-based atlas fusion. Results The proposed {DCNN} method produced a mean absolute error ({MAE}) below 85 {HU} for 13 of the 18 test subjects. The overall average {MAE} was 84.8 ± 17.3 {HU} for all subjects, which was found to be significantly better than the average {MAE} of 94.5 ± 17.8 {HU} for the atlas-based method. The {DCNN} method also provided significantly better accuracy when being evaluated using two other metrics: the mean squared error (188.6 ± 33.7 versus 198.3 ± 33.0) and the Pearson correlation coefficient(0.906 ± 0.03 versus 0.896 ± 0.03). Although training a {DCNN} model can be slow, training only need be done once. Applying a trained model to generate a complete {sCT} volume for each new patient {MR} image only took 9 s, which was much faster than the atlas-based approach. Conclusions A {DCNN} model method was developed, and shown to be able to produce highly accurate {sCT} estimations from conventional, single-sequence {MR} images in near real time. Quantitative results also showed that the proposed method competed favorably with an atlas-based method, in terms of both accuracy and computation speed at test time. Further validation on dose computation accuracy and on a larger patient cohort is warranted. Extensions of the method are also possible to further improve accuracy or to handle multi-sequence {MR} images.}
@@ -2254,8 +1890,8 @@
       \strng{editorbibnamehash}{077825f35a0e5cad9e0a6f57a11f2eec}
       \strng{editornamehash}{72f7644690bd3ea1ec82e15ff4cb0041}
       \strng{editorfullhash}{077825f35a0e5cad9e0a6f57a11f2eec}
-      \field{sortinit}{1}
-      \field{sortinithash}{50c6687d7fc80f50136d75228e3c59ba}
+      \field{sortinit}{9}
+      \field{sortinithash}{54047ffb55bdefa0694bbd554c1b11a0}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{abstract}{{MR}-only radiotherapy treatment planning requires accurate {MR}-to-{CT} synthesis. Current deep learning methods for {MR}-to-{CT} synthesis depend on pairwise aligned {MR} and {CT} training images of the same patient. However, misalignment between paired images could lead to errors in synthesized {CT} images. To overcome this, we propose to train a generative adversarial network ({GAN}) with unpaired {MR} and {CT} images. A {GAN} consisting of two synthesis convolutional neural networks ({CNNs}) and two discriminator {CNNs} was trained with cycle consistency to transform 2D brain {MR} image slices into 2D brain {CT} image slices and vice versa. Brain {MR} and {CT} images of 24 patients were analyzed. A quantitative evaluation showed that the model was able to synthesize {CT} images that closely approximate reference {CT} images, and was able to outperform a {GAN} model trained with paired {MR} and {CT} images.}
@@ -2332,8 +1968,8 @@
       \strng{authorbibnamehash}{480f91551d3af113d0e6c02446c28faf}
       \strng{authornamehash}{e6697507170a0dae1e00428e5e785eb5}
       \strng{authorfullhash}{480f91551d3af113d0e6c02446c28faf}
-      \field{sortinit}{1}
-      \field{sortinithash}{50c6687d7fc80f50136d75228e3c59ba}
+      \field{sortinit}{9}
+      \field{sortinithash}{54047ffb55bdefa0694bbd554c1b11a0}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{shorttitle}
       \field{issn}{03603016}
@@ -2366,6 +2002,1702 @@
       \verb https://linkinghub.elsevier.com/retrieve/pii/S0360301618309106
       \endverb
     \endentry
+    \entry{kazemifar_segmentation_2018}{article}{}
+      \name{author}{7}{}{%
+        {{hash=7bf640b68010d999b096e31a9fca003f}{%
+           family={Kazemifar},
+           familyi={K\bibinitperiod},
+           given={Samaneh},
+           giveni={S\bibinitperiod}}}%
+        {{hash=2bc1bd61c1b509bdd0efabd586fbe8b5}{%
+           family={Balagopal},
+           familyi={B\bibinitperiod},
+           given={Anjali},
+           giveni={A\bibinitperiod}}}%
+        {{hash=3ecd991ab566324d3af8c80578f7ee44}{%
+           family={Nguyen},
+           familyi={N\bibinitperiod},
+           given={Dan},
+           giveni={D\bibinitperiod}}}%
+        {{hash=5952f5b9a153cb6f844d52cf5c24950d}{%
+           family={{McGuire}},
+           familyi={M\bibinitperiod},
+           given={Sarah},
+           giveni={S\bibinitperiod}}}%
+        {{hash=f180b95687f3149b05e95deef01f85aa}{%
+           family={Hannan},
+           familyi={H\bibinitperiod},
+           given={Raquibul},
+           giveni={R\bibinitperiod}}}%
+        {{hash=8b68eeb651a65cf41483362e5af8dbd0}{%
+           family={Jiang},
+           familyi={J\bibinitperiod},
+           given={Steve},
+           giveni={S\bibinitperiod}}}%
+        {{hash=4eb14fe429903c35d5cd1bdbdc0c97f0}{%
+           family={Owrangi},
+           familyi={O\bibinitperiod},
+           given={Amir},
+           giveni={A\bibinitperiod}}}%
+      }
+      \strng{namehash}{1e4c1003c034651976a183232561b8e6}
+      \strng{fullhash}{34d48101f35b4f26146f7ea0f503ef50}
+      \strng{bibnamehash}{34d48101f35b4f26146f7ea0f503ef50}
+      \strng{authorbibnamehash}{34d48101f35b4f26146f7ea0f503ef50}
+      \strng{authornamehash}{1e4c1003c034651976a183232561b8e6}
+      \strng{authorfullhash}{34d48101f35b4f26146f7ea0f503ef50}
+      \field{sortinit}{1}
+      \field{sortinithash}{50c6687d7fc80f50136d75228e3c59ba}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{day}{23}
+      \field{issn}{2057-1976}
+      \field{journaltitle}{Biomedical Physics \& Engineering Express}
+      \field{month}{7}
+      \field{number}{5}
+      \field{shortjournal}{Biomed. Phys. Eng. Express}
+      \field{title}{Segmentation of the prostate and organs at risk in male pelvic {CT} images using deep learning}
+      \field{urlday}{23}
+      \field{urlmonth}{8}
+      \field{urlyear}{2021}
+      \field{volume}{4}
+      \field{year}{2018}
+      \field{dateera}{ce}
+      \field{urldateera}{ce}
+      \field{pages}{055003}
+      \range{pages}{1}
+      \verb{doi}
+      \verb 10.1088/2057-1976/aad100
+      \endverb
+      \verb{file}
+      \verb Eingereichte Version:/Users/simongutwein/Zotero/storage/VWGW35H6/Kazemifar et al. - 2018 - Segmentation of the prostate and organs at risk in.pdf:application/pdf
+      \endverb
+      \verb{urlraw}
+      \verb https://iopscience.iop.org/article/10.1088/2057-1976/aad100
+      \endverb
+      \verb{url}
+      \verb https://iopscience.iop.org/article/10.1088/2057-1976/aad100
+      \endverb
+    \endentry
+    \entry{liang_deep-learning-based_2019}{article}{}
+      \name{author}{9}{}{%
+        {{hash=834f114316722f3832975d524fe86fea}{%
+           family={Liang},
+           familyi={L\bibinitperiod},
+           given={Shujun},
+           giveni={S\bibinitperiod}}}%
+        {{hash=a958f774c08255289978af15ee6aa50f}{%
+           family={Tang},
+           familyi={T\bibinitperiod},
+           given={Fan},
+           giveni={F\bibinitperiod}}}%
+        {{hash=70690fdeb2e9ffeb415711090ebc9ee8}{%
+           family={Huang},
+           familyi={H\bibinitperiod},
+           given={Xia},
+           giveni={X\bibinitperiod}}}%
+        {{hash=783266f851e206eb88e38e2e9d58bc10}{%
+           family={Yang},
+           familyi={Y\bibinitperiod},
+           given={Kaifan},
+           giveni={K\bibinitperiod}}}%
+        {{hash=17ffd40c8403be522ef9c58a862d2ce7}{%
+           family={Zhong},
+           familyi={Z\bibinitperiod},
+           given={Tao},
+           giveni={T\bibinitperiod}}}%
+        {{hash=602983a3ab52982a09d9bc84028249e9}{%
+           family={Hu},
+           familyi={H\bibinitperiod},
+           given={Runyue},
+           giveni={R\bibinitperiod}}}%
+        {{hash=5315cad0e30e11bc6d37d518d658488d}{%
+           family={Liu},
+           familyi={L\bibinitperiod},
+           given={Shangqing},
+           giveni={S\bibinitperiod}}}%
+        {{hash=6c7b3bddba25d3458b550dda1bf7d8f3}{%
+           family={Yuan},
+           familyi={Y\bibinitperiod},
+           given={Xinrui},
+           giveni={X\bibinitperiod}}}%
+        {{hash=9a4f4a1ff661cd600eb26523a5ba8bb4}{%
+           family={Zhang},
+           familyi={Z\bibinitperiod},
+           given={Yu},
+           giveni={Y\bibinitperiod}}}%
+      }
+      \strng{namehash}{e27ba5b42eacc0920d3f2a92e9026ab6}
+      \strng{fullhash}{c687984172963bdbbc2a92cc89c94dd3}
+      \strng{bibnamehash}{c687984172963bdbbc2a92cc89c94dd3}
+      \strng{authorbibnamehash}{c687984172963bdbbc2a92cc89c94dd3}
+      \strng{authornamehash}{e27ba5b42eacc0920d3f2a92e9026ab6}
+      \strng{authorfullhash}{c687984172963bdbbc2a92cc89c94dd3}
+      \field{sortinit}{1}
+      \field{sortinithash}{50c6687d7fc80f50136d75228e3c59ba}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{Objective Accurate detection and segmentation of organs at risks ({OARs}) in {CT} image is the key step for efficient planning of radiation therapy for nasopharyngeal carcinoma ({NPC}) treatment. We develop a fully automated deep-learning-based method (termed organs-at-risk detection and segmentation network ({ODS} net)) on {CT} images and investigate {ODS} net performance in automated detection and segmentation of {OARs}. Methods The {ODS} net consists of two convolutional neural networks ({CNNs}). The first {CNN} proposes organ bounding boxes along with their scores, and then a second {CNN} utilizes the proposed bounding boxes to predict segmentation masks for each organ. A total of 185 subjects were included in this study for statistical comparison. Sensitivity and specificity were performed to determine the performance of the detection and the Dice coefficient was used to quantitatively measure the overlap between automated segmentation results and manual segmentation. Paired samples t tests and analysis of variance were employed for statistical analysis. Results {ODS} net provides an accurate detection result with a sensitivity of 0.997 to 1 for most organs and a specificity of 0.983 to 0.999. Furthermore, segmentation results from {ODS} net correlated strongly with manual segmentation with a Dice coefficient of more than 0.85 in most organs. A significantly higher Dice coefficient for all organs together (p = 0.0003 < 0.01) was obtained in {ODS} net (0.861 ± 0.07) than in fully convolutional neural network ({FCN}) (0.8 ± 0.07). The Dice coefficients of each {OAR} did not differ significantly between different T-staging patients. Conclusion The {ODS} net yielded accurate automated detection and segmentation of {OARs} in {CT} images and thereby may improve and facilitate radiotherapy planning for {NPC}. Key Points • A fully automated deep-learning method ({ODS} net) is developed to detect and segment {OARs} in clinical {CT} images. • This deep-learning-based framework produces reliable detection and segmentation results and thus can be useful in delineating {OARs} in {NPC} radiotherapy planning. • This deep-learning-based framework delineating a single image requires approximately 30 s, which is suitable for clinical workflows.}
+      \field{issn}{0938-7994, 1432-1084}
+      \field{journaltitle}{European Radiology}
+      \field{langid}{english}
+      \field{month}{4}
+      \field{number}{4}
+      \field{shortjournal}{Eur Radiol}
+      \field{title}{Deep-learning-based detection and segmentation of organs at risk in nasopharyngeal carcinoma computed tomographic images for radiotherapy planning}
+      \field{urlday}{23}
+      \field{urlmonth}{8}
+      \field{urlyear}{2021}
+      \field{volume}{29}
+      \field{year}{2019}
+      \field{dateera}{ce}
+      \field{urldateera}{ce}
+      \field{pages}{1961\bibrangedash 1967}
+      \range{pages}{7}
+      \verb{doi}
+      \verb 10.1007/s00330-018-5748-9
+      \endverb
+      \verb{file}
+      \verb Liang et al. - 2019 - Deep-learning-based detection and segmentation of .pdf:/Users/simongutwein/Zotero/storage/XEAQIKDE/Liang et al. - 2019 - Deep-learning-based detection and segmentation of .pdf:application/pdf
+      \endverb
+      \verb{urlraw}
+      \verb http://link.springer.com/10.1007/s00330-018-5748-9
+      \endverb
+      \verb{url}
+      \verb http://link.springer.com/10.1007/s00330-018-5748-9
+      \endverb
+    \endentry
+    \entry{shen_medical_2019}{collection}{}
+      \name{editor}{8}{}{%
+        {{hash=4be3a7080769a01b5a9027ae92b8c440}{%
+           family={Shen},
+           familyi={S\bibinitperiod},
+           given={Dinggang},
+           giveni={D\bibinitperiod}}}%
+        {{hash=7faa75cd0a9341fee33d1761b2b44234}{%
+           family={Liu},
+           familyi={L\bibinitperiod},
+           given={Tianming},
+           giveni={T\bibinitperiod}}}%
+        {{hash=2e9e8ad6e5b81ddb8a49e01d8924307d}{%
+           family={Peters},
+           familyi={P\bibinitperiod},
+           given={Terry\bibnamedelima M.},
+           giveni={T\bibinitperiod\bibinitdelim M\bibinitperiod}}}%
+        {{hash=8e4eccef17cacd52453cc109b060cfd9}{%
+           family={Staib},
+           familyi={S\bibinitperiod},
+           given={Lawrence\bibnamedelima H.},
+           giveni={L\bibinitperiod\bibinitdelim H\bibinitperiod}}}%
+        {{hash=4470b51212e02d6d9992bacd48ee75df}{%
+           family={Essert},
+           familyi={E\bibinitperiod},
+           given={Caroline},
+           giveni={C\bibinitperiod}}}%
+        {{hash=fb59119b1e852da0e1ae6ea7de32256e}{%
+           family={Zhou},
+           familyi={Z\bibinitperiod},
+           given={Sean},
+           giveni={S\bibinitperiod}}}%
+        {{hash=b97a01ef9253fda170cb859e3263f3f3}{%
+           family={Yap},
+           familyi={Y\bibinitperiod},
+           given={Pew-Thian},
+           giveni={P\bibinithyphendelim T\bibinitperiod}}}%
+        {{hash=31ee1db9c67b2817b746426d40e4c754}{%
+           family={Khan},
+           familyi={K\bibinitperiod},
+           given={Ali},
+           giveni={A\bibinitperiod}}}%
+      }
+      \list{location}{1}{%
+        {Cham}%
+      }
+      \list{publisher}{1}{%
+        {Springer International Publishing}%
+      }
+      \strng{namehash}{b85860514c80840f3f8b271de4f23b4e}
+      \strng{fullhash}{37fb9bfd986d300c074cd4c377abaf1a}
+      \strng{bibnamehash}{37fb9bfd986d300c074cd4c377abaf1a}
+      \strng{editorbibnamehash}{37fb9bfd986d300c074cd4c377abaf1a}
+      \strng{editornamehash}{b85860514c80840f3f8b271de4f23b4e}
+      \strng{editorfullhash}{37fb9bfd986d300c074cd4c377abaf1a}
+      \field{sortinit}{1}
+      \field{sortinithash}{50c6687d7fc80f50136d75228e3c59ba}
+      \field{labelnamesource}{editor}
+      \field{labeltitlesource}{shorttitle}
+      \field{isbn}{978-3-030-32244-1 978-3-030-32245-8}
+      \field{langid}{english}
+      \field{series}{Lecture Notes in Computer Science}
+      \field{shorttitle}{Medical Image Computing and Computer Assisted Intervention – {MICCAI} 2019}
+      \field{title}{Medical Image Computing and Computer Assisted Intervention – {MICCAI} 2019: 22nd International Conference, Shenzhen, China, October 13–17, 2019, Proceedings, Part {II}}
+      \field{urlday}{23}
+      \field{urlmonth}{8}
+      \field{urlyear}{2021}
+      \field{volume}{11765}
+      \field{year}{2019}
+      \field{dateera}{ce}
+      \field{urldateera}{ce}
+      \verb{doi}
+      \verb 10.1007/978-3-030-32245-8
+      \endverb
+      \verb{file}
+      \verb Shen et al. - 2019 - Medical Image Computing and Computer Assisted Inte.pdf:/Users/simongutwein/Zotero/storage/ZY868YCH/Shen et al. - 2019 - Medical Image Computing and Computer Assisted Inte.pdf:application/pdf
+      \endverb
+      \verb{urlraw}
+      \verb https://link.springer.com/10.1007/978-3-030-32245-8
+      \endverb
+      \verb{url}
+      \verb https://link.springer.com/10.1007/978-3-030-32245-8
+      \endverb
+    \endentry
+    \entry{fan_automatic_2019}{article}{}
+      \name{author}{6}{}{%
+        {{hash=149aaa22326fbf2cf55ae56706bfeebe}{%
+           family={Fan},
+           familyi={F\bibinitperiod},
+           given={Jiawei},
+           giveni={J\bibinitperiod}}}%
+        {{hash=d883fada7d4cbfd3192187ba8373f64f}{%
+           family={Wang},
+           familyi={W\bibinitperiod},
+           given={Jiazhou},
+           giveni={J\bibinitperiod}}}%
+        {{hash=5c069394326941cace3c2b60358b9423}{%
+           family={Chen},
+           familyi={C\bibinitperiod},
+           given={Zhi},
+           giveni={Z\bibinitperiod}}}%
+        {{hash=65d4435147b2a1e70e996d611630dcd9}{%
+           family={Hu},
+           familyi={H\bibinitperiod},
+           given={Chaosu},
+           giveni={C\bibinitperiod}}}%
+        {{hash=4be62463c6bbd4876f8fceaf19e1edcf}{%
+           family={Zhang},
+           familyi={Z\bibinitperiod},
+           given={Zhen},
+           giveni={Z\bibinitperiod}}}%
+        {{hash=19c113d66fd6adf04d0c1c0b2c47f16f}{%
+           family={Hu},
+           familyi={H\bibinitperiod},
+           given={Weigang},
+           giveni={W\bibinitperiod}}}%
+      }
+      \strng{namehash}{4955de1e77f6f66e43e4b32785da91ea}
+      \strng{fullhash}{b8551b0de75e2209965430b76ab18e88}
+      \strng{bibnamehash}{b8551b0de75e2209965430b76ab18e88}
+      \strng{authorbibnamehash}{b8551b0de75e2209965430b76ab18e88}
+      \strng{authornamehash}{4955de1e77f6f66e43e4b32785da91ea}
+      \strng{authorfullhash}{b8551b0de75e2209965430b76ab18e88}
+      \field{extraname}{1}
+      \field{sortinit}{1}
+      \field{sortinithash}{50c6687d7fc80f50136d75228e3c59ba}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{Purpose: To develop an automated treatment planning strategy for external beam intensity-modulated radiation therapy ({IMRT}), including a deep learning-based three-dimensional (3D) dose prediction and a dose distribution-based plan generation algorithm. Methods and Materials: A residual neural network-based deep learning model is trained to predict a dose distribution based on patient-specific geometry and prescription dose. A total of 270 headand-neck cancer cases were enrolled in this study, including 195 cases in the training dataset, 25 cases in the validation dataset, and 50 cases in the testing dataset. All patients were treated with {IMRT} with a variety of different prescription patterns. The model input consists of {CT} images and contours delineating the organs at risk ({OARs}) and planning target volumes ({PTVs}). The algorithm output is trained to predict the dose distribution on the {CT} image slices. The obtained prediction model is used to predict dose distributions for new patients. Then, an optimization objective function based on these predicted dose distributions is created for automatic plan generation. Results: Our results demonstrate that the deep learning method can predict clinically acceptable dose distributions. There is no statistically significant difference between prediction and real clinical plan for all clinically relevant dose–volume histogram ({DVH}) indices, except brainstem, right and left lens. However, the predicted plans were still clinically acceptable. The results of plan generation show no statistically significant differences between the automatic generated plan and the predicted plan except {PTV}70.4, but the difference is only 0.5\% which is still clinically acceptable. Conclusion: This study developed a new automated radiotherapy treatment planning system based on 3D dose prediction and 3D dose distribution-based optimization. It is a promising approach for realizing automated treatment planning in the future. © 2018 American Association of Physicists in Medicine [https://doi.org/10.1002/mp.13271]}
+      \field{issn}{00942405}
+      \field{journaltitle}{Medical Physics}
+      \field{langid}{english}
+      \field{month}{1}
+      \field{number}{1}
+      \field{shortjournal}{Med. Phys.}
+      \field{title}{Automatic treatment planning based on three-dimensional dose distribution predicted from deep learning technique}
+      \field{urlday}{16}
+      \field{urlmonth}{3}
+      \field{urlyear}{2021}
+      \field{volume}{46}
+      \field{year}{2019}
+      \field{dateera}{ce}
+      \field{urldateera}{ce}
+      \field{pages}{370\bibrangedash 381}
+      \range{pages}{12}
+      \verb{doi}
+      \verb 10.1002/mp.13271
+      \endverb
+      \verb{file}
+      \verb mp.13271.pdf:/Users/simongutwein/Studium/Masterarbeit/Paper/mp.13271.pdf:application/pdf
+      \endverb
+      \verb{urlraw}
+      \verb http://doi.wiley.com/10.1002/mp.13271
+      \endverb
+      \verb{url}
+      \verb http://doi.wiley.com/10.1002/mp.13271
+      \endverb
+    \endentry
+    \entry{liu_deep_2019}{article}{}
+      \name{author}{9}{}{%
+        {{hash=abe9fefc7586274d11d441f787828e0f}{%
+           family={Liu},
+           familyi={L\bibinitperiod},
+           given={Zhiqiang},
+           giveni={Z\bibinitperiod}}}%
+        {{hash=149aaa22326fbf2cf55ae56706bfeebe}{%
+           family={Fan},
+           familyi={F\bibinitperiod},
+           given={Jiawei},
+           giveni={J\bibinitperiod}}}%
+        {{hash=13af9768d9e6479f3ac9abc5fb1045ee}{%
+           family={Li},
+           familyi={L\bibinitperiod},
+           given={Minghui},
+           giveni={M\bibinitperiod}}}%
+        {{hash=402fca6eea43ee37782629a196fc9d46}{%
+           family={Yan},
+           familyi={Y\bibinitperiod},
+           given={Hui},
+           giveni={H\bibinitperiod}}}%
+        {{hash=c37e532529c1c4f5baf04303e4c97eda}{%
+           family={Hu},
+           familyi={H\bibinitperiod},
+           given={Zhihui},
+           giveni={Z\bibinitperiod}}}%
+        {{hash=16a1b156e5b597ff5f1fe282d02ad5bd}{%
+           family={Huang},
+           familyi={H\bibinitperiod},
+           given={Peng},
+           giveni={P\bibinitperiod}}}%
+        {{hash=d12eaa4bcfe35e37d08f0d3d058861fd}{%
+           family={Tian},
+           familyi={T\bibinitperiod},
+           given={Yuan},
+           giveni={Y\bibinitperiod}}}%
+        {{hash=8d0c6bba52e31bece728a4608f91994a}{%
+           family={Miao},
+           familyi={M\bibinitperiod},
+           given={Junjie},
+           giveni={J\bibinitperiod}}}%
+        {{hash=4067e6738b310aaec04f9b1c019abbbd}{%
+           family={Dai},
+           familyi={D\bibinitperiod},
+           given={Jianrong},
+           giveni={J\bibinitperiod}}}%
+      }
+      \strng{namehash}{fcc43c1bcfcd33a0a91cd80ea889282b}
+      \strng{fullhash}{b35c03912d1b925efc8687a2bd89528a}
+      \strng{bibnamehash}{b35c03912d1b925efc8687a2bd89528a}
+      \strng{authorbibnamehash}{b35c03912d1b925efc8687a2bd89528a}
+      \strng{authornamehash}{fcc43c1bcfcd33a0a91cd80ea889282b}
+      \strng{authorfullhash}{b35c03912d1b925efc8687a2bd89528a}
+      \field{sortinit}{1}
+      \field{sortinithash}{50c6687d7fc80f50136d75228e3c59ba}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{Purpose: To develop a deep learning method for prediction of three-dimensional (3D) voxel-byvoxel dose distributions of helical tomotherapy ({HT}). Methods: Using previously treated {HT} plans as training data, a deep learning model named U-{ResNet}-D was trained to predict a 3D dose distribution. First, the contoured structures and dose volumes were converted from plan database to 3D matrix with a program based on a developed visualization toolkit ({VTK}), then transferred to U-{ResNet}-D for correlating anatomical features and dose distributions at voxel-level. One hundred and ninety nasopharyngeal cancer ({NPC}) patients treated by {HT} with multiple planning target volumes ({PTVs}) in different prescription patterns were studied. The model was typically trained from scratch with weights randomly initialized rather than using transferlearning method, and used to predict new patient’s 3D dose distributions. The predictive accuracy was evaluated with three methods: (a) The dose difference at the position r, d(r, r) = Dc(r) À Dp(r), was calculated for each voxel. The mean (ld(r,r)) and standard deviation (rd(r,r)) of d(r, r) were calculated to assess the prediction bias and precision; (b) The mean absolute differences of dosimetric indexes ({DIs}) including maximum and mean dose, homogeneity index, conformity index, and dose spillage for {PTVs} and organ at risks ({OARs}) were calculated and statistically analyzed with the paired-samples t test; (c) Dice similarity coefficients ({DSC}) between predicted and clinical isodose volumes were calculated. Results: The U-{ResNet}-D model predicted 3D dose distribution accurately. For twenty tested patients, the prediction bias ranged from À2.0\% to 2.3\% and prediction error varied from 1.5\% to 4.5\% (relative to prescription) for 3D dose differences. The mean absolute dose differences for {PTVs} and {OARs} are within 2.0\% and 4.2\%, and nearly all the {DIs} for {PTVs} and {OARs} had no significant differences. The averaged {DSC} ranged from 0.95 to 1 for different isodose volumes. Conclusions: The study developed a new deep learning method for 3D voxel-by-voxel dose prediction, and shown to be able to produce accurately dose predictions for nasopharyngeal patients treated by {HT}. The predicted 3D dose map can be useful for improving radiotherapy planning design, ensuring plan quality and consistency, making clinical technique comparison, and guiding automatic treatment planning. © 2019 American Association of Physicists in Medicine [https://doi.org/10.1002/ mp.13490]}
+      \field{issn}{0094-2405, 2473-4209}
+      \field{journaltitle}{Medical Physics}
+      \field{langid}{english}
+      \field{month}{5}
+      \field{number}{5}
+      \field{shortjournal}{Med. Phys.}
+      \field{title}{A deep learning method for prediction of three‐dimensional dose distribution of helical tomotherapy}
+      \field{urlday}{16}
+      \field{urlmonth}{3}
+      \field{urlyear}{2021}
+      \field{volume}{46}
+      \field{year}{2019}
+      \field{dateera}{ce}
+      \field{urldateera}{ce}
+      \field{pages}{1972\bibrangedash 1983}
+      \range{pages}{12}
+      \verb{doi}
+      \verb 10.1002/mp.13490
+      \endverb
+      \verb{file}
+      \verb mp.13490.pdf:/Users/simongutwein/Studium/Masterarbeit/Paper/mp.13490.pdf:application/pdf
+      \endverb
+      \verb{urlraw}
+      \verb https://onlinelibrary.wiley.com/doi/abs/10.1002/mp.13490
+      \endverb
+      \verb{url}
+      \verb https://onlinelibrary.wiley.com/doi/abs/10.1002/mp.13490
+      \endverb
+    \endentry
+    \entry{javaid_mitigating_2019}{article}{}
+      \name{author}{5}{}{%
+        {{hash=f5df62267d54d3c60418fe84c770f9e5}{%
+           family={Javaid},
+           familyi={J\bibinitperiod},
+           given={Umair},
+           giveni={U\bibinitperiod}}}%
+        {{hash=bcd3b7f95453003642bfa44408884f37}{%
+           family={Souris},
+           familyi={S\bibinitperiod},
+           given={Kevin},
+           giveni={K\bibinitperiod}}}%
+        {{hash=7a2ca0795c662bc9895f4b0b2b50b42e}{%
+           family={Dasnoy},
+           familyi={D\bibinitperiod},
+           given={Damien},
+           giveni={D\bibinitperiod}}}%
+        {{hash=c2a7ced72472992536b07322cfad02a1}{%
+           family={Huang},
+           familyi={H\bibinitperiod},
+           given={Sheng},
+           giveni={S\bibinitperiod}}}%
+        {{hash=1013aa8f8d2b7651ab1e33c67b3b6291}{%
+           family={Lee},
+           familyi={L\bibinitperiod},
+           given={John\bibnamedelima A.},
+           giveni={J\bibinitperiod\bibinitdelim A\bibinitperiod}}}%
+      }
+      \strng{namehash}{2b5ddab518d25ee4a68f51bcf971caf7}
+      \strng{fullhash}{04b136bb220220ccfae24d28a43aecf1}
+      \strng{bibnamehash}{04b136bb220220ccfae24d28a43aecf1}
+      \strng{authorbibnamehash}{04b136bb220220ccfae24d28a43aecf1}
+      \strng{authornamehash}{2b5ddab518d25ee4a68f51bcf971caf7}
+      \strng{authorfullhash}{04b136bb220220ccfae24d28a43aecf1}
+      \field{sortinit}{1}
+      \field{sortinithash}{50c6687d7fc80f50136d75228e3c59ba}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{issn}{0094-2405, 2473-4209}
+      \field{journaltitle}{Medical Physics}
+      \field{langid}{english}
+      \field{month}{12}
+      \field{number}{12}
+      \field{shortjournal}{Med. Phys.}
+      \field{title}{Mitigating inherent noise in Monte Carlo dose distributions using dilated U‐Net}
+      \field{urlday}{24}
+      \field{urlmonth}{8}
+      \field{urlyear}{2021}
+      \field{volume}{46}
+      \field{year}{2019}
+      \field{dateera}{ce}
+      \field{urldateera}{ce}
+      \field{pages}{5790\bibrangedash 5798}
+      \range{pages}{9}
+      \verb{doi}
+      \verb 10.1002/mp.13856
+      \endverb
+      \verb{urlraw}
+      \verb https://onlinelibrary.wiley.com/doi/10.1002/mp.13856
+      \endverb
+      \verb{url}
+      \verb https://onlinelibrary.wiley.com/doi/10.1002/mp.13856
+      \endverb
+    \endentry
+    \entry{jabbari_review_2011}{article}{}
+      \name{author}{1}{}{%
+        {{hash=8c599396e0441385ecb03424433b0030}{%
+           family={Jabbari},
+           familyi={J\bibinitperiod},
+           given={Keyvan},
+           giveni={K\bibinitperiod}}}%
+      }
+      \strng{namehash}{8c599396e0441385ecb03424433b0030}
+      \strng{fullhash}{8c599396e0441385ecb03424433b0030}
+      \strng{bibnamehash}{8c599396e0441385ecb03424433b0030}
+      \strng{authorbibnamehash}{8c599396e0441385ecb03424433b0030}
+      \strng{authornamehash}{8c599396e0441385ecb03424433b0030}
+      \strng{authorfullhash}{8c599396e0441385ecb03424433b0030}
+      \field{sortinit}{1}
+      \field{sortinithash}{50c6687d7fc80f50136d75228e3c59ba}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{An important requirement in radiation therapy is a fast and accurate treatment planning system. This system, using computed tomography ({CT}) data, direction, and characteristics of the beam, calculates the dose at all points of the patient’s volume. The two main factors in treatment planning system are accuracy and speed. According to these factors, various generations of treatment planning systems are developed. This article is a review of the Fast Monte Carlo treatment planning algorithms, which are accurate and fast at the same time. The Monte Carlo techniques are based on the transport of each individual particle (e.g., photon or electron) in the tissue. The transport of the particle is done using the physics of the interaction of the particles with matter. Other techniques transport the particles as a group. For a typical dose calculation in radiation therapy the code has to transport several millions particles, which take a few hours, therefore, the Monte Carlo techniques are accurate, but slow for clinical use. In recent years, with the development of the ‘fast’ Monte Carlo systems, one is able to perform dose calculation in a reasonable time for clinical use. The acceptable time for dose calculation is in the range of one minute. There is currently a growing interest in the fast Monte Carlo treatment planning systems and there are many commercial treatment planning systems that perform dose calculation in radiation therapy based on the Monte Carlo technique.}
+      \field{issn}{2228-7477}
+      \field{journaltitle}{Journal of Medical Signals \& Sensors}
+      \field{langid}{english}
+      \field{number}{1}
+      \field{shortjournal}{J Med Signals Sens}
+      \field{title}{Review of fast Monte Carlo codes for dose calculation in radiation therapy treatment planning}
+      \field{urlday}{18}
+      \field{urlmonth}{11}
+      \field{urlyear}{2021}
+      \field{volume}{1}
+      \field{year}{2011}
+      \field{dateera}{ce}
+      \field{urldateera}{ce}
+      \field{pages}{73}
+      \range{pages}{1}
+      \verb{doi}
+      \verb 10.4103/2228-7477.83522
+      \endverb
+      \verb{file}
+      \verb Jabbari - 2011 - Review of fast Monte Carlo codes for dose calculat.pdf:/Users/simongutwein/Zotero/storage/SRKN2VPV/Jabbari - 2011 - Review of fast Monte Carlo codes for dose calculat.pdf:application/pdf
+      \endverb
+      \verb{urlraw}
+      \verb http://www.jmssjournal.net/text.asp?2011/1/1/73/83522
+      \endverb
+      \verb{url}
+      \verb http://www.jmssjournal.net/text.asp?2011/1/1/73/83522
+      \endverb
+    \endentry
+    \entry{esteva_dermatologist-level_2017}{article}{}
+      \name{author}{7}{}{%
+        {{hash=5243abb0865221bf8daee169b621b075}{%
+           family={Esteva},
+           familyi={E\bibinitperiod},
+           given={Andre},
+           giveni={A\bibinitperiod}}}%
+        {{hash=9eebdac3670ed2b9871136c675f3354e}{%
+           family={Kuprel},
+           familyi={K\bibinitperiod},
+           given={Brett},
+           giveni={B\bibinitperiod}}}%
+        {{hash=7dcf7c517335b316301b5a23b218557b}{%
+           family={Novoa},
+           familyi={N\bibinitperiod},
+           given={Roberto\bibnamedelima A.},
+           giveni={R\bibinitperiod\bibinitdelim A\bibinitperiod}}}%
+        {{hash=d5274c1d02c20ebd471b200127fcee09}{%
+           family={Ko},
+           familyi={K\bibinitperiod},
+           given={Justin},
+           giveni={J\bibinitperiod}}}%
+        {{hash=2418082b9eed3d391d9b768fd518590b}{%
+           family={Swetter},
+           familyi={S\bibinitperiod},
+           given={Susan\bibnamedelima M.},
+           giveni={S\bibinitperiod\bibinitdelim M\bibinitperiod}}}%
+        {{hash=783e12f70b583afa14d66ac21e6d8a13}{%
+           family={Blau},
+           familyi={B\bibinitperiod},
+           given={Helen\bibnamedelima M.},
+           giveni={H\bibinitperiod\bibinitdelim M\bibinitperiod}}}%
+        {{hash=5112ea130eadef0764fce0145b8b9f91}{%
+           family={Thrun},
+           familyi={T\bibinitperiod},
+           given={Sebastian},
+           giveni={S\bibinitperiod}}}%
+      }
+      \strng{namehash}{8996a2e2d5273de74158f688db6d25f7}
+      \strng{fullhash}{6ab07ac579bf17d04b49f954f4cfa136}
+      \strng{bibnamehash}{6ab07ac579bf17d04b49f954f4cfa136}
+      \strng{authorbibnamehash}{6ab07ac579bf17d04b49f954f4cfa136}
+      \strng{authornamehash}{8996a2e2d5273de74158f688db6d25f7}
+      \strng{authorfullhash}{6ab07ac579bf17d04b49f954f4cfa136}
+      \field{sortinit}{1}
+      \field{sortinithash}{50c6687d7fc80f50136d75228e3c59ba}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{day}{2}
+      \field{issn}{0028-0836, 1476-4687}
+      \field{journaltitle}{Nature}
+      \field{langid}{english}
+      \field{month}{2}
+      \field{number}{7639}
+      \field{shortjournal}{Nature}
+      \field{title}{Dermatologist-level classification of skin cancer with deep neural networks}
+      \field{urlday}{18}
+      \field{urlmonth}{11}
+      \field{urlyear}{2021}
+      \field{volume}{542}
+      \field{year}{2017}
+      \field{dateera}{ce}
+      \field{urldateera}{ce}
+      \field{pages}{115\bibrangedash 118}
+      \range{pages}{4}
+      \verb{doi}
+      \verb 10.1038/nature21056
+      \endverb
+      \verb{file}
+      \verb Esteva et al. - 2017 - Dermatologist-level classification of skin cancer .pdf:/Users/simongutwein/Zotero/storage/HTE22K2M/Esteva et al. - 2017 - Dermatologist-level classification of skin cancer .pdf:application/pdf
+      \endverb
+      \verb{urlraw}
+      \verb http://www.nature.com/articles/nature21056
+      \endverb
+      \verb{url}
+      \verb http://www.nature.com/articles/nature21056
+      \endverb
+    \endentry
+    \entry{cheng_computer-aided_2016}{article}{}
+      \name{author}{9}{}{%
+        {{hash=46c1b223dea6c3a9fa5e9b79ec8b3575}{%
+           family={Cheng},
+           familyi={C\bibinitperiod},
+           given={Jie-Zhi},
+           giveni={J\bibinithyphendelim Z\bibinitperiod}}}%
+        {{hash=2c96205fc08248d3bf9ce910ea7d5f7e}{%
+           family={Ni},
+           familyi={N\bibinitperiod},
+           given={Dong},
+           giveni={D\bibinitperiod}}}%
+        {{hash=6baea8cf9428c0c4ffbfd54382c10f35}{%
+           family={Chou},
+           familyi={C\bibinitperiod},
+           given={Yi-Hong},
+           giveni={Y\bibinithyphendelim H\bibinitperiod}}}%
+        {{hash=697fd343883f28bcc58dffdf5acded14}{%
+           family={Qin},
+           familyi={Q\bibinitperiod},
+           given={Jing},
+           giveni={J\bibinitperiod}}}%
+        {{hash=921faa2a161221a34556b10c3c507fc3}{%
+           family={Tiu},
+           familyi={T\bibinitperiod},
+           given={Chui-Mei},
+           giveni={C\bibinithyphendelim M\bibinitperiod}}}%
+        {{hash=dcd80d82fa52253ba8514334fa25834a}{%
+           family={Chang},
+           familyi={C\bibinitperiod},
+           given={Yeun-Chung},
+           giveni={Y\bibinithyphendelim C\bibinitperiod}}}%
+        {{hash=02e7709573433951cf8c04869d21213f}{%
+           family={Huang},
+           familyi={H\bibinitperiod},
+           given={Chiun-Sheng},
+           giveni={C\bibinithyphendelim S\bibinitperiod}}}%
+        {{hash=4be3a7080769a01b5a9027ae92b8c440}{%
+           family={Shen},
+           familyi={S\bibinitperiod},
+           given={Dinggang},
+           giveni={D\bibinitperiod}}}%
+        {{hash=593f1d04dba277767ccc82b195c0b765}{%
+           family={Chen},
+           familyi={C\bibinitperiod},
+           given={Chung-Ming},
+           giveni={C\bibinithyphendelim M\bibinitperiod}}}%
+      }
+      \strng{namehash}{2542a9e8abe70524f9555ba83a08cd31}
+      \strng{fullhash}{0d2b2aad41b746297e15c1a3a00ce2f6}
+      \strng{bibnamehash}{0d2b2aad41b746297e15c1a3a00ce2f6}
+      \strng{authorbibnamehash}{0d2b2aad41b746297e15c1a3a00ce2f6}
+      \strng{authornamehash}{2542a9e8abe70524f9555ba83a08cd31}
+      \strng{authorfullhash}{0d2b2aad41b746297e15c1a3a00ce2f6}
+      \field{sortinit}{1}
+      \field{sortinithash}{50c6687d7fc80f50136d75228e3c59ba}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{shorttitle}
+      \field{issn}{2045-2322}
+      \field{journaltitle}{Scientific Reports}
+      \field{langid}{english}
+      \field{month}{4}
+      \field{number}{1}
+      \field{shortjournal}{Sci Rep}
+      \field{shorttitle}{Computer-Aided Diagnosis with Deep Learning Architecture}
+      \field{title}{Computer-Aided Diagnosis with Deep Learning Architecture: Applications to Breast Lesions in {US} Images and Pulmonary Nodules in {CT} Scans}
+      \field{urlday}{18}
+      \field{urlmonth}{11}
+      \field{urlyear}{2021}
+      \field{volume}{6}
+      \field{year}{2016}
+      \field{dateera}{ce}
+      \field{urldateera}{ce}
+      \field{pages}{24454}
+      \range{pages}{1}
+      \verb{doi}
+      \verb 10.1038/srep24454
+      \endverb
+      \verb{file}
+      \verb Cheng et al. - 2016 - Computer-Aided Diagnosis with Deep Learning Archit.pdf:/Users/simongutwein/Zotero/storage/QYF8T5NJ/Cheng et al. - 2016 - Computer-Aided Diagnosis with Deep Learning Archit.pdf:application/pdf
+      \endverb
+      \verb{urlraw}
+      \verb http://www.nature.com/articles/srep24454
+      \endverb
+      \verb{url}
+      \verb http://www.nature.com/articles/srep24454
+      \endverb
+    \endentry
+    \entry{cicero_training_2017}{article}{}
+      \name{author}{7}{}{%
+        {{hash=d5d4e40e5a3b0fb4c1faff0f54f74ffa}{%
+           family={Cicero},
+           familyi={C\bibinitperiod},
+           given={Mark},
+           giveni={M\bibinitperiod}}}%
+        {{hash=ac69179f17f2415033b30b1a2b5f0bdc}{%
+           family={Bilbily},
+           familyi={B\bibinitperiod},
+           given={Alexander},
+           giveni={A\bibinitperiod}}}%
+        {{hash=69c340627be0e379e167b30ee6056f05}{%
+           family={Colak},
+           familyi={C\bibinitperiod},
+           given={Errol},
+           giveni={E\bibinitperiod}}}%
+        {{hash=bd6b2758c56866636e492ddf9f6f4b70}{%
+           family={Dowdell},
+           familyi={D\bibinitperiod},
+           given={Tim},
+           giveni={T\bibinitperiod}}}%
+        {{hash=d16be817d856e04d21ad24a8d124e321}{%
+           family={Gray},
+           familyi={G\bibinitperiod},
+           given={Bruce},
+           giveni={B\bibinitperiod}}}%
+        {{hash=d71b95e26ececc5d66da494b4f59acdf}{%
+           family={Perampaladas},
+           familyi={P\bibinitperiod},
+           given={Kuhan},
+           giveni={K\bibinitperiod}}}%
+        {{hash=13a4bc2ddbb46c230daf5ed4d1b0e50f}{%
+           family={Barfett},
+           familyi={B\bibinitperiod},
+           given={Joseph},
+           giveni={J\bibinitperiod}}}%
+      }
+      \strng{namehash}{647512ea29459529446348fcee03436c}
+      \strng{fullhash}{677d6f49f8269ae8e7e14ef756b5ed7c}
+      \strng{bibnamehash}{677d6f49f8269ae8e7e14ef756b5ed7c}
+      \strng{authorbibnamehash}{677d6f49f8269ae8e7e14ef756b5ed7c}
+      \strng{authornamehash}{647512ea29459529446348fcee03436c}
+      \strng{authorfullhash}{677d6f49f8269ae8e7e14ef756b5ed7c}
+      \field{sortinit}{1}
+      \field{sortinithash}{50c6687d7fc80f50136d75228e3c59ba}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{Objectives: Convolutional neural networks ({CNNs}) are a subtype of artificial neural network that have shown strong performance in computer vision tasks including image classification. To date, there has been limited application of {CNNs} to chest radiographs, the most frequently performed medical imaging study. We hypothesize {CNNs} can learn to classify frontal chest radiographs according to common findings from a sufficiently large data set. Materials and Methods: Our institution's research ethics board approved a single-center retrospective review of 35,038 adult posterior-anterior chest radiographs and final reports performed between 2005 and 2015 (56\% men, average age of 56, patient type: 24\% inpatient, 39\% outpatient, 37\% emergency department) with a waiver for informed consent. The {GoogLeNet} {CNN} was trained using 3 graphics processing units to automatically classify radiographs as normal (n = 11,702) or into 1 or more of cardiomegaly (n = 9240), consolidation (n = 6788), pleural effusion (n = 7786), pulmonary edema (n = 1286), or pneumothorax (n = 1299). The network's performance was evaluated using receiver operating curve analysis on a test set of 2443 radiographs with the criterion standard being board-certified radiologist interpretation. Results: Using 256 Â 256-pixel images as input, the network achieved an overall sensitivity and specificity of 91\% with an area under the curve of 0.964 for classifying a study as normal (n = 1203). For the abnormal categories, the sensitivity, specificity, and area under the curve, respectively, were 91\%, 91\%, and 0.962 for pleural effusion (n = 782), 82\%, 82\%, and 0.868 for pulmonary edema (n = 356), 74\%, 75\%, and 0.850 for consolidation (n = 214), 81\%, 80\%, and 0.875 for cardiomegaly (n = 482), and 78\%, 78\%, and 0.861 for pneumothorax (n = 167). Conclusions: Current deep {CNN} architectures can be trained with modest-sized medical data sets to achieve clinically useful performance at detecting and excluding common pathology on chest radiographs.}
+      \field{issn}{1536-0210, 0020-9996}
+      \field{journaltitle}{Investigative Radiology}
+      \field{langid}{english}
+      \field{month}{5}
+      \field{number}{5}
+      \field{shortjournal}{Invest Radiol}
+      \field{title}{Training and Validating a Deep Convolutional Neural Network for Computer-Aided Detection and Classification of Abnormalities on Frontal Chest Radiographs}
+      \field{urlday}{18}
+      \field{urlmonth}{11}
+      \field{urlyear}{2021}
+      \field{volume}{52}
+      \field{year}{2017}
+      \field{dateera}{ce}
+      \field{urldateera}{ce}
+      \field{pages}{281\bibrangedash 287}
+      \range{pages}{7}
+      \verb{doi}
+      \verb 10.1097/RLI.0000000000000341
+      \endverb
+      \verb{file}
+      \verb Cicero et al. - 2017 - Training and Validating a Deep Convolutional Neura.pdf:/Users/simongutwein/Zotero/storage/GHL43GVW/Cicero et al. - 2017 - Training and Validating a Deep Convolutional Neura.pdf:application/pdf
+      \endverb
+      \verb{urlraw}
+      \verb https://journals.lww.com/00004424-201705000-00004
+      \endverb
+      \verb{url}
+      \verb https://journals.lww.com/00004424-201705000-00004
+      \endverb
+    \endentry
+    \entry{iizuka_deep_2020}{article}{}
+      \name{author}{6}{}{%
+        {{hash=cf8351b4dc02b2ac3d19eb120555b451}{%
+           family={Iizuka},
+           familyi={I\bibinitperiod},
+           given={Osamu},
+           giveni={O\bibinitperiod}}}%
+        {{hash=46efcf803b4287dcc411152a239dc179}{%
+           family={Kanavati},
+           familyi={K\bibinitperiod},
+           given={Fahdi},
+           giveni={F\bibinitperiod}}}%
+        {{hash=3d4c7bbf45a169c2af2c985d5208e303}{%
+           family={Kato},
+           familyi={K\bibinitperiod},
+           given={Kei},
+           giveni={K\bibinitperiod}}}%
+        {{hash=5d9421b1ca738bc884a9c3c4ae41a779}{%
+           family={Rambeau},
+           familyi={R\bibinitperiod},
+           given={Michael},
+           giveni={M\bibinitperiod}}}%
+        {{hash=9a3f64ac2d7f642952de791e3a2c2fa8}{%
+           family={Arihiro},
+           familyi={A\bibinitperiod},
+           given={Koji},
+           giveni={K\bibinitperiod}}}%
+        {{hash=8a125e1eec535b82102fcbcf1d88ef41}{%
+           family={Tsuneki},
+           familyi={T\bibinitperiod},
+           given={Masayuki},
+           giveni={M\bibinitperiod}}}%
+      }
+      \strng{namehash}{587e18037ef5132c2b48784a9696ef94}
+      \strng{fullhash}{e3817ca6b633618e37fa117445bee0de}
+      \strng{bibnamehash}{e3817ca6b633618e37fa117445bee0de}
+      \strng{authorbibnamehash}{e3817ca6b633618e37fa117445bee0de}
+      \strng{authornamehash}{587e18037ef5132c2b48784a9696ef94}
+      \strng{authorfullhash}{e3817ca6b633618e37fa117445bee0de}
+      \field{sortinit}{1}
+      \field{sortinithash}{50c6687d7fc80f50136d75228e3c59ba}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{Abstract Histopathological classification of gastric and colonic epithelial tumours is one of the routine pathological diagnosis tasks for pathologists. Computational pathology techniques based on Artificial intelligence ({AI}) would be of high benefit in easing the ever increasing workloads on pathologists, especially in regions that have shortages in access to pathological diagnosis services. In this study, we trained convolutional neural networks ({CNNs}) and recurrent neural networks ({RNNs}) on biopsy histopathology whole-slide images ({WSIs}) of stomach and colon. The models were trained to classify {WSI} into adenocarcinoma, adenoma, and non-neoplastic. We evaluated our models on three independent test sets each, achieving area under the curves ({AUCs}) up to 0.97 and 0.99 for gastric adenocarcinoma and adenoma, respectively, and 0.96 and 0.99 for colonic adenocarcinoma and adenoma respectively. The results demonstrate the generalisation ability of our models and the high promising potential of deployment in a practical histopathological diagnostic workflow system.}
+      \field{issn}{2045-2322}
+      \field{journaltitle}{Scientific Reports}
+      \field{langid}{english}
+      \field{month}{12}
+      \field{number}{1}
+      \field{shortjournal}{Sci Rep}
+      \field{title}{Deep Learning Models for Histopathological Classification of Gastric and Colonic Epithelial Tumours}
+      \field{urlday}{18}
+      \field{urlmonth}{11}
+      \field{urlyear}{2021}
+      \field{volume}{10}
+      \field{year}{2020}
+      \field{dateera}{ce}
+      \field{urldateera}{ce}
+      \field{pages}{1504}
+      \range{pages}{1}
+      \verb{doi}
+      \verb 10.1038/s41598-020-58467-9
+      \endverb
+      \verb{file}
+      \verb Iizuka et al. - 2020 - Deep Learning Models for Histopathological Classif.pdf:/Users/simongutwein/Zotero/storage/WYGDLEJT/Iizuka et al. - 2020 - Deep Learning Models for Histopathological Classif.pdf:application/pdf
+      \endverb
+      \verb{urlraw}
+      \verb http://www.nature.com/articles/s41598-020-58467-9
+      \endverb
+      \verb{url}
+      \verb http://www.nature.com/articles/s41598-020-58467-9
+      \endverb
+    \endentry
+    \entry{poplin_prediction_2018}{article}{}
+      \name{author}{8}{}{%
+        {{hash=8b2130158b306313b26c160d391687d8}{%
+           family={Poplin},
+           familyi={P\bibinitperiod},
+           given={Ryan},
+           giveni={R\bibinitperiod}}}%
+        {{hash=981c93a93cc689a6a466ac7e155c6c46}{%
+           family={Varadarajan},
+           familyi={V\bibinitperiod},
+           given={Avinash\bibnamedelima V.},
+           giveni={A\bibinitperiod\bibinitdelim V\bibinitperiod}}}%
+        {{hash=3db84d7dbf0cc2fc82165244dcfa5830}{%
+           family={Blumer},
+           familyi={B\bibinitperiod},
+           given={Katy},
+           giveni={K\bibinitperiod}}}%
+        {{hash=e8425d142317172c04a78968a7c61852}{%
+           family={Liu},
+           familyi={L\bibinitperiod},
+           given={Yun},
+           giveni={Y\bibinitperiod}}}%
+        {{hash=c3d3f2645d32b649f8e3a3d0d5635bc5}{%
+           family={{McConnell}},
+           familyi={M\bibinitperiod},
+           given={Michael\bibnamedelima V.},
+           giveni={M\bibinitperiod\bibinitdelim V\bibinitperiod}}}%
+        {{hash=84d9f354fa0b45dae996f27dad2c6607}{%
+           family={Corrado},
+           familyi={C\bibinitperiod},
+           given={Greg\bibnamedelima S.},
+           giveni={G\bibinitperiod\bibinitdelim S\bibinitperiod}}}%
+        {{hash=79113f7fef30b07d1aa3427c8d2fda7e}{%
+           family={Peng},
+           familyi={P\bibinitperiod},
+           given={Lily},
+           giveni={L\bibinitperiod}}}%
+        {{hash=d38a80bf82831fe5c4d0f850a77ddff9}{%
+           family={Webster},
+           familyi={W\bibinitperiod},
+           given={Dale\bibnamedelima R.},
+           giveni={D\bibinitperiod\bibinitdelim R\bibinitperiod}}}%
+      }
+      \strng{namehash}{5d1211b737c666ac485fecb7b5880b29}
+      \strng{fullhash}{9aa35738df2c94df0fb4806b216676d0}
+      \strng{bibnamehash}{9aa35738df2c94df0fb4806b216676d0}
+      \strng{authorbibnamehash}{9aa35738df2c94df0fb4806b216676d0}
+      \strng{authornamehash}{5d1211b737c666ac485fecb7b5880b29}
+      \strng{authorfullhash}{9aa35738df2c94df0fb4806b216676d0}
+      \field{sortinit}{1}
+      \field{sortinithash}{50c6687d7fc80f50136d75228e3c59ba}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{issn}{2157-846X}
+      \field{journaltitle}{Nature Biomedical Engineering}
+      \field{langid}{english}
+      \field{month}{3}
+      \field{number}{3}
+      \field{shortjournal}{Nat Biomed Eng}
+      \field{title}{Prediction of cardiovascular risk factors from retinal fundus photographs via deep learning}
+      \field{urlday}{18}
+      \field{urlmonth}{11}
+      \field{urlyear}{2021}
+      \field{volume}{2}
+      \field{year}{2018}
+      \field{dateera}{ce}
+      \field{urldateera}{ce}
+      \field{pages}{158\bibrangedash 164}
+      \range{pages}{7}
+      \verb{doi}
+      \verb 10.1038/s41551-018-0195-0
+      \endverb
+      \verb{file}
+      \verb Poplin et al. - 2018 - Prediction of cardiovascular risk factors from ret.pdf:/Users/simongutwein/Zotero/storage/B3JFBL73/Poplin et al. - 2018 - Prediction of cardiovascular risk factors from ret.pdf:application/pdf
+      \endverb
+      \verb{urlraw}
+      \verb http://www.nature.com/articles/s41551-018-0195-0
+      \endverb
+      \verb{url}
+      \verb http://www.nature.com/articles/s41551-018-0195-0
+      \endverb
+    \endentry
+    \entry{delaney_role_2005}{article}{}
+      \name{author}{4}{}{%
+        {{hash=837d6f0d4f895b7eeab110077a4e0f21}{%
+           family={Delaney},
+           familyi={D\bibinitperiod},
+           given={Geoff},
+           giveni={G\bibinitperiod}}}%
+        {{hash=5d2738b07a501af726a28d2f96f89b11}{%
+           family={Jacob},
+           familyi={J\bibinitperiod},
+           given={Susannah},
+           giveni={S\bibinitperiod}}}%
+        {{hash=33144235a8b6c1644f233989170539e1}{%
+           family={Featherstone},
+           familyi={F\bibinitperiod},
+           given={Carolyn},
+           giveni={C\bibinitperiod}}}%
+        {{hash=42f5bf2be2ce61e0091b777d56a3b416}{%
+           family={Barton},
+           familyi={B\bibinitperiod},
+           given={Michael},
+           giveni={M\bibinitperiod}}}%
+      }
+      \strng{namehash}{1772c6409b94232b1764e0deecda2b2b}
+      \strng{fullhash}{a45627b4f48bebb226f3d7d4942d6913}
+      \strng{bibnamehash}{a45627b4f48bebb226f3d7d4942d6913}
+      \strng{authorbibnamehash}{a45627b4f48bebb226f3d7d4942d6913}
+      \strng{authornamehash}{1772c6409b94232b1764e0deecda2b2b}
+      \strng{authorfullhash}{a45627b4f48bebb226f3d7d4942d6913}
+      \field{sortinit}{1}
+      \field{sortinithash}{50c6687d7fc80f50136d75228e3c59ba}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{shorttitle}
+      \field{day}{15}
+      \field{issn}{0008-543X, 1097-0142}
+      \field{journaltitle}{Cancer}
+      \field{langid}{english}
+      \field{month}{9}
+      \field{number}{6}
+      \field{shortjournal}{Cancer}
+      \field{shorttitle}{The role of radiotherapy in cancer treatment}
+      \field{title}{The role of radiotherapy in cancer treatment: Estimating optimal utilization from a review of evidence-based clinical guidelines}
+      \field{urlday}{18}
+      \field{urlmonth}{11}
+      \field{urlyear}{2021}
+      \field{volume}{104}
+      \field{year}{2005}
+      \field{dateera}{ce}
+      \field{urldateera}{ce}
+      \field{pages}{1129\bibrangedash 1137}
+      \range{pages}{9}
+      \verb{doi}
+      \verb 10.1002/cncr.21324
+      \endverb
+      \verb{file}
+      \verb Delaney et al. - 2005 - The role of radiotherapy in cancer treatment Esti.pdf:/Users/simongutwein/Zotero/storage/FZ7NVUCF/Delaney et al. - 2005 - The role of radiotherapy in cancer treatment Esti.pdf:application/pdf
+      \endverb
+      \verb{urlraw}
+      \verb https://onlinelibrary.wiley.com/doi/10.1002/cncr.21324
+      \endverb
+      \verb{url}
+      \verb https://onlinelibrary.wiley.com/doi/10.1002/cncr.21324
+      \endverb
+    \endentry
+    \entry{li_dna_2021}{article}{}
+      \name{author}{5}{}{%
+        {{hash=4641c68087078f20952fffea997eedd0}{%
+           family={Li},
+           familyi={L\bibinitperiod},
+           given={Lan-ya},
+           giveni={L\bibinithyphendelim y\bibinitperiod}}}%
+        {{hash=148d73b9deb3a0885f0f257eddb284f2}{%
+           family={Guan},
+           familyi={G\bibinitperiod},
+           given={Yi-di},
+           giveni={Y\bibinithyphendelim d\bibinitperiod}}}%
+        {{hash=d258cf267fb342fede2fdc291ebd92b0}{%
+           family={Chen},
+           familyi={C\bibinitperiod},
+           given={Xi-sha},
+           giveni={X\bibinithyphendelim s\bibinitperiod}}}%
+        {{hash=3c047b052ae4dac29a2e28d736717a07}{%
+           family={Yang},
+           familyi={Y\bibinitperiod},
+           given={Jin-ming},
+           giveni={J\bibinithyphendelim m\bibinitperiod}}}%
+        {{hash=568c91fef7be054e921b14e31ce2732c}{%
+           family={Cheng},
+           familyi={C\bibinitperiod},
+           given={Yan},
+           giveni={Y\bibinitperiod}}}%
+      }
+      \strng{namehash}{5769ec97e7325fbe03fb0b2e82e7c965}
+      \strng{fullhash}{3d50a8ce60288c4aee50eacc2c1e163b}
+      \strng{bibnamehash}{3d50a8ce60288c4aee50eacc2c1e163b}
+      \strng{authorbibnamehash}{3d50a8ce60288c4aee50eacc2c1e163b}
+      \strng{authornamehash}{5769ec97e7325fbe03fb0b2e82e7c965}
+      \strng{authorfullhash}{3d50a8ce60288c4aee50eacc2c1e163b}
+      \field{sortinit}{1}
+      \field{sortinithash}{50c6687d7fc80f50136d75228e3c59ba}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{{DNA} repair pathways are triggered to maintain genetic stability and integrity when mammalian cells are exposed to endogenous or exogenous {DNA}-damaging agents. The deregulation of {DNA} repair pathways is associated with the initiation and progression of cancer. As the primary anti-cancer therapies, ionizing radiation and chemotherapeutic agents induce cell death by directly or indirectly causing {DNA} damage, dysregulation of the {DNA} damage response may contribute to hypersensitivity or resistance of cancer cells to genotoxic agents and targeting {DNA} repair pathway can increase the tumor sensitivity to cancer therapies. Therefore, targeting {DNA} repair pathways may be a potential therapeutic approach for cancer treatment. A better understanding of the biology and the regulatory mechanisms of {DNA} repair pathways has the potential to facilitate the development of inhibitors of nuclear and mitochondria {DNA} repair pathways for enhancing anticancer effect of {DNA} damage-based therapy.}
+      \field{day}{8}
+      \field{issn}{1663-9812}
+      \field{journaltitle}{Frontiers in Pharmacology}
+      \field{langid}{english}
+      \field{month}{2}
+      \field{shortjournal}{Front. Pharmacol.}
+      \field{title}{{DNA} Repair Pathways in Cancer Therapy and Resistance}
+      \field{urlday}{18}
+      \field{urlmonth}{11}
+      \field{urlyear}{2021}
+      \field{volume}{11}
+      \field{year}{2021}
+      \field{dateera}{ce}
+      \field{urldateera}{ce}
+      \field{pages}{629266}
+      \range{pages}{1}
+      \verb{doi}
+      \verb 10.3389/fphar.2020.629266
+      \endverb
+      \verb{file}
+      \verb Li et al. - 2021 - DNA Repair Pathways in Cancer Therapy and Resistan.pdf:/Users/simongutwein/Zotero/storage/UNFYD5SR/Li et al. - 2021 - DNA Repair Pathways in Cancer Therapy and Resistan.pdf:application/pdf
+      \endverb
+      \verb{urlraw}
+      \verb https://www.frontiersin.org/articles/10.3389/fphar.2020.629266/full
+      \endverb
+      \verb{url}
+      \verb https://www.frontiersin.org/articles/10.3389/fphar.2020.629266/full
+      \endverb
+    \endentry
+    \entry{lorentz_versuch_1937}{incollection}{}
+      \name{author}{1}{}{%
+        {{hash=e7fb2ef04ab651b092ea6739541b789c}{%
+           family={Lorentz},
+           familyi={L\bibinitperiod},
+           given={H.\bibnamedelimi A.},
+           giveni={H\bibinitperiod\bibinitdelim A\bibinitperiod}}}%
+      }
+      \name{editor}{1}{}{%
+        {{hash=e7fb2ef04ab651b092ea6739541b789c}{%
+           family={Lorentz},
+           familyi={L\bibinitperiod},
+           given={H.\bibnamedelimi A.},
+           giveni={H\bibinitperiod\bibinitdelim A\bibinitperiod}}}%
+      }
+      \list{location}{1}{%
+        {Dordrecht}%
+      }
+      \list{publisher}{1}{%
+        {Springer Netherlands}%
+      }
+      \strng{namehash}{e7fb2ef04ab651b092ea6739541b789c}
+      \strng{fullhash}{e7fb2ef04ab651b092ea6739541b789c}
+      \strng{bibnamehash}{e7fb2ef04ab651b092ea6739541b789c}
+      \strng{authorbibnamehash}{e7fb2ef04ab651b092ea6739541b789c}
+      \strng{authornamehash}{e7fb2ef04ab651b092ea6739541b789c}
+      \strng{authorfullhash}{e7fb2ef04ab651b092ea6739541b789c}
+      \strng{editorbibnamehash}{e7fb2ef04ab651b092ea6739541b789c}
+      \strng{editornamehash}{e7fb2ef04ab651b092ea6739541b789c}
+      \strng{editorfullhash}{e7fb2ef04ab651b092ea6739541b789c}
+      \field{sortinit}{1}
+      \field{sortinithash}{50c6687d7fc80f50136d75228e3c59ba}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{Die Frage, ob der Aether an der Bewegung ponderabler Körper theilnehme oder nicht, hat noch immer keine alle Physiker befriedigende Beantwortung gefunden. Für die Entscheidung können in erster Linie die Aberration des Lichtes und die damit zusammenhängenden Erscheinungen herangezogen werden, doch hat sich bis jetzt keine der beiden streitigen Theorieen, weder die von Fresnel, noch die von Stokes, allen Beobachtungen gegenüber voll und ganz bewährt, und so kann man bei der Wahl zwischen beiden Ansichten nur davon ausgehen, dass man die hüben und drüben noch verbleibenden Schwierigkeiten gegen einander abwägt. Auf diese Weise wurde ich schon vor längerer Zeit zu der Meinung geführt, dass man mit der Auffassung Fresnel’s, also mit der Annahme eines unbeweglichen Aethers, auf dem richtigen Wege sei. Zwar lässt sich gegen die Ansicht des Herrn Stokes kaum mehr als das eine Bedenken erheben, dass seine Voraussetzungen über die in der Nähe der Erde stattfindende Aetherbewegung sich widersprechen1), aber dieses Bedenken fällt schwer ins Gewicht und ich sehe gar nicht, wie dasselbe zu beseitigen wäre.}
+      \field{booktitle}{Collected Papers: Volume V}
+      \field{isbn}{978-94-015-3445-1}
+      \field{langid}{german}
+      \field{title}{Versuch Einer Theorie der Electrischen und Optischen Erscheinungen in Bewegten Körpern}
+      \field{urlday}{19}
+      \field{urlmonth}{11}
+      \field{urlyear}{2021}
+      \field{year}{1937}
+      \field{dateera}{ce}
+      \field{urldateera}{ce}
+      \field{pages}{1\bibrangedash 138}
+      \range{pages}{138}
+      \verb{doi}
+      \verb 10.1007/978-94-015-3445-1_1
+      \endverb
+      \verb{urlraw}
+      \verb https://doi.org/10.1007/978-94-015-3445-1_1
+      \endverb
+      \verb{url}
+      \verb https://doi.org/10.1007/978-94-015-3445-1_1
+      \endverb
+    \endentry
+    \entry{ahnesjo_collapsed_1989}{article}{}
+      \name{author}{1}{}{%
+        {{hash=be1bd42eb2805b41a2c16ff79ecc0e03}{%
+           family={Ahnesjö},
+           familyi={A\bibinitperiod},
+           given={Anders},
+           giveni={A\bibinitperiod}}}%
+      }
+      \strng{namehash}{be1bd42eb2805b41a2c16ff79ecc0e03}
+      \strng{fullhash}{be1bd42eb2805b41a2c16ff79ecc0e03}
+      \strng{bibnamehash}{be1bd42eb2805b41a2c16ff79ecc0e03}
+      \strng{authorbibnamehash}{be1bd42eb2805b41a2c16ff79ecc0e03}
+      \strng{authornamehash}{be1bd42eb2805b41a2c16ff79ecc0e03}
+      \strng{authorfullhash}{be1bd42eb2805b41a2c16ff79ecc0e03}
+      \field{sortinit}{2}
+      \field{sortinithash}{ed39bb39cf854d5250e95b1c1f94f4ed}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{shorttitle}
+      \field{issn}{00942405}
+      \field{journaltitle}{Medical Physics}
+      \field{langid}{english}
+      \field{month}{7}
+      \field{number}{4}
+      \field{shortjournal}{Med. Phys.}
+      \field{shorttitle}{Collapsed cone convolution of radiant energy for photon dose calculation in heterogeneous media}
+      \field{title}{Collapsed cone convolution of radiant energy for photon dose calculation in heterogeneous media: Photon dose calculation}
+      \field{urlday}{22}
+      \field{urlmonth}{6}
+      \field{urlyear}{2021}
+      \field{volume}{16}
+      \field{year}{1989}
+      \field{dateera}{ce}
+      \field{urldateera}{ce}
+      \field{pages}{577\bibrangedash 592}
+      \range{pages}{16}
+      \verb{doi}
+      \verb 10.1118/1.596360
+      \endverb
+      \verb{file}
+      \verb Ahnesjö - 1989 - Collapsed cone convolution of radiant energy for p.pdf:/Users/simongutwein/Zotero/storage/SFNXMEFZ/Ahnesjö - 1989 - Collapsed cone convolution of radiant energy for p.pdf:application/pdf
+      \endverb
+      \verb{urlraw}
+      \verb http://doi.wiley.com/10.1118/1.596360
+      \endverb
+      \verb{url}
+      \verb http://doi.wiley.com/10.1118/1.596360
+      \endverb
+    \endentry
+    \entry{mohan_differential_1986}{article}{}
+      \name{author}{3}{}{%
+        {{hash=2fe93205a3ecb5735cecd0e57b49a198}{%
+           family={Mohan},
+           familyi={M\bibinitperiod},
+           given={R.},
+           giveni={R\bibinitperiod}}}%
+        {{hash=7b5049412e686994e46705218928ea6b}{%
+           family={Chui},
+           familyi={C\bibinitperiod},
+           given={C.},
+           giveni={C\bibinitperiod}}}%
+        {{hash=0321fc01d48cb90f8b7c0758a2336181}{%
+           family={Lidofsky},
+           familyi={L\bibinitperiod},
+           given={L.},
+           giveni={L\bibinitperiod}}}%
+      }
+      \strng{namehash}{6c1316c193dff3ff0ed1601c2782e58a}
+      \strng{fullhash}{1bd1ad8805b02903b12c428ef45b6a44}
+      \strng{bibnamehash}{1bd1ad8805b02903b12c428ef45b6a44}
+      \strng{authorbibnamehash}{1bd1ad8805b02903b12c428ef45b6a44}
+      \strng{authornamehash}{6c1316c193dff3ff0ed1601c2782e58a}
+      \strng{authorfullhash}{1bd1ad8805b02903b12c428ef45b6a44}
+      \field{sortinit}{2}
+      \field{sortinithash}{ed39bb39cf854d5250e95b1c1f94f4ed}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{shorttitle}
+      \field{issn}{00942405}
+      \field{journaltitle}{Medical Physics}
+      \field{langid}{english}
+      \field{month}{1}
+      \field{number}{1}
+      \field{shortjournal}{Med. Phys.}
+      \field{shorttitle}{Differential pencil beam dose computation model for photons}
+      \field{title}{Differential pencil beam dose computation model for photons: Differential pencil beam computation for photons}
+      \field{urlday}{22}
+      \field{urlmonth}{6}
+      \field{urlyear}{2021}
+      \field{volume}{13}
+      \field{year}{1986}
+      \field{dateera}{ce}
+      \field{urldateera}{ce}
+      \field{pages}{64\bibrangedash 73}
+      \range{pages}{10}
+      \verb{doi}
+      \verb 10.1118/1.595924
+      \endverb
+      \verb{file}
+      \verb Mohan et al. - 1986 - Differential pencil beam dose computation model fo.pdf:/Users/simongutwein/Zotero/storage/MB6QBIAL/Mohan et al. - 1986 - Differential pencil beam dose computation model fo.pdf:application/pdf
+      \endverb
+      \verb{urlraw}
+      \verb http://doi.wiley.com/10.1118/1.595924
+      \endverb
+      \verb{url}
+      \verb http://doi.wiley.com/10.1118/1.595924
+      \endverb
+    \endentry
+    \entry{noauthor_nrc-cnrcegsnrc_2021}{software}{}
+      \list{publisher}{1}{%
+        {National Research Council Canada — Conseil national de recherches Canada}%
+      }
+      \field{sortinit}{2}
+      \field{sortinithash}{ed39bb39cf854d5250e95b1c1f94f4ed}
+      \field{labeltitlesource}{title}
+      \field{abstract}{{EGSnrc} toolkit for Monte Carlo simulation of ionizing radiation — Trousse d'outils logiciels pour la simulation Monte Carlo du rayonnement ionisant}
+      \field{day}{2}
+      \field{month}{11}
+      \field{note}{original-date: 2012-11-28T19:26:41Z}
+      \field{title}{nrc-cnrc/{EGSnrc}}
+      \field{urlday}{4}
+      \field{urlmonth}{11}
+      \field{urlyear}{2021}
+      \field{year}{2021}
+      \field{dateera}{ce}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://github.com/nrc-cnrc/EGSnrc
+      \endverb
+      \verb{url}
+      \verb https://github.com/nrc-cnrc/EGSnrc
+      \endverb
+      \keyw{dosimetry,egsnrc,ionizing-radiation,medical-physics,metrology,monte-carlo-simulation,radiation-therapy,radiation-transport}
+    \endentry
+    \entry{friedel_development_2019}{article}{}
+      \name{author}{5}{}{%
+        {{hash=c0ccc505b3de087f653b9369bbdf2f6e}{%
+           family={Friedel},
+           familyi={F\bibinitperiod},
+           given={M.},
+           giveni={M\bibinitperiod}}}%
+        {{hash=136e839c5610a9f3e76ba95e5a8ec1e4}{%
+           family={Nachbar},
+           familyi={N\bibinitperiod},
+           given={M.},
+           giveni={M\bibinitperiod}}}%
+        {{hash=4ab7e245274397508da51aaeff695105}{%
+           family={Mönnich},
+           familyi={M\bibinitperiod},
+           given={D.},
+           giveni={D\bibinitperiod}}}%
+        {{hash=6af3973da405bb5405cc81f0bbf00779}{%
+           family={Dohm},
+           familyi={D\bibinitperiod},
+           given={O.},
+           giveni={O\bibinitperiod}}}%
+        {{hash=92b18adc836e777b2f4766250b4a2892}{%
+           family={Thorwarth},
+           familyi={T\bibinitperiod},
+           given={D.},
+           giveni={D\bibinitperiod}}}%
+      }
+      \strng{namehash}{c272b5e44762e0671ae4b0a8c92b2c68}
+      \strng{fullhash}{e0ef55fe0dd3d09f5ef0dd5f64a90501}
+      \strng{bibnamehash}{e0ef55fe0dd3d09f5ef0dd5f64a90501}
+      \strng{authorbibnamehash}{e0ef55fe0dd3d09f5ef0dd5f64a90501}
+      \strng{authornamehash}{c272b5e44762e0671ae4b0a8c92b2c68}
+      \strng{authorfullhash}{e0ef55fe0dd3d09f5ef0dd5f64a90501}
+      \field{sortinit}{2}
+      \field{sortinithash}{ed39bb39cf854d5250e95b1c1f94f4ed}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{Purpose: To develop, implement, and validate a full 1.5 T/7 {MV} magnetic resonance ({MR})-Linac accelerator head and cryostat model in {EGSnrc} for high precision dose calculations accounting for magnetic field effects that are independent from the vendor treatment planning system. Methods: Primary electron beam parameters for the implemented model were adapted to be in accordance with measured dose profiles of the Elekta Unity (Elekta {AB}, Stockholm, Sweden). Parameters to be investigated were the mean electron energy as well as the Gaussian radial intensity and energy distributions. Energy tuning was done comparing depth dose profiles simulated with monoenergetic beams of varying energies to measurements. The optimum radial intensity distribution was found by varying the radial full width at half maximum ({FWHM}) and comparing simulated and measured lateral profiles. The influence of the energy distribution was investigated by comparing simulated lateral and depth dose profiles with varying energy spreads to measured data. Comparison of simulations and measurements was performed by calculating average and maximum local dose deviations. The model was validated recalculating a clinical intensity-modulated radiation therapy plan for the {MR}-Linac and comparing the resulting dose distribution with simulations from the commercial treatment planning system Monaco using the gamma criterion. Results: Comparison of simulated and measured data showed that the optimum initial electron beam for {MR}-Linac simulations was monoenergetic with an electron energy of (7.4 Æ 0.2) {MeV}. The optimum Gaussian radial intensity distribution has a {FWHM} of (2.2 Æ 0.3) mm. The average relative deviations were smaller than 1\% for all simulated profiles with optimum electron parameters, whereas the largest maximum deviation of 2.07\% was found for the 22 9 22 cm2 cross-plane profile. Profiles were insensitive to energy spread variations. The {IMRT} plan recalculated with the final {MR}-Linac model with optimized initial electron beam parameters showed a gamma pass rate of 99.83 \% using a gamma criterion of 3\%/3 mm. Conclusions: The {EGSnrc} {MR}-Linac model developed in this study showed good accordance with measurements and was successfully used to recalculate a first full clinical {IMRT} treatment plan. Thus, it shows the general possibility for future secondary dose calculations of full {IMRT} plans with {EGSnrc}, which needs further detailed investigations before clinical use. © 2019 The Authors. Medical Physics published by Wiley Periodicals, Inc. on behalf of American Association of Physicists in Medicine. [https://doi.org/10.1002/mp.13829]}
+      \field{issn}{0094-2405, 2473-4209}
+      \field{journaltitle}{Medical Physics}
+      \field{langid}{english}
+      \field{month}{11}
+      \field{number}{11}
+      \field{shortjournal}{Med. Phys.}
+      \field{title}{Development and validation of a 1.5 T {MR}‐Linac full accelerator head and cryostat model for Monte Carlo dose simulations}
+      \field{urlday}{16}
+      \field{urlmonth}{3}
+      \field{urlyear}{2021}
+      \field{volume}{46}
+      \field{year}{2019}
+      \field{dateera}{ce}
+      \field{urldateera}{ce}
+      \field{pages}{5304\bibrangedash 5313}
+      \range{pages}{10}
+      \verb{doi}
+      \verb 10.1002/mp.13829
+      \endverb
+      \verb{file}
+      \verb mp.13829.pdf:/Users/simongutwein/Downloads/mp.13829-2.pdf:application/pdf
+      \endverb
+      \verb{urlraw}
+      \verb https://onlinelibrary.wiley.com/doi/abs/10.1002/mp.13829
+      \endverb
+      \verb{url}
+      \verb https://onlinelibrary.wiley.com/doi/abs/10.1002/mp.13829
+      \endverb
+    \endentry
+    \entry{neishabouri_long_2021}{article}{}
+      \name{author}{5}{}{%
+        {{hash=0902af2713ef21e42faa9b1574137984}{%
+           family={Neishabouri},
+           familyi={N\bibinitperiod},
+           given={Ahmad},
+           giveni={A\bibinitperiod}}}%
+        {{hash=e9b4915afc4f05230f3f3c4ab205e5f6}{%
+           family={Wahl},
+           familyi={W\bibinitperiod},
+           given={Niklas},
+           giveni={N\bibinitperiod}}}%
+        {{hash=0f8d52babaeb84ef534c90b7b30307ff}{%
+           family={Mairani},
+           familyi={M\bibinitperiod},
+           given={Andrea},
+           giveni={A\bibinitperiod}}}%
+        {{hash=0dd1d3f7acb8053593402a08d07e455b}{%
+           family={Köthe},
+           familyi={K\bibinitperiod},
+           given={Ullrich},
+           giveni={U\bibinitperiod}}}%
+        {{hash=cb91aaf0dcf007e4fab47d79d0e8b52c}{%
+           family={Bangert},
+           familyi={B\bibinitperiod},
+           given={Mark},
+           giveni={M\bibinitperiod}}}%
+      }
+      \strng{namehash}{06bf7dde2b92b85f6c51836847908c7f}
+      \strng{fullhash}{9f23eab9aaa06715a0e66453b73c0f63}
+      \strng{bibnamehash}{9f23eab9aaa06715a0e66453b73c0f63}
+      \strng{authorbibnamehash}{9f23eab9aaa06715a0e66453b73c0f63}
+      \strng{authornamehash}{06bf7dde2b92b85f6c51836847908c7f}
+      \strng{authorfullhash}{9f23eab9aaa06715a0e66453b73c0f63}
+      \field{extraname}{1}
+      \field{sortinit}{2}
+      \field{sortinithash}{ed39bb39cf854d5250e95b1c1f94f4ed}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{A novel dose calculation approach was designed based on the application of {LSTM} network that processes the 3D patient/phantom geometry as a sequence of 2D computed tomography input slices yielding a corresponding sequence of 2D slices that forms the respective 3D dose distribution. {LSTM} networks can propagate information effectively in one direction, resulting in a model that can properly imitate the mechanisms of proton interaction in matter. The study is centered on predicting dose on a single pencil beam level, avoiding the averaging effects in treatment plans comprised of thousands pencil beams. Moreover, such approach allows straightforward integration into today’s treatment planning systems’ inverse planning optimization process. The ground truth training data was prepared with Monte Carlo simulations for both phantom and patient studies by simulating different pencil beams impinging from random gantry angles through the patient geometry. For model training, 10’000 Monte Carlo simulations were prepared for the phantom study, and 4’000 simulations were prepared for the patient study. The trained {LSTM} model was able to achieve a 99.29 \% gamma-index pass rate ([0.5\%, 1 mm]) accuracy on the set-aside test set for the phantom study, and a 99.33 \% gamma-index pass rate ([0.5\%, 2 mm]) for the set-aside test set for the patient study. These results were achieved for each pencil beam in 6-23 ms. The average Monte Carlo simulation run-time using Topas was 1160 s. The generalization of the model was veriﬁed by testing for 5 previously unseen lung cancer patients. {LSTM} networks are well suited for proton therapy dose calculation tasks. However, further work needs to be performed to generalize the proposed approach to clinical applications, primarily to be implemented for various energies, patient sites, and {CT} resolutions/scanners.}
+      \field{day}{11}
+      \field{issn}{0094-2405, 2473-4209}
+      \field{journaltitle}{Medical Physics}
+      \field{langid}{english}
+      \field{month}{3}
+      \field{shortjournal}{Med. Phys.}
+      \field{title}{Long short‐term memory networks for proton dose calculation in highly heterogeneous tissues}
+      \field{urlday}{16}
+      \field{urlmonth}{3}
+      \field{urlyear}{2021}
+      \field{year}{2021}
+      \field{dateera}{ce}
+      \field{urldateera}{ce}
+      \field{pages}{mp.14658}
+      \range{pages}{-1}
+      \verb{doi}
+      \verb 10.1002/mp.14658
+      \endverb
+      \verb{file}
+      \verb Neishabouri_DKFZ_manuscript_2020.pdf:/Users/simongutwein/Studium/Masterarbeit/Paper/Neishabouri_DKFZ_manuscript_2020.pdf:application/pdf
+      \endverb
+      \verb{urlraw}
+      \verb https://onlinelibrary.wiley.com/doi/10.1002/mp.14658
+      \endverb
+      \verb{url}
+      \verb https://onlinelibrary.wiley.com/doi/10.1002/mp.14658
+      \endverb
+    \endentry
+    \entry{de_bruijne_high-particle_2021}{incollection}{}
+      \name{author}{6}{}{%
+        {{hash=dc4c46588aa2b92847a68eb09f6c6824}{%
+           family={Martinot},
+           familyi={M\bibinitperiod},
+           given={Sonia},
+           giveni={S\bibinitperiod}}}%
+        {{hash=6cd6ae54ee5afade3742c498e06ba011}{%
+           family={Bus},
+           familyi={B\bibinitperiod},
+           given={Norbert},
+           giveni={N\bibinitperiod}}}%
+        {{hash=aec756bc8eafb6c5206b1ccea6a900e1}{%
+           family={Vakalopoulou},
+           familyi={V\bibinitperiod},
+           given={Maria},
+           giveni={M\bibinitperiod}}}%
+        {{hash=3956fced5e85b892872d8c75681e14a9}{%
+           family={Robert},
+           familyi={R\bibinitperiod},
+           given={Charlotte},
+           giveni={C\bibinitperiod}}}%
+        {{hash=5a144fb4514274d33088992be259a766}{%
+           family={Deutsch},
+           familyi={D\bibinitperiod},
+           given={Eric},
+           giveni={E\bibinitperiod}}}%
+        {{hash=8392955ddce1cfbdf31363a688094e1e}{%
+           family={Paragios},
+           familyi={P\bibinitperiod},
+           given={Nikos},
+           giveni={N\bibinitperiod}}}%
+      }
+      \name{editor}{7}{}{%
+        {{hash=d25cceb35249f03c8ee9a84eed0ca79a}{%
+           family={Bruijne},
+           familyi={B\bibinitperiod},
+           given={Marleen},
+           giveni={M\bibinitperiod},
+           prefix={de},
+           prefixi={d\bibinitperiod}}}%
+        {{hash=117f195f225495ceecffc2ac02636336}{%
+           family={Cattin},
+           familyi={C\bibinitperiod},
+           given={Philippe\bibnamedelima C.},
+           giveni={P\bibinitperiod\bibinitdelim C\bibinitperiod}}}%
+        {{hash=483e7500a60d0e80350944be0201a2f7}{%
+           family={Cotin},
+           familyi={C\bibinitperiod},
+           given={Stéphane},
+           giveni={S\bibinitperiod}}}%
+        {{hash=f600d46e05cbdb4b85dcb95d039ce4f9}{%
+           family={Padoy},
+           familyi={P\bibinitperiod},
+           given={Nicolas},
+           giveni={N\bibinitperiod}}}%
+        {{hash=4e47ca3028a0a7df8211f419903005f3}{%
+           family={Speidel},
+           familyi={S\bibinitperiod},
+           given={Stefanie},
+           giveni={S\bibinitperiod}}}%
+        {{hash=828d9baf956fa25bba9fb1a2dc3ab299}{%
+           family={Zheng},
+           familyi={Z\bibinitperiod},
+           given={Yefeng},
+           giveni={Y\bibinitperiod}}}%
+        {{hash=4470b51212e02d6d9992bacd48ee75df}{%
+           family={Essert},
+           familyi={E\bibinitperiod},
+           given={Caroline},
+           giveni={C\bibinitperiod}}}%
+      }
+      \list{location}{1}{%
+        {Cham}%
+      }
+      \list{publisher}{1}{%
+        {Springer International Publishing}%
+      }
+      \strng{namehash}{083f43dd06ff6ca2a9d409b78b66bc71}
+      \strng{fullhash}{94c79942acb032357cd868f8b3b4c4c9}
+      \strng{bibnamehash}{94c79942acb032357cd868f8b3b4c4c9}
+      \strng{authorbibnamehash}{94c79942acb032357cd868f8b3b4c4c9}
+      \strng{authornamehash}{083f43dd06ff6ca2a9d409b78b66bc71}
+      \strng{authorfullhash}{94c79942acb032357cd868f8b3b4c4c9}
+      \strng{editorbibnamehash}{81f1f44f81d3c2e6fb5f0aa50efb7373}
+      \strng{editornamehash}{4f110dd29368d845106692a13451e731}
+      \strng{editorfullhash}{81f1f44f81d3c2e6fb5f0aa50efb7373}
+      \field{sortinit}{2}
+      \field{sortinithash}{ed39bb39cf854d5250e95b1c1f94f4ed}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{Monte-Carlo simulation of radiotherapy dose remains an extremely time-consuming task, despite being still the most precise tool for radiation transport calculation. To circumvent this issue, deep learning oﬀers promising avenues. In this paper, we extend {ConvLSTM} to handle 3D data and introduce a 3D recurrent and fully convolutional neural network architecture. Our model’s purpose is to infer a computationally expensive Monte Carlo dose calculation result for {VMAT} plans with a high number of particles from a sequence of simulations with a low number of particles. We benchmark our framework against other learning methods commonly used for denoising and other medical tasks. Our model outperforms the other methods with regards to several evaluation metrics used to assess the clinical viability of the predictions. Code is available at https://git.io/{JcbxD}.}
+      \field{booktitle}{Medical Image Computing and Computer Assisted Intervention – {MICCAI} 2021}
+      \field{isbn}{978-3-030-87201-4 978-3-030-87202-1}
+      \field{langid}{english}
+      \field{note}{Series Title: Lecture Notes in Computer Science}
+      \field{title}{High-Particle Simulation of Monte-Carlo Dose Distribution with 3D {ConvLSTMs}}
+      \field{urlday}{20}
+      \field{urlmonth}{11}
+      \field{urlyear}{2021}
+      \field{volume}{12904}
+      \field{year}{2021}
+      \field{dateera}{ce}
+      \field{urldateera}{ce}
+      \field{pages}{499\bibrangedash 508}
+      \range{pages}{10}
+      \verb{doi}
+      \verb 10.1007/978-3-030-87202-1_48
+      \endverb
+      \verb{file}
+      \verb Martinot et al. - 2021 - High-Particle Simulation of Monte-Carlo Dose Distr.pdf:/Users/simongutwein/Zotero/storage/XJT6DL4P/Martinot et al. - 2021 - High-Particle Simulation of Monte-Carlo Dose Distr.pdf:application/pdf
+      \endverb
+      \verb{urlraw}
+      \verb https://link.springer.com/10.1007/978-3-030-87202-1_48
+      \endverb
+      \verb{url}
+      \verb https://link.springer.com/10.1007/978-3-030-87202-1_48
+      \endverb
+    \endentry
+    \entry{neph_deepmcdose_2019}{article}{}
+      \name{author}{4}{}{%
+        {{hash=7fc33ce32d4760562b2a4cf2cf87c928}{%
+           family={Neph},
+           familyi={N\bibinitperiod},
+           given={Ryan},
+           giveni={R\bibinitperiod}}}%
+        {{hash=b09665f2d86b894e561d30d65478cb84}{%
+           family={Huang},
+           familyi={H\bibinitperiod},
+           given={Yangsibo},
+           giveni={Y\bibinitperiod}}}%
+        {{hash=838265e60ff1ec44eb82431dce5cf8be}{%
+           family={Yang},
+           familyi={Y\bibinitperiod},
+           given={Youming},
+           giveni={Y\bibinitperiod}}}%
+        {{hash=e631bb82c3de82c208edc55258ff03d8}{%
+           family={Sheng},
+           familyi={S\bibinitperiod},
+           given={Ke},
+           giveni={K\bibinitperiod}}}%
+      }
+      \strng{namehash}{1b13c108c366c2445cdf8f5dd74163d2}
+      \strng{fullhash}{ed5fd2ec0af9af8c9a0790183ebfee60}
+      \strng{bibnamehash}{ed5fd2ec0af9af8c9a0790183ebfee60}
+      \strng{authorbibnamehash}{ed5fd2ec0af9af8c9a0790183ebfee60}
+      \strng{authornamehash}{1b13c108c366c2445cdf8f5dd74163d2}
+      \strng{authorfullhash}{ed5fd2ec0af9af8c9a0790183ebfee60}
+      \field{sortinit}{2}
+      \field{sortinithash}{ed39bb39cf854d5250e95b1c1f94f4ed}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{shorttitle}
+      \field{abstract}{The next great leap toward improving treatment of cancer with radiation will require the combined use of online adaptive and magnetic resonance guided radiation therapy techniques with automatic X-ray beam orientation selection. Unfortunately, by uniting these advancements, we are met with a substantial expansion in the required dose information and consequential increase to the overall computational time imposed during radiation treatment planning, which cannot be handled by existing techniques for accelerating Monte Carlo dose calculation. We propose a deep convolutional neural network approach that unlocks new levels of acceleration and accuracy with regards to post-processed Monte Carlo dose results by relying on data-driven learned representations of low-level beamlet dose distributions instead of more limited filter-based denoising techniques that only utilize the information in a single dose input. Our method uses parallel {UNET} branches acting on three input channels before mixing latent understanding to produce noise-free dose predictions. Our model achieves a normalized mean absolute error of only 0.106\% compared with the ground truth dose contrasting the 25.7\% error of the under sampled {MC} dose fed into the network at prediction time. Our model's per-beamlet prediction time is {\textasciitilde}220ms, including Monte Carlo simulation and network prediction, with substantial additional acceleration expected from batched processing and combination with existing Monte Carlo acceleration techniques. Our method shows promise toward enabling clinical practice of advanced treatment technologies.}
+      \field{day}{12}
+      \field{eprinttype}{arxiv}
+      \field{journaltitle}{{arXiv}:1908.04437 [physics]}
+      \field{month}{8}
+      \field{shorttitle}{{DeepMCDose}}
+      \field{title}{{DeepMCDose}: A Deep Learning Method for Efficient Monte Carlo Beamlet Dose Calculation by Predictive Denoising in {MR}-Guided Radiotherapy}
+      \field{urlday}{2}
+      \field{urlmonth}{8}
+      \field{urlyear}{2021}
+      \field{year}{2019}
+      \field{dateera}{ce}
+      \field{urldateera}{ce}
+      \verb{eprint}
+      \verb 1908.04437
+      \endverb
+      \verb{file}
+      \verb arXiv Fulltext PDF:/Users/simongutwein/Zotero/storage/4EZH6DJ3/Neph et al. - 2019 - DeepMCDose A Deep Learning Method for Efficient M.pdf:application/pdf
+      \endverb
+      \verb{urlraw}
+      \verb http://arxiv.org/abs/1908.04437
+      \endverb
+      \verb{url}
+      \verb http://arxiv.org/abs/1908.04437
+      \endverb
+      \keyw{Physics - Medical Physics}
+    \endentry
+    \entry{fan_data-driven_2020}{article}{}
+      \name{author}{6}{}{%
+        {{hash=149aaa22326fbf2cf55ae56706bfeebe}{%
+           family={Fan},
+           familyi={F\bibinitperiod},
+           given={Jiawei},
+           giveni={J\bibinitperiod}}}%
+        {{hash=e0b7e525a0d93bb4b5b20e01c39282b6}{%
+           family={Xing},
+           familyi={X\bibinitperiod},
+           given={Lei},
+           giveni={L\bibinitperiod}}}%
+        {{hash=04ae0e2d50542487a8771e46bf81b469}{%
+           family={Dong},
+           familyi={D\bibinitperiod},
+           given={Peng},
+           giveni={P\bibinitperiod}}}%
+        {{hash=d883fada7d4cbfd3192187ba8373f64f}{%
+           family={Wang},
+           familyi={W\bibinitperiod},
+           given={Jiazhou},
+           giveni={J\bibinitperiod}}}%
+        {{hash=19c113d66fd6adf04d0c1c0b2c47f16f}{%
+           family={Hu},
+           familyi={H\bibinitperiod},
+           given={Weigang},
+           giveni={W\bibinitperiod}}}%
+        {{hash=5dbbb31c2945ea251715203ea00da154}{%
+           family={Yang},
+           familyi={Y\bibinitperiod},
+           given={Yong},
+           giveni={Y\bibinitperiod}}}%
+      }
+      \strng{namehash}{4955de1e77f6f66e43e4b32785da91ea}
+      \strng{fullhash}{0f3a66adc761a7bb8475c10607b4f8aa}
+      \strng{bibnamehash}{0f3a66adc761a7bb8475c10607b4f8aa}
+      \strng{authorbibnamehash}{0f3a66adc761a7bb8475c10607b4f8aa}
+      \strng{authornamehash}{4955de1e77f6f66e43e4b32785da91ea}
+      \strng{authorfullhash}{0f3a66adc761a7bb8475c10607b4f8aa}
+      \field{extraname}{2}
+      \field{sortinit}{3}
+      \field{sortinithash}{a37a8ef248a93c322189792c34fc68c9}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{Accurate and efficient dose calculation is an important prerequisite to ensure the success of radiation therapy. However, all the dose calculation algorithms commonly used in current clinical practice have to compromise between calculation accuracy and efficiency, which may result in unsatisfactory dose accuracy or highly intensive computation time in many clinical situations. The purpose of this work is to develop a novel dose calculation algorithm based on the deep learning method for radiation therapy. In this study we performed a feasibility investigation on implementing a fast and accurate dose calculation based on a deep learning technique. A two-dimensional (2D) fluence map was first converted into a three-dimensional (3D) volume using ray traversal algorithm. 3D U-Net like deep residual network was then established to learn a mapping between this converted 3D volume, {CT} and 3D dose distribution. Therefore an indirect relationship was built between a fluence map and its corresponding 3D dose distribution without using significantly complex neural networks. Two hundred patients, including nasopharyngeal, lung, rectum and breast cancer cases, were collected and applied to train the proposed network. Additional 47 patients were randomly selected to evaluate the accuracy of the proposed method through comparing dose distributions, dose volume histograms and clinical indices with the results from a treatment planning system ({TPS}), which was used as the ground truth in this study. The proposed deep learning based dose calculation algorithm achieved good predictive performance. For 47 tested patients, the average per-voxel bias of the deep learning calculated value and standard deviation (normalized to the prescription), relative to the {TPS} calculation, is 0.17\%±2.28\%. The average deep learning calculated values and standard deviations for relevant clinical indices were compared with the {TPS} calculated results and the t-test p-values demonstrated the consistency between them. In this study we developed a new deep learning based dose calculation method. This approach was evaluated by the clinical cases with different sites. Our results demonstrated its feasibility and reliability and indicated its great potential to improve the efficiency and accuracy of radiation dose calculation for different treatment modalities.}
+      \field{day}{22}
+      \field{issn}{0031-9155}
+      \field{journaltitle}{Physics in medicine and biology}
+      \field{month}{12}
+      \field{number}{24}
+      \field{shortjournal}{Phys Med Biol}
+      \field{title}{Data-driven dose calculation algorithm based on deep U-Net}
+      \field{urlday}{20}
+      \field{urlmonth}{11}
+      \field{urlyear}{2021}
+      \field{volume}{65}
+      \field{year}{2020}
+      \field{dateera}{ce}
+      \field{urldateera}{ce}
+      \field{pages}{245035}
+      \range{pages}{1}
+      \verb{doi}
+      \verb 10.1088/1361-6560/abca05
+      \endverb
+      \verb{file}
+      \verb PubMed Central Full Text PDF:/Users/simongutwein/Zotero/storage/G7AKBG7B/Fan et al. - 2020 - Data-driven dose calculation algorithm based on de.pdf:application/pdf
+      \endverb
+      \verb{urlraw}
+      \verb https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7870566/
+      \endverb
+      \verb{url}
+      \verb https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7870566/
+      \endverb
+    \endentry
+    \entry{kontaxis_deepdose_2020}{article}{}
+      \name{author}{4}{}{%
+        {{hash=fc6f1bd44b9c5cc30f61706d94f0c9b0}{%
+           family={Kontaxis},
+           familyi={K\bibinitperiod},
+           given={C.},
+           giveni={C\bibinitperiod}}}%
+        {{hash=eb1eed459138f9d1c45d90ddf869dcd0}{%
+           family={Bol},
+           familyi={B\bibinitperiod},
+           given={G.\bibnamedelimi H.},
+           giveni={G\bibinitperiod\bibinitdelim H\bibinitperiod}}}%
+        {{hash=eca20aed532cf31d426f0a745e899622}{%
+           family={Lagendijk},
+           familyi={L\bibinitperiod},
+           given={J.\bibnamedelimi J.\bibnamedelimi W.},
+           giveni={J\bibinitperiod\bibinitdelim J\bibinitperiod\bibinitdelim W\bibinitperiod}}}%
+        {{hash=748ea44dd505886b2b7bccf3de24decf}{%
+           family={Raaymakers},
+           familyi={R\bibinitperiod},
+           given={B.\bibnamedelimi W.},
+           giveni={B\bibinitperiod\bibinitdelim W\bibinitperiod}}}%
+      }
+      \strng{namehash}{c27060f5a3cdef96bb29dc58b200362f}
+      \strng{fullhash}{b8857ea61be559c60d02a03afb02db7f}
+      \strng{bibnamehash}{b8857ea61be559c60d02a03afb02db7f}
+      \strng{authorbibnamehash}{b8857ea61be559c60d02a03afb02db7f}
+      \strng{authornamehash}{c27060f5a3cdef96bb29dc58b200362f}
+      \strng{authorfullhash}{b8857ea61be559c60d02a03afb02db7f}
+      \field{sortinit}{3}
+      \field{sortinithash}{a37a8ef248a93c322189792c34fc68c9}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{shorttitle}
+      \field{abstract}{We present {DeepDose}, a deep learning framework for fast dose calculations in radiation therapy. Given a patient anatomy and linear-accelerator {IMRT} multi-leaf-collimator shape or segment, a novel set of physics-based inputs is calculated that encode the linac machine parameters into the underlying anatomy. These inputs are then used to train a deep convolutional network to derive the dose distribution of individual {MLC} shapes on a given patient anatomy. In this work we demonstrate the proof-of-concept application of {DeepDose} on 101 prostate patients treated in our clinic with fixed-beam {IMRT}. The ground-truth data used for training, validation and testing of the prediction were calculated with a state-of-the-art Monte Carlo dose engine at 1\% statistical uncertainty per segment. A deep convolution network was trained using the data of 80 patients at the clinically used 3 mm3 grid spacing while 10 patients were used for validation. For another 11 independent test patients, the network was able to accurately estimate the segment doses from the clinical plans of each patient passing the clinical {QA} when compared with the Monte Carlo calculations, yielding on average 99.9\%±0.3\% for the forward calculated patient plans at 3\%/3 mm gamma tests. Dose prediction using the trained network was very fast at approximately 0.9 seconds for the input generation and 0.6 seconds for single {GPU} inference per segment and 1 minute per patient in total. The overall performance of this dose calculation framework in terms of both accuracy and inference speed, makes it compelling for online adaptive workflows where fast segment dose calculations are needed.}
+      \field{issn}{0031-9155}
+      \field{journaltitle}{Physics in Medicine \& Biology}
+      \field{langid}{english}
+      \field{month}{4}
+      \field{note}{Publisher: {IOP} Publishing}
+      \field{number}{7}
+      \field{shortjournal}{Phys. Med. Biol.}
+      \field{shorttitle}{{DeepDose}}
+      \field{title}{{DeepDose}: Towards a fast dose calculation engine for radiation therapy using deep learning}
+      \field{urlday}{23}
+      \field{urlmonth}{8}
+      \field{urlyear}{2021}
+      \field{volume}{65}
+      \field{year}{2020}
+      \field{dateera}{ce}
+      \field{urldateera}{ce}
+      \field{pages}{075013}
+      \range{pages}{1}
+      \verb{doi}
+      \verb 10.1088/1361-6560/ab7630
+      \endverb
+      \verb{file}
+      \verb IOP Full Text PDF:/Users/simongutwein/Zotero/storage/4MP5RNH9/Kontaxis et al. - 2020 - DeepDose Towards a fast dose calculation engine f.pdf:application/pdf
+      \endverb
+      \verb{urlraw}
+      \verb https://doi.org/10.1088/1361-6560/ab7630
+      \endverb
+      \verb{url}
+      \verb https://doi.org/10.1088/1361-6560/ab7630
+      \endverb
+    \endentry
     \entry{ronneberger_u-net_2015-1}{article}{}
       \name{author}{3}{}{%
         {{hash=8e46da9de9e53ea5d37089897d69cdd9}{%
@@ -2390,8 +3722,8 @@
       \strng{authorbibnamehash}{f23ccc5160c62c7866172335b2c76e11}
       \strng{authornamehash}{9a497128db448eba9bbb6e27b1ed57ed}
       \strng{authorfullhash}{f23ccc5160c62c7866172335b2c76e11}
-      \field{sortinit}{1}
-      \field{sortinithash}{50c6687d7fc80f50136d75228e3c59ba}
+      \field{sortinit}{3}
+      \field{sortinithash}{a37a8ef248a93c322189792c34fc68c9}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{shorttitle}
       \field{abstract}{There is large consent that successful training of deep networks requires many thousand annotated training samples. In this paper, we present a network and training strategy that relies on the strong use of data augmentation to use the available annotated samples more eﬃciently. The architecture consists of a contracting path to capture context and a symmetric expanding path that enables precise localization. We show that such a network can be trained end-to-end from very few images and outperforms the prior best method (a sliding-window convolutional network) on the {ISBI} challenge for segmentation of neuronal structures in electron microscopic stacks. Using the same network trained on transmitted light microscopy images (phase contrast and {DIC}) we won the {ISBI} cell tracking challenge 2015 in these categories by a large margin. Moreover, the network is fast. Segmentation of a 512x512 image takes less than a second on a recent {GPU}. The full implementation (based on Caﬀe) and the trained networks are available at http://lmb.informatik.uni-freiburg.de/people/ronneber/u-net.}
@@ -2446,8 +3778,8 @@
       \strng{authorbibnamehash}{d7e5e689e2c2635c84d8599e8bdb2c4a}
       \strng{authornamehash}{c0bafefa03754d12f0c5ce9f61ab0c50}
       \strng{authorfullhash}{d7e5e689e2c2635c84d8599e8bdb2c4a}
-      \field{sortinit}{1}
-      \field{sortinithash}{50c6687d7fc80f50136d75228e3c59ba}
+      \field{sortinit}{3}
+      \field{sortinithash}{a37a8ef248a93c322189792c34fc68c9}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{shorttitle}
       \field{abstract}{Background and objective: Processing of medical images such as {MRI} or {CT} presents different challenges compared to {RGB} images typically used in computer vision. These include a lack of labels for large datasets, high computational costs, and the need of metadata to describe the physical properties of voxels. Data augmentation is used to artiﬁcially increase the size of the training datasets. Training with image subvolumes or patches decreases the need for computational power. Spatial metadata needs to be carefully taken into account in order to ensure a correct alignment and orientation of volumes. Methods: We present {TorchIO}, an open-source Python library to enable eﬃcient loading, preprocessing, augmentation and patch-based sampling of medical images for deep learning. {TorchIO} follows the style of {PyTorch} and integrates standard medical image processing libraries to eﬃciently process images during training of neural networks. {TorchIO} transforms can be easily composed, reproduced, traced and extended. Most transforms can be inverted, making the library suitable for test-time augmentation and estimation of aleatoric uncertainty in the context of segmentation. We provide multiple generic preprocessing and augmentation operations as well as simulation of {MRI}-speciﬁc artifacts. Results: Source code, comprehensive tutorials and extensive documentation for {TorchIO} can be found at http://torchio.rtfd.io/. The package can be installed from the Python Package Index ({PyPI}) running pip install torchio. It includes a command-line interface which allows users to apply transforms to image ﬁles without using Python. Additionally, we provide a graphical user interface within a {TorchIO} extension in 3D Slicer to visualize the effects of transforms. Conclusion: {TorchIO} was developed to help researchers standardize medical image processing pipelines and allow them to focus on the deep learning experiments. It encourages good open-science practices, as it supports experiment reproducibility and is version-controlled so that the software can be cited precisely. Due to its modularity, the library is compatible with other frameworks for deep learning with medical images.}
@@ -2480,100 +3812,6 @@
       \verb https://linkinghub.elsevier.com/retrieve/pii/S0169260721003102
       \endverb
     \endentry
-    \entry{noauthor_nrc-cnrcegsnrc_2021}{software}{}
-      \list{publisher}{1}{%
-        {National Research Council Canada — Conseil national de recherches Canada}%
-      }
-      \field{sortinit}{1}
-      \field{sortinithash}{50c6687d7fc80f50136d75228e3c59ba}
-      \field{labeltitlesource}{title}
-      \field{abstract}{{EGSnrc} toolkit for Monte Carlo simulation of ionizing radiation — Trousse d'outils logiciels pour la simulation Monte Carlo du rayonnement ionisant}
-      \field{day}{7}
-      \field{month}{8}
-      \field{note}{original-date: 2012-11-28T19:26:41Z}
-      \field{title}{nrc-cnrc/{EGSnrc}}
-      \field{urlday}{17}
-      \field{urlmonth}{8}
-      \field{urlyear}{2021}
-      \field{year}{2021}
-      \field{dateera}{ce}
-      \field{urldateera}{ce}
-      \verb{urlraw}
-      \verb https://github.com/nrc-cnrc/EGSnrc
-      \endverb
-      \verb{url}
-      \verb https://github.com/nrc-cnrc/EGSnrc
-      \endverb
-      \keyw{dosimetry,egsnrc,ionizing-radiation,medical-physics,metrology,monte-carlo-simulation,radiation-therapy,radiation-transport}
-    \endentry
-    \entry{friedel_development_2019}{article}{}
-      \name{author}{5}{}{%
-        {{hash=c0ccc505b3de087f653b9369bbdf2f6e}{%
-           family={Friedel},
-           familyi={F\bibinitperiod},
-           given={M.},
-           giveni={M\bibinitperiod}}}%
-        {{hash=136e839c5610a9f3e76ba95e5a8ec1e4}{%
-           family={Nachbar},
-           familyi={N\bibinitperiod},
-           given={M.},
-           giveni={M\bibinitperiod}}}%
-        {{hash=4ab7e245274397508da51aaeff695105}{%
-           family={Mönnich},
-           familyi={M\bibinitperiod},
-           given={D.},
-           giveni={D\bibinitperiod}}}%
-        {{hash=6af3973da405bb5405cc81f0bbf00779}{%
-           family={Dohm},
-           familyi={D\bibinitperiod},
-           given={O.},
-           giveni={O\bibinitperiod}}}%
-        {{hash=92b18adc836e777b2f4766250b4a2892}{%
-           family={Thorwarth},
-           familyi={T\bibinitperiod},
-           given={D.},
-           giveni={D\bibinitperiod}}}%
-      }
-      \strng{namehash}{c272b5e44762e0671ae4b0a8c92b2c68}
-      \strng{fullhash}{e0ef55fe0dd3d09f5ef0dd5f64a90501}
-      \strng{bibnamehash}{e0ef55fe0dd3d09f5ef0dd5f64a90501}
-      \strng{authorbibnamehash}{e0ef55fe0dd3d09f5ef0dd5f64a90501}
-      \strng{authornamehash}{c272b5e44762e0671ae4b0a8c92b2c68}
-      \strng{authorfullhash}{e0ef55fe0dd3d09f5ef0dd5f64a90501}
-      \field{sortinit}{1}
-      \field{sortinithash}{50c6687d7fc80f50136d75228e3c59ba}
-      \field{labelnamesource}{author}
-      \field{labeltitlesource}{title}
-      \field{abstract}{Purpose: To develop, implement, and validate a full 1.5 T/7 {MV} magnetic resonance ({MR})-Linac accelerator head and cryostat model in {EGSnrc} for high precision dose calculations accounting for magnetic field effects that are independent from the vendor treatment planning system. Methods: Primary electron beam parameters for the implemented model were adapted to be in accordance with measured dose profiles of the Elekta Unity (Elekta {AB}, Stockholm, Sweden). Parameters to be investigated were the mean electron energy as well as the Gaussian radial intensity and energy distributions. Energy tuning was done comparing depth dose profiles simulated with monoenergetic beams of varying energies to measurements. The optimum radial intensity distribution was found by varying the radial full width at half maximum ({FWHM}) and comparing simulated and measured lateral profiles. The influence of the energy distribution was investigated by comparing simulated lateral and depth dose profiles with varying energy spreads to measured data. Comparison of simulations and measurements was performed by calculating average and maximum local dose deviations. The model was validated recalculating a clinical intensity-modulated radiation therapy plan for the {MR}-Linac and comparing the resulting dose distribution with simulations from the commercial treatment planning system Monaco using the gamma criterion. Results: Comparison of simulated and measured data showed that the optimum initial electron beam for {MR}-Linac simulations was monoenergetic with an electron energy of (7.4 Æ 0.2) {MeV}. The optimum Gaussian radial intensity distribution has a {FWHM} of (2.2 Æ 0.3) mm. The average relative deviations were smaller than 1\% for all simulated profiles with optimum electron parameters, whereas the largest maximum deviation of 2.07\% was found for the 22 9 22 cm2 cross-plane profile. Profiles were insensitive to energy spread variations. The {IMRT} plan recalculated with the final {MR}-Linac model with optimized initial electron beam parameters showed a gamma pass rate of 99.83 \% using a gamma criterion of 3\%/3 mm. Conclusions: The {EGSnrc} {MR}-Linac model developed in this study showed good accordance with measurements and was successfully used to recalculate a first full clinical {IMRT} treatment plan. Thus, it shows the general possibility for future secondary dose calculations of full {IMRT} plans with {EGSnrc}, which needs further detailed investigations before clinical use. © 2019 The Authors. Medical Physics published by Wiley Periodicals, Inc. on behalf of American Association of Physicists in Medicine. [https://doi.org/10.1002/mp.13829]}
-      \field{issn}{0094-2405, 2473-4209}
-      \field{journaltitle}{Medical Physics}
-      \field{langid}{english}
-      \field{month}{11}
-      \field{number}{11}
-      \field{shortjournal}{Med. Phys.}
-      \field{title}{Development and validation of a 1.5 T {MR}‐Linac full accelerator head and cryostat model for Monte Carlo dose simulations}
-      \field{urlday}{16}
-      \field{urlmonth}{3}
-      \field{urlyear}{2021}
-      \field{volume}{46}
-      \field{year}{2019}
-      \field{dateera}{ce}
-      \field{urldateera}{ce}
-      \field{pages}{5304\bibrangedash 5313}
-      \range{pages}{10}
-      \verb{doi}
-      \verb 10.1002/mp.13829
-      \endverb
-      \verb{file}
-      \verb mp.13829.pdf:/Users/simongutwein/Studium/Masterarbeit/Paper/mp.13829.pdf:application/pdf
-      \endverb
-      \verb{urlraw}
-      \verb https://onlinelibrary.wiley.com/doi/abs/10.1002/mp.13829
-      \endverb
-      \verb{url}
-      \verb https://onlinelibrary.wiley.com/doi/abs/10.1002/mp.13829
-      \endverb
-    \endentry
     \entry{low_technique_1998}{article}{}
       \name{author}{4}{}{%
         {{hash=acf0cad0360d6a2e994312cff7dc4ba5}{%
@@ -2603,8 +3841,8 @@
       \strng{authorbibnamehash}{24093fee48a0575795db62085d865848}
       \strng{authornamehash}{5b0615feb2f88ed8cef6691282e05e4c}
       \strng{authorfullhash}{24093fee48a0575795db62085d865848}
-      \field{sortinit}{1}
-      \field{sortinithash}{50c6687d7fc80f50136d75228e3c59ba}
+      \field{sortinit}{4}
+      \field{sortinithash}{e071e0bcb44634fab398d68ad04e69f4}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{issn}{00942405}
@@ -2635,6 +3873,67 @@
       \verb{url}
       \verb http://doi.wiley.com/10.1118/1.598248
       \endverb
+    \endentry
+    \entry{neishabouri_long_2020}{article}{}
+      \name{author}{4}{}{%
+        {{hash=0902af2713ef21e42faa9b1574137984}{%
+           family={Neishabouri},
+           familyi={N\bibinitperiod},
+           given={Ahmad},
+           giveni={A\bibinitperiod}}}%
+        {{hash=e9b4915afc4f05230f3f3c4ab205e5f6}{%
+           family={Wahl},
+           familyi={W\bibinitperiod},
+           given={Niklas},
+           giveni={N\bibinitperiod}}}%
+        {{hash=a35a22a3fc3485f65bb57a9da6372917}{%
+           family={Köthe},
+           familyi={K\bibinitperiod},
+           given={Ulrich},
+           giveni={U\bibinitperiod}}}%
+        {{hash=cb91aaf0dcf007e4fab47d79d0e8b52c}{%
+           family={Bangert},
+           familyi={B\bibinitperiod},
+           given={Mark},
+           giveni={M\bibinitperiod}}}%
+      }
+      \strng{namehash}{06bf7dde2b92b85f6c51836847908c7f}
+      \strng{fullhash}{c7b208f6ff58267c43ebab0d11673012}
+      \strng{bibnamehash}{c7b208f6ff58267c43ebab0d11673012}
+      \strng{authorbibnamehash}{c7b208f6ff58267c43ebab0d11673012}
+      \strng{authornamehash}{06bf7dde2b92b85f6c51836847908c7f}
+      \strng{authorfullhash}{c7b208f6ff58267c43ebab0d11673012}
+      \field{extraname}{2}
+      \field{sortinit}{4}
+      \field{sortinithash}{e071e0bcb44634fab398d68ad04e69f4}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{A novel dose calculation approach was designed based on the application of {LSTM} network that processes the 3D patient/phantom geometry as a sequence of 2D computed tomography input slices yielding a corresponding sequence of 2D slices that forms the respective 3D dose distribution. {LSTM} networks can propagate information effectively in one direction, resulting in a model that can properly imitate the mechanisms of proton interaction in matter. The study is centered on predicting dose on a single pencil beam level, avoiding the averaging effects in treatment plans comprised of thousands pencil beams. Moreover, such approach allows straightforward integration into today’s treatment planning systems’ inverse planning optimization process. The ground truth training data was prepared with Monte Carlo simulations for both phantom and patient studies by simulating different pencil beams impinging from random gantry angles through the patient geometry. For model training, 10’000 Monte Carlo simulations were prepared for the phantom study, and 4’000 simulations were prepared for the patient study. The trained {LSTM} model was able to achieve a 99.29 \% gamma-index pass rate ([0.5\%, 1 mm]) accuracy on the set-aside test set for the phantom study, and a 99.33 \% gamma-index pass rate ([0.5\%, 2 mm]) for the set-aside test set for the patient study. These results were achieved for each pencil beam in 6-23 ms. The average Monte Carlo simulation run-time using Topas was 1160 s. The generalization of the model was veriﬁed by testing for 5 previously unseen lung cancer patients. {LSTM} networks are well suited for proton therapy dose calculation tasks. However, further work needs to be performed to generalize the proposed approach to clinical applications, primarily to be implemented for various energies, patient sites, and {CT} resolutions/scanners.}
+      \field{day}{10}
+      \field{eprinttype}{arxiv}
+      \field{journaltitle}{{arXiv}:2006.06085 [physics]}
+      \field{langid}{english}
+      \field{month}{6}
+      \field{title}{Long short-term memory networks for proton dose calculation in highly heterogeneous tissues}
+      \field{urlday}{16}
+      \field{urlmonth}{3}
+      \field{urlyear}{2021}
+      \field{year}{2020}
+      \field{dateera}{ce}
+      \field{urldateera}{ce}
+      \verb{eprint}
+      \verb 2006.06085
+      \endverb
+      \verb{file}
+      \verb 2006.06085.pdf:/Users/simongutwein/Studium/Masterarbeit/Paper/2006.06085.pdf:application/pdf
+      \endverb
+      \verb{urlraw}
+      \verb http://arxiv.org/abs/2006.06085
+      \endverb
+      \verb{url}
+      \verb http://arxiv.org/abs/2006.06085
+      \endverb
+      \keyw{Physics - Medical Physics}
     \endentry
   \enddatalist
 \endrefsection

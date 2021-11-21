@@ -1,10 +1,14 @@
 \boolfalse {citerequest}\boolfalse {citetracker}\boolfalse {pagetracker}\boolfalse {backtracker}\relax 
 \babel@toc {english}{}
 \defcounter {refsection}{0}\relax 
-\contentsline {table}{\numberline {1}{\ignorespaces Patient data infortmation for Prostate-Only as well as Mixed-Entity trained model and testing data set. Fieldsizes are given as mean (standard deviation).\relax }}{15}{table.caption.13}%
+\contentsline {table}{\numberline {1}{\ignorespaces Patient data infortmation for Prostate-Only as well as Mixed-Entity trained model and testing data set. Fieldsizes are given as mean (standard deviation).\relax }}{17}{table.caption.27}%
 \defcounter {refsection}{0}\relax 
-\contentsline {table}{\numberline {2}{\ignorespaces Summary of gamma passrates for liver, mamma, head and lyphnodes tumor patients, hier noch min max einfügen\relax }}{17}{table.caption.17}%
+\contentsline {table}{\numberline {2}{\ignorespaces Gamma rassrates for segments as well as plans for prostate, liver, mamma, \acs {HN} and \acs {LN} predicted with the prostate-only data trained model. Gamma test settings: 3~mm/3\% lower percentage cutoff 10\%\relax }}{20}{table.caption.32}%
 \defcounter {refsection}{0}\relax 
-\contentsline {table}{\numberline {3}{\ignorespaces Summary of gamma passrates for liver, mamma, head and lyphnodes tumor patients min max hinzufügen \relax }}{19}{table.caption.18}%
+\contentsline {table}{\numberline {3}{\ignorespaces Gamma rassrates for segments as well as plans for prostate, liver, mamma, \acs {HN} and \acs {LN} predicted with the mixed data trained model. Gamma test settings: 3~mm/3\% lower percentage cutoff 10\%\relax }}{20}{table.caption.33}%
 \defcounter {refsection}{0}\relax 
-\contentsline {table}{\numberline {4}{\ignorespaces Gamma passrates for prostate only and mixed trained models for different water slab phantom positions inside an air volume. Water slab thickness was 200 pixels.\relax }}{19}{table.caption.23}%
+\contentsline {table}{\numberline {4}{\ignorespaces Gamma passrate comparison of prostate-only and mixed entity trained models on the test dataset consisting of 306 prostate, 272 liver, 419 mamma, 379 head \& neck and 659 lymphnode segments. Gamma test criteria: 3~mm/3\% with a lower dose cutoff of 10\%.\relax }}{23}{table.caption.36}%
+\defcounter {refsection}{0}\relax 
+\contentsline {table}{\numberline {5}{\ignorespaces {Gamma passrate comparison of prostate-only and mixed entity trained models on the test dataset consisting of 5 prostate, 5 liver, 5 mamma, 5 head \& neck and 15 lymphnode treatment plans. Gamma test criteria: 3~mm/3\% with a lower dose cutoff of 10\%.}\relax }}{23}{table.caption.37}%
+\defcounter {refsection}{0}\relax 
+\contentsline {table}{\numberline {6}{\ignorespaces Gamma passrates for prostate only and mixed trained models for different water phantom phantom positions inside an air volume. Water phantom thickness was 200 pixels.\relax }}{24}{table.caption.39}%
