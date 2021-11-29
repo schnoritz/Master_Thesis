@@ -42,6 +42,7 @@ def create_dvh(struc_data: dict, dose_array: np.ndarray, dvh_x: list, attribute_
             struc[attribute_name + "_D2"] = dvh_x[find_nearest(dvh_data, 0.02)]
             struc[attribute_name + "_Dmean"] = relevant_part.mean()
             struc[attribute_name + "_D98"] = dvh_x[find_nearest(dvh_data, 0.98)]
+            struc[attribute_name + "_D"] = dvh_x[find_nearest(dvh_data, 0.98)]
 
         else:
 
@@ -115,7 +116,7 @@ def plot_dvh(structures: dict, path: str, diff=False) -> None:
 
     legend = []
 
-    plot_struc = ["ctv", "ptv", "bladder", "rectum", "femur"]
+    plot_struc = ["ctv", "ptv", "bladder", "rectum", "femur", "penile", "uret"]
 
     if diff:
         fig, ax = plt.subplots(1, 2, figsize=(18, 8))
@@ -152,7 +153,7 @@ def plot_dvh(structures: dict, path: str, diff=False) -> None:
         ax.set_xlabel("Dose \Gy")
         ax.set_ylabel("Percentage Volume /%")
     cm = 1/2.54
-    fig.set_size_inches(14*cm, 12*cm, forward=True)
+    fig.set_size_inches(14*cm, 10*cm, forward=True)
     plt.savefig(path, dpi=300, bbox_inches='tight')
 
 
@@ -198,7 +199,7 @@ def main():
     import os
 
     patients = ["pt0"]
-    models = ["mixed_trained_UNET_1183.pt", "prostate_trained_UNET_2234.pt"]
+    models = ["prostate_trained_UNET_2234.pt", "mixed_trained_UNET_1183.pt"]
     for patient in patients:
         for model in models:
             print(patient, model)
@@ -222,7 +223,7 @@ def main():
 
             structures = analyse_structures(structure_file, origin, px_sp, target_dose.shape, target_dose, prediction_dose)
 
-            plot_dvh(structures, os.path.join(data_dir, f"dvh_img.png"), diff=False)
+            plot_dvh(structures, os.path.join(data_dir, f"dvh_img.pdf"), diff=False)
             dvh_values_to_xlsx(structures, os.path.join(data_dir, f"dvh_data.xlsx"))
 
 

@@ -1,97 +1,100 @@
 \subsection{General Applicability}
 
 The training of the model was succesful and took approximately 11 days until convergence. Training stopped at $6.7\cdot10^5$ due to no improvement in gamma and validation loss. 
-On the test dataset consisting of 5 prostate patient plans and 306 segments in total the model reaches a gamma passrate of 94.35\% ± 5.99\% (min: 58.02\%, max: 99.96\%) on all segments resulting in a passrate 96.16\% ± 6.12\% (min: 85.33\%, max: 99.96\%) for the plans. 
-A qualitative plan prediction sample is given in \autoref{fig:prediction}, showing the isocentric slice of a target dose, the respective dose prediction and the gamma criterion evaliation. 
+The model reaches gamma passrates of 94.35\% ± 5.99\% (min: 58.02\%, max: 99.96\%) on all segments resulting in a mean passrate 99.1\% ± 1.3\% (min: 96.8\%, max: 100\%) on the 306 segments and five total plans respectively.
+Very good dose agreement between target dose, caluclated by \acs{MC} simulation and the dose prediction can be observed as depicted in \autoref{fig:prediction} showing the isocentric slice of a prostate cancer patient with a gamma passrate of 99.9\%.
 As shown the model is able to accurately predict the beamshape for single segments aswell as the penumbra and beamwidening. 
 The \ac{DVH} shown in \autoref{fig:dvh} gives crucial information about the applied dose inside target volumes as well as \ac{OAR} for a test plan of the prostate patient cohort.
-A very good dose agreement for high as well as low dose regions is reached. 
-Slight deviations in smaller structures such as rectum and seminal vesicles can be observed, most likely due to the larger contribution of single voxel to the entire volume.
+\acs{DVH} curves overlap for all structures but urethra, which is caused by the high contribution of single voxels to the entire volume. 
+Very good dose agreement for high as well as low dose regions is reached. 
 
 \begin{figure}
     \centering
-    \includegraphics[scale=0.7]{dvh_notable.pdf}
-    \caption{dvh for prostate cancer test plan with gamma passrate of 99.36.}\label{fig:dvh}
+    \includegraphics[scale=0.7]{dvh.pdf}
+    \caption{dvh for prostate cancer test plan with gamma passrate of 99.9\%.}\label{fig:dvh}
 \end{figure}
 
 \begin{figure}
     \centering
-    \includegraphics[width=\textwidth]{example_pt1.pdf}
+    \includegraphics[width=\textwidth]{gamma_pt0.pdf}
     \caption{
         Dose prediction example on isocentric slice on prostate cancer patient from test cohort with prostate data only trained model. 
-        From left to right: target dose; dose prediction; gamma map for isocentric slice with a gamma pass rate of 98.02\%
+        From left to right: target dose; dose prediction; gamma map for isocentric slice with a gamma pass rate of 99.9\%
     }\label{fig:prediction}
 \end{figure}
-
-
 
 \subsection{Poor Initial Translatability}
 
 When applying the prostate only trained network on body entities deviating from the lower abdomen its accuracy decreases significantly. 
-A summary over the prediction accuracy for all segments aswell as the summed up plans for all tumor entities is given in \autoref{tab:prost}. 
+A summary over the prediction accuracy for all segments aswell as the summed up plans for all included entities is given in \autoref{tab:prost}. 
 The model shows particular problems with breast cancer and \acs{HN} segments with a mean gamma passrate of 57.8~±~18.0\% (min: 1.9\% max: 94.7\%) and 60.5~±~11.8\% (min: 31.1\% max: 91.5\%). 
-An examplary case is given by \autoref{fig:mamma_pred} showing low accuracy in the high dose aswell as lower dose areas of the volume.
+An examplary case with a gamma passrate of 60.6\% is shown in \autoref{fig:mamma_pred} depicting low accuracy in the high dose aswell as lower dose areas of the volume.
 
 \begin{figure}
     \centering
-    \includegraphics[width=\textwidth]{example_mt1.pdf}
+    \includegraphics[width=\textwidth]{gamma_mt1.pdf}
     \caption{
         Dose prediction example on isocentric slice on breast cancer patient from test cohort with prostate data only trained model. 
-        From left to right: target dose; dose prediction; gamma map for respective slice with a gamma pass rate of 53.78\%}\label{fig:mamma_pred}
+        From left to right: target dose; dose prediction; gamma map for respective slice with a gamma pass rate of 60.6\%}\label{fig:mamma_pred}
 \end{figure}
 
 \begin{table}
     \centering
-    \scalebox{0.92}{
-        \begin{tabular}{|llccccclcccl|}
+    \scalebox{1}{
+        \begin{tabular}{|lccccccccccc|}
             \hline
-            \textbf{}                 & \textbf{}                     & \multicolumn{2}{c}{\textbf{Prostate}} & \multicolumn{2}{c}{\textbf{Liver}} & \multicolumn{2}{c}{\textbf{Mamma}} & \multicolumn{2}{c}{\textbf{\acs{HN}}} & \multicolumn{2}{c|}{\textbf{\acs{LN}}} \\
-            \textbf{Segments / Plans} & \textbf{/1}                   & 306               & 5                 & 272              & 5               & 419     & \multicolumn{1}{c}{5}    & 379             & 5               & 659   & \multicolumn{1}{c|}{15}  \\ \hline
-            \textbf{Mean}             & \multirow{4}{*}{\textbf{/\%}} & 94.4              & 96.2              & 75.4             & 77.7            & 57.8    & 63.3                     & 60.5            & 76.2            & 77.4  & 82.1                     \\
-            \textbf{STD}              &                               & 6.0               & 6.1               & 12.6             & 10.1            & 18.0    & 6.7                      & 11.8            & 5.0             & 13.8  & 11.5                     \\
-            \textbf{Min}              &                               & 58.0              & 85.3              & 38.9             & 67.6            & \textbf{1.9}     & 53.8                     & \textbf{31.1}            & 69.5            & \textbf{36.0}  & 63.8                     \\
-            \textbf{Max}              &                               & 100               & 100               & 99.4             & 91.6            & 94.7    & 72.5                     & 91.5            & 82.0            & 99.7  & 98.2                     \\ \hline
+            \multicolumn{1}{|r}{}              & \multicolumn{1}{l}{} & \multicolumn{2}{c}{\textbf{Prostate}} & \multicolumn{2}{c}{\textbf{Liver}} & \multicolumn{2}{c}{\textbf{Mamma}} & \multicolumn{2}{c}{\textbf{H\&N}} & \multicolumn{2}{c|}{\textbf{LN}} \\
+            \multirow{2}{*}{\textbf{Modality}} & \multirow{2}{*}{\#}  & \textit{Seg.}     & \textit{Plan}     & \textit{Seg.}    & \textit{Plan}   & \textit{Seg.}    & \textit{Plan}   & \textit{Seg.}   & \textit{Plan}   & \textit{Seg.}   & \textit{Plan}  \\
+                                               &                      & 306               & 5                 & 272              & 5               & 419              & 5               & 379             & 5               & 659             & 15             \\ \hline
+            \textbf{Mean}                      & \multirow{5}{*}{\%}  & 94.3              & 99.1              & 75.4             & 89.9            & 57.8             & 67.4            & 60.5            & 77.4            & 77.4            & 93.0           \\
+            \textbf{Median}                    &                      & 96.2              & 99.6              & 77.4             & 91.8            & 56.4             & 66.2            & 61.0            & 78.8            & 80.2            & 92.8           \\
+            \textbf{STD}                       &                      & 6.0               & 1.3               & 12.6             & 4.1             & 18.0             & 5.3             & 11.8            & 10.2            & 13.8            & 6.1            \\
+            \textbf{Min}                       &                      & 58.0              & 96.8              & 38.9             & 84.0            & 1.9              & 60.6            & 31.1            & 62.5            & 36.0            & 75.3           \\
+            \textbf{Max}                       &                      & 100               & 99.9              & 99.4             & 94.4            & 94.7             & 73.0            & 91.5            & 90.2            & 99.7            & 99.7           \\ \hline
             \end{tabular}}
-    \caption{Gamma rassrates for segments as well as plans for prostate, liver, mamma, \acs{HN} and \acs{LN} predicted with the prostate-only data trained model. Gamma test settings: 3~mm/3\% lower percentage cutoff 10\%}\label{tab:prost}
+    \caption{Gamma rassrates for segments as well as plans for prostate, liver, mamma, \acs{HN} and \acs{LN} predicted with the prostate-only trained model. Gamma test settings: 3~mm/3\% lower percentage cutoff 10\%}\label{tab:prost}
 \end{table}
 
 
 \subsection{Increased Robustness}
 
 The model training was succesful and took approximately 9 days until convergence. Training stopped at $5.0\cdot10^5$ due to no improvement in gamma and validation loss. 
-Testing was done on prostate, liver, mamma and \acs{HN} entities, which were included in the training set as well as \acs{LN} was was not not included. 
+Testing was done on prostate, liver, mamma and \acs{HN} entities, which were included in the training set as well as \acs{LN} which was not not included. 
 A summary of the reached gamma passrates is given in \autoref{tab:mixed}, showing significantly changed gamma passrates (p-level: 0.05) see \autoref{fig:comparison}~\emph{left}.
-Mean gamma pass rate changes for single segments were -0.88, +14.4, +19.11, +19.65, +7.75 for prostate, liver, mamma, \acs{HN} and \acs{LN} respectively. 
-The mean gamma passrate shows no decrease in performance for the entire plan analysis. An increase of +1.69, +19.9, +24.2, +14.49, +8.59 was observed for prostate, liver, mamma, \acs{HN} and \acs{LN}. 
+Mean gamma pass rate changes for single segments were -0.88\%, +14.4\%, +19.11\%, +19.65\%, +7.75\% for prostate, liver, mamma, \acs{HN} and \acs{LN} respectively. 
+The mean gamma passrate shows no decrease in performance for the plan analysis of all tumor entities with an increase of  +0.1\%,  +7.7\%,+16.2\%, +11.4\%, +3\% for prostate, liver, mamma, \acs{HN} and \acs{LN} plans respectively. 
 A comparison between the results of the individual segments and the overall plans shows that, on average, the segments with the higher contributions to the irradiation plan are better predicted than less contributing ones. 
 
 \begin{table}
     \centering
-    \scalebox{0.92}{\begin{tabular}{|llcccccccccc|}
-        \hline
-        \textbf{}                 & \textbf{}                     & \multicolumn{2}{c}{\textbf{Prostate}} & \multicolumn{2}{c}{\textbf{Liver}} & \multicolumn{2}{c}{\textbf{Mamma}} & \multicolumn{2}{c}{\textbf{\acs{HN}}} & \multicolumn{2}{c|}{\textbf{\acs{LN}}} \\
-        \textbf{Segments / Plans} & \textbf{/1}                   & 306               & 5                 & 272             & 5                & 419              & 5               & 379             & 5               & 659            & 15              \\ \hline
-        \textbf{Mean}             & \multirow{4}{*}{\textbf{/\%}} & 93.5              & 97.9              & 89.8            & 97.6             & 76.9             & 87.5            & 80.1            & 90.7            & 85.2           & 90.7            \\
-        \textbf{STD}              &                               & 6.3               & 2.8               & 7.1             & 4.6              & 12.8             & 6.6             & 10.9            & 6.4             & 10.7           & 9.6             \\
-        \textbf{Min}              &                               & 39.2              & 92.9              & 50.8            & 89.5             & 18.4             & 80.0            & 49.3            & 79.6            & 38.7           & 66.6            \\
-        \textbf{Max}              &                               & 99.8              & 100             & 99.1            & 100            & 98.5             & 94.5            & 97.4            & 96.3            & 99.9           & 100           \\ \hline
-        \end{tabular}}
+    \scalebox{1}{
+        \begin{tabular}{|lccccccccccc|}
+            \hline
+            \multicolumn{1}{|r}{}              & \multicolumn{1}{l}{} & \multicolumn{2}{c}{\textbf{Prostate}} & \multicolumn{2}{c}{\textbf{Liver}} & \multicolumn{2}{c}{\textbf{Mamma}} & \multicolumn{2}{c}{\textbf{H\&N}} & \multicolumn{2}{c|}{\textbf{LN}} \\
+            \multirow{2}{*}{\textbf{Modality}} & \multirow{2}{*}{\#}  & \textit{Seg.}     & \textit{Plan}     & \textit{Seg.}    & \textit{Plan}   & \textit{Seg.}    & \textit{Plan}   & \textit{Seg.}   & \textit{Plan}   & \textit{Seg.}   & \textit{Plan}  \\
+                                               &                      & 306               & 5                 & 272              & 5               & 419              & 5               & 379             & 5               & 659             & 15             \\ \hline
+            \textbf{Mean}                      & \multirow{5}{*}{\%}  & 93.5              & 99.2              & 89.8             & 97.6            & 76.9             & 83.6            & 80.1            & 88.8            & 85.2            & 96.0           \\
+            \textbf{Median}                    &                      & 95.0              & 99.7              & 91.6             & 97.4            & 78.9             & 83.7            & 82.8            & 90.9            & 87.8            & 98.8           \\
+            \textbf{STD}                       &                      & 6.3               & 1.0               & 7.0              & 1.0             & 12.8             & 4.6             & 10.9            & 8.6             & 10.7            & 5.8            \\
+            \textbf{Min}                       &                      & 39.2              & 97.5              & 50.8             & 96.6            & 18.4             & 77.0            & 49.3            & 76.0            & 38.7            & 77.9           \\
+            \textbf{Max}                       &                      & 99.8              & 99.9              & 99.1             & 99.2            & 98.5             & 89.8            & 97.4            & 98.5            & 99.9            & 99.9           \\ \hline
+            \end{tabular}}
     \caption{Gamma rassrates for segments as well as plans for prostate, liver, mamma, \acs{HN} and \acs{LN} predicted with the mixed data trained model. Gamma test settings: 3~mm/3\% lower percentage cutoff 10\%}\label{tab:mixed}
 \end{table}
 
-To get a deeper insight into the networks method of operation and to enlarge the interpretability of the network, we analysed the the perfomance of the network regarding fieldsize and segment weights. 
-The correlation between fieldsize and gamma passrate, aswell as between segment weight and gamma passrate are dispalyed in \autoref{fig:weight_fz_analysis}. 
+To get a deeper insight into the networks method of operation and to enlarge the interpretability of the network, we analysed the the perfomance of the network regarding fieldsize and segment weights as depicted in \autoref{fig:weight_fz_analysis}, which gives information about the correlation of fieldsize and weight to prediction accuracy of single segments. 
 Relative occurence of segment sizes aswell as weights are displayed as a bar chart in the background of both plots.
-Around 82\% segments have a fieldsize smaller than $60 cm^2$ that is also the fieldsize until network accuracy increases with increasing fieldsize for both the prostate-only and mixed entity trained model.
-Fieldsizes larger than $60 cm^2$ are not predicted as stable with fluctuating gamma passrates for both models.
-The prostate-only trained model expieriences a a larger drop in accuracy for fieldsizes bigger than $60 cm^2$ and accuracy is steadily decreasing with increasing fieldsizes. 
-It is observable that smaller fieldsizes are less robust and range from 1.9\% to 100\% and 18.5\% to 99.9\% for the prostate-only and the mixed entity model respectively on a fieldsize of 0 to $15 cm^2$.
-Segments with weights under 0.2 make up for almost 80\% of all segments. Gamma passrate analysis with respect to segment weight shows the same trend of increased accuracy and robustness with increasing weight values.
+Around 82\% segments have a fieldsize smaller than $60~cm^2$ that is also the fieldsize until network accuracy increases with increasing fieldsize for both the prostate-only and mixed entity trained model.
+Fieldsizes larger than $60~cm^2$ are not predicted as stable with fluctuating gamma passrates for both models.
+The prostate-only trained model expieriences a larger drop in accuracy for fieldsizes bigger than $60~cm^2$ and accuracy is steadily decreasing with increasing fieldsizes. 
+It is observable that smaller fieldsizes are less robust and range from 1.9\% to 100\% and 18.5\% to 99.9\% for the prostate-only and the mixed entity model respectively on a fieldsize of 0 to $15~cm^2$.
+Gamma passrate analysis with respect to segment weight shows the same trend of increased accuracy and robustness with increasing weight values.
+Segments with weights under 0.2 make up for almost 80\% of all segments. 
 A comprehensive and direct comparison between prostate-only and mixed entity model prediction accuracy for segment and plan predictions is given in \autoref{tab:seg_comp} and \autoref{tab:plan_comp} respectively.
 
 \begin{figure}
     \centering
-    \includegraphics[width=\textwidth]{test_results.pdf}
+    \includegraphics[width=\textwidth]{results_combined.pdf}
     \caption{
         Gamma pass rate comparison for single segments (left) and summed up plans (right) between prostate-only and mixed entity trained models. 
         Boxplot are displayed inside respecitve violin plots. 
@@ -108,6 +111,17 @@ A comprehensive and direct comparison between prostate-only and mixed entity mod
         Relative occurence of discretized fieldsize bin is displayed in the background.}\label{fig:weight_fz_analysis}
 \end{figure}
 
+\subsection{Underlying Physics}
+
+Both the prostate-only aswell as the mixed entity model perform poorly regarding gamma passrates for all water phantom positions tested. 
+The model accuracy is steadily decreasing with increasing \acs{SSD} with gamma pass rates of 60.1\%, 45.5\%, 48.4\%, and 56.1\%, 27.7\%, 19.2\% for the prostate-only and mixed entity model at depths of 100~pixels, 200~pixels and 300~pixels respectively. A summary of the accuracy is given in \autoref{tab:phantom_res}. 
+The transversal view in \autoref{fig:phantom} shows that the prostate model is better at representing the peak at the beginning of the phantom than the mixed model for a depth of 100 pixels. 
+At higher phantom distances the prostate model resembles the qualitative dose distribution quite well, while failing at reaching the correct predictive value. 
+The mixed model can not reach the correct peak height at the beginning but predicts the later curve very well in terms of height and curvature in the transversal view. 
+Coronal and sagital view both show that the penumbra is resembles very well by both models. 
+At phantom depths of 200 and 300 pixels the shoulders of the dose profile drop too fast for the mixed trained model in the coronal view.
+Slight fluctuations at the phantom's edge can be observed at 100~pixel depth for the mixed model in the sagital view.
+ 
 \begin{table}
     \centering
     \scalebox{0.78}{
@@ -142,18 +156,6 @@ A comprehensive and direct comparison between prostate-only and mixed entity mod
         }
     \caption{{Gamma passrate comparison of prostate-only and mixed entity trained models on the test dataset consisting of 5 prostate, 5 liver, 5 mamma, 5 head \& neck and 15 lymphnode treatment plans. Gamma test criteria: 3~mm/3\% with a lower dose cutoff of 10\%.}}\label{tab:plan_comp}
 \end{table}
-
-\subsection{Underlying Physics}
-
-Both the prostate-only aswell as the mixed entity model perform poorly regarding gamma passrates for all water phantom positions tested. 
-The model accuracy is steadily decreasing with increasing \acs{SSD} with gamma pass rates of 60.1\%, 45.5\%, 48.4\%, and 56.1\%, 27.7\%, 19.2\% for the prostate-only and mixed entity model at depths of 100~pixels, 200~pixels and 300~pixels respectively. A summary of the accuracy is given in \autoref{tab:phantom_res}. 
-The transversal view in \autoref{fig:phantom} shows that the prostate model is better at representing the peak at the beginning of the phantom than the mixed model for a depth of 100 pixels. 
-At higher phantom distances the prostate model resembles the qualitative dose distribution quite well, while failing at reaching the correct predictive value. 
-The mixed model can not reach the correct peak height at the beginning but predicts the later curve very well in terms of height and curvature in the transversal view. 
-Coronal and sagital view both show that the penumbra is resembles very well by both models. 
-At phantom depths of 200 and 300 pixels the shoulders of the dose profile drop too fast for the mixed trained model in the coronal view.
-Slight fluctuations at the phantom's edge can be observed at 100~pixel depth for the mixed model in the sagital view.
- 
 
 \begin{figure}
     \centering

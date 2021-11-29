@@ -1,7 +1,9 @@
 import matplotlib.pyplot as plt
 import numpy as np
+import torch
 from matplotlib import cm
-from matplotlib.colors import ListedColormap, LinearSegmentedColormap
+from matplotlib.colors import ListedColormap
+import pymedphys
 
 
 def latex(width, height, path):
@@ -20,18 +22,15 @@ def latex(width, height, path):
     return do_latex
 
 
-@latex(width=20, height=12, path="/Users/simongutwein/Desktop/example_mt1.pdf")
+@latex(width=20, height=12, path="/Users/simongutwein/Desktop/gamma_mt1.pdf")
 def example():
 
-    import torch
     pat = "mt1"
 
-    pred = np.array(torch.load(f"/Users/simongutwein/Studium/Masterarbeit/plan_predictions_test/{pat}/prediction.pt"))
-    target = np.array(torch.load(f"/Users/simongutwein/Studium/Masterarbeit/plan_predictions_test/{pat}/target.pt"))
+    pred = np.array(torch.load(f"/Users/simongutwein/Studium/Masterarbeit/preds/{pat}/prostate_trained_UNET_2234.pt/prediction.pt"))
+    target = np.array(torch.load(f"/Users/simongutwein/Studium/Masterarbeit/preds/{pat}/prostate_trained_UNET_2234.pt/target.pt"))
 
-    ct = np.array(torch.load(f"/Users/simongutwein/Studium/Masterarbeit/plan_predictions_test/{pat}/training_data.pt"))[1]
-
-    import pymedphys
+    ct = np.array(torch.load(f"/Users/simongutwein/Studium/Masterarbeit/preds/{pat}/training_data.pt"))[1]
 
     slice_ = np.argwhere(target == target.max())[0][2]
     max_gamma = 3
@@ -84,7 +83,7 @@ def example():
     ax[1].imshow(pred[cut_top:, :, 3],  cmap="Oranges", alpha=0.8)
     ax[1].axis("off")
     ax[2].imshow(ct[cut_top:, :, 3], cmap="bone")
-    axs = ax[2].imshow(gamma_val[cut_top:, :, 3],  cmap=newcmp)
+    axs = ax[2].imshow(gamma_val[cut_top:, :, 3],  cmap=newcmp, vmin=0, vmax=max_gamma)
     cbar = fig.colorbar(axs, fraction=0.035, pad=0.04)
 
     # cbar.ax.tick_params(size=0, rotation=90)

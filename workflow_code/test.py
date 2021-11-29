@@ -51,7 +51,7 @@ def main():
     y_circ1 = np.sin(u)
     z_circ1 = np.zeros(len(y_circ1))
 
-    ax.plot_surface(x, y, z, linewidth=1, alpha=0.05, color="black", antialiased=False)  # ,  alpha=0.5, color="red", zorder=-1)  # alpha=0.5
+    ax.plot_surface(x, y, z, linewidth=1, alpha=0.1, color="darkblue")  # , antialiased=False)  # ,  alpha=0.5, color="red", zorder=-1)  # alpha=0.5
 
     ax.scatter3D(0, 0, 0, marker="8", color="k")
     a = Arrow3D([0, 0], [-2, 2], [0, 0], mutation_scale=10, lw=1, arrowstyle="<|-|>", color="k")
@@ -64,10 +64,10 @@ def main():
     pos = [0.2, -0.4, 0.6]
     pos2 = [-0.6, 0.6, 1.3]
 
-    ax.text3D(pos2[0], pos2[1]-0.08, pos2[2]+0.08, r'$r_{failed}$', ha="center", fontsize=11, zorder=10)
-    ax.scatter(pos2[0], pos2[1], pos2[2], marker="X", color="k")
-    a = Arrow3D([0, pos2[0]+0.01], [0, pos2[1]+0.01], [0, pos2[2]+0.01], mutation_scale=10, lw=2, arrowstyle="-|>", color="red")
-    ax.add_artist(a)
+    #ax.text3D(pos2[0], pos2[1]-0.08, pos2[2]+0.08, r'$r_{failed}$', ha="center", fontsize=11, zorder=10)
+    #ax.scatter(pos2[0], pos2[1], pos2[2], marker="X", color="k")
+    #a = Arrow3D([0, pos2[0]+0.01], [0, pos2[1]+0.01], [0, pos2[2]+0.01], mutation_scale=10, lw=2, arrowstyle="-|>", color="red")
+    # ax.add_artist(a)
 
     ax.plot3D(x_circ1, y_circ1, z_circ1, zorder=1, color="Orange")
     ax.plot3D(z_circ1, x_circ1, y_circ1, zorder=2, color="Maroon")
@@ -76,10 +76,10 @@ def main():
     ax.text3D(2.1, 0, 0.2, "X-Plane", ha="center", zorder=10)
     ax.text3D(0, 0, 1.8, "Dose-Value", ha="center", zorder=10)
     ax.text3D(0.15, 0, -0.15, r'$r_m$', ha="center", fontsize=11)
-    ax.text3D(pos[0], pos[1]-0.08, pos[2]+0.08, r'$r_{passed}$', ha="left", fontsize=11, zorder=10)
-    ax.scatter(pos[0], pos[1], pos[2], marker="X", color="k")
-    a = Arrow3D([0, pos[0]+0.01], [0, pos[1]+0.01], [0, pos[2]+0.01], mutation_scale=10, lw=2, arrowstyle="-|>", color="green")
-    ax.add_artist(a)
+    #ax.text3D(pos[0], pos[1]-0.08, pos[2]+0.08, r'$r_{passed}$', ha="left", fontsize=11, zorder=10)
+    #ax.scatter(pos[0], pos[1], pos[2], marker="X", color="k")
+    #a = Arrow3D([0, pos[0]+0.01], [0, pos[1]+0.01], [0, pos[2]+0.01], mutation_scale=10, lw=2, arrowstyle="-|>", color="green")
+    # ax.add_artist(a)
 
     a = Arrow3D([0, np.cos(3*np.pi/4)], [0, np.sin(3*np.pi/4)], [0, 0], mutation_scale=10, lw=2, arrowstyle="-|>", linestyle='--', color="k")
     ax.add_artist(a)

@@ -1,12 +1,12 @@
-\BOOKMARK [1][-]{Doc-Start}{Abbildungsverzeichnis}{}% 1
-\BOOKMARK [1][-]{Doc-Start}{Tabellenverzeichnis}{}% 2
+\BOOKMARK [1][-]{Doc-Start}{List\040of\040Figure}{}% 1
+\BOOKMARK [1][-]{Doc-Start}{List\040of\040Tables}{}% 2
 \BOOKMARK [1][-]{Doc-Start}{List\040of\040Abbreviations}{}% 3
 \BOOKMARK [1][-]{section.1}{Introduction}{}% 4
 \BOOKMARK [1][-]{section.2}{Medical\040Knowledge}{}% 5
 \BOOKMARK [2][-]{subsection.2.1}{Tumor\040Radiation}{section.2}% 6
 \BOOKMARK [2][-]{subsection.2.2}{MR\040Linear\040Accelerator}{section.2}% 7
 \BOOKMARK [2][-]{subsection.2.3}{Physical\040Fundamentals}{section.2}% 8
-\BOOKMARK [2][-]{subsection.2.4}{Dose\040Calculation}{section.2}% 9
+\BOOKMARK [2][-]{subsection.2.4}{Dose\040Deposition\040Calculation}{section.2}% 9
 \BOOKMARK [1][-]{section.3}{Previous\040Work}{}% 10
 \BOOKMARK [1][-]{section.4}{Material\040and\040Methods}{}% 11
 \BOOKMARK [2][-]{subsection.4.1}{Network\040Architecture}{section.4}% 12
@@ -35,5 +35,4 @@
 \BOOKMARK [2][-]{subsection.6.4}{Model\040improvement}{section.6}% 35
 \BOOKMARK [1][-]{section.7}{Conclusion}{}% 36
 \BOOKMARK [1][-]{section.8}{Aknowledgement}{}% 37
-\BOOKMARK [1][-]{section.9}{Appendix}{}% 38
-\BOOKMARK [1][-]{section.9}{Apendix}{}% 39
+\BOOKMARK [1][-]{section.8}{Appendix}{}% 38

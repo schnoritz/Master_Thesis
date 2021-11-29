@@ -22,14 +22,13 @@
 \titlespacing{\subsection}{0pt}{6pt}{6pt}
 \titlespacing{\subsubsection}{0pt}{6pt}{6pt}
 
-\Titlepage{Deep Learning for Radiation Dose Estimation}   % Titel der Arbeit
+\Titlepage{Investigation of Deep Learning Dose Estimation Robustness for MR Guided Radiotherapy}   % Titel der Arbeit
     {Deep Learning for Dose Estimation}             % Muss in die Kopfzeile passen
-    {Masterarbeit}                                  % Art der Arbeit
-    {Gutwein, Simon}                                % Vor- und Nachname des Autors
-    {16.09.2021}                                    % Tag der Anemeldung 
-    {16.03.2022}                                    % Tag der Abgabe
+    {Master~-~Thesis}                               % Art der Arbeit
+    {Simon Gutwein}                                % Vor- und Nachname des Autors
     {Medizinische Strahlenwissenschaften}           % Studiengang
-    {Prof.~Dr.~Daniela Thorwarth}                   % Name des Betreuers -- Hier sollte *immer* Prof. Winkelmann stehen
+    {Prof.~Dr.~Daniela Thorwarth}                   % Gutachter 1
+    {Dr.~Christian Baumgartner}                     % Gutachter 1
     {5419474}                                       % Matrikelnummer 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -57,8 +56,8 @@
 \newpage
 
 \listoffigures
-\addcontentsline{toc}{section}{Abbildungsverzeichnis}%
-\markboth{Abbildungsverzeichnis}{Abbildungsverzeichnis}
+\addcontentsline{toc}{section}{List of Figure}%
+\markboth{List of Figure}{List of Figure}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -68,8 +67,8 @@
 
 \newpage
 
-\addcontentsline{toc}{section}{Tabellenverzeichnis}%
-\markboth{Tabellenverzeichnis}{Tabellenverzeichnis}
+\addcontentsline{toc}{section}{List of Tables}%
+\markboth{List of Tables}{List of Tables}
 \listoftables
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -98,7 +97,7 @@
   \acro{IMRT}[IMRT]{intensity modulated radio therapy}
   \acro{LN}[LN]{lymphnodes}
   \acro{LSTM}[LSTM]{long short term memory}
-  \acro{MC}[MC]{monte carlo}
+  \acro{MC}[MC]{Monte-Carlo}
   \acro{MLC}[MLC]{multi leaf collimator}
   \acro{MRI}[MRI]{magnet resonance imaging}
   \acro{MU}[MU]{monitor units}
@@ -129,7 +128,6 @@
 \Kapitel{Discussion}{chapters/8_discussion.tex}
 \Kapitel{Conclusion}{chapters/9_conclusion.tex}
 \Kapitel{Aknowledgement}{chapters/10_aknowledgement.tex}
-\Kapitel{Appendix}{chapters/11_appendix.tex}
 
 \newpage
 \DeclareDelimFormat[bib,biblist]{nametitledelim}{\addcolon\space}
@@ -144,11 +142,12 @@
   [article,inbook,incollection,inproceedings,patent,thesis,unpublished]
   {authortitle}{#1\isdot}
 
+\emergencystretch=1em
 \printbibliography[title=Literature]
 
 \newpage
-\section*{Apendix} \label{Apendix}
-\addcontentsline{toc}{section}{Apendix}%
-\markboth{Apendix}{Apendix}
+\section*{Appendix}\label{Appendix}
+\addcontentsline{toc}{section}{Appendix}%
+\markboth{Appendix}{Appendix}
 
 \end{document}

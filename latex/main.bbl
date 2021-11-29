@@ -20,7 +20,7 @@
 \refsection{0}
   \datalist[entry]{none/global//global/global}
     \entry{bray_everincreasing_2021}{article}{}
-      \name{author}{4}{}{%
+      \name{author}{3}{}{%
         {{hash=3dc58d92f805cee080ba2dde0a50c3e2}{%
            family={Bray},
            familyi={B\bibinitperiod},
@@ -36,18 +36,13 @@
            familyi={W\bibinitperiod},
            given={Elisabete},
            giveni={E\bibinitperiod}}}%
-        {{hash=1157717990b3a2879530e4acbb92b56c}{%
-           family={Soerjomataram},
-           familyi={S\bibinitperiod},
-           given={Isabelle},
-           giveni={I\bibinitperiod}}}%
       }
       \strng{namehash}{74cc8b3af0676dd7492582e70e84f78c}
-      \strng{fullhash}{a0fdbf07b8c82478558a13b7a326f39d}
-      \strng{bibnamehash}{a0fdbf07b8c82478558a13b7a326f39d}
-      \strng{authorbibnamehash}{a0fdbf07b8c82478558a13b7a326f39d}
+      \strng{fullhash}{c856390bd88fa8ce0385ca82974098d6}
+      \strng{bibnamehash}{c856390bd88fa8ce0385ca82974098d6}
+      \strng{authorbibnamehash}{c856390bd88fa8ce0385ca82974098d6}
       \strng{authornamehash}{74cc8b3af0676dd7492582e70e84f78c}
-      \strng{authorfullhash}{a0fdbf07b8c82478558a13b7a326f39d}
+      \strng{authorfullhash}{c856390bd88fa8ce0385ca82974098d6}
       \field{sortinit}{1}
       \field{sortinithash}{50c6687d7fc80f50136d75228e3c59ba}
       \field{labelnamesource}{author}
@@ -1788,15 +1783,16 @@
       \field{sortinithash}{54047ffb55bdefa0694bbd554c1b11a0}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
-      \field{abstract}{Purpose Interests have been rapidly growing in the field of radiotherapy to replace {CT} with magnetic resonance imaging ({MRI}), due to superior soft tissue contrast offered by {MRI} and the desire to reduce unnecessary radiation dose. {MR}-only radiotherapy also simplifies clinical workflow and avoids uncertainties in aligning {MR} with {CT}. Methods, however, are needed to derive {CT}-equivalent representations, often known as synthetic {CT} ({sCT}), from patient {MR} images for dose calculation and {DRR}-based patient positioning. Synthetic {CT} estimation is also important for {PET} attenuation correction in hybrid {PET}-{MR} systems. We propose in this work a novel deep convolutional neural network ({DCNN}) method for {sCT} generation and evaluate its performance on a set of brain tumor patient images. Methods The proposed method builds upon recent developments of deep learning and convolutional neural networks in the computer vision literature. The proposed {DCNN} model has 27 convolutional layers interleaved with pooling and unpooling layers and 35 million free parameters, which can be trained to learn a direct end-to-end mapping from {MR} images to their corresponding {CTs}. Training such a large model on our limited data is made possible through the principle of transfer learning and by initializing model weights from a pretrained model. Eighteen brain tumor patients with both {CT} and T1-weighted {MR} images are used as experimental data and a sixfold cross-validation study is performed. Each {sCT} generated is compared against the real {CT} image of the same patient on a voxel-by-voxel basis. Comparison is also made with respect to an atlas-based approach that involves deformable atlas registration and patch-based atlas fusion. Results The proposed {DCNN} method produced a mean absolute error ({MAE}) below 85 {HU} for 13 of the 18 test subjects. The overall average {MAE} was 84.8 ± 17.3 {HU} for all subjects, which was found to be significantly better than the average {MAE} of 94.5 ± 17.8 {HU} for the atlas-based method. The {DCNN} method also provided significantly better accuracy when being evaluated using two other metrics: the mean squared error (188.6 ± 33.7 versus 198.3 ± 33.0) and the Pearson correlation coefficient(0.906 ± 0.03 versus 0.896 ± 0.03). Although training a {DCNN} model can be slow, training only need be done once. Applying a trained model to generate a complete {sCT} volume for each new patient {MR} image only took 9 s, which was much faster than the atlas-based approach. Conclusions A {DCNN} model method was developed, and shown to be able to produce highly accurate {sCT} estimations from conventional, single-sequence {MR} images in near real time. Quantitative results also showed that the proposed method competed favorably with an atlas-based method, in terms of both accuracy and computation speed at test time. Further validation on dose computation accuracy and on a larger patient cohort is warranted. Extensions of the method are also possible to further improve accuracy or to handle multi-sequence {MR} images.}
-      \field{issn}{2473-4209}
+      \field{abstract}{Purpose: Interests have been rapidly growing in the field of radiotherapy to replace {CT} with magnetic resonance imaging ({MRI}), due to superior soft tissue contrast offered by {MRI} and the desire to reduce unnecessary radiation dose. {MR}-only radiotherapy also simplifies clinical workflow and avoids uncertainties in aligning {MR} with {CT}. Methods, however, are needed to derive {CT}-equivalent representations, often known as synthetic {CT} ({sCT}), from patient {MR} images for dose calculation and {DRR}-based patient positioning. Synthetic {CT} estimation is also important for {PET} attenuation correction in hybrid {PET}-{MR} systems. We propose in this work a novel deep convolutional neural network ({DCNN}) method for {sCT} generation and evaluate its performance on a set of brain tumor patient images. Methods: The proposed method builds upon recent developments of deep learning and convolutional neural networks in the computer vision literature. The proposed {DCNN} model has 27 convolutional layers interleaved with pooling and unpooling layers and 35 million free parameters, which can be trained to learn a direct end-to-end mapping from {MR} images to their corresponding {CTs}. Training such a large model on our limited data is made possible through the principle of transfer learning and by initializing model weights from a pretrained model. Eighteen brain tumor patients with both {CT} and T1-weighted {MR} images are used as experimental data and a sixfold cross-validation study is performed. Each {sCT} generated is compared against the real {CT} image of the same patient on a voxel-by-voxel basis. Comparison is also made with respect to an atlas-based approach that involves deformable atlas registration and patch-based atlas fusion. Results: The proposed {DCNN} method produced a mean absolute error ({MAE}) below 85 {HU} for 13 of the 18 test subjects. The overall average {MAE} was 84.8 Æ 17.3 {HU} for all subjects, which was found to be significantly better than the average {MAE} of 94.5 Æ 17.8 {HU} for the atlas-based method. The {DCNN} method also provided significantly better accuracy when being evaluated using two other metrics: the mean squared error (188.6 Æ 33.7 versus 198.3 Æ 33.0) and the Pearson correlation coefficient(0.906 Æ 0.03 versus 0.896 Æ 0.03). Although training a {DCNN} model can be slow, training only need be done once. Applying a trained model to generate a complete {sCT} volume for each new patient {MR} image only took 9 s, which was much faster than the atlas-based approach. Conclusions: A {DCNN} model method was developed, and shown to be able to produce highly accurate {sCT} estimations from conventional, single-sequence {MR} images in near real time. Quantitative results also showed that the proposed method competed favorably with an atlas-based method, in terms of both accuracy and computation speed at test time. Further validation on dose computation accuracy and on a larger patient cohort is warranted. Extensions of the method are also possible to further improve accuracy or to handle multi-sequence {MR} images. © 2017 American Association of Physicists in Medicine [https://doi.org/10.1002/mp.12155]}
+      \field{issn}{00942405}
       \field{journaltitle}{Medical Physics}
       \field{langid}{english}
-      \field{note}{\_eprint: https://aapm.onlinelibrary.wiley.com/doi/pdf/10.1002/mp.12155}
+      \field{month}{4}
       \field{number}{4}
+      \field{shortjournal}{Med. Phys.}
       \field{title}{{MR}-based synthetic {CT} generation using a deep convolutional neural network method}
-      \field{urlday}{23}
-      \field{urlmonth}{8}
+      \field{urlday}{26}
+      \field{urlmonth}{11}
       \field{urlyear}{2021}
       \field{volume}{44}
       \field{year}{2017}
@@ -1808,15 +1804,14 @@
       \verb 10.1002/mp.12155
       \endverb
       \verb{file}
-      \verb Full Text PDF:/Users/simongutwein/Zotero/storage/TMERT26H/Han - 2017 - MR-based synthetic CT generation using a deep conv.pdf:application/pdf;Snapshot:/Users/simongutwein/Zotero/storage/43JJUGZI/mp.html:text/html
+      \verb Han - 2017 - MR-based synthetic CT generation using a deep conv.pdf:/Users/simongutwein/Zotero/storage/BV2JXLLA/Han - 2017 - MR-based synthetic CT generation using a deep conv.pdf:application/pdf
       \endverb
       \verb{urlraw}
-      \verb https://aapm.onlinelibrary.wiley.com/doi/abs/10.1002/mp.12155
+      \verb https://onlinelibrary.wiley.com/doi/10.1002/mp.12155
       \endverb
       \verb{url}
-      \verb https://aapm.onlinelibrary.wiley.com/doi/abs/10.1002/mp.12155
+      \verb https://onlinelibrary.wiley.com/doi/10.1002/mp.12155
       \endverb
-      \keyw{radiation therapy,deep learning,{MRI},convolutional neural network,synthetic {CT}}
     \endentry
     \entry{wolterink_deep_2017}{inproceedings}{}
       \name{author}{6}{}{%
@@ -2987,6 +2982,43 @@
       \verb https://onlinelibrary.wiley.com/doi/10.1002/cncr.21324
       \endverb
     \endentry
+    \entry{kaina_dna_2003}{article}{}
+      \name{author}{1}{}{%
+        {{hash=0dcfc10fd597485b75e69c9e726f85c1}{%
+           family={Kaina},
+           familyi={K\bibinitperiod},
+           given={Bernd},
+           giveni={B\bibinitperiod}}}%
+      }
+      \strng{namehash}{0dcfc10fd597485b75e69c9e726f85c1}
+      \strng{fullhash}{0dcfc10fd597485b75e69c9e726f85c1}
+      \strng{bibnamehash}{0dcfc10fd597485b75e69c9e726f85c1}
+      \strng{authorbibnamehash}{0dcfc10fd597485b75e69c9e726f85c1}
+      \strng{authornamehash}{0dcfc10fd597485b75e69c9e726f85c1}
+      \strng{authorfullhash}{0dcfc10fd597485b75e69c9e726f85c1}
+      \field{sortinit}{1}
+      \field{sortinithash}{50c6687d7fc80f50136d75228e3c59ba}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{shorttitle}
+      \field{abstract}{Genotoxic {DNA} damaging agents may activate both membrane death receptors and the endogenous mitochondrial damage pathway leading to cell death via apoptosis. Here, apoptotic responses in cells exhibiting a defect in various {DNA} repair pathways such as alkyltransferase, base excision repair, nucleotide excision repair and mismatch repair are reviewed. The {HSVTk}/ganciclovir and {VZV}/{BVDU} suicide system will also be discussed. Data are available to show that critical {DNA} damage triggers apoptosis in a {DNA} replication dependent way by activating the mitochondrial damage pathway in fibroblasts. It is proposed that {DNA} double-strand breaks ({DSBs}) are common ultimate apoptosis-triggering lesions arising from primary {DNA} lesions during {DNA} replication. Thus, {DNA} replication is a necessary component in {DNA} damage-triggered apoptosis, at least in fibroblasts treated with genotoxins not inducing {DSBs} themselves. For methylating agents inducing O(6)-methylguanine, an additional requirement is mismatch repair provoking {DSB} formation that triggers Bcl-2 decline and caspase-9/-3 activation. This occurs independent of p53 since most of the repair deficient cell lines under study were mutated for p53. Moreover, p53 knockout fibroblasts are more sensitive to methylating agents and {UV} light than p53 wt cells, suggesting p53 to play a protective rather than a pro-apoptotic role in this cell system, probably by its involvement in {DNA} repair. However, for lymphoblastoid cells p53 wt variants are more sensitive to {DNA} damage indicating that p53 participates in apoptotic signaling in a cell type-specific fashion. The role of topoisomerase {II} inhibitors and c-Fos/{AP}-1 in apoptosis will also be discussed.}
+      \field{day}{15}
+      \field{issn}{0006-2952}
+      \field{journaltitle}{Biochemical Pharmacology}
+      \field{month}{10}
+      \field{number}{8}
+      \field{shortjournal}{Biochem Pharmacol}
+      \field{shorttitle}{{DNA} damage-triggered apoptosis}
+      \field{title}{{DNA} damage-triggered apoptosis: critical role of {DNA} repair, double-strand breaks, cell proliferation and signaling}
+      \field{volume}{66}
+      \field{year}{2003}
+      \field{dateera}{ce}
+      \field{pages}{1547\bibrangedash 1554}
+      \range{pages}{8}
+      \verb{doi}
+      \verb 10.1016/s0006-2952(03)00510-0
+      \endverb
+      \keyw{Humans,{DNA} Repair,Animals,Signal Transduction,Apoptosis,Cell Division,{DNA} Damage,Tumor Suppressor Protein p53}
+    \endentry
     \entry{li_dna_2021}{article}{}
       \name{author}{5}{}{%
         {{hash=4641c68087078f20952fffea997eedd0}{%
@@ -3110,6 +3142,73 @@
       \endverb
       \verb{url}
       \verb https://doi.org/10.1007/978-94-015-3445-1_1
+      \endverb
+    \endentry
+    \entry{lee_using_2017}{article}{}
+      \name{author}{5}{}{%
+        {{hash=61f8bc41328f838af80ca57908058666}{%
+           family={Lee},
+           familyi={L\bibinitperiod},
+           given={Hannah\bibnamedelima J},
+           giveni={H\bibinitperiod\bibinitdelim J\bibinitperiod}}}%
+        {{hash=3b1c3dd4a951bc15c4a84a9c192838c5}{%
+           family={Won\bibnamedelima Choi},
+           familyi={W\bibinitperiod\bibinitdelim C\bibinitperiod},
+           given={Gye},
+           giveni={G\bibinitperiod}}}%
+        {{hash=37df929b94eeb729f1aed5b3ab01e985}{%
+           family={Alqathami},
+           familyi={A\bibinitperiod},
+           given={Mamdooh},
+           giveni={M\bibinitperiod}}}%
+        {{hash=a884f2fa9f0a7252712cbeca3cfa3ab9}{%
+           family={Kadbi},
+           familyi={K\bibinitperiod},
+           given={Mo},
+           giveni={M\bibinitperiod}}}%
+        {{hash=7d63e3f9f10ae557e76caa082484992d}{%
+           family={Ibbott},
+           familyi={I\bibinitperiod},
+           given={Geoffrey},
+           giveni={G\bibinitperiod}}}%
+      }
+      \strng{namehash}{d8abadb05b999f8f44083632f2f2ce48}
+      \strng{fullhash}{30362bf36b005d6e484e2a4051a8cad0}
+      \strng{bibnamehash}{30362bf36b005d6e484e2a4051a8cad0}
+      \strng{authorbibnamehash}{30362bf36b005d6e484e2a4051a8cad0}
+      \strng{authornamehash}{d8abadb05b999f8f44083632f2f2ce48}
+      \strng{authorfullhash}{30362bf36b005d6e484e2a4051a8cad0}
+      \field{sortinit}{2}
+      \field{sortinithash}{ed39bb39cf854d5250e95b1c1f94f4ed}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{Image-guided radiation therapy ({IGRT}) using computed tomography ({CT}), conebeam {CT}, {MV} on-board imager ({OBI}), and {kV} {OBI} systems have allowed for more accurate patient positioning prior to each treatment fraction. While these imaging modalities provide excellent bony anatomy image quality, {MRI} surpasses them in soft tissue image contrast for better visualization and tracking of soft tissue tumors with no additional radiation dose to the patient. A pre-clinical integrated 1.5 T magnetic resonance imaging and 7 {MV} linear accelerator system ({MR}-linac) allows for real-time tracking of soft tissues and adaptive treatment planning prior to each treatment fraction. However, due to the presence of a strong magnetic field from the {MR} component, there is a three dimensional (3D) change in dose deposited by the secondary electrons. Especially at nonhomogeneous anatomical sites with tissues of very different densities, dose enhancements and reductions can occur due to the Lorentz force influencing the trajectories of secondary electrons. These dose changes at tissue interfaces are called the electron return effect or {ERE}. This study investigated the {ERE} using 3D dosimeters.}
+      \field{issn}{1742-6588, 1742-6596}
+      \field{journaltitle}{Journal of Physics: Conference Series}
+      \field{langid}{english}
+      \field{month}{5}
+      \field{shortjournal}{J. Phys.: Conf. Ser.}
+      \field{title}{Using 3D dosimetry to quantify the Electron Return Effect ({ERE}) for {MR}-image-guided radiation therapy ({MR}-{IGRT}) applications}
+      \field{urlday}{22}
+      \field{urlmonth}{11}
+      \field{urlyear}{2021}
+      \field{volume}{847}
+      \field{year}{2017}
+      \field{dateera}{ce}
+      \field{urldateera}{ce}
+      \field{pages}{012057}
+      \range{pages}{1}
+      \verb{doi}
+      \verb 10.1088/1742-6596/847/1/012057
+      \endverb
+      \verb{file}
+      \verb Lee et al. - 2017 - Using 3D dosimetry to quantify the Electron Return.pdf:/Users/simongutwein/Zotero/storage/M8YNS3UT/Lee et al. - 2017 - Using 3D dosimetry to quantify the Electron Return.pdf:application/pdf
+      \endverb
+      \verb{urlraw}
+      \verb https://iopscience.iop.org/article/10.1088/1742-6596/847/1/012057
+      \endverb
+      \verb{url}
+      \verb https://iopscience.iop.org/article/10.1088/1742-6596/847/1/012057
       \endverb
     \endentry
     \entry{ahnesjo_collapsed_1989}{article}{}
@@ -3371,7 +3470,7 @@
       \verb 10.1002/mp.14658
       \endverb
       \verb{file}
-      \verb Neishabouri_DKFZ_manuscript_2020.pdf:/Users/simongutwein/Studium/Masterarbeit/Paper/Neishabouri_DKFZ_manuscript_2020.pdf:application/pdf
+      \verb Neishabouri_DKFZ_manuscript_2020.pdf:/Users/simongutwein/Desktop/Neishabouri_DKFZ_manuscript_2020.pdf:application/pdf
       \endverb
       \verb{urlraw}
       \verb https://onlinelibrary.wiley.com/doi/10.1002/mp.14658
@@ -3528,8 +3627,8 @@
       \strng{authorbibnamehash}{ed5fd2ec0af9af8c9a0790183ebfee60}
       \strng{authornamehash}{1b13c108c366c2445cdf8f5dd74163d2}
       \strng{authorfullhash}{ed5fd2ec0af9af8c9a0790183ebfee60}
-      \field{sortinit}{2}
-      \field{sortinithash}{ed39bb39cf854d5250e95b1c1f94f4ed}
+      \field{sortinit}{3}
+      \field{sortinithash}{a37a8ef248a93c322189792c34fc68c9}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{shorttitle}
       \field{abstract}{The next great leap toward improving treatment of cancer with radiation will require the combined use of online adaptive and magnetic resonance guided radiation therapy techniques with automatic X-ray beam orientation selection. Unfortunately, by uniting these advancements, we are met with a substantial expansion in the required dose information and consequential increase to the overall computational time imposed during radiation treatment planning, which cannot be handled by existing techniques for accelerating Monte Carlo dose calculation. We propose a deep convolutional neural network approach that unlocks new levels of acceleration and accuracy with regards to post-processed Monte Carlo dose results by relying on data-driven learned representations of low-level beamlet dose distributions instead of more limited filter-based denoising techniques that only utilize the information in a single dose input. Our method uses parallel {UNET} branches acting on three input channels before mixing latent understanding to produce noise-free dose predictions. Our model achieves a normalized mean absolute error of only 0.106\% compared with the ground truth dose contrasting the 25.7\% error of the under sampled {MC} dose fed into the network at prediction time. Our model's per-beamlet prediction time is {\textasciitilde}220ms, including Monte Carlo simulation and network prediction, with substantial additional acceleration expected from batched processing and combination with existing Monte Carlo acceleration techniques. Our method shows promise toward enabling clinical practice of advanced treatment technologies.}
@@ -3778,8 +3877,8 @@
       \strng{authorbibnamehash}{d7e5e689e2c2635c84d8599e8bdb2c4a}
       \strng{authornamehash}{c0bafefa03754d12f0c5ce9f61ab0c50}
       \strng{authorfullhash}{d7e5e689e2c2635c84d8599e8bdb2c4a}
-      \field{sortinit}{3}
-      \field{sortinithash}{a37a8ef248a93c322189792c34fc68c9}
+      \field{sortinit}{4}
+      \field{sortinithash}{e071e0bcb44634fab398d68ad04e69f4}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{shorttitle}
       \field{abstract}{Background and objective: Processing of medical images such as {MRI} or {CT} presents different challenges compared to {RGB} images typically used in computer vision. These include a lack of labels for large datasets, high computational costs, and the need of metadata to describe the physical properties of voxels. Data augmentation is used to artiﬁcially increase the size of the training datasets. Training with image subvolumes or patches decreases the need for computational power. Spatial metadata needs to be carefully taken into account in order to ensure a correct alignment and orientation of volumes. Methods: We present {TorchIO}, an open-source Python library to enable eﬃcient loading, preprocessing, augmentation and patch-based sampling of medical images for deep learning. {TorchIO} follows the style of {PyTorch} and integrates standard medical image processing libraries to eﬃciently process images during training of neural networks. {TorchIO} transforms can be easily composed, reproduced, traced and extended. Most transforms can be inverted, making the library suitable for test-time augmentation and estimation of aleatoric uncertainty in the context of segmentation. We provide multiple generic preprocessing and augmentation operations as well as simulation of {MRI}-speciﬁc artifacts. Results: Source code, comprehensive tutorials and extensive documentation for {TorchIO} can be found at http://torchio.rtfd.io/. The package can be installed from the Python Package Index ({PyPI}) running pip install torchio. It includes a command-line interface which allows users to apply transforms to image ﬁles without using Python. Additionally, we provide a graphical user interface within a {TorchIO} extension in 3D Slicer to visualize the effects of transforms. Conclusion: {TorchIO} was developed to help researchers standardize medical image processing pipelines and allow them to focus on the deep learning experiments. It encourages good open-science practices, as it supports experiment reproducibility and is version-controlled so that the software can be cited precisely. Due to its modularity, the library is compatible with other frameworks for deep learning with medical images.}
@@ -3904,8 +4003,8 @@
       \strng{authornamehash}{06bf7dde2b92b85f6c51836847908c7f}
       \strng{authorfullhash}{c7b208f6ff58267c43ebab0d11673012}
       \field{extraname}{2}
-      \field{sortinit}{4}
-      \field{sortinithash}{e071e0bcb44634fab398d68ad04e69f4}
+      \field{sortinit}{5}
+      \field{sortinithash}{5dd416adbafacc8226114bc0202d5fdd}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{abstract}{A novel dose calculation approach was designed based on the application of {LSTM} network that processes the 3D patient/phantom geometry as a sequence of 2D computed tomography input slices yielding a corresponding sequence of 2D slices that forms the respective 3D dose distribution. {LSTM} networks can propagate information effectively in one direction, resulting in a model that can properly imitate the mechanisms of proton interaction in matter. The study is centered on predicting dose on a single pencil beam level, avoiding the averaging effects in treatment plans comprised of thousands pencil beams. Moreover, such approach allows straightforward integration into today’s treatment planning systems’ inverse planning optimization process. The ground truth training data was prepared with Monte Carlo simulations for both phantom and patient studies by simulating different pencil beams impinging from random gantry angles through the patient geometry. For model training, 10’000 Monte Carlo simulations were prepared for the phantom study, and 4’000 simulations were prepared for the patient study. The trained {LSTM} model was able to achieve a 99.29 \% gamma-index pass rate ([0.5\%, 1 mm]) accuracy on the set-aside test set for the phantom study, and a 99.33 \% gamma-index pass rate ([0.5\%, 2 mm]) for the set-aside test set for the patient study. These results were achieved for each pencil beam in 6-23 ms. The average Monte Carlo simulation run-time using Topas was 1160 s. The generalization of the model was veriﬁed by testing for 5 previously unseen lung cancer patients. {LSTM} networks are well suited for proton therapy dose calculation tasks. However, further work needs to be performed to generalize the proposed approach to clinical applications, primarily to be implemented for various energies, patient sites, and {CT} resolutions/scanners.}
@@ -3934,6 +4033,55 @@
       \verb http://arxiv.org/abs/2006.06085
       \endverb
       \keyw{Physics - Medical Physics}
+    \endentry
+    \entry{kendall_what_2017}{article}{}
+      \name{author}{2}{}{%
+        {{hash=4b1053f4ffb69cd61c1f122cc435c884}{%
+           family={Kendall},
+           familyi={K\bibinitperiod},
+           given={Alex},
+           giveni={A\bibinitperiod}}}%
+        {{hash=d4f394bd4030e20e7b1399e0abe7dc6a}{%
+           family={Gal},
+           familyi={G\bibinitperiod},
+           given={Yarin},
+           giveni={Y\bibinitperiod}}}%
+      }
+      \strng{namehash}{67fae8c7b2d9ca45db463bbf1488d262}
+      \strng{fullhash}{e213bf93074fd2dbfa9d1e82b9118fb3}
+      \strng{bibnamehash}{e213bf93074fd2dbfa9d1e82b9118fb3}
+      \strng{authorbibnamehash}{e213bf93074fd2dbfa9d1e82b9118fb3}
+      \strng{authornamehash}{67fae8c7b2d9ca45db463bbf1488d262}
+      \strng{authorfullhash}{e213bf93074fd2dbfa9d1e82b9118fb3}
+      \field{sortinit}{5}
+      \field{sortinithash}{5dd416adbafacc8226114bc0202d5fdd}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{There are two major types of uncertainty one can model. Aleatoric uncertainty captures noise inherent in the observations. On the other hand, epistemic uncertainty accounts for uncertainty in the model -- uncertainty which can be explained away given enough data. Traditionally it has been difficult to model epistemic uncertainty in computer vision, but with new Bayesian deep learning tools this is now possible. We study the benefits of modeling epistemic vs. aleatoric uncertainty in Bayesian deep learning models for vision tasks. For this we present a Bayesian deep learning framework combining input-dependent aleatoric uncertainty together with epistemic uncertainty. We study models under the framework with per-pixel semantic segmentation and depth regression tasks. Further, our explicit uncertainty formulation leads to new loss functions for these tasks, which can be interpreted as learned attenuation. This makes the loss more robust to noisy data, also giving new state-of-the-art results on segmentation and depth regression benchmarks.}
+      \field{day}{5}
+      \field{eprinttype}{arxiv}
+      \field{journaltitle}{{arXiv}:1703.04977 [cs]}
+      \field{month}{10}
+      \field{title}{What Uncertainties Do We Need in Bayesian Deep Learning for Computer Vision?}
+      \field{urlday}{23}
+      \field{urlmonth}{7}
+      \field{urlyear}{2021}
+      \field{year}{2017}
+      \field{dateera}{ce}
+      \field{urldateera}{ce}
+      \verb{eprint}
+      \verb 1703.04977
+      \endverb
+      \verb{file}
+      \verb arXiv Fulltext PDF:/Users/simongutwein/Zotero/storage/3QZNXPP6/Kendall und Gal - 2017 - What Uncertainties Do We Need in Bayesian Deep Lea.pdf:application/pdf;arXiv.org Snapshot:/Users/simongutwein/Zotero/storage/3LMTSK5M/1703.html:text/html
+      \endverb
+      \verb{urlraw}
+      \verb http://arxiv.org/abs/1703.04977
+      \endverb
+      \verb{url}
+      \verb http://arxiv.org/abs/1703.04977
+      \endverb
+      \keyw{Computer Science - Computer Vision and Pattern Recognition}
     \endentry
   \enddatalist
 \endrefsection

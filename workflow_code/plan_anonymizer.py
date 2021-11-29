@@ -39,7 +39,7 @@ def create_anonymized_data(path):
         "Time",
         "PersonName",
         "StudyDate",
-        "StudyTime "
+        "StudyTime"
     ]
     # StudyID evtl. hinzufügen
 

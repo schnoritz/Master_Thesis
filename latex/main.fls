@@ -247,10 +247,10 @@ INPUT images/dataloading.pdf
 INPUT images/gamma.pdf
 INPUT chapters/7_results.tex
 INPUT chapters/7_results.tex
-INPUT images/dvh_notable.pdf
-INPUT images/example_pt1.pdf
-INPUT images/example_mt1.pdf
-INPUT images/test_results.pdf
+INPUT images/dvh.pdf
+INPUT images/gamma_pt0.pdf
+INPUT images/gamma_mt1.pdf
+INPUT images/results_combined.pdf
 INPUT images/segs_weight_fz.pdf
 INPUT images/quer.pdf
 INPUT chapters/8_discussion.tex
@@ -262,8 +262,6 @@ INPUT chapters/9_conclusion.tex
 INPUT chapters/9_conclusion.tex
 INPUT chapters/10_aknowledgement.tex
 INPUT chapters/10_aknowledgement.tex
-INPUT chapters/11_appendix.tex
-INPUT chapters/11_appendix.tex
 INPUT main.aux
 INPUT ./main.out
 INPUT ./main.out
