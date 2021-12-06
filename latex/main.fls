@@ -234,8 +234,8 @@ INPUT chapters/3_introduction.tex
 INPUT chapters/4_medicalknowledge.tex
 INPUT chapters/4_medicalknowledge.tex
 INPUT images/example_image.pdf
-INPUT chapters/5_previouswork.tex
-INPUT chapters/5_previouswork.tex
+INPUT chapters/5_relatedwork.tex
+INPUT chapters/5_relatedwork.tex
 INPUT chapters/6_materialmethods.tex
 INPUT chapters/6_materialmethods.tex
 INPUT images/UNET.pdf
@@ -247,8 +247,8 @@ INPUT images/dataloading.pdf
 INPUT images/gamma.pdf
 INPUT chapters/7_results.tex
 INPUT chapters/7_results.tex
-INPUT images/dvh.pdf
 INPUT images/gamma_pt0.pdf
+INPUT images/dvh.pdf
 INPUT images/gamma_mt1.pdf
 INPUT images/results_combined.pdf
 INPUT images/segs_weight_fz.pdf

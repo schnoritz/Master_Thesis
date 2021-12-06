@@ -1,21 +1,22 @@
 [0] Config.pm:304> INFO - This is Biber 2.14
 [0] Config.pm:307> INFO - Logfile is 'main.blg'
-[89] biber-darwin:322> INFO - === Fri Nov 26, 2021, 14:59:23
-[106] Biber.pm:415> INFO - Reading 'main.bcf'
-[219] Biber.pm:943> INFO - Found 57 citekeys in bib section 0
-[234] Biber.pm:4256> INFO - Processing section 0
-[235] Utils.pm:75> INFO - Globbing data source 'bib.bib'
-[235] Utils.pm:91> INFO - Globbed data source 'bib.bib' to bib.bib
-[245] Biber.pm:4455> INFO - Looking for bibtex format file 'bib.bib' for section 0
-[266] bibtex.pm:1653> INFO - LaTeX decoding ...
-[727] bibtex.pm:1471> INFO - Found BibTeX data source 'bib.bib'
-[787] Utils.pm:304> WARN - ISBN '978-1-78923-777-1 978-1-78923-778-8' in entry 'shahzad_overview_2018' is invalid - run biber with '--validate_datamodel' for details.
-[1111] Utils.pm:304> WARN - ISBN '978-3-030-32244-1 978-3-030-32245-8' in entry 'shen_medical_2019' is invalid - run biber with '--validate_datamodel' for details.
-[1290] Utils.pm:304> WARN - ISBN '978-3-030-87201-4 978-3-030-87202-1' in entry 'de_bruijne_high-particle_2021' is invalid - run biber with '--validate_datamodel' for details.
-[1433] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'normalization = NFD' with 'normalization = prenormalized'
-[1433] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'variable = shifted' with 'variable = non-ignorable'
-[1433] Biber.pm:4084> INFO - Sorting list 'none/global//global/global' of type 'entry' with template 'none' and locale 'en-US'
-[1434] Biber.pm:4090> INFO - No sort tailoring available for locale 'en-US'
-[1485] bbl.pm:652> INFO - Writing 'main.bbl' with encoding 'UTF-8'
-[1568] bbl.pm:755> INFO - Output to main.bbl
-[1568] Biber.pm:128> INFO - WARNINGS: 3
+[95] biber-darwin:322> INFO - === Mon Dec  6, 2021, 20:14:01
+[111] Biber.pm:415> INFO - Reading 'main.bcf'
+[229] Biber.pm:943> INFO - Found 59 citekeys in bib section 0
+[243] Biber.pm:4256> INFO - Processing section 0
+[244] Utils.pm:75> INFO - Globbing data source 'bib.bib'
+[244] Utils.pm:91> INFO - Globbed data source 'bib.bib' to bib.bib
+[254] Biber.pm:4455> INFO - Looking for bibtex format file 'bib.bib' for section 0
+[275] bibtex.pm:1653> INFO - LaTeX decoding ...
+[730] bibtex.pm:1471> INFO - Found BibTeX data source 'bib.bib'
+[788] Utils.pm:304> WARN - ISBN '978-1-78923-777-1 978-1-78923-778-8' in entry 'shahzad_overview_2018' is invalid - run biber with '--validate_datamodel' for details.
+[1092] Utils.pm:304> WARN - ISBN '978-3-030-32244-1 978-3-030-32245-8' in entry 'shen_medical_2019' is invalid - run biber with '--validate_datamodel' for details.
+[1215] Utils.pm:304> WARN - ISBN '978-3-642-83103-4 978-3-642-83101-0' in entry 'withers_innovations_1988' is invalid - run biber with '--validate_datamodel' for details.
+[1264] Utils.pm:304> WARN - ISBN '978-3-030-87201-4 978-3-030-87202-1' in entry 'de_bruijne_high-particle_2021' is invalid - run biber with '--validate_datamodel' for details.
+[1402] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'variable = shifted' with 'variable = non-ignorable'
+[1402] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'normalization = NFD' with 'normalization = prenormalized'
+[1402] Biber.pm:4084> INFO - Sorting list 'none/global//global/global' of type 'entry' with template 'none' and locale 'en-US'
+[1402] Biber.pm:4090> INFO - No sort tailoring available for locale 'en-US'
+[1453] bbl.pm:652> INFO - Writing 'main.bbl' with encoding 'UTF-8'
+[1534] bbl.pm:755> INFO - Output to main.bbl
+[1534] Biber.pm:128> INFO - WARNINGS: 4

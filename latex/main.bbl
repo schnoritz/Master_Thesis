@@ -3087,6 +3087,105 @@
       \verb https://www.frontiersin.org/articles/10.3389/fphar.2020.629266/full
       \endverb
     \endentry
+    \entry{withers_innovations_1988}{collection}{}
+      \name{editor}{2}{}{%
+        {{hash=49f9539a1cc6293198c7cec5da08d842}{%
+           family={Withers},
+           familyi={W\bibinitperiod},
+           given={H.\bibnamedelimi Rodney},
+           giveni={H\bibinitperiod\bibinitdelim R\bibinitperiod}}}%
+        {{hash=8d37e8d171a728fc0bbde69ecbaad593}{%
+           family={Peters},
+           familyi={P\bibinitperiod},
+           given={Lester\bibnamedelima J.},
+           giveni={L\bibinitperiod\bibinitdelim J\bibinitperiod}}}%
+      }
+      \list{location}{1}{%
+        {Berlin, Heidelberg}%
+      }
+      \list{publisher}{1}{%
+        {Springer Berlin Heidelberg}%
+      }
+      \strng{namehash}{8f53208d2e6b010fa5f90c22a0a624c6}
+      \strng{fullhash}{0b032a18640f21aa5136ceaea2a1ea75}
+      \strng{bibnamehash}{0b032a18640f21aa5136ceaea2a1ea75}
+      \strng{editorbibnamehash}{0b032a18640f21aa5136ceaea2a1ea75}
+      \strng{editornamehash}{8f53208d2e6b010fa5f90c22a0a624c6}
+      \strng{editorfullhash}{0b032a18640f21aa5136ceaea2a1ea75}
+      \field{sortinit}{1}
+      \field{sortinithash}{50c6687d7fc80f50136d75228e3c59ba}
+      \field{labelnamesource}{editor}
+      \field{labeltitlesource}{title}
+      \field{isbn}{978-3-642-83103-4 978-3-642-83101-0}
+      \field{langid}{english}
+      \field{series}{Medical Radiology}
+      \field{title}{Innovations in Radiation Oncology}
+      \field{urlday}{3}
+      \field{urlmonth}{12}
+      \field{urlyear}{2021}
+      \field{year}{1988}
+      \field{dateera}{ce}
+      \field{urldateera}{ce}
+      \verb{doi}
+      \verb 10.1007/978-3-642-83101-0
+      \endverb
+      \verb{file}
+      \verb Withers und Peters - 1988 - Innovations in Radiation Oncology.pdf:/Users/simongutwein/Zotero/storage/ZT629G6J/Withers und Peters - 1988 - Innovations in Radiation Oncology.pdf:application/pdf
+      \endverb
+      \verb{urlraw}
+      \verb http://link.springer.com/10.1007/978-3-642-83101-0
+      \endverb
+      \verb{url}
+      \verb http://link.springer.com/10.1007/978-3-642-83101-0
+      \endverb
+    \endentry
+    \entry{barendsen_dose_1982}{article}{}
+      \name{author}{1}{}{%
+        {{hash=c31acb896e4f2a38bc2315ffb48106e7}{%
+           family={Barendsen},
+           familyi={B\bibinitperiod},
+           given={G.W},
+           giveni={G\bibinitperiod}}}%
+      }
+      \strng{namehash}{c31acb896e4f2a38bc2315ffb48106e7}
+      \strng{fullhash}{c31acb896e4f2a38bc2315ffb48106e7}
+      \strng{bibnamehash}{c31acb896e4f2a38bc2315ffb48106e7}
+      \strng{authorbibnamehash}{c31acb896e4f2a38bc2315ffb48106e7}
+      \strng{authornamehash}{c31acb896e4f2a38bc2315ffb48106e7}
+      \strng{authorfullhash}{c31acb896e4f2a38bc2315ffb48106e7}
+      \field{sortinit}{1}
+      \field{sortinithash}{50c6687d7fc80f50136d75228e3c59ba}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{issn}{03603016}
+      \field{journaltitle}{International Journal of Radiation Oncology*Biology*Physics}
+      \field{langid}{english}
+      \field{month}{11}
+      \field{number}{11}
+      \field{shortjournal}{International Journal of Radiation Oncology*Biology*Physics}
+      \field{title}{Dose fractionation, dose rate and iso-effect relationships for normal tissue responses}
+      \field{urlday}{3}
+      \field{urlmonth}{12}
+      \field{urlyear}{2021}
+      \field{volume}{8}
+      \field{year}{1982}
+      \field{dateera}{ce}
+      \field{urldateera}{ce}
+      \field{pages}{1981\bibrangedash 1997}
+      \range{pages}{17}
+      \verb{doi}
+      \verb 10.1016/0360-3016(82)90459-X
+      \endverb
+      \verb{file}
+      \verb Barendsen - 1982 - Dose fractionation, dose rate and iso-effect relat.pdf:/Users/simongutwein/Zotero/storage/N86P35BT/Barendsen - 1982 - Dose fractionation, dose rate and iso-effect relat.pdf:application/pdf
+      \endverb
+      \verb{urlraw}
+      \verb https://linkinghub.elsevier.com/retrieve/pii/036030168290459X
+      \endverb
+      \verb{url}
+      \verb https://linkinghub.elsevier.com/retrieve/pii/036030168290459X
+      \endverb
+    \endentry
     \entry{lorentz_versuch_1937}{incollection}{}
       \name{author}{1}{}{%
         {{hash=e7fb2ef04ab651b092ea6739541b789c}{%
@@ -3566,8 +3665,8 @@
       \strng{editorbibnamehash}{81f1f44f81d3c2e6fb5f0aa50efb7373}
       \strng{editornamehash}{4f110dd29368d845106692a13451e731}
       \strng{editorfullhash}{81f1f44f81d3c2e6fb5f0aa50efb7373}
-      \field{sortinit}{2}
-      \field{sortinithash}{ed39bb39cf854d5250e95b1c1f94f4ed}
+      \field{sortinit}{3}
+      \field{sortinithash}{a37a8ef248a93c322189792c34fc68c9}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{abstract}{Monte-Carlo simulation of radiotherapy dose remains an extremely time-consuming task, despite being still the most precise tool for radiation transport calculation. To circumvent this issue, deep learning oﬀers promising avenues. In this paper, we extend {ConvLSTM} to handle 3D data and introduce a 3D recurrent and fully convolutional neural network architecture. Our model’s purpose is to infer a computationally expensive Monte Carlo dose calculation result for {VMAT} plans with a high number of particles from a sequence of simulations with a low number of particles. We benchmark our framework against other learning methods commonly used for denoising and other medical tasks. Our model outperforms the other methods with regards to several evaluation metrics used to assess the clinical viability of the predictions. Code is available at https://git.io/{JcbxD}.}
@@ -3821,8 +3920,8 @@
       \strng{authorbibnamehash}{f23ccc5160c62c7866172335b2c76e11}
       \strng{authornamehash}{9a497128db448eba9bbb6e27b1ed57ed}
       \strng{authorfullhash}{f23ccc5160c62c7866172335b2c76e11}
-      \field{sortinit}{3}
-      \field{sortinithash}{a37a8ef248a93c322189792c34fc68c9}
+      \field{sortinit}{4}
+      \field{sortinithash}{e071e0bcb44634fab398d68ad04e69f4}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{shorttitle}
       \field{abstract}{There is large consent that successful training of deep networks requires many thousand annotated training samples. In this paper, we present a network and training strategy that relies on the strong use of data augmentation to use the available annotated samples more eﬃciently. The architecture consists of a contracting path to capture context and a symmetric expanding path that enables precise localization. We show that such a network can be trained end-to-end from very few images and outperforms the prior best method (a sliding-window convolutional network) on the {ISBI} challenge for segmentation of neuronal structures in electron microscopic stacks. Using the same network trained on transmitted light microscopy images (phase contrast and {DIC}) we won the {ISBI} cell tracking challenge 2015 in these categories by a large margin. Moreover, the network is fast. Segmentation of a 512x512 image takes less than a second on a recent {GPU}. The full implementation (based on Caﬀe) and the trained networks are available at http://lmb.informatik.uni-freiburg.de/people/ronneber/u-net.}
@@ -4053,8 +4152,8 @@
       \strng{authorbibnamehash}{e213bf93074fd2dbfa9d1e82b9118fb3}
       \strng{authornamehash}{67fae8c7b2d9ca45db463bbf1488d262}
       \strng{authorfullhash}{e213bf93074fd2dbfa9d1e82b9118fb3}
-      \field{sortinit}{5}
-      \field{sortinithash}{5dd416adbafacc8226114bc0202d5fdd}
+      \field{sortinit}{6}
+      \field{sortinithash}{7851c86048328b027313775d8fbd2131}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{abstract}{There are two major types of uncertainty one can model. Aleatoric uncertainty captures noise inherent in the observations. On the other hand, epistemic uncertainty accounts for uncertainty in the model -- uncertainty which can be explained away given enough data. Traditionally it has been difficult to model epistemic uncertainty in computer vision, but with new Bayesian deep learning tools this is now possible. We study the benefits of modeling epistemic vs. aleatoric uncertainty in Bayesian deep learning models for vision tasks. For this we present a Bayesian deep learning framework combining input-dependent aleatoric uncertainty together with epistemic uncertainty. We study models under the framework with per-pixel semantic segmentation and depth regression tasks. Further, our explicit uncertainty formulation leads to new loss functions for these tasks, which can be interpreted as learned attenuation. This makes the loss more robust to noisy data, also giving new state-of-the-art results on segmentation and depth regression benchmarks.}

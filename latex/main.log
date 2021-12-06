@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.14159265-2.6-0.999992 (TeX Live 2020) (preloaded format=xelatex 2021.2.17)  26 NOV 2021 15:10
+This is XeTeX, Version 3.14159265-2.6-0.999992 (TeX Live 2020) (preloaded format=xelatex 2021.2.17)  6 DEC 2021 20:47
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -950,6 +950,8 @@ LaTeX Warning: Hyper reference `acro:PTV' on page viii undefined on input line 1
 
 Package acronym Info: Acronym PTV used in text but not spelled out in full in text on input line 105.
 [8] (./chapters/3_introduction.tex
+Package acronym Info: Label `acro:RT' newly defined as it shall be overridden
+although it is yet undefined on input line 3.
 Package acronym Info: Label `acro:HN' newly defined as it shall be overridden
 although it is yet undefined on input line 3.
 Package acronym Info: Label `acro:LN' newly defined as it shall be overridden
@@ -989,125 +991,141 @@ Underfull \hbox (badness 10000) in paragraph at lines 76--88
 
  []
 
-[6]) [7] (./chapters/5_previouswork.tex
+[6]) [7] (./chapters/5_relatedwork.tex
 Package acronym Info: Label `acro:LSTM' newly defined as it shall be overridden
 although it is yet undefined on input line 7.
-) [8] [9] (./chapters/6_materialmethods.tex
+
+Underfull \hbox (badness 10000) in paragraph at lines 2--30
+
+ []
+
+[8]) [9] (./chapters/6_materialmethods.tex
 File: images/UNET.pdf Graphic file (type pdf)
 <use images/UNET.pdf>
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <10.95> on input line 22.
+(Font)              <10.95> on input line 19.
  [10]
 Package acronym Info: Label `acro:FFF' newly defined as it shall be overridden
-although it is yet undefined on input line 48.
- [11]
+although it is yet undefined on input line 45.
 Package acronym Info: Label `acro:HU' newly defined as it shall be overridden
-although it is yet undefined on input line 68.
+although it is yet undefined on input line 65.
+ [11]
 File: images/masks.pdf Graphic file (type pdf)
 <use images/masks.pdf>
+ [12]
 Package acronym Info: Label `acro:HPC' newly defined as it shall be overridden
-although it is yet undefined on input line 101.
- [12] [13]
+although it is yet undefined on input line 98.
+ [13]
 Package acronym Info: Label `acro:GPU' newly defined as it shall be overridden
-although it is yet undefined on input line 123.
+although it is yet undefined on input line 120.
 Package acronym Info: Label `acro:RAM' newly defined as it shall be overridden
-although it is yet undefined on input line 123.
+although it is yet undefined on input line 120.
 File: images/dataloading.pdf Graphic file (type pdf)
 <use images/dataloading.pdf>
- [14] [15]
+ [14]
 File: images/gamma.pdf Graphic file (type pdf)
 <use images/gamma.pdf>
- [16]
-Underfull \hbox (badness 10000) in paragraph at lines 177--180
+ [15] [16]
+Underfull \hbox (badness 10000) in paragraph at lines 178--181
 
  []
 
 Package acronym Info: Label `acro:SSD' newly defined as it shall be overridden
-although it is yet undefined on input line 187.
+although it is yet undefined on input line 188.
 
-Underfull \hbox (badness 10000) in paragraph at lines 186--188
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 189--191
+Underfull \hbox (badness 10000) in paragraph at lines 187--190
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 197--200
+Underfull \hbox (badness 10000) in paragraph at lines 191--193
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 201--207
+Underfull \hbox (badness 10000) in paragraph at lines 199--202
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 203--211
 
  []
 
 [17]
-Underfull \hbox (badness 10000) in paragraph at lines 213--216
+Underfull \hbox (badness 10000) in paragraph at lines 217--220
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 217--221
+Underfull \hbox (badness 10000) in paragraph at lines 221--225
 
  []
 
 [18]) [19] (./chapters/7_results.tex
 Package acronym Info: Label `acro:DVH' newly defined as it shall be overridden
-although it is yet undefined on input line 7.
-File: images/dvh.pdf Graphic file (type pdf)
-<use images/dvh.pdf>
+although it is yet undefined on input line 8.
 File: images/gamma_pt0.pdf Graphic file (type pdf)
 <use images/gamma_pt0.pdf>
- [20]
+File: images/dvh.pdf Graphic file (type pdf)
+<use images/dvh.pdf>
+
+Overfull \hbox (3.50012pt too wide) in paragraph at lines 45--46
+ [][] 
+ []
+
+[20]
 File: images/gamma_mt1.pdf Graphic file (type pdf)
 <use images/gamma_mt1.pdf>
- [21] [22]
+ [21]
+Overfull \hbox (3.50012pt too wide) in paragraph at lines 83--84
+ [][] 
+ []
+
+[22]
 File: images/results_combined.pdf Graphic file (type pdf)
 <use images/results_combined.pdf>
+ [23]
 File: images/segs_weight_fz.pdf Graphic file (type pdf)
 <use images/segs_weight_fz.pdf>
- [23] [24]
+ [24] [25]
 File: images/quer.pdf Graphic file (type pdf)
 <use images/quer.pdf>
-) [25] [26] (./chapters/8_discussion.tex
+) [26] (./chapters/8_discussion.tex
 Underfull \hbox (badness 10000) in paragraph at lines 3--20
 
  []
 
-[27]
 File: images/mamma.pdf Graphic file (type pdf)
 <use images/mamma.pdf>
- [28]
+[27] [28]
 File: images/cross.pdf Graphic file (type pdf)
 <use images/cross.pdf>
- [29] [30]
+ [29]
 File: images/scale.pdf Graphic file (type pdf)
 <use images/scale.pdf>
-
+ [30]
 Underfull \hbox (badness 10000) in paragraph at lines 100--119
 
  []
 
-[31] [32]) [33] [34] (./chapters/9_conclusion.tex) [35] (./chapters/10_aknowledgement.tex) [36]
-Package biblatex Info: Delimiter 'nametitledelim' in context 'bib' already defined, overwriting on input line 133.
-Package biblatex Info: Delimiter 'nametitledelim' in context 'biblist' already defined, overwriting on input line 133.
- [37] [38]
-Overfull \hbox (1.53957pt too wide) in paragraph at lines 146--146
+[31] [32]) [33] (./chapters/9_conclusion.tex) [34] (./chapters/10_aknowledgement.tex) [35]
+Package biblatex Info: Delimiter 'nametitledelim' in context 'bib' already defined, overwriting on input line 134.
+Package biblatex Info: Delimiter 'nametitledelim' in context 'biblist' already defined, overwriting on input line 134.
+ [36] [37]
+Overfull \hbox (1.53957pt too wide) in paragraph at lines 147--147
 []\TU/lmr/m/n/12 Haruo Matsushita, Keiichi Jingu, Rei Umezawa, Takaya Yamamoto, Yojiro Ishikawa,
  []
 
-[39] [40] [41] [42] [43] [44] [45]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 153.
- [46]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 153.
+[38] [39] [40] [41] [42] [43] [44]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 154.
+ [45]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 154.
  (./main.aux)
-Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 153.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 153.
+Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 154.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 154.
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: AA6901B25F59B201467FEBDDE9A29ABE;2608.
+(rerunfilecheck)             Checksum: B5CC31F9FA4379A85C8BBF2EE3319293;2687.
 
 
 LaTeX Warning: There were undefined references.
@@ -1117,12 +1135,12 @@ Package logreq Info: Writing requests to 'main.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 22627 strings out of 479418
- 430242 string characters out of 5884585
- 1199515 words of memory out of 5000000
- 39813 multiletter control sequences out of 15000+600000
+ 22637 strings out of 479418
+ 430521 string characters out of 5884585
+ 1201758 words of memory out of 5000000
+ 39823 multiletter control sequences out of 15000+600000
  536478 words of font info for 53 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
  47i,14n,52p,3360b,6261s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on main.xdv (55 pages, 1140508 bytes).
+Output written on main.xdv (54 pages, 1156244 bytes).

@@ -1,37 +1,38 @@
 Cancer is one of the most contributing diseases leading to death under the age of 70 years in most countries \cite{bray_everincreasing_2021}. 
 A multitude of modalities exists for cancer treatment. 
-Radiotherapy is a widespread and accessible method throughout the world \cite{shahzad_overview_2018} and is applied to a multitude of tumor entities such as prostate~\cite{geinitz_3d_2005, nguyen_curative_2005, budiharto_external_nodate}, breast~\cite{ragaz_adjuvant_1997, lena_combined_nodate, taylor_estimating_2017}, \ac{HN}~\cite{datta_head_1990, bhide_advances_2010, castadot_adaptive_2010, morgan_adaptive_2020}, liver~\cite{hoyer_radiotherapy_2012, wulf_stereotactic_2001, wulf_stereotactic_2006, sterzing_stereotactic_2014, witt_mri-guided_2020} and \ac{LN} cancer~\cite{degro_degro_2014, matsushita_stereotactic_2018, mikell_postoperative_2015, lundstedt_long-term_2012, jereczek-fossa_is_2015}.
-On solid and delimited tumors it is mostly applied after surgical tumor resection.
-The target volume, which is defined by an oncologist, is radiated during a radio treatment session.
-A linear accelerator is used as the source for the ionizing particles, in this case photons.
-Due to the decreased repair capabolities of cancerous cells, compared to healty tissue, when exposed to ionizing radiation Tumor cells have decreased repair capabilities compared to healty a radiotherapy is split into fractions, minimizing the bad side effect while destroying cancerous cells in the target volume.
-In combination with different angles from where the photons are radiated an optimal radiation dose inside the target volume can be achieved while sparing \ac{OAR}. 
-There exist multiple application modalities of radiotherapy that depend on the tumor entity, intitutional guidelines and personal preference.
+The application of \Ac{RT} is widespread and accessible throughout the world~\cite{shahzad_overview_2018} and is used for a multitude of tumor entities such as prostate~\cite{geinitz_3d_2005, nguyen_curative_2005, budiharto_external_nodate}, breast~\cite{ragaz_adjuvant_1997, lena_combined_nodate, taylor_estimating_2017}, \ac{HN}~\cite{datta_head_1990, bhide_advances_2010, castadot_adaptive_2010, morgan_adaptive_2020}, liver~\cite{hoyer_radiotherapy_2012, wulf_stereotactic_2001, wulf_stereotactic_2006, sterzing_stereotactic_2014, witt_mri-guided_2020} and \ac{LN} cancer~\cite{degro_degro_2014, matsushita_stereotactic_2018, mikell_postoperative_2015, lundstedt_long-term_2012, jereczek-fossa_is_2015}.
+\acs{RT} is most applied on solid, local and delimited tumors after surgical resection.
+The target volume, which is defined by an oncologist, is irradiated with ionizing radation during several radio treatment sessions.
+Radiation is generated using a medical linear accelerator. Most applications use photons as their initial ionizing radiation.
+Due to the decreased repair capabilities of cancerous cells, compared to healty tissue, when exposed to ionizing radiation the \acs{RT} is split into fractions, minimizing the bad side effect while destroying cancerous cells in the target volume.
+In combination with different angles from where the photons are irradiated an optimal radiation dose inside the target volume can be achieved while sparing \ac{OAR}. 
+There exist multiple application modalities of \ac{RT} that depend on the tumor site, institutional guidelines and personal preference.
 With the \ac{IMRT} treatment modality, which is the most applied treatment modality, radiation is applied from multiple specific angles around the patient~\cite{cho_intensity-modulated_2018}.
 Prior to a patient's radiation treatment, a treatment plan is created by an oncologist in conjunction with a treatment planner or medical physicist.
-Due to the varying anatomy of patients, individualization of treatment plans is critical to achieve an optimal therapeutic outcome. 
-The goal of radio treatment planning is to optimally tailor treatment to the patient's individual tumor location, shape and environment.
-To adapt for different shapes of tumors the shape of the beam can be changed using lead aperatures inside the accelerator head.\\
-Individualization of treatment plans is not only to optimally radiate the target volume but to spare surrounding \ac{OAR}.
-The general workflow for treatment plan creation consists of \ac{CT} aquisition, tumor volume and \acs{OAR} delineation and an iterative process of treatment planning involving the onoclogist and the treatment planner. 
-Interative planning can take up to multiple days until a convinient treatment plan is created.\\
-The newest development regarding radiotherapy is the incorparation of an \ac{MRI} modality into an linear accelerator called MR-Linac. 
+Due to the varying anatomy of patients, individualization of treatment plans is crucial to achieve an optimal therapeutic outcome. 
+The goal of \acs{RT} planning is to optimally tailor treatment to the patient's individual tumor location, shape and environment.
+To adapt for different shapes of tumors shape and weight of each beam can be changed using lead aperatures inside the accelerator head.\\
+Individualization of treatment plans is not only needed to optimally irradiate the target volume but to spare surrounding \ac{OAR}.
+The general workflow for treatment plan creation consists of a \ac{CT} aquisition prior to treatment followed by tumor volume and \acs{OAR} delineation and an iterative process of treatment planning involving the onoclogist and the treatment planner. 
+Iterative planning can take up to several days to create an convenient treatment plan.\\
+The newest development regarding \ac{RT} is the incorparation of an \ac{MRI} device into a linear accelerator, called MR-Linac. 
 This enables live imaging before or during the treatment of the patient.
-Offering a lot of opportunities such a quantitative \acs{MRI} or treatment supervision and online adaption of treatment plans, multiple challenges have to be tackled to use the MR-Linac to its full potential. 
-Current research effort is going towards the development of the needed software tools to enable an MR-only workflow for radio treatment planning, which makes the \acs{CT} reduntant in the treatment planning pipeline. 
-Regarding an MR-only treatment plan workflow recent work involves the creation of pseudo CT images~\cite{han_mr-based_2017, wolterink_deep_2017, dinkla_mr-only_2018}, delineation of \acs{OAR}~\cite{kazemifar_segmentation_2018, liang_deep-learning-based_2019, shen_medical_2019}, plan optimization~\cite{fan_automatic_2019, liu_deep_2019} and dose estimation algorithms~\cite{javaid_mitigating_2019}.
-Ultimately this should lead to a supervised automated real-time treatment plan adation, which enables the treatment plan to be automatically adapted, when the patients anatomy changes between or during fractions.
+Offering a lot of opportunities such as quantitative \acs{MRI} or treatment supervision and online adaption of treatment plans. However, many challenges still need to be overcome to fully exploit the potential of the MR-Linac.
+Current research effort is focusing on the development of the needed software tools to enable an MR-only workflow for \acs{RT} planning, which makes the \acs{CT} reduntant in the treatment planning pipeline. 
+Regarding an MR-only treatment plan workflow recent work involves the creation of pseudo CT images~\cite{han_mr-based_2017, wolterink_deep_2017, dinkla_mr-only_2018}, delineation of \acs{OAR}~\cite{kazemifar_segmentation_2018, liang_deep-learning-based_2019, shen_medical_2019}, plan optimization~\cite{fan_automatic_2019, liu_deep_2019} and dose calculation algorithms~\cite{javaid_mitigating_2019}.
+Ultimately this should lead to a supervised automated real-time treatment plan adaption, which enables the treatment plan to be automatically adapted, when the patients anatomy changes between or during fractions.
 As previously mentioned the entire process of treatment planning is a time consuming and also tedious task to do. 
-Therefore is the current research is directed to improve time consumption and ultimately automate most task to be applicable in real-time.
-An important part in the pipeline consists of the \ac{DD} calculation, which is needed for the treatment planning software, aswell as dose verficication processes.
+Therefore, current research is aiming towards the improvement of time consumption and ultimately automating most tasks to be applicable in real-time.
+An important part in the pipeline consists of the \ac{DD} calculation, which is needed for the treatment planning software, as well as dose verification processes.
 Currently \acs{DD} calculation algorithms are based on \ac{MC} simulations~\cite{jabbari_review_2011}. 
-To achieve accurate results, a multitude of particle histories, in the order of $10^7 to 10^{11}$ particles, are simulated, taking into account the patients anatomie and accelerator settings.
+To achieve accurate results, a multitude of particle histories, in the order of $10^7 - 10^{11}$ particles, are simulated, taking into account the patients anatomy and accelerator settings.
 In order to obtain accurate results, prior knowledge of the interaction processes is required, which are very well described in the literature.
 \acs{DD} calculation algorithms with \acs{MC} yield very accurate results. 
 Disadvantage of these algorithms is that due to the large number of particles required for accurate results, simulation times can become increasingly large with the required accuracy requirements.
 Even in times of parallelization and GPU acceleration techniques time consumption still poses a problem.
 To enable real time MR-only treatment planning, the need for a fast and accurate dose estimation tool arises.\\
 The use of \ac{DL} has shown to be promising in a multitude of applications in \ac{CV} tasks in medicine~\cite{esteva_dermatologist-level_2017,cheng_computer-aided_2016,cicero_training_2017,iizuka_deep_2020,poplin_prediction_2018}.
-Since \acs{DD} is based on CT images aquired from the patients anatomy and the accelerator settings, it is promising applying \acs{DL} to overcome the challenges of time consuming simulations with \acs{MC}.\\
-The aim of this paper is to improve the state of the art dose estimation tools involving \acs{DL} and evaluate robustness aswell as the generalization capabilities.
-We do so by applying a 3D-UNet based \acs{DL} solution to a multitude of tumor entities and treatment plans and evalute its accuracy in dose prediction.
+Since \acs{DD} is based on CT images aquired from the patients anatomy and the accelerator settings, it seems promising to apply \acs{DL} to overcome the challenges of time consuming simulations with \acs{MC}.\\
+The aim of this project was to improve the state of the art dose estimation tools involving \acs{DL} and evaluate robustness aswell as the generalization capabilities.
+To investigate the applicability of \acs{DL} for \acs{DD} calculation we trained a 3D-UNet with training data combining linear accelerator settings as well as patient anatomies to yield 3D dose distributions. 
+We then evalutated the accuracy of said predictions by applying the network on a multitude of tumor sites. 
