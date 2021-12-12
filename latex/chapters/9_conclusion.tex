@@ -1,1 +1,10 @@
-Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
+
+This project aimed at improving upon the state-of the art solution for dose calculation in reasearch and clinical settings and replacing \acs{MC} simulations with faster \acs{DL} solutions.
+Based on previously developed tools for dose estimation using \acs{DL} we presented a 3D-UNet that receives volumetric input data combining information of the patient's anatomy and the \acs{RT} plan.
+Prediction times of single segments were short with approximately 3 seconds per segment.
+We showed that simplified approaches of single tumor site data do not provide sufficient training data variablity to reach the desired level of accuracy and robustness.
+The inclusion of training data from a wider variety of tumor sites and therefore multiple body regions increased the models accuracy for unseen test cases while maintining high accuracy for previously included tumor sites.
+The network reached mean gamma passrates well above 90\% with 99.2~±~1.0\%, 97.6~±~1.0\% and 96.0~±~5.8\% for prostate, liver and \acs{LN} cancer \acs{RT} plans respectively.\\
+Altough we could increase the robustness of predictions for \acs{DD}, results and interpretability of the network are not sufficient to be used in a clinical setting.
+The network did not reach the desired gamma passrates for breast and \acs{HN} \acs{RT} plans with mean values of 83.6~±~10.9\% and 88.8~±~8.6\% respectively. 
+We therefore provided a set of future improvements and new approaches, including the deviation from patient data to fully artificially created training data and new network architectures involving a \acs{LSTM} networks for sequential dose prediction along the beam axis.\\

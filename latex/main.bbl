@@ -4012,65 +4012,52 @@
     \endentry
     \entry{low_technique_1998}{article}{}
       \name{author}{4}{}{%
-        {{hash=acf0cad0360d6a2e994312cff7dc4ba5}{%
+        {{hash=4b250234b585cf8a2be6afc0eabb6164}{%
            family={Low},
            familyi={L\bibinitperiod},
-           given={Daniel\bibnamedelima A.},
+           given={D.\bibnamedelimi A.},
            giveni={D\bibinitperiod\bibinitdelim A\bibinitperiod}}}%
-        {{hash=96de7412d2ff799189d7dad1795de2cc}{%
+        {{hash=5b955c7956d6b749fa13db09d79b757c}{%
            family={Harms},
            familyi={H\bibinitperiod},
-           given={William\bibnamedelima B.},
+           given={W.\bibnamedelimi B.},
            giveni={W\bibinitperiod\bibinitdelim B\bibinitperiod}}}%
-        {{hash=90d2b7bf57445ff8ac4f7bd734e76802}{%
+        {{hash=18f1356f64eb1402bc540a7d03e3d28b}{%
            family={Mutic},
            familyi={M\bibinitperiod},
-           given={Sasa},
+           given={S.},
            giveni={S\bibinitperiod}}}%
-        {{hash=8881807286a343d0ed2250d5a87ace57}{%
+        {{hash=52ad46450c55bacabf71124fc19fe308}{%
            family={Purdy},
            familyi={P\bibinitperiod},
-           given={James\bibnamedelima A.},
+           given={J.\bibnamedelimi A.},
            giveni={J\bibinitperiod\bibinitdelim A\bibinitperiod}}}%
       }
-      \strng{namehash}{5b0615feb2f88ed8cef6691282e05e4c}
-      \strng{fullhash}{24093fee48a0575795db62085d865848}
-      \strng{bibnamehash}{24093fee48a0575795db62085d865848}
-      \strng{authorbibnamehash}{24093fee48a0575795db62085d865848}
-      \strng{authornamehash}{5b0615feb2f88ed8cef6691282e05e4c}
-      \strng{authorfullhash}{24093fee48a0575795db62085d865848}
-      \field{sortinit}{4}
-      \field{sortinithash}{e071e0bcb44634fab398d68ad04e69f4}
+      \strng{namehash}{7f8fc3d9fcc7f25226f11e01f35b5176}
+      \strng{fullhash}{7fd932399a07abeec2b8fbe54122d9aa}
+      \strng{bibnamehash}{7fd932399a07abeec2b8fbe54122d9aa}
+      \strng{authorbibnamehash}{7fd932399a07abeec2b8fbe54122d9aa}
+      \strng{authornamehash}{7f8fc3d9fcc7f25226f11e01f35b5176}
+      \strng{authorfullhash}{7fd932399a07abeec2b8fbe54122d9aa}
+      \field{sortinit}{5}
+      \field{sortinithash}{5dd416adbafacc8226114bc0202d5fdd}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
-      \field{issn}{00942405}
+      \field{abstract}{The commissioning of a three-dimensional treatment planning system requires comparisons of measured and calculated dose distributions. Techniques have been developed to facilitate quantitative comparisons, including superimposed isodoses, dose-difference, and distance-to-agreement ({DTA}) distributions. The criterion for acceptable calculation performance is generally defined as a tolerance of the dose and {DTA} in regions of low and high dose gradients, respectively. The dose difference and {DTA} distributions complement each other in their useful regions. A composite distribution has recently been developed that presents the dose difference in regions that fail both dose-difference and {DTA} comparison criteria. Although the composite distribution identifies locations where the calculation fails the preselected criteria, no numerical quality measure is provided for display or analysis. A technique is developed to unify dose distribution comparisons using the acceptance criteria. The measure of acceptability is the multidimensional distance between the measurement and calculation points in both the dose and the physical distance, scaled as a fraction of the acceptance criteria. In a space composed of dose and spatial coordinates, the acceptance criteria form an ellipsoid surface, the major axis scales of which are determined by individual acceptance criteria and the center of which is located at the measurement point in question. When the calculated dose distribution surface passes through the ellipsoid, the calculation passes the acceptance test for the measurement point. The minimum radial distance between the measurement point and the calculation points (expressed as a surface in the dose-distance space) is termed the gamma index. Regions where gamma > 1 correspond to locations where the calculation does not meet the acceptance criteria. The determination of gamma throughout the measured dose distribution provides a presentation that quantitatively indicates the calculation accuracy. Examples of a 6 {MV} beam penumbra are used to illustrate the gamma index.}
+      \field{issn}{0094-2405}
       \field{journaltitle}{Medical Physics}
-      \field{langid}{english}
-      \field{month}{5}
       \field{number}{5}
-      \field{shortjournal}{Med. Phys.}
+      \field{shortjournal}{Med Phys}
       \field{title}{A technique for the quantitative evaluation of dose distributions}
-      \field{urlday}{16}
-      \field{urlmonth}{3}
-      \field{urlyear}{2021}
       \field{volume}{25}
       \field{year}{1998}
       \field{dateera}{ce}
-      \field{urldateera}{ce}
       \field{pages}{656\bibrangedash 661}
       \range{pages}{6}
       \verb{doi}
       \verb 10.1118/1.598248
       \endverb
-      \verb{file}
-      \verb gamma_index_paper.pdf:/Users/simongutwein/Studium/Masterarbeit/Paper/gamma_index_paper.pdf:application/pdf
-      \endverb
-      \verb{urlraw}
-      \verb http://doi.wiley.com/10.1118/1.598248
-      \endverb
-      \verb{url}
-      \verb http://doi.wiley.com/10.1118/1.598248
-      \endverb
+      \keyw{Gamma Rays,Models,Theoretical,Phantoms,Imaging,Photons,Radiotherapy Dosage,Radiotherapy Planning,Computer-Assisted}
     \endentry
     \entry{neishabouri_long_2020}{article}{}
       \name{author}{4}{}{%
@@ -4102,8 +4089,8 @@
       \strng{authornamehash}{06bf7dde2b92b85f6c51836847908c7f}
       \strng{authorfullhash}{c7b208f6ff58267c43ebab0d11673012}
       \field{extraname}{2}
-      \field{sortinit}{5}
-      \field{sortinithash}{5dd416adbafacc8226114bc0202d5fdd}
+      \field{sortinit}{6}
+      \field{sortinithash}{7851c86048328b027313775d8fbd2131}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{abstract}{A novel dose calculation approach was designed based on the application of {LSTM} network that processes the 3D patient/phantom geometry as a sequence of 2D computed tomography input slices yielding a corresponding sequence of 2D slices that forms the respective 3D dose distribution. {LSTM} networks can propagate information effectively in one direction, resulting in a model that can properly imitate the mechanisms of proton interaction in matter. The study is centered on predicting dose on a single pencil beam level, avoiding the averaging effects in treatment plans comprised of thousands pencil beams. Moreover, such approach allows straightforward integration into today’s treatment planning systems’ inverse planning optimization process. The ground truth training data was prepared with Monte Carlo simulations for both phantom and patient studies by simulating different pencil beams impinging from random gantry angles through the patient geometry. For model training, 10’000 Monte Carlo simulations were prepared for the phantom study, and 4’000 simulations were prepared for the patient study. The trained {LSTM} model was able to achieve a 99.29 \% gamma-index pass rate ([0.5\%, 1 mm]) accuracy on the set-aside test set for the phantom study, and a 99.33 \% gamma-index pass rate ([0.5\%, 2 mm]) for the set-aside test set for the patient study. These results were achieved for each pencil beam in 6-23 ms. The average Monte Carlo simulation run-time using Topas was 1160 s. The generalization of the model was veriﬁed by testing for 5 previously unseen lung cancer patients. {LSTM} networks are well suited for proton therapy dose calculation tasks. However, further work needs to be performed to generalize the proposed approach to clinical applications, primarily to be implemented for various energies, patient sites, and {CT} resolutions/scanners.}

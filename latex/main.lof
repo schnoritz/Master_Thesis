@@ -1,7 +1,7 @@
 \boolfalse {citerequest}\boolfalse {citetracker}\boolfalse {pagetracker}\boolfalse {backtracker}\relax 
 \babel@toc {english}{}
 \defcounter {refsection}{0}\relax 
-\contentsline {figure}{\numberline {1}{\ignorespaces CT image of a prostate cancer patient including the dose distribution of the respective treatment plan shown as iso dose lines. Areas of high dose deposition are displayed in red and orange. Contours of \acs {OAR} as well as \acs {PTV} are displayed in white. \relax }}{4}{figure.caption.14}%
+\contentsline {figure}{\numberline {1}{\ignorespaces CT image of a prostate cancer patient including the dose distribution of the respective treatment plan shown as iso dose lines. Areas of high dose deposition are displayed in red and orange. Contours of OAR as well as PTV are displayed in white. \relax }}{4}{figure.caption.14}%
 \defcounter {refsection}{0}\relax 
 \contentsline {figure}{\numberline {2}{\ignorespaces Basic scheme of adapted network architecture with a downsampling ratio of 8 and a maximum depth of 512 in the bottleneck layer. Input dimensions: $5 \times W \times H \times D$; Output dimensions: $1 \times W \times H \times D$\relax }}{10}{figure.caption.18}%
 \defcounter {refsection}{0}\relax 
@@ -17,11 +17,11 @@
 \defcounter {refsection}{0}\relax 
 \contentsline {figure}{\numberline {8}{\ignorespaces Dose prediction example on isocentric slice on breast cancer patient from test cohort with prostate data only trained model. From left to right: target dose; dose prediction; gamma map for respective slice with a gamma pass rate of 60.6\%\relax }}{22}{figure.caption.33}%
 \defcounter {refsection}{0}\relax 
-\contentsline {figure}{\numberline {9}{\ignorespaces Gamma pass rate comparison for single segments (left) and summed up plans (right) between prostate-only and mixed entity trained models. Boxplot are displayed inside respecitve violin plots. Individual analysis of mixed entity set, composed of liver, mamma and \acs {HN} displayed on top plot. Significance level was assessed using Wilcoxon singed-rank test with significance level p~<~0.05~(*) p~<~0.01~(**) and p~<~0.001~(***). \relax }}{23}{figure.caption.35}%
+\contentsline {figure}{\numberline {9}{\ignorespaces Gamma pass rate comparison for single segments (left) and summed up plans (right) between prostate-only and mixed entity trained models. Boxplot are displayed inside respecitve violin plots. Individual analysis of the mixed entity set, composed of liver, mamma and \acs {HN} is displayed on top plot. Significance level was assessed using Wilcoxon singed-rank test with significance level p~<~0.05~(*), p~<~0.01~(**) and p~<~0.001~(***). \relax }}{23}{figure.caption.35}%
 \defcounter {refsection}{0}\relax 
 \contentsline {figure}{\numberline {10}{\ignorespaces Prediction accuracy of each segment with respect to field size for prostate only and mixed trained model. Relative occurence of discretized field size bin is displayed in the background.\relax }}{24}{figure.caption.36}%
 \defcounter {refsection}{0}\relax 
-\contentsline {figure}{\numberline {11}{\ignorespaces Coronal, sagital and transversal view of the dose distributions for 100, 200 and 300 px depth in the phantom volume\relax }}{26}{figure.caption.40}%
+\contentsline {figure}{\numberline {11}{\ignorespaces Coronal, sagital and transversal view of the dose distributions for 100, 200 and 300 px depth in the phantom volume.\relax }}{26}{figure.caption.40}%
 \defcounter {refsection}{0}\relax 
 \contentsline {figure}{\numberline {12}{\ignorespaces Exemplary images of target dose distribution of tangential segments on breast cancer patients with very small gamma-passrates (top) and the respective dose prediction from the prostate only trained model (bottom).\relax }}{28}{figure.caption.41}%
 \defcounter {refsection}{0}\relax 

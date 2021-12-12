@@ -1,19 +1,20 @@
 \subsection{Single entity training}\label{ssec:SET}
 
-We have shown that training the proposed 3D-UNet with the given training algorithm and dataloading scheme can reach very good accuracy concering the provided entity. 
-It reached very high dose conformaty for single tested segments aswell as entire treatment plan dose distributions with mean gamma passrates of 94.4\% ± 6.0\% and 99.1\% ± 1.3\% respectively. 
-DVH analysis, depicted in \autoref{fig:dvh}, also shows very good agreement in high dose areas, such as CTV and PTV, aswell as \acs{OAR} such as rectum or femur heads.
-Accuracy in and DVH conformality of \acs{OAR} of interest for quality assurance of treatment plans indicate that the proposed network can be used as a secondary dose engine or as a dose verifcation tool.
-Dose prediction is highly accurate for the entirety of prostate plans and segments with different field sizes, shapes, irradiation angles, and patient anatomies.
-With prediction times of 3 seconds per segment, the goal of real-time dose prediction is approached. 
-Further developments towards the use of parallelization, the inference time could be further reduced. 
-Nonetheless, 3 seconds is a significant improvement over 4 hours of \acs{MC} simulation time on an \acs{HPC} solution that already benefits from paralization using the EGSnrc software tool.\\
-In contrast to other previous works such as \citeauthor{kontaxis_deepdose_2020}~\cite{kontaxis_deepdose_2020}, that only included segments of five predefined beam angles into the training data, we did not limit us to specific beam angles but rather took all provided angles from the planning system.
-We further improved on their work by increasing the voxel size in sagital and coronal directions to increase the resolution of the dose distributions and to be able to achieve higher accuracy in high density gradients. \\
-Testing against not included tumor sites have shown the limits of this single entity trained approach. 
+We have shown that training the proposed 3D-UNet with the given training algorithm and dataloading scheme can reach very good accuracy concering the provided tumor site. 
+It reached very high dose conformality for single tested segments as well as for entire treatment plans with mean gamma passrates of 94.4\% ± 6.0\% and 99.1\% ± 1.3\% respectively. 
+DVH analysis, (cf.~\autoref{fig:dvh}), confirms the high level of accuracy especially in high dose areas, such as CTV and PTV, as well as \acs{OAR} such as rectum or femoral heads.
+Accuracy and DVH conformality of \acs{OAR} of interest for quality assurance of treatment plans indicate that the proposed network might be used as a secondary dose engine or as a dose verifcation tool.
+Dose prediction is highly accurate for prostate plans and segments with different field sizes, shapes, irradiation angles, and patient anatomies.
+With prediction times of approximately 3 seconds per segment, the goal of real-time dose prediction is approached. 
+Further developments could aim at parallelizing predictions, which would further reduce inference times. 
+Nonetheless, 3 seconds is a significant improvement over 4 hours of \acs{MC} simulation time on an \acs{HPC} solution that already benefits from parallelization using the EGSnrc software tool.\\
+In contrast to other previous works such as \citeauthor{kontaxis_deepdose_2020}~\cite{kontaxis_deepdose_2020}, that only included segments of five predefined beam angles into the training data, we did not limit ourselfs to specific beam angles but rather took all provided angles from the planning system.
+We further improved the spatial resolution by increasing the voxel size in sagital and coronal directions.
+This enabled us to increase prediction accuracy in high density gradients.\\
+Testing against omitted tumor sites showed the limits of this single entity trained approach. 
 Rapidly decreasing gamma passrates with a lowest passrate of 1.9\% for a breast cancer segment were reached. 
-Particularly low gamma-pass rates were obtained at tangential irradiation angles, where the radiation field passed only through part of the patients anatomy, in our case the breast.
-Beamshape and orientation of the predicted dose are correct, but the network fails at predicting the respective value of each voxel.
+Particularly low gamma pass rates were obtained at tangential irradiation angles, where the radiation field passed only through part of the patients anatomy, in our case the breast.
+Beamshape and orientation of the predicted dose are correct, but the network fails at predicting the respective dose value of each voxel.
 Predicted values are significantly smaller than the desired target value.  
 Three poorly predicted segments that intersect only parts of the breast are depicted in \autoref{fig:mamma}.
 We assume that due to the offset of the radiation target and the associated larger distance between the target and the central beam line, the effects of the distance mask for the central beam line are overweighted and thus reduce the predicted value.\\
@@ -26,17 +27,17 @@ We assume that due to the offset of the radiation target and the associated larg
 \end{figure}
 
 Decreasing performance for tumor sites not included into the training data is most probably occuring due to the increased complexity of unseen anatomies. 
-The position of the prostate and the surrounding \acs{OAR} is quite defined inside the humans anatomy irrespective of the individual patient. 
-Therefore prostate cancer treatment plans have a very similar isocenter, aswell as the majority of highly contributing segments have similiar shape and sizes.
-In contrast \acs{HN}, \acs{LN} or even mamma treatment plans have a wider range of segment shapes and fieldsizes (depicted in \autoref{tab:patients}: row fieldsizes). 
+The position of the prostate and the surrounding \acs{OAR} is quite defined inside the human anatomy irrespective of the individual patient. 
+Therefore prostate cancer treatment plans have a very similar isocenter, as well as the majority of highly contributing segments have similiar shape and sizes.
+In contrast \acs{HN}, \acs{LN} or even mamma treatment plans have a wider range of segment shapes and field sizes (cf. \autoref{tab:patients}). 
 When looking at the anatomy of a patients lower abdomen the intersubject variation in \acs{SSD} is small compared to an inter-entity comparison to \acs{HN}. 
-In \autoref{fig:crosssection} three anatomies from prostate, \acs{HN} and breast cancer are depicted, with the respecitve \ac{HU} distribution in a slice throught the isocentric slice.
-The variety in \acs{HU} in a prostate cancer patient is comparable with the one of a water phantom, it has a ``box-like'' shape, while crossections from \acs{HN} and breast cancer show larger variation in width of patient contour as well as \acs{HU} value variation inside the patients anatomy.
+In \autoref{fig:crosssection} three anatomies from prostate, \acs{HN} and breast cancer are depicted, with the respecitve \ac{HU} distribution in a slice through the isocenter.
+The small variation in \acs{HU} in a prostate cancer patients crosssection is comparable with the one of a water phantom, it has a ``box-like'' shape, while crosssections from \acs{HN} and breast cancer show larger variation in width of patient contour as well as \acs{HU} value variation inside the patient's anatomy.
 Due to increased variation in \acs{SSD} on \acs{HN} patient anatomies compared to prostate patients the impact of the distance-squared law is significantly higher.
-We assume that the network is not able to correctly map the impact of the squared distance-law on the dose distribution due to the small variatzion in \acs{SSD} when using only prostate training data.\\
-There exist a multitude of radiation protocols, which vary depending on the insitutional guidelines aswell as applications or accelerator type. 
-These different treatment modalities have inherent a variety of different parameters, such as radiation angles, field sizes, and beam shapes.
-Therefore a robust dose prediction inrrespective of the target volume, beam angle and \acs{MLC} shapes is of crucial importance, and a careful veryfication process is needed. 
+We assume that the network is not able to correctly map the impact of the squared distance-law on the dose distribution due to the small variatzion in \acs{SSD} when using only prostate training data.
+There exists a multitude of radiation protocols, which vary depending on the insitutional guidelines as well as applications or accelerator type. 
+These different treatment modalities inherent a variety of different parameters, such as radiation angles, field sizes, and beam shapes.
+Therefore a robust dose prediction irrespective of the target volume, beam angle and \acs{MLC} shapes is of crucial importance, and a careful veryfication process is needed. 
 
 \begin{figure}
     \centering
@@ -50,33 +51,33 @@ Therefore a robust dose prediction inrrespective of the target volume, beam angl
 \subsection{Mixed entity training}
 
 The number of patches until convergence was lower for the mixed entity model than for the prostate only trained model, at $5.0 \times 10^7$ compared to $6.7 \times 10^7$ patches.
-This suggests that the model learns the important aspects of dose deposition more quickly with the greater diversity of training data than with a relatively homogeneously distributed training data set. 
-Model performance and dose prediction accuracy increased for the newly added entities aswell as the \acs{LN} segments aswell as plans. 
+This suggests that the model learns the important aspects of dose deposition more quickly with greater diversity of training data than with a relatively homogeneously distributed training data set. 
+Model performance and dose prediction accuracy increased for the newly added entities and the \acs{LN} segments as well as plans. 
 Slight decreases in model accuracy regarding single segments of prostate treatment plans are noticed. 
-This is most likely due to the increased generalization of the model and the decreased adaption to prostate plans only.
+This is most likely due to the increased generalization of the model and the decreased adaptation to prostate plans only.
 Nevertheless the increased generalization leads to a better perfomance in the mean for the entire prostate plans compared to the prostate-only trained model.
 We have observed that the mean single segment prediction accuracies for all entities are smaller than the mean plan prediction accuracies.
-As depicted in th lower plot of \autoref{fig:weight_fz_analysis}, the higher weighted segments tend to be predicted better for both models leading to the effect of better predicted plans.\\
-Predictions for breast cancer segments are particularly bad for the prostate-only aswell as the mixed-entity trained model. 
+As depicted in the lower plot of \autoref{fig:weight_fz_analysis}, the higher weighted segments tend to be predicted better for both models leading to the effect of better predicted plans.\\
+Predictions for breast cancer segments are particularly bad for the prostate-only as well as the mixed-entity trained model. 
 Beside the challenging anatomy of air cavities as well as tangential fields only partially hitting the patients body, the internal treatment protocol has changed between training and target dataset. 
 Breast cancer treatment plans from the test dataset are significantly higher modulated, with 23.7 ± 5.6 and 83.8 ± 15.3 segments per plan for old and new institutional guidelines respectively. 
 This higher modulation results in more smaller segments and more complex \acs{MLC} configurations.
 Nevertheless the newly adapted model showed promising results for all tested entities regarding entire plan dose distributions.
-As the model needs specific accelerator settings to predict a dose for a specific segment, this model is not usable as a primary dose engine for a radio treatment planning system.
+As the model needs specific accelerator settings to predict a dose for a specific segment, this model is not usable as a primary dose engine for a \acs{RT} planning system.
 However due to its promising accuracy concerning DVH parameters and its short inference times, it may be promising as an online dose verification or a secondary dose engine after further development.
 
 \subsection{Dose deposition physics}
 
-Water phantoms are used clinically for dose verification and accelerator constancy testing.
-They are not only the most basic model of a target volume, but dose distributions in them are very well described in literature.
+Water phantoms are used clinically for dose verification and accelerator quality assurance.
+They are not only the most basic model of a target volume, but dose distributions in water are very well described in literature.
 Due to the homogenous density distribution inside the phantom physical processes of dose distribution can be analyzed very well with a water phantom.
-We therefore choose a synthetic water phantom to assess the capability of the model to learn the underlying phyisics of the dose deposition process.
+We therefore choose a synthetic water phantom to assess the capability of the model to learn the underlying physics of the dose deposition process.
 Dose curves were resembled by the networks prediction quiet well, dose peaks at the beginning of the phantom were present. 
-The exponential dose decrease aswell as the rapid dose drop to the zero level at the end of the phantom has been mapped well qualitatively.
+The exponential dose decrease as well as the rapid dose drop to the zero level at the end of the phantom has been mapped well qualitatively.
 The prostate-only trained model showed particular problems reaching the correct predicted height for entire dose curve.
-Scaling the curves to the correct maximum, as shown in \autoref{fig:scaled}, gives a more comprehensible picture of the curvature for the prostate-only and mixed entity models.
-As depicted the qualitative curvature is closer resembled by the prostate model. 
-When comapring different entity crosssections, as shown in \autoref{fig:crosssection}, the prostate density distribution is comparable to the one of a water phantom. 
+Scaling the curves to the correct maximum, as shown in \autoref{fig:scaled}, gives a more comprehensive picture of the curvature for the prostate-only and mixed entity models.
+As depicted, the qualitative curvature is closer resembled by the prostate model. 
+When comparing different entity cross sections, as shown in \autoref{fig:crosssection}, the prostate density distribution is comparable to the one of a water phantom. 
 Therefore it is probable that the model has not learned the underlying pyhsics but predicts the qualitative dose distribution in a water phantom better due to the similarities between the density distribution of the lower abdomen and the one of a water phantom.
 
 \begin{figure}
@@ -92,48 +93,50 @@ Both models have problems with the representation of the dose deposition peak at
 Taking this into account could explain why the dose from the tangential radiation fields represented in \autoref{fig:mamma} is underestimated in the breast cancer plans.
 The prediction accuracy of the first 100 pixels of the segment is quite poor, so segments whose radiological path is less than 100 pixels are predicted very poorly.
 Contrary to the first 100 pixels, the further dose distribution is well predicted by the mixed entity model.
-The majority of plans have their target volume and therefore the high dose volume located at higher depths.
-As the models prediction of dose curvature at greater depths become more accurate and the gamma passrates only accounts for high dose areas, the gamma passrates increases for target volumes at higher depths.
+The majority of plans have their target volume and consequently the high dose volume located at higher depths.
+As the models prediction of dose curvature at greater depths becomes more accurate and the gamma passrates only account for high dose areas, the gamma passrates increase for target volumes at higher depths.
 
 \subsection{Model improvement}
 
-The here proposed model showed promising results as a first step towards a fast, accurate and robust dose enginge for an online treatment workflow using an MR-Linac. 
-We have confirmed that the genereal concept of a spatial information informed 3D-UNet is applicable for the prediction of dose deposition processes in patients anatomy as proposed by \citeauthor{kontaxis_deepdose_2020}.
-Nevertheless the evaluation of dose prediction accuracy has shown outliers, especially on challenging tasks such as dose distributions in highly heterogenous tissues such as air cavities aswell as very small fields with short radiological paths inside the patients anatomy.  
+The here proposed model showed promising results as a first step towards a fast, accurate and robust dose engine for an online treatment workflow using an MR-Linac. 
+We have confirmed that the genereal concept of a spatial information informed 3D-UNet is applicable for the prediction of dose deposition processes in patients anatomy as proposed by \citeauthor{kontaxis_deepdose_2020}~\cite{kontaxis_deepdose_2020}.
+Nevertheless the evaluation of dose prediction accuracy has shown outliers, especially on challenging tasks such as dose distributions in highly heterogenous tissues such as air cavities as well as very small fields with short radiological paths inside the patients anatomy.  
 The network has shown short estmiation times with approximately 3~seconds per segment. 
-To improve inference time, investigations towards the expolration of other applicable memory efficient network architectures are needed, aswell as the utilization of a multi GPU prediction process at inference.
-In detail analysis of mask impact for every provided mask, as partially done by \citeauthor{kontaxis_deepdose_2020}~\cite{kontaxis_deepdose_2020}, might yield benefitial results for the interpretability of the networks performance as well as its limitations towards a robust and reliable dose prediction. 
-As discussed in \autoref{ssec:SET}, we assume that the center beam line distance, might have a negative effects regarding offset segments.\\
+To improve inference time, investigations towards the exploration of other applicable memory efficient network architectures are needed, as well as the utilization of a multi GPU prediction process at inference time.
+As discussed in \autoref{ssec:SET}, we assume that the distance to the central beam axis, might have negative effects regarding prediction accuracy for segments with a larger offset to the central beam axis.
+Therefore a detailed analysis of mask impact for every provided mask, as partially done by \citeauthor{kontaxis_deepdose_2020}~\cite{kontaxis_deepdose_2020}, might yield beneficial results for the interpretability of the networks performance as well as its limitations towards a robust and reliable dose prediction.\\
+
 We have shown that incorporating more heterogenous training data improves the robustness and the prediction accuracy of the model.
-Our training data consisted of patient specific segments take from entiree radio treatment plans that was genereated by the intitutional treatment planning software. 
+Our training data consisted of patient specific segments taken from entire \acs{RT} plans that were generated by the institutional treatment planning software.
 This way we had no control over how segments were shaped or oriented.
-To achieve desired distributions for fieldsizes and gantry angles and to gain control over the segment shapes and the respective isocenter, we propose to further increase the training data variability by generating artificial segments.
-By using artificial segments, we can control the exact distributions of gantry angles aswell as fieldsizes over the entire training data pool, from which we promise to achieve an increased representation of otherwise underpresented segment shapes, sizes and areas of uncommon iso centers.\\
+To achieve desired distributions for field sizes and gantry angles and to gain control over the segment shapes as well as the respective isocenter, we propose to further increase the training data variability by generating artificial segments.
+By using artificial segments, we can control the exact distributions of gantry angles as well as field sizes over the entire training data pool, from which we promise to achieve an increased representation of otherwise underrepresented segment shapes, sizes and areas of uncommon isocenters.\\
 Data from patients that were previously treated at the MR-linac in our institution is very limited.
 We therefore propose to use, in addition to artificial segments, the anatomy CTs of not only treated patients at the MR-Linac, but any patient CT\@.
-In this way, we deviate from the small pool of CTs of cancer patients from our radiotherapy department and expand the pool to all patients who have had a CT of any body region.
+In this way, the small pool of CTs of cancer patients from our radiotherapy department may be increased.
 This decreases the change of the network overfitting to specific anatomic distribrutions of the given patient anatomy pool and contributes to the robustness and generalization process that is desired to be achieved.
 Implementing this approach would suit as a first proof of concept. 
 Further data individualization can be achieved by deviating from the patient's anatomy and creating artificial target volumes with heterogeneous areas within the irradiated volume.
-The position, shape and density of these created areas inside the target volume, can be choosen based on the desired distribution as implemented by \citeauthor{neishabouri_long_2021} for their training data generation.\\
+The position, shape and density of these created areas inside the target volume, can be choosen based on the desired distribution as implemented by \citeauthor{neishabouri_long_2021}~\cite{neishabouri_long_2021} for their training data generation.
+To further the implement the correct mapping of \acs{DD} physics into the training of the network, simple phantom cases could be included in the validation data. The network would then be able to directly use the information of the phantom predictions to adapt its predictions in following training steps.\\
 
-Further development could go towards exploring an LSTM approach that provides 2.5~-~D or 3~-~D dose distributions in the direction of the irradiation angle, as suggested by \citeauthor{neishabouri_long_2020} in their work on proton dose predictions for heterogeneous tissues~\cite{neishabouri_long_2020}. 
-Approching the problem in this manner might lead to the networks incorporating of previously passed tissues.
+Further developments may also explore an LSTM approach that provides 2.5~-~D or 3~-~D dose distributions in the direction of the irradiation angle, as suggested by \citeauthor{neishabouri_long_2020} in their work on proton dose predictions for heterogeneous tissues~\cite{neishabouri_long_2020}. 
+Approching the problem in this manner might lead to an incorporation of previously seen tissues into the networks future predictions.
 As stated in \autoref{par:radiological_depth} the radiological depth is of crucial importance for the dose deposition processes on the particle path.
 Implementing a LSTM would account for information of prior passed tissues, while avoiding the vanishing gradient problem of basic RNNs. 
-Further information incorporated into the model input, such as a vector mask to indicate the Lorentz force acting on the secondary particles, could increase in a more accurate dose deposition prediction.\\
-In contrast to the DeepDose network of \citeauthor{kontaxis_deepdose_2020}~\cite{kontaxis_deepdose_2020} we decreased the voxel size of the target volume in the coronal and sagital plane aswell as included the entire possible gantry angle range into the training data.
+Further information incorporated into the model input, such as a vector mask to indicate the Lorentz force acting on the secondary particles, could lead to a more accurate dose deposition prediction.\\
+In contrast to the DeepDose network of \citeauthor{kontaxis_deepdose_2020}~\cite{kontaxis_deepdose_2020} we decreased the voxel size of the target volume in the coronal and sagittal plane and included the entire possible gantry angle range into the training data.
 While increasing the complexity of the proposed problem we have reached comparable results for prostate cancer patient plans.
 Time needed for prediction of single segments is increased compared to DeepDose from approximately 1 second to 3 seconds.
-his is due to the increased memory usage by a higher resolution grid.\\
+This is due to the increased memory usage by a higher resolution grid.\\
 Uncertainty quantification is of crucial importance to applications of machine learning and deep learning in the medical field, especially when dealing with sensitive decisions, such as the creation of a treatment plan for a cancer patient.
-Medical physicians aswell as the oncologist in charge need to be sure the dose distributions yielded by the software tool need to be accurate and reliable.
+Medical physicians as well as the oncologist in charge need to be sure the dose distributions yielded by the software tool are accurate and reliable.
 Therefore should future implementations of the network include the option for uncertainty quantification.
-As proposed by \citeauthor{kendall_what_2017} aleatoric and epistemic uncertainty could be included when calculating dose distributions.
-If the network yields a high uncertainty the dose caclulation system would resort to a \acs{MC} based calculation algorithm instead of the \acs{DL} solution for single segments or entire plans.
-Further information about which region the network is uncertain about coulb be used to decide if the uncertainty is of importance for the treatment plan.
-This could be the case when the network is uncertrain about the deposited dose in the treatment couch or regions where no \acs{OAR} are present.
-The planning software could then decide that the uncertaint reported by the network is of minor imprtance and the prediction could still be used.
+As proposed by \citeauthor{kendall_what_2017}~\cite{kendall_what_2017} aleatoric and epistemic uncertainty could be included when calculating dose distributions.
+If the network yields a high uncertainty, the dose calculation system would resort to a \acs{MC} based calculation algorithm instead of the \acs{DL} solution for single segments or entire plans.
+Further information about which region the network is uncertain about might be used to decide if the uncertainty is of importance for the treatment plan.
+This could be the case when the network is uncertrain about the deposited dose in the treatment couch or regions where no \acs{OAR}s are present.
+The planning software could then decide that the uncertainty reported by the network is of minor importance and the prediction could still be used.
 
 
 

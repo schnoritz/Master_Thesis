@@ -1,1 +1,17 @@
-\blindtext{}
+
+\textbf{Purpose:} Monte Carlo (MC) simulations are time intensive and therefore not applicable for real-time dose calculations without major simplifications.  Recent research efforts aim at the use of Deep Learning (DL) tools for dose calculation. 
+However, the accuracy of pretrained DL models remains unclear if conditions between training data and applied data change.
+Different conditions may include tumor entity, source-to-surface distance (SSD), field size and shape, gantry angle and tissue density. In this work, we therefore developed a DL dose prediction model and investigated the accuracy and robustness of dose prediction on unseen data.\\
+
+\textbf{Methods:} A DL framework was developed to predict dose distributions based on patient CT and irradiation field information. 
+Two training datasets were defined based on clinical MR-Linac treatment plans of (A) 40 primary prostate cancer patients and (B) 40 patients with either prostate, head and neck, breast or liver cancers. 
+Both training sets were composed of approximately 2000 individual segments from different angles. 
+Gold standard dose distributions, used as the target for model training and testing, were obtained by segment-wise MC dose simulation using a dedicated EGSnrc MR-Linac model. 
+The training datasets were used to train two separate 3D-UNet for dose prediction. 
+For evaluation, both trained models were applied to data representing three different conditions: (1)~A~set of 5 unseen prostate plans, (2) 5 head and neck, breast and liver plans each and (3) 15 lymphnode plans, for which the conditions were unseen by both models. 
+The DL dose predictions were compared against gold standard using gamma analysis (3mm/3\%, 10\% cutoff) and evaluated by Wilcoxon signed-rank test.\\
+
+\textbf{Results:} Both DL models were successfully trained and allowed for segment-wise dose prediction.
+The network trained on training dataset (A) reached mean gamma passrates of  99.1\% ± 1.3\% when tested against (1).
+Accuracy decreased significantly when tested against (2) and (3) with mean gamma passrates of 89.9\%~±~4.1\%, 67.4\%~±~5.3\%, 77.4\%~±~10.2\%, 93.0\%~±~6.1\% for liver, breast, head and neck and lymphnode plan segments respectively.
+In comparison the mixed model (B) applied to the test datasets (1), (2) and (3) yielded mean gamma pass rates of 99.2\%~±~1.0\%, 97.6\%~±~1.0\%, 83.6\%~±~4.6\%, 88.8\%~±~8.6\% and 96.0\%~±~5.8\% for prostate, liver, breast, head and neck and lymphnode plans respectively. 

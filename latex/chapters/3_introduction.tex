@@ -11,13 +11,13 @@ With the \ac{IMRT} treatment modality, which is the most applied treatment modal
 Prior to a patient's radiation treatment, a treatment plan is created by an oncologist in conjunction with a treatment planner or medical physicist.
 Due to the varying anatomy of patients, individualization of treatment plans is crucial to achieve an optimal therapeutic outcome. 
 The goal of \acs{RT} planning is to optimally tailor treatment to the patient's individual tumor location, shape and environment.
-To adapt for different shapes of tumors shape and weight of each beam can be changed using lead aperatures inside the accelerator head.\\
+To accommodate different tumor shapes, the shape and weight of each beam can be changed using lead aperatures inside the accelerator head.\\
 Individualization of treatment plans is not only needed to optimally irradiate the target volume but to spare surrounding \ac{OAR}.
-The general workflow for treatment plan creation consists of a \ac{CT} aquisition prior to treatment followed by tumor volume and \acs{OAR} delineation and an iterative process of treatment planning involving the onoclogist and the treatment planner. 
-Iterative planning can take up to several days to create an convenient treatment plan.\\
-The newest development regarding \ac{RT} is the incorparation of an \ac{MRI} device into a linear accelerator, called MR-Linac. 
-This enables live imaging before or during the treatment of the patient.
-Offering a lot of opportunities such as quantitative \acs{MRI} or treatment supervision and online adaption of treatment plans. However, many challenges still need to be overcome to fully exploit the potential of the MR-Linac.
+The general workflow for treatment plan creation consists of a \ac{CT} aquisition prior to treatment followed by tumor volume and \acs{OAR} delineation as well as an iterative process of treatment planning involving the onoclogist and the treatment planner. 
+Iterative planning can take up to several days to create a convenient treatment plan.\\
+The newest development regarding \ac{RT} is the incorporation of a \ac{MRI} device into a linear accelerator, called MR-Linac. 
+This enables live imaging before or during the treatment of the patient, offering a lot of opportunities such as quantitative \acs{MRI} or treatment supervision and online adaption of treatment plans. 
+However, many challenges still need to be overcome to fully exploit the potential of the MR-Linac.
 Current research effort is focusing on the development of the needed software tools to enable an MR-only workflow for \acs{RT} planning, which makes the \acs{CT} reduntant in the treatment planning pipeline. 
 Regarding an MR-only treatment plan workflow recent work involves the creation of pseudo CT images~\cite{han_mr-based_2017, wolterink_deep_2017, dinkla_mr-only_2018}, delineation of \acs{OAR}~\cite{kazemifar_segmentation_2018, liang_deep-learning-based_2019, shen_medical_2019}, plan optimization~\cite{fan_automatic_2019, liu_deep_2019} and dose calculation algorithms~\cite{javaid_mitigating_2019}.
 Ultimately this should lead to a supervised automated real-time treatment plan adaption, which enables the treatment plan to be automatically adapted, when the patients anatomy changes between or during fractions.
@@ -26,9 +26,9 @@ Therefore, current research is aiming towards the improvement of time consumptio
 An important part in the pipeline consists of the \ac{DD} calculation, which is needed for the treatment planning software, as well as dose verification processes.
 Currently \acs{DD} calculation algorithms are based on \ac{MC} simulations~\cite{jabbari_review_2011}. 
 To achieve accurate results, a multitude of particle histories, in the order of $10^7 - 10^{11}$ particles, are simulated, taking into account the patients anatomy and accelerator settings.
-In order to obtain accurate results, prior knowledge of the interaction processes is required, which are very well described in the literature.
+In order to obtain accurate results, prior knowledge of the interaction processes, which are very well described in the literature, is required.
 \acs{DD} calculation algorithms with \acs{MC} yield very accurate results. 
-Disadvantage of these algorithms is that due to the large number of particles required for accurate results, simulation times can become increasingly large with the required accuracy requirements.
+Disadvantage of these algorithms is that due to the large number of particles required for accurate results, simulation times can become increasingly large with the clinical accuracy requirements.
 Even in times of parallelization and GPU acceleration techniques time consumption still poses a problem.
 To enable real time MR-only treatment planning, the need for a fast and accurate dose estimation tool arises.\\
 The use of \ac{DL} has shown to be promising in a multitude of applications in \ac{CV} tasks in medicine~\cite{esteva_dermatologist-level_2017,cheng_computer-aided_2016,cicero_training_2017,iizuka_deep_2020,poplin_prediction_2018}.

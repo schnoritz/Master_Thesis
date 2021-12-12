@@ -1,6 +1,6 @@
 \subsection{Network Architecture}
 
-Our prosoed network architecture (\autoref{fig:network}) consists of a basic 3D-UNet as implemented for the first time by \citeauthor{ronneberger_u-net_2015-1}~\cite{ronneberger_u-net_2015-1}.
+Our proposed network architecture (\autoref{fig:network}) consists of a basic 3D-UNet as implemented for the first time by \citeauthor{ronneberger_u-net_2015-1}~\cite{ronneberger_u-net_2015-1}.
 It is composed of an encoding and a decoding part connected by skip-connections.
 The encoding part is used to analyse the given input and transform it into a more abstract presentation level. 
 This is achieved by consecutive application of 3D convolutions to the input.
@@ -9,8 +9,8 @@ Skip connections are utilized to incorparate a lower level of presentation into 
 We adapted the downsampling depth of the proposed network due to memory limitations when using 3D data to a factor of 8. 
 Maximum layer depth was 512 in the bottleneck connection. 
 Skip connections were used before each pooling layer. 
-To include a multitude of information from the patient as well as the \acs{RT} plan, we used five input volumes as proposed by \cite{kontaxis_deepdose_2020} concatenated along the forth dimension, resulting in an input volume of size $5 \times width \ (W) \times height \ (H) \times depth \ (D)$.
-Resolution for all input volumes were set to the resolution of our CT scans with voxel dimensions of $1.1718 \times 1.1718 \times 3$ mm\textsuperscript{3} in the coronal, sagital, and tanversal plane. 
+To include a multitude of information from the patient as well as the \acs{RT} plan, we used five input volumes as proposed by \citeauthor{kontaxis_deepdose_2020}~\cite{kontaxis_deepdose_2020} concatenated along the forth dimension, resulting in an input volume of size $5 \times width \ (W) \times height \ (H) \times depth \ (D)$.
+Resolution for all input volumes were set to the resolution of our CT scans with voxel dimensions of $1.1718 \times 1.1718 \times 3$ mm\textsuperscript{3} in the coronal, sagital, and tansversal plane. 
 
 
 \begin{figure}[!b]
@@ -23,7 +23,7 @@ Resolution for all input volumes were set to the resolution of our CT scans with
 
 \subsubsection{Network Input}
 
-The network expects five 3D volumes concatenated along their fourth dimension as resulting in an 4D input. 
+The network expects five 3D volumes concatenated along their fourth dimension resulting in a 4D input. 
 These five 3D volumes (\autoref{fig:masks}) combine different spatial, anatomical as well as accelorator information into the training data. 
 By doing so gantry as well as accelerator head information can be directly translated into 3D space, which makes them interpretable for the network. 
 
@@ -31,7 +31,7 @@ By doing so gantry as well as accelerator head information can be directly trans
 
 \begin{hangingpar}
     \item \textbf{(a) Beam Shape}: The trajectory of the beamshape into 3D space is of crucial importance. 
-    Combining information from \acs{MLC} configurations as well as gantry angle gives the network crucial information about the translation of the beams eye view into 3D space. 
+    Combining information from \acs{MLC} configurations as well as gantry angle provides the network with crucial information about the translation of the beams eye view into 3D space. 
     Information about which voxel is intersected or partially intersected by the beam is stored in this mask. 
     To additionally account for the output factor, the fieldsize of each segment is stored in each voxel intersected with the beam field. 
     Voxel values of partially clipped voxels are scaled down by the percentage of the voxel that lies within the field. 
@@ -45,8 +45,8 @@ By doing so gantry as well as accelerator head information can be directly trans
     Flattening filters are not built into MR-Linac which makes it \ac{FFF}. 
     Beamprofiles of the MR-Linac are therefore not uniform.
     The dose profile peaks in the central beam line from where it flattens out to the edges of the field.
-    Therefore receive fields that are distant from the central beamline slightly lower doses that fields in the direct center.
-    Each voxel in this mask is therefore assigned its minimum distance from the central beamline. 
+    Therefore, fields that are distant from the central beamline induce slightly lower doses than fields in the direct center.
+    Each voxel in this mask is therefore assigned to its minimum distance from the central beamline. 
 \end{hangingpar}
 
 \begin{hangingpar}
@@ -63,20 +63,20 @@ By doing so gantry as well as accelerator head information can be directly trans
     Dose deposition and interactions of particles depend on their energy as well as the electron density of the affected volume. 
     As the initial energy of the radiated photons is assumed constant, the impact of the electron density of the volume (in this case the patients anatomy) is responsible for the different interaction processes of photons as well as secondary electrons. 
     \ac{HU} of the patient's anatomy acquired from a \ac{CT} scan are stored in each voxel of the volume. 
-    Photons radiated from gantry angles below the treatment couch, interact partly inside it, therefore it was included in the \acs{CT} mask. 
+    Photons radiated from gantry angles below the treatment couch interact partly inside it, therefore it was included in the \acs{CT} mask. 
 \end{hangingpar}
 
 \begin{hangingpar}\label{par:radiological_depth}
     \item \textbf{(e) Radiological Depth}: 
     A photon beam that passes through the interaction medium loses energy on its path. 
-    Therefore, the path that a particle follows through a medium is highly relevant for the \acs{DD} effects that take place. 
+    Therefore, the path that a particle follows through a medium is highly relevant for the \acs{DD} effects. 
     Combining the information of the source distance of each voxel in combination with the density of the patients anatomy results in the radiological depth.
     It is calculated by the summation of the partial path of a casted ray through each intersected voxel in the medium multiplied by the \acs{HU} value of each respective voxel.
     Information about the density of prior tissues is given in each voxel value.
-    Therefore the same spatial depth in a dense material results in a higher radiological depth than the same depth in soft tissue.
+    Consequently the same spatial depth in a dense material results in a higher radiological depth than the same depth in soft tissue.
 \end{hangingpar}
 
-Particles interact negligibly in air, therefore all masks were set to zero where the CT masks was 150 \acs{HU} over the value of air. Air or low density volumes inside the body of the patient were not affected by this step, to account for the \acs{ERE} on the surface of air cavities inside the patient. 
+Particles interact negligibly in air, therefore all masks were set to zero where the CT masks was 150 \acs{HU} over the value of air. Air or low density volumes inside the body of the patient were not affected by this step to account for the \acs{ERE} on the surface of air cavities inside the patient. 
 
 \begin{figure}
     \centering
@@ -86,7 +86,9 @@ Particles interact negligibly in air, therefore all masks were set to zero where
 
 \subsubsection{Network Output}
 
-The network combines the information from the five 3D volumes and yields a single volume with the respective dose distribution. Spatial dimensions for width height and depth as well as voxel dimensions are preserved during inference. A respective dose distribution (f) for the input ((a)~-~(e)) from a segment taken from a prostate cancer treatment plan is depicted in \autoref{fig:masks}.
+The network combines the information from the five 3D volumes and yields a single volume with the respective dose distribution. 
+Spatial dimensions for width, height and depth as well as voxel dimensions are preserved during inference. 
+A respective dose distribution (f) for the input ((a)~-~(e)) from a segment taken from a prostate cancer treatment plan is depicted in \autoref{fig:masks}.
 
 \subsection{Training Data Generation}
 
@@ -99,7 +101,7 @@ Simulation of all segments was done using a remote \ac{HPC} solution provided by
 Coordinate system orientation of the patient's anatomy as well as \ac{MLC} and gantry positions are given in the dose and plan file. 
 Simulation of $10^7$ particles took around 4 hours on average.
 The 3D input volumes to the network were calculated using in-house developed python scripts with the provided information from CT, dose and plan files. 
-The central beam line distance and source distance were calculated using the isocenter information from the DICOM-plan file and the respecitve coordinate system provided from the CT-DICOM files.
+The central beam line distance and source distance were calculated using the isocenter information from the DICOM-plan file and the respective coordinate system provided from the CT-DICOM files.
 The CT mask was directly taken from the CT images and resized to fit the spatial resolution. 
 Ray tracing was used to calculate the radiological depth mask with information from the CT and the gantry position which was taken from the DICOM-plan file.
 Information about each segments \acs{MLC} configuration and gantry angle were used to project the beams eye view into 3D space for the beam shape mask.
@@ -111,15 +113,15 @@ This enabled a batchsize of 128 with a patch size of $32 \times 32 \times 32$ vo
 After every epoch, the model performance was assessed on the validation set and the top 5 models were saved. 
 The ADAM optimizer was used with 0.9, 0.99, $10^{-8}$ for $\beta_1$, $\beta_1$ and $\epsilon$ respectively. 
 An initial learning rate of $10^{-4}$ was used. If the validation loss did not decrease or the gamma passrate on the valdiation set did not increase over 50 epochs the learning rate was decreased by a factor of 10. 
-When a learning rate of $10^{-6}$ was reached and no performance increase was noted over 50 epochs the training was stopped to prevent overfitting and to save computational recources.
+When a learning rate of $10^{-6}$ was reached and no performance increase was noted over 50 epochs the training was stopped to prevent overfitting and to save computational resources.
  
 
 \subsubsection{Dataloading}
 
 Memory usage is a serious concern in the application of deep learning and espeacially when dealing with 3D data sets. 
-In our case not only the memory usage in the \ac{GPU} but in the \ac{RAM} is of importance. 
+In our case not only the memory usage in the \ac{GPU} but also in the \ac{RAM} is of importance. 
 In conventional applications the network training is divided into epochs, where the network sees every single instance before validation.
-The present training data is therefore loaded into the \acs{RAM} and can be quickly accessed from there, to pass it onto the \acs{GPU} memory.
+The present training data is therefore loaded into the \acs{RAM} and can be quickly accessed from there to pass it onto the \acs{GPU} memory.
 Our here posed problem of dose deposition prediction is a 3D problem with input volumes of multiple hundreds of megabytes per input segment.
 Loading all data into the \acs{RAM} was therefore not applicable. 
 A solution to this problem is to load individual segments on the fly into the RAM and then process it.
@@ -127,10 +129,10 @@ This solution was not applicable for us because loading times were long compared
 We therefore developed a partial on the fly dataloading inspired by the \emph{Queue} class from \citeauthor{perez-garcia_torchio_2021}~\cite{perez-garcia_torchio_2021} open source python libary \emph{TorchIO}.
 Classical augmentations in the form of shearing, warping or zooming were not applicable in our case because of the trivial relations between the augmentation and the \acs{DD}.
 To still achieve additional variation in training data we employed patch based training. 
-With this approach a multitude of patches can therefore be extracted from the same segment volume, increasing the variety in training data.
-To combine the semi-on-the-fly dataloading and the patch based training, multiple volumes are loadded into the RAM and then processed together as depicted in \autoref{fig:dataloading}. 
+With this approach a multitude of patches can be extracted from the same segment volume, increasing the variety in training data.
+To combine the semi-on-the-fly dataloading and the patch based training, multiple volumes are loaded into the RAM and then processed together as depicted in \autoref{fig:dataloading}. 
 A fixed amount of training data is loaded from the randomized training data pool into the \acs{RAM}. 
-From this set of training volumes a subset of patches from each volume is extracted and stored in a queue of patches, which is then shuffled and batch wise passed onto the \acs{GPU} and the network. 
+From this set of training volumes a subset of patches from each volume is extracted and stored in a queue of patches, which is then shuffled and batch-wise passed onto the \acs{GPU} and the network. 
 
 \begin{figure}
     \centering
@@ -140,7 +142,7 @@ From this set of training volumes a subset of patches from each volume is extrac
 
 \subsection{Evaluation Metrics}
 
-Conformality of dose distributions are clinically assessed using the gamma-index metric first introduced by \citeauthor{low_technique_1998}~\cite{low_technique_1998} in \citeyear{low_technique_1998}. 
+Conformality of dose distributions are clinically assessed using the gamma-index metric first introduced by \citeauthor{low_technique_1998} in \citeyear{low_technique_1998}~\cite{low_technique_1998}. 
 The evaluation metric is composed of two parametric values that set the criteria for which dose distributions are analysed. 
 Spatial deviations as well as deviations of dose are respected when analysing. 
 Dose conformality is assessed by analyzing each individual voxel of a given dose distribution using the following equation:
@@ -198,16 +200,17 @@ In the following section we desribe several experiments which aim to investiage 
 
     \item\textbf{Hypothesis 3}\newline
     The inclusion of a broader variety of segment shapes, sizes and positions inside the patients anatomy, as well as differing body regions and therefore varying \acs{SSD} values and tissue densities results in a better robustness of the networks prediction accuracy.
-    We hypothesize that significant increases in accuracy regarding new included entities can be achieved while the accuracy for the previously present remains stable.\\
+    We hypothesize that significant increases in accuracy regarding newly included entities can be achieved while the accuracy for the previously present entities remains stable.\\
 
     \item\textbf{Experiment 3}\newline
     Network architecture as well as training procedure of the in \emph{\ref{sssec:H1} \nameref{sssec:H1}} trained network were kept, while adding data from liver, breast and \acs{HN} segments into the pool of training data. 
     The total amount of segments remained approximately constant and the ratio of treatment plans per entity was equal.
-    The translational capabilities were then assessed by testing the newly trained network on the entities that were included in the training data as well as additional lymph node test cases. 
-    Significane of results was assessed using the Wilcoxon singed-rank test.
-    With this test design we investigated if the network performance decreased on prostate data by including new tumor sites into the training data and we assessed its performance on seen as well as unseen treatment plan data.
-    We used lymph node plan data as the unseen test data because lymph nodes are present all over the human body, which makes this anatomies aswell as \acs{RT} plans of this tumor site especially heterogeneous. 
-    Due to the small size of lymph nodes, segment fieldsize was therefore especially small, which we assumed to be the biggest challenge to the network.\\
+    The translational capabilities were then assessed by testing the newly trained network on the entities that were included in the training data as well as additional \ac{LN} test cases. 
+    Significance of results was assessed using the Wilcoxon singed-rank test.
+    With this test design we investigated if the network performance decreased on prostate data by including new tumor sites into the training data.
+    Additionally we assessed its performance on seen as well as unseen treatment plan data.
+    We used \acs{LN} plan data as the unseen test data because \acs{LN}s are present all over the human body, which makes this anatomies aswell as \acs{RT} plans of this tumor site especially heterogeneous. 
+    Due to the small size of \acs{LN}s, segment fieldsize was especially small, which we assumed to be the biggest challenge for the network.\\
 
 \end{hanginglist}
 
@@ -215,7 +218,7 @@ In the following section we desribe several experiments which aim to investiage 
 \begin{hanginglist}\itemsep2pt
 
     \item\textbf{Hypothesis 4}\newline
-    We hypothesized that basic physical dependencies, such as accurate dose depth profiles, correct mapping of penumbra and impact of the distance squared law will be learned by the network from the includation of a multitude of \acs{SSD}, patient anatomies, segment shapes, angles and sizes into the training data.
+    We hypothesized that basic physical dependencies, such as accurate dose depth profiles, correct mapping of penumbra and impact of the distance squared law will be learned by the network from the inclusion of a multitude of \acs{SSD}, patient anatomies, segment shapes, angles and sizes into the training data.
     Therefore we assumed that the predictions of dose deposition in basic homegenous phantoms will be accurately predicted with the training on the given heterogeneous dataset.\\
 
     \item\textbf{Experiment 4}\newline

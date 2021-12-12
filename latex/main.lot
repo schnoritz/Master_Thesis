@@ -11,4 +11,4 @@
 \defcounter {refsection}{0}\relax 
 \contentsline {table}{\numberline {5}{\ignorespaces {Gamma passrate comparison of prostate-only and mixed entity trained models on the test dataset consisting of 5 prostate, 5 liver, 5 mamma, 5 head \& neck and 15 lymphnode treatment plans. Gamma test criteria: 3~mm/3\% with a lower dose cutoff of 10\%.}\relax }}{25}{table.caption.38}%
 \defcounter {refsection}{0}\relax 
-\contentsline {table}{\numberline {6}{\ignorespaces Gamma passrates for prostate only and mixed trained models for different water phantom phantom positions inside an air volume. Water phantom thickness was 200 pixels.\relax }}{26}{table.caption.39}%
+\contentsline {table}{\numberline {6}{\ignorespaces Gamma passrates for prostate only and mixed trained models for different water phantom positions inside an air volume. Water phantom thickness was 200 pixels.\relax }}{26}{table.caption.39}%

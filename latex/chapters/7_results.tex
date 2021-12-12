@@ -3,11 +3,11 @@
 The training of the model took approximately 11 days until convergence. 
 Training stopped at $6.7\cdot10^5$ due to no improvement in gamma and validation loss. 
 The model reaches mean gamma passrates of 94.35\% ± 5.99\% (min: 58.02\%, max: 99.96\%) for prostate test segments and a mean gamma passrate of 99.1\% ± 1.3\% (min: 96.8\%, max: 100\%) for the five plans.
-Very good dose agreement between target dose, caluclated by \acs{MC} simulation and the dose prediction can be observed as depicted in \autoref{fig:prediction} showing the isocentric slice of a prostate cancer patient with a gamma passrate of 99.9\%.
+Very good dose agreement between target dose, caluclated \acs{MC} simulation and the dose prediction can be observed as depicted in \autoref{fig:prediction}, showing the isocentric slice of a prostate cancer patient with a gamma passrate of 99.9\%.
 As shown, the model is able to accurately predict the beamshape for single segments as well as the penumbra and beamwidening. 
 The \ac{DVH} shown in \autoref{fig:dvh} gives crucial information about the applied dose inside target volumes as well as \ac{OAR} for a test plan of the prostate patient cohort.
-\acs{DVH} curves overlap for all structures but urethra, which is caused by the high contribution of single voxels to the entire volume. 
-Very good dose agreement for high as well as low dose regions is reached. 
+\acs{DVH} curves overlap for all structures but urethra, which was caused by the high contribution of single voxels to the entire volume. 
+Very good dose agreement for high as well as low dose regions was reached. 
 
 \begin{figure}[htb]
     \centering
@@ -76,7 +76,7 @@ A comparison between the results of the individual segments and the overall plan
             \multirow{2}{*}{} & \multirow{2}{*}{\#}  & \textit{Seg.}     & \textit{Plans}     & \textit{Seg.}    & \textit{Plans}   & \textit{Seg.}    & \textit{Plans}   & \textit{Seg.}   & \textit{Plans}   & \textit{Seg.}   & \textit{Plans}  \\
                                                &                      & 306               & 5                 & 272              & 5               & 419              & 5               & 379             & 5               & 659             & 15             \\ \hline
             \textbf{Mean}                      & \multirow{5}{*}{/\%}  & 93.5              & \textbf{99.2}              & 89.8             & \textbf{97.6}            & 76.9             & 83.6            & 80.1            & 88.8            & 85.2            & \textbf{96.0}          \\
-            \textbf{Median}                    &                      & \textbf{95.0}              & 99.7              & 91.6             & \textbf{97.4}            & 78.9             & 83.7            & 82.8            & 90.9            & 87.8            & \textbf{98.8}           \\
+            \textbf{Median}                    &                      & \textbf{95.0}              & \textbf{99.7}              & 91.6             & \textbf{97.4}            & 78.9             & 83.7            & 82.8            & 90.9            & 87.8            & \textbf{98.8}           \\
             \textbf{STD}                       &                      & 6.3               & 1.0               & 7.0              & 1.0             & 12.8             & 4.6             & 10.9            & 8.6             & 10.7            & 5.8            \\
             \textbf{Min}                       &                      & 39.2              & 97.5              & 50.8             & 96.6            & 18.4             & 77.0            & 49.3            & 76.0            & 38.7            & 77.9           \\
             \textbf{Max}                       &                      & 99.8              & 99.9              & 99.1             & 99.2            & 98.5             & 89.8            & 97.4            & 98.5            & 99.9            & 99.9           \\ \hline
@@ -84,15 +84,15 @@ A comparison between the results of the individual segments and the overall plan
     \caption{Gamma rassrates for segments as well as plans for prostate, liver, mamma, \acs{HN} and \acs{LN} predicted with the mixed data trained model. Gamma test settings: 3~mm/3\% lower percentage cutoff 10\%}\label{tab:mixed}
 \end{table}
 
-To get a deeper insight into the networks method of operation and to enlarge the interpretability of the network, we analysed the the perfomance of the network regarding field size and segment weights as depicted in \autoref{fig:weight_fz_analysis}, which gives information about the correlation of field size and prediction accuracy of single segments. 
+To get a deeper insight into the networks method of operation and to enlarge the interpretability of the network, we analysed the perfomance of the network regarding field size and segment weights as depicted in \autoref{fig:weight_fz_analysis}, which gives information about the correlation of field size and prediction accuracy of single segments. 
 Relative occurence of segment sizes as well as weights are displayed as a bar chart in the background of both plots.
-Around 82\% segments have a field size smaller than 60~cm\textsuperscript{2} that is also the field size until network accuracy increases with increasing field size for both the prostate-only and mixed entity trained model.
-Fieldsizes larger than 60~cm\textsuperscript{2} are not predicted as stable with fluctuating gamma passrates for both models.
-The prostate-only trained model expieriences a larger drop in accuracy for field sizes larger than 60~cm\textsuperscript{2} and accuracy is steadily decreasing with increasing field sizes. 
+Around 82\% of all segments have a field size smaller than 60~cm\textsuperscript{2} that is also the field size until network accuracy increases with increasing field size for both the prostate-only and mixed entity trained model.
+Field sizes larger than 60~cm\textsuperscript{2} are not predicted as stable with fluctuating gamma passrates for both models.
+The prostate-only trained model experienced a larger drop in accuracy for field sizes larger than 60~cm\textsuperscript{2} and accuracy is steadily decreasing with increasing field sizes. 
 It was observable that smaller field sizes are less robust and range from 1.9\% to 100\% and 18.5\% to 99.9\% for the prostate-only and the mixed entity model respectively on a field size of 0 to 15~cm\textsuperscript{2}.
 Gamma passrate analysis with respect to segment weight showed the same trend of increased accuracy and robustness with increasing weight values.
 Segments with weights under 0.2 made up for almost 80\% of all segments. 
-A comprehensive and direct comparison between prostate-only and mixed entity model prediction accuracy for segment and plan predictions is given in \autoref{tab:seg_comp} and \autoref{tab:plan_comp} respectively.
+A comprehensive and direct comparison between prostate-only and mixed entity model prediction accuracy for segment and plan predictions is given in \autoref{tab:seg_comp} and \autoref{tab:plan_comp}.
 
 \begin{figure}[htb]
     \centering
@@ -100,8 +100,8 @@ A comprehensive and direct comparison between prostate-only and mixed entity mod
     \caption{
         Gamma pass rate comparison for single segments (left) and summed up plans (right) between prostate-only and mixed entity trained models. 
         Boxplot are displayed inside respecitve violin plots. 
-        Individual analysis of mixed entity set, composed of liver, mamma and \acs{HN} displayed on top plot. 
-        Significance level was assessed using Wilcoxon singed-rank test with significance level p~<~0.05~(*) p~<~0.01~(**) and  p~<~0.001~(***).
+        Individual analysis of the mixed entity set, composed of liver, mamma and \acs{HN} is displayed on top plot. 
+        Significance level was assessed using Wilcoxon singed-rank test with significance level p~<~0.05~(*), p~<~0.01~(**) and p~<~0.001~(***).
     }\label{fig:comparison}
 \end{figure}
 
@@ -155,9 +155,9 @@ A comprehensive and direct comparison between prostate-only and mixed entity mod
 \subsection{Experiment 4: Underlying Physics}
 
 Both the prostate-only as well as the mixed entity model perform poorly regarding gamma passrates for all water phantom positions tested. 
-The model accuracy is steadily decreasing with increasing \acs{SSD} with gamma pass rates of 60.1\%, 45.5\%, 48.4\%, and 56.1\%, 27.7\%, 19.2\% for the prostate-only and mixed entity model at depths of 100~pixels, 200~pixels and 300~pixels respectively. A summary of the accuracy is given in \autoref{tab:phantom_res}. 
+The model accuracy is steadily decreasing with increasing \acs{SSD} and gamma pass rates of 60.1\%, 45.5\%, 48.4\%, and 56.1\%, 27.7\%, 19.2\% for the prostate-only and mixed entity model at depths of 100~pixels, 200~pixels and 300~pixels respectively. A summary of the accuracy is given in \autoref{tab:phantom_res}. 
 The transversal view in \autoref{fig:phantom} shows that the prostate model is better at representing the peak at the beginning of the phantom than the mixed model for a depth of 100 pixels. 
-At higher phantom distances the prostate model resembles the qualitative dose distribution quite well, while failing at achieving a quantitatively correct predictive value. 
+At higher phantom distances the prostate model resembles the qualitative dose distribution quite well while failing at achieving a quantitatively correct predictive value. 
 The mixed model cannot reach the correct peak height at the beginning but predicts the later curve very well in terms of height and curvature in the transversal view. 
 Coronal and sagittal view both show that the penumbra is resembled very well by both models. 
 At phantom depths of 200 and 300 pixels the shoulders of the dose profile drop too fast for the mixed trained model in the coronal view.
@@ -170,11 +170,11 @@ Slight fluctuations at the phantom's edge can be observed at 100~pixel depth for
     Model               &        & Mixed          & Prostate         & Mixed          & Prostate         & Mixed          & Prostate         \\
     Gamma Passrate      & /\%    & 60.1         & 56.1           & 45.5         & 27.7           & 48.4         & 19.2           \\ \hline
     \end{tabular}
-    \caption{Gamma passrates for prostate only and mixed trained models for different water phantom phantom positions inside an air volume. Water phantom thickness was 200 pixels.}\label{tab:phantom_res}
+    \caption{Gamma passrates for prostate only and mixed trained models for different water phantom positions inside an air volume. Water phantom thickness was 200 pixels.}\label{tab:phantom_res}
 \end{table}
 
 \begin{figure}[htb]
     \centering
     \includegraphics[width=0.8\textwidth]{quer.pdf}
-    \caption{Coronal, sagital and transversal view of the dose distributions for 100, 200 and 300 px depth in the phantom volume}\label{fig:phantom}
+    \caption{Coronal, sagital and transversal view of the dose distributions for 100, 200 and 300 px depth in the phantom volume.}\label{fig:phantom}
 \end{figure}
